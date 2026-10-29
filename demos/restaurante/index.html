@@ -1,0 +1,292 @@
+<title>Bodegón Chapaleofú</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Karla:wght@400;500;700&display=swap">
+<style>
+/* Layout: bodegón — hero con foto, carta con pestañas por sección, menú del mediodía destacado, reservas e info práctica */
+:root{
+  --paper:#f3f4f0;
+  --card:#ffffff;
+  --ink:#14150f;
+  --soft:#5d6155;
+  --line:#dcded6;
+  --wine:#8a1428;
+  --olive:#4e5c2b;
+  --dark:#14150f;
+  --dark-ink:#f3f4f0;
+  --disp:"Fraunces",Georgia,serif;
+  --body:"Karla","Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#131410;--card:#1c1d17;--ink:#eef0e8;--soft:#a2a898;--line:#2e3027;
+    --wine:#e2697e;--olive:#a3bd61;--dark:#0b0c08;--dark-ink:#eef0e8;color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#131410;--card:#1c1d17;--ink:#eef0e8;--soft:#a2a898;--line:#2e3027;
+  --wine:#e2697e;--olive:#a3bd61;--dark:#0b0c08;--dark-ink:#eef0e8;color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.6}
+.in{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h2{font-family:var(--disp);font-weight:900;font-size:clamp(27px,4.6vw,42px);line-height:1;margin:0 0 6px;letter-spacing:-.015em;text-wrap:balance}
+.eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--wine);font-weight:700;margin:0 0 9px}
+.lead{color:var(--soft);max-width:60ch;margin:0}
+section{padding-block:50px}
+.head{margin-bottom:26px}
+
+.demo{background:var(--olive);color:#fff;font-size:12.5px;font-weight:700;text-align:center;padding:7px 14px}
+
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--dark);color:var(--dark-ink)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:21;background:var(--dark)}
+nav .in{display:flex;align-items:center;justify-content:space-between;gap:14px;padding-block:11px;flex-wrap:wrap}
+.brand{font-family:var(--disp);font-weight:900;font-size:22px;line-height:1}
+.brand small{display:block;font-family:var(--body);font-size:9px;letter-spacing:.24em;text-transform:uppercase;opacity:.7;font-weight:500;margin-top:3px}
+nav ul{list-style:none;display:flex;gap:17px;margin:0;padding:0;font-size:13px;flex-wrap:wrap}
+nav a{color:inherit;text-decoration:none;opacity:.85}
+nav a:hover{opacity:1;text-decoration:underline;text-underline-offset:3px}
+
+.hero{background:var(--dark);color:var(--dark-ink)}
+.hero .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.92fr);gap:32px;align-items:center;padding-block:44px 50px}
+@media (max-width:800px){.hero .in{grid-template-columns:1fr;padding-block:30px 34px;gap:22px}}
+.hero h1{font-family:var(--disp);font-weight:900;font-size:clamp(38px,8vw,66px);line-height:.94;margin:0 0 13px;letter-spacing:-.025em}
+.hero p{margin:0 0 20px;max-width:44ch;opacity:.86}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-block;padding:11px 20px;border-radius:999px;font-weight:700;font-size:14px;text-decoration:none;border:1.5px solid transparent}
+.btn-a{background:var(--wine);color:#fff}
+.btn-b{border-color:currentColor;color:inherit}
+.horario{margin-top:22px;font-size:13px;opacity:.72;border-top:1px solid rgba(255,255,255,.16);padding-top:14px}
+
+.ph{position:relative;background:
+  repeating-linear-gradient(45deg,rgba(255,255,255,.05) 0 11px,transparent 11px 22px),
+  linear-gradient(155deg,var(--wine),#2a1016);
+  border-radius:3px;display:flex;align-items:flex-end;padding:11px;color:#fff;max-width:100%}
+.ph em{font-style:normal;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;background:rgba(0,0,0,.45);padding:4px 8px;border-radius:2px;line-height:1.3}
+.ph-hero{aspect-ratio:5/4}
+.ph-sq{aspect-ratio:1/1}
+
+/* carta */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.tab{border:1.5px solid var(--line);background:var(--card);color:var(--ink);font-family:var(--body);font-weight:700;font-size:13px;padding:7px 14px;border-radius:999px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--wine);border-color:var(--wine);color:#fff}
+.tab:focus-visible{outline:2px solid var(--olive);outline-offset:2px}
+.carta{background:var(--card);border:1px solid var(--line);border-radius:3px;padding:20px 22px}
+.item{display:flex;align-items:baseline;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line)}
+.item:last-child{border-bottom:0}
+.item .n{font-weight:700;font-size:15px;flex:none;max-width:60%}
+.item .d{color:var(--soft);font-size:13px;display:block;font-weight:400;margin-top:1px}
+.item .fill{flex:1;border-bottom:1px dotted var(--line);transform:translateY(-3px);min-width:12px}
+.item .p{font-variant-numeric:tabular-nums;font-weight:700;font-size:15px;white-space:nowrap}
+.aviso{font-size:12.5px;color:var(--soft);margin:14px 0 0;font-style:italic}
+
+.menu-dia{background:var(--olive);color:#fff;border-radius:3px;padding:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;align-items:center}
+.menu-dia h3{font-family:var(--disp);font-weight:900;font-size:26px;margin:0 0 6px;line-height:1.05}
+.menu-dia p{margin:0;font-size:14px;opacity:.92}
+.menu-dia .precio{font-family:var(--disp);font-weight:900;font-size:40px;line-height:1;font-variant-numeric:tabular-nums}
+.menu-dia .precio span{display:block;font-family:var(--body);font-size:11px;letter-spacing:.15em;text-transform:uppercase;opacity:.8;font-weight:500;margin-top:4px}
+
+.gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:10px}
+
+.info{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:18px}
+.bloque{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--wine);border-radius:2px;padding:17px;min-width:0}
+.bloque h3{font-family:var(--disp);font-weight:600;font-size:18px;margin:0 0 7px}
+.bloque p{margin:0;font-size:14px;color:var(--soft)}
+.bloque b{color:var(--ink)}
+
+details{border-bottom:1px solid var(--line);padding:13px 0}
+summary{cursor:pointer;font-weight:700;font-size:15px;list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--disp);font-weight:400;font-size:21px;color:var(--wine);line-height:1}
+details[open] summary::after{content:"–"}
+details p{margin:8px 0 0;color:var(--soft);font-size:14px;max-width:64ch}
+summary:focus-visible{outline:2px solid var(--wine);outline-offset:3px}
+
+.cierre{background:var(--dark);color:var(--dark-ink)}
+.cierre .in{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:24px;padding-block:44px}
+.cierre h2{color:var(--dark-ink)}
+.dato{font-size:14px;opacity:.86;margin:0}
+.dato b{display:block;font-size:11px;letter-spacing:.17em;text-transform:uppercase;opacity:.58;margin-bottom:3px;font-weight:500}
+footer{background:var(--dark);color:var(--dark-ink);border-top:1px solid rgba(255,255,255,.12)}
+footer .in{padding-block:15px;font-size:12px;opacity:.58;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="demo">Sitio de muestra · Negocio ficticio creado para mostrar el diseño</div>
+
+<nav>
+  <div class="in">
+    <div class="brand">Chapaleofú<small>Bodegón y parrilla</small></div>
+    <ul>
+      <li><a href="#carta">Carta</a></li>
+      <li><a href="#mediodia">Mediodía</a></li>
+      <li><a href="#salon">El salón</a></li>
+      <li><a href="#reservas">Reservas</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="in">
+    <div>
+      <h1>Cocina de bodegón, sin apuro</h1>
+      <p>Parrilla a la leña, pastas amasadas en casa y mesas largas para comer en familia. En Victoria desde 2004.</p>
+      <div class="btns">
+        <a class="btn btn-a" href="#reservas">Reservar mesa</a>
+        <a class="btn btn-b" href="#carta">Ver la carta</a>
+      </div>
+      <p class="horario">Martes a domingo · Mediodía de 12 a 16 · Noche de 20 a 00:30<br>Lunes cerrado</p>
+    </div>
+    <div class="ph ph-hero"><em>Foto: parrilla encendida con achuras y costillar</em></div>
+  </div>
+</header>
+
+<section id="carta">
+  <div class="in">
+    <div class="head">
+      <p class="eyebrow">La carta</p>
+      <h2>Qué se come acá</h2>
+      <p class="lead">Precios actualizados al 28 de octubre. Todas las carnes son de ternera y se sirven con una guarnición a elección.</p>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Secciones de la carta" id="tabs"></div>
+    <div class="carta" id="carta" role="tabpanel" aria-live="polite"></div>
+    <p class="aviso">Cubierto $2.400 por persona, incluye pan casero y chimichurri. Descorche de vino propio $8.000 por botella. Consultá por opciones sin TACC y vegetarianas.</p>
+  </div>
+</section>
+
+<section id="mediodia">
+  <div class="in">
+    <div class="menu-dia">
+      <div>
+        <h3>Menú del mediodía</h3>
+        <p>De martes a viernes, de 12 a 15. Plato principal a elección entre cuatro opciones del día, postre y bebida. Incluye el cubierto.</p>
+      </div>
+      <div class="precio">$16.500<span>Por persona</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="salon">
+  <div class="in">
+    <div class="head">
+      <p class="eyebrow">El lugar</p>
+      <h2>El salón</h2>
+      <p class="lead">Sesenta cubiertos adentro y veinte en la vereda. Salón del fondo disponible para grupos de hasta treinta personas.</p>
+    </div>
+    <div class="gal">
+      <div class="ph ph-sq"><em>Foto: salón con mesas puestas</em></div>
+      <div class="ph ph-sq"><em>Foto: bife de chorizo servido en el plato</em></div>
+      <div class="ph ph-sq"><em>Foto: ravioles caseros</em></div>
+      <div class="ph ph-sq"><em>Foto: mesas en la vereda al atardecer</em></div>
+      <div class="ph ph-sq"><em>Foto: flan con dulce de leche</em></div>
+      <div class="ph ph-sq"><em>Foto: provoleta saliendo de la parrilla</em></div>
+    </div>
+  </div>
+</section>
+
+<section id="reservas">
+  <div class="in">
+    <div class="head">
+      <p class="eyebrow">Para tener en cuenta</p>
+      <h2>Reservas e información</h2>
+    </div>
+    <div class="info">
+      <div class="bloque"><h3>Reservas</h3><p>Por WhatsApp hasta dos horas antes. Los fines de semana conviene reservar con anticipación: la noche del sábado se llena.</p></div>
+      <div class="bloque"><h3>Grupos y eventos</h3><p>Salón del fondo para hasta <b>30 personas</b>, con menú cerrado a convenir. Se reserva con seña.</p></div>
+      <div class="bloque"><h3>Cómo llegar</h3><p>Av. Mitre 0000, Victoria, San Fernando. A tres cuadras de la estación. Estacionamiento sobre la calle lateral.</p></div>
+      <div class="bloque"><h3>Formas de pago</h3><p>Efectivo, débito, crédito y transferencia. <b>10% de descuento</b> abonando en efectivo o por transferencia.</p></div>
+      <div class="bloque"><h3>Para llevar</h3><p>Todos los platos se preparan para retirar por el local. Pedidos por WhatsApp con 30 minutos de anticipación.</p></div>
+      <div class="bloque"><h3>Accesibilidad</h3><p>Acceso sin escalones por la puerta principal y baño adaptado. Se permiten mascotas en la vereda.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="in">
+    <div class="head"><p class="eyebrow">Consultas frecuentes</p><h2>Preguntas</h2></div>
+    <details open><summary>¿Hacen delivery?</summary><p>Trabajamos con retiro por el local y con las aplicaciones de reparto de la zona. Los pedidos directos por WhatsApp tienen el precio de carta, sin recargo de aplicación.</p></details>
+    <details><summary>¿Se puede ir sin reserva?</summary><p>Sí, siempre guardamos mesas sin reservar. En los horarios pico del fin de semana puede haber espera de veinte o treinta minutos.</p></details>
+    <details><summary>¿Tienen opciones vegetarianas?</summary><p>Sí: pastas con salsas sin carne, provoleta, tortilla, ensaladas y guarniciones. La parrilla y la plancha de verduras son sectores separados.</p></details>
+    <details><summary>¿Los ñoquis del 29 están en la carta?</summary><p>Todos los 29 hacemos ñoquis caseros con tres salsas a elección, a precio promocional. Se agota temprano, conviene reservar.</p></details>
+    <details><summary>¿Se puede llevar vino propio?</summary><p>Sí, con un descorche de $8.000 por botella. También tenemos carta de vinos de bodegas chicas, por copa y por botella.</p></details>
+  </div>
+</section>
+
+<section class="cierre" id="contacto">
+  <div class="in">
+    <div>
+      <h2>Te esperamos</h2>
+      <p class="dato" style="max-width:38ch;margin-top:10px">Reservá tu mesa por WhatsApp y te confirmamos en el momento.</p>
+      <div class="btns" style="margin-top:17px"><a class="btn btn-a" href="#contacto">Reservar por WhatsApp</a></div>
+    </div>
+    <div>
+      <p class="dato"><b>Dirección</b>Av. Mitre 0000, Victoria<br>San Fernando, Buenos Aires</p>
+      <p class="dato" style="margin-top:15px"><b>Horarios</b>Mar a Dom · 12 a 16 y 20 a 00:30<br>Lunes cerrado</p>
+    </div>
+    <div>
+      <p class="dato"><b>Teléfono</b>11 0000-0000</p>
+      <p class="dato" style="margin-top:15px"><b>Instagram</b>@bodegonchapaleofu</p>
+      <p class="dato" style="margin-top:15px"><b>Correo</b>reservas@chapaleofu.example</p>
+    </div>
+  </div>
+</section>
+
+<footer><div class="in"><span>Bodegón Chapaleofú · Victoria, San Fernando</span><span>Sitio de muestra</span></div></footer>
+
+<script>
+const CARTA={
+ "Entradas":[
+  ["Provoleta a la parrilla","Con orégano, aceite de oliva y tomates secos","9.800"],
+  ["Empanadas de carne cortada a cuchillo","Unidad. Mínimo tres","2.600"],
+  ["Mollejas al limón","Doradas a la parrilla, con limón y sal gruesa","16.400"],
+  ["Chorizo y morcilla","Media y media, con pan casero","7.900"],
+  ["Tabla de fiambres","Para dos. Jamón crudo, salame, quesos y aceitunas","21.000"]],
+ "Parrilla":[
+  ["Bife de chorizo","400 g aproximados","19.800"],
+  ["Ojo de bife","350 g, con hueso","21.500"],
+  ["Entraña","Fina, bien dorada por fuera","22.900"],
+  ["Asado de tira","Tira ancha, cocción lenta","18.600"],
+  ["Vacío","Con chimichurri de la casa","17.900"],
+  ["Matambrito de cerdo","A la pizza o a la provenzal","16.800"],
+  ["Parrillada para dos","Achuras, chorizo, vacío, asado y pollo","42.000"]],
+ "Pastas":[
+  ["Ravioles de osobuco","Con salsa de tomate y albahaca o fileto","15.400"],
+  ["Sorrentinos de jamón y queso","Con crema de hongos","16.200"],
+  ["Ñoquis de papa","Con la salsa que elijas","13.800"],
+  ["Tallarines al huevo","Amasados en casa, con tuco y pesto","13.200"],
+  ["Lasaña de carne","Porción generosa, gratinada al horno","16.900"]],
+ "Guarniciones":[
+  ["Papas fritas","Comunes o a caballo","6.400"],
+  ["Papas españolas","Con cebolla y morrón","7.200"],
+  ["Puré de calabaza","Con nuez moscada","6.800"],
+  ["Ensalada mixta","Lechuga, tomate y cebolla","6.200"],
+  ["Verduras a la plancha","De estación","7.600"]],
+ "Postres":[
+  ["Flan casero","Con dulce de leche, crema o mixto","6.900"],
+  ["Panqueque de dulce de leche","Flambeado a pedido","7.400"],
+  ["Queso y dulce","Batata o membrillo","6.200"],
+  ["Helado artesanal","Dos bochas a elección","6.500"],
+  ["Budín de pan","Con caramelo y pasas","6.400"]],
+ "Bebidas":[
+  ["Vino de la casa","Malbec o blend. Copa / botella","4.200 / 14.500"],
+  ["Vinos de bodegas chicas","Consultar carta de la semana","desde 19.000"],
+  ["Cerveza tirada","Pinta rubia o roja","5.800"],
+  ["Gaseosa o agua","Línea completa","3.600"],
+  ["Café","Pocillo o cortado","3.200"]]
+};
+const tabs=document.getElementById('tabs'),carta=document.getElementById('carta'),claves=Object.keys(CARTA);
+claves.forEach((k,i)=>{
+  const b=document.createElement('button');
+  b.className='tab';b.type='button';b.setAttribute('role','tab');b.setAttribute('aria-selected',i===0);b.textContent=k;
+  b.addEventListener('click',()=>ver(i));
+  tabs.appendChild(b);
+});
+function ver(i){
+  const k=claves[i];
+  [...tabs.children].forEach((b,j)=>b.setAttribute('aria-selected',i===j));
+  carta.innerHTML=CARTA[k].map(x=>
+    '<div class="item"><span class="n">'+x[0]+'<span class="d">'+x[1]+'</span></span><span class="fill"></span><span class="p">$'+x[2]+'</span></div>'
+  ).join('');
+}
+ver(0);
+</script>
