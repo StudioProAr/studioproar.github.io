@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Muestra de diseño de StudioProAr (plan Esencial). Negocio ficticio.">
+<title>Ferretería La Llave</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231a1a18'/%3E%3Ctext x='16' y='23' font-size='20' font-weight='800' text-anchor='middle' fill='%23f2b705' font-family='Arial'%3EL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&display=swap">
+<style>
+/* Plan Esencial: una sola página, cinco secciones, WhatsApp, ubicación y horarios */
+:root{
+  --paper:#f4f3ee;--card:#ffffff;--ink:#1a1a18;--soft:#5b5b55;--line:#dcdbd3;
+  --acc:#f2b705;--acc-ink:#1a1a18;--band:#1a1a18;--band-ink:#f4f3ee;
+  --disp:"Barlow Condensed","Arial Narrow",sans-serif;--body:"Barlow","Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--paper:#111110;--card:#1a1a18;--ink:#f1f0ea;--soft:#a6a59c;--line:#2c2c28;--band:#0a0a09;color-scheme:dark}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.55;font-size:17px}
+img{max-width:100%;display:block}
+.in{max-width:1060px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--disp);text-transform:uppercase;line-height:.98;margin:0 0 10px;letter-spacing:.005em}
+h2{font-size:clamp(30px,5vw,46px);font-weight:800}
+h3{font-size:22px;font-weight:700}
+.eyebrow{font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;margin:0 0 8px;color:var(--soft)}
+.lead{color:var(--soft);max-width:56ch;margin:0}
+section{padding-block:54px}
+.head{margin-bottom:26px}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.muestra{background:#fff3cd;color:#5c4400;text-align:center;font:600 13px/1.4 system-ui,sans-serif;padding:8px 12px;border-bottom:1px solid #e6cf85}
+.muestra a{color:inherit}
+
+nav{position:sticky;top:0;z-index:20;background:var(--band);color:var(--band-ink)}
+nav .in{display:flex;align-items:center;justify-content:space-between;gap:14px;padding-block:11px;flex-wrap:wrap}
+.logo{font-family:var(--disp);font-weight:800;font-size:25px;text-transform:uppercase;letter-spacing:.02em;line-height:1}
+.logo b{color:var(--acc)}
+nav ul{list-style:none;display:flex;gap:18px;margin:0;padding:0;font-size:15px;flex-wrap:wrap}
+nav a{color:inherit;text-decoration:none;opacity:.88}
+nav a:hover{opacity:1;text-decoration:underline;text-underline-offset:4px}
+
+.btn{display:inline-block;padding:13px 24px;font:700 17px var(--disp);text-transform:uppercase;letter-spacing:.06em;text-decoration:none;border:2px solid var(--acc);background:var(--acc);color:var(--acc-ink);cursor:pointer}
+.btn-b{background:transparent;color:inherit;border-color:currentColor}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+
+.hero{background:var(--band);color:var(--band-ink)}
+.hero .in{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:34px;align-items:center;padding-block:50px 54px}
+@media (max-width:820px){.hero .in{grid-template-columns:1fr;padding-block:30px 36px;gap:24px}}
+.hero h1{font-size:clamp(46px,9vw,88px);font-weight:800;margin:0 0 14px}
+.hero h1 em{font-style:normal;color:var(--acc)}
+.hero p{margin:0 0 22px;max-width:44ch;opacity:.88}
+.hero img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.dato-rapido{display:flex;gap:24px;flex-wrap:wrap;margin-top:24px;font-size:14px;opacity:.85}
+.dato-rapido b{font-family:var(--disp);font-size:22px;display:block;line-height:1;color:var(--acc)}
+
+.rubros{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.rubro{background:var(--card);border:1px solid var(--line);min-width:0}
+.rubro img{width:100%;aspect-ratio:3/2;object-fit:cover}
+.rubro div{padding:14px 16px 18px}
+.rubro p{margin:0;font-size:15px;color:var(--soft)}
+
+.band{background:var(--card);border-block:1px solid var(--line)}
+.servs{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;list-style:none;margin:0;padding:0}
+.servs li{padding-left:18px;border-left:4px solid var(--acc)}
+.servs b{display:block;font-family:var(--disp);text-transform:uppercase;font-size:22px;line-height:1;margin-bottom:4px}
+.servs span{color:var(--soft);font-size:15px}
+
+.consulta{background:var(--band);color:var(--band-ink)}
+.consulta .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:30px;align-items:center}
+@media (max-width:760px){.consulta .in{grid-template-columns:1fr}}
+.consulta h2{color:var(--band-ink)}
+.consulta p{opacity:.85;max-width:40ch;margin:0}
+.caja{display:flex;gap:8px;flex-wrap:wrap}
+.caja input{flex:1;min-width:200px;padding:14px;border:2px solid var(--band-ink);background:transparent;color:var(--band-ink);font:400 17px var(--body)}
+.caja input::placeholder{color:var(--band-ink);opacity:.6}
+.marcas{margin-top:14px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;opacity:.6}
+
+.donde{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px}
+.donde b{display:block;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft);margin-bottom:3px}
+.donde p{margin:0 0 16px}
+.horarios{width:100%;border-collapse:collapse;font-size:16px}
+.horarios td{padding:7px 0;border-bottom:1px solid var(--line)}
+.horarios td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+footer{background:var(--band);color:var(--band-ink);font-size:14px}
+footer .in{padding-block:16px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;opacity:.7}
+.wa-flot{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:30;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="muestra">Muestra de diseño · negocio ficticio · fotos de ejemplo (Unsplash); en tu web van las de tu negocio · <a href="https://wa.me/5491126339350?text=Hola!%20Vi%20StudioProAr%20y%20quiero%20hacer%20una%20consulta.%20Mi%20duda%3A%20" target="_blank" rel="noopener">Quiero una web así →</a></div>
+
+<nav>
+  <div class="in">
+    <div class="logo">La <b>Llave</b></div>
+    <ul>
+      <li><a href="#rubros">Qué vendemos</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#consulta">Consultá stock</a></li>
+      <li><a href="#donde">Dónde estamos</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="in">
+    <div>
+      <p class="eyebrow" style="color:var(--acc)">Ferretería de barrio · San Fernando</p>
+      <h1>Todo para <em>resolver</em> hoy</h1>
+      <p>Herramientas, pinturas, bulonería, plomería y jardín. Si no lo tenemos, te lo conseguimos. Preguntá por stock por WhatsApp y pasá a retirarlo.</p>
+      <div class="btns">
+        <a class="btn" href="#consulta">Consultar stock</a>
+        <a class="btn btn-b" href="#donde">Cómo llegar</a>
+      </div>
+      <div class="dato-rapido">
+        <div><b>Lun a sáb</b>Abierto todo el día</div>
+        <div><b>Corte de llaves</b>Al instante</div>
+        <div><b>Envíos</b>En la zona</div>
+      </div>
+    </div>
+    <img src="https://images.unsplash.com/photo-1759200165738-6366977a73c6?auto=format&fit=crop&w=1100&q=70" alt="Pared de la ferretería con herramientas colgadas">
+  </div>
+</header>
+
+<section id="rubros">
+  <div class="in">
+    <div class="head">
+      <p class="eyebrow">Qué vendemos</p>
+      <h2>Seis rubros, un solo local</h2>
+      <p class="lead">Lo de todos los días y lo que necesitás para esa obra que no esperaba.</p>
+    </div>
+    <div class="rubros">
+      <article class="rubro"><img src="https://images.unsplash.com/photo-1668874184010-87aa286683dd?auto=format&fit=crop&w=700&q=70" alt="Martillos" loading="lazy"><div><h3>Herramientas</h3><p>Manuales y eléctricas, de las marcas de siempre.</p></div></article>
+      <article class="rubro"><img src="https://images.unsplash.com/photo-1510016290251-68aaad49723e?auto=format&fit=crop&w=700&q=70" alt="Latas de pintura de colores" loading="lazy"><div><h3>Pinturas</h3><p>Látex, esmaltes y barnices. Hacemos el color que quieras.</p></div></article>
+      <article class="rubro"><img src="https://images.unsplash.com/photo-1525909002-1b05e0c869d8?auto=format&fit=crop&w=700&q=70" alt="Rodillos de pintura" loading="lazy"><div><h3>Accesorios de pintura</h3><p>Rodillos, pinceles, cintas y lijas.</p></div></article>
+      <article class="rubro"><img src="https://images.unsplash.com/photo-1613945831677-383c19ad7721?auto=format&fit=crop&w=700&q=70" alt="Tornillos sobre una mesa" loading="lazy"><div><h3>Bulonería</h3><p>Tornillos, tarugos, bulones y fijaciones por unidad o por caja.</p></div></article>
+      <article class="rubro"><img src="https://images.unsplash.com/photo-1529255848089-c4e456d166e0?auto=format&fit=crop&w=700&q=70" alt="Brocas" loading="lazy"><div><h3>Brocas y discos</h3><p>Para madera, metal y mampostería.</p></div></article>
+      <article class="rubro"><img src="https://images.unsplash.com/photo-1621272156568-7306716648df?auto=format&fit=crop&w=700&q=70" alt="Carretilla en un jardín" loading="lazy"><div><h3>Jardín</h3><p>Palas, rastrillos, mangueras y tijeras de podar.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<section id="servicios" class="band">
+  <div class="in">
+    <div class="head">
+      <p class="eyebrow">Servicios</p>
+      <h2>Lo resolvemos en el mostrador</h2>
+    </div>
+    <ul class="servs">
+      <li><b>Corte de llaves</b><span>Copias en el momento, de puerta, candado y buzón.</span></li>
+      <li><b>Color a pedido</b><span>Llevás una muestra y te preparamos la pintura del mismo tono.</span></li>
+      <li><b>Corte a medida</b><span>Caños, varillas, cadenas y sogas al largo que necesites.</span></li>
+      <li><b>Envíos en la zona</b><span>Pedís por WhatsApp y te lo llevamos el mismo día.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="consulta" class="consulta">
+  <div class="in">
+    <div>
+      <p class="eyebrow" style="color:var(--acc)">Consultá stock</p>
+      <h2>¿Qué estás buscando?</h2>
+      <p>Escribilo y te respondemos si lo tenemos, cuánto sale y cuándo podés pasar.</p>
+      <p class="marcas">Stanley · Bahco · Alba · Sinteplast · Tramontina · Dewalt</p>
+    </div>
+    <form class="caja" id="f-consulta">
+      <label for="que" style="position:absolute;left:-9999px">Producto que buscás</label>
+      <input id="que" type="text" placeholder="Ej: mecha 8 mm para pared" autocomplete="off" maxlength="120">
+      <button class="btn" type="submit">Consultar</button>
+    </form>
+  </div>
+</section>
+
+<section id="donde">
+  <div class="in">
+    <div class="head">
+      <p class="eyebrow">Dónde estamos</p>
+      <h2>Pasá cuando quieras</h2>
+    </div>
+    <div class="donde">
+      <div>
+        <p><b>Dirección</b>Calle de ejemplo 0000<br>San Fernando, Buenos Aires</p>
+        <p><b>WhatsApp</b>11 2633-9350</p>
+        <p><b>Instagram</b>@ferreteria.lallave</p>
+        <a class="btn" id="wa" target="_blank" rel="noopener" href="#">Escribir por WhatsApp</a>
+      </div>
+      <div>
+        <p style="margin-bottom:6px"><b>Horarios</b></p>
+        <table class="horarios">
+          <tr><td>Lunes a viernes</td><td>8:00 a 13:00 · 15:00 a 19:30</td></tr>
+          <tr><td>Sábados</td><td>8:00 a 13:30</td></tr>
+          <tr><td>Domingos y feriados</td><td>Cerrado</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="in"><span>Ferretería La Llave · San Fernando</span><span>Sitio de muestra · plan Esencial</span></div></footer>
+
+<a class="btn wa-flot" id="wa-flot" target="_blank" rel="noopener" href="#">WhatsApp</a>
+
+<script>
+(function () {
+  const NUM = '5491126339350';
+  const wa = t => 'https://wa.me/' + NUM + '?text=' + encodeURIComponent(t);
+  const saludo = 'Hola! Vi la muestra de la Ferretería La Llave (StudioProAr) y quiero consultar: ';
+  document.getElementById('wa').href = wa(saludo);
+  document.getElementById('wa-flot').href = wa(saludo);
+  document.getElementById('f-consulta').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const q = document.getElementById('que').value.trim();
+    window.open(wa(saludo + (q || 'tienen stock?')), '_blank', 'noopener');
+  });
+})();
+</script>
+</body>
+</html>

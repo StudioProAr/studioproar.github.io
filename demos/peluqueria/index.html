@@ -82,6 +82,22 @@ nav a:hover{color:var(--ink)}
 .serv .p{font-weight:600;font-size:15px;font-variant-numeric:tabular-nums;white-space:nowrap;min-width:92px;text-align:right}
 .aviso{font-size:12.5px;color:var(--soft);margin:13px 0 0}
 
+/* agenda de turnos */
+.agenda{background:var(--card);border:1px solid var(--line);border-radius:2px;padding:26px;margin-bottom:22px}
+.agenda .lead{margin-bottom:18px}
+.ag-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+.ag-et{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--soft);margin-bottom:7px}
+.agenda select{width:100%;max-width:520px;padding:10px 12px;border:1.5px solid var(--line);border-radius:2px;background:var(--paper);color:var(--ink);font:500 14px var(--body)}
+.ag-dias,.ag-horas{display:flex;flex-wrap:wrap;gap:7px}
+.ag-b{border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font:600 13px var(--body);padding:8px 13px;border-radius:2px;cursor:pointer;min-width:74px;text-align:center}
+.ag-b small{display:block;font-weight:500;font-size:11px;color:var(--soft)}
+.ag-b[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.ag-b[aria-pressed="true"] small{color:inherit;opacity:.8}
+.ag-b:disabled{opacity:.38;cursor:not-allowed;text-decoration:line-through}
+.ag-b:focus-visible,.agenda select:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
+.ag-res{margin:18px 0 12px;font-size:15px;min-height:1.6em}
+.ag-res b{font-weight:600}
+.agenda .btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
 .turno{background:var(--forest);color:#fff;border-radius:2px;padding:26px}
 .turno h2{color:#fff;margin-bottom:16px}
 .pasos{counter-reset:p;display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:18px;margin:0 0 20px;padding:0;list-style:none}
@@ -166,11 +182,24 @@ footer .in{padding-block:15px;font-size:12px;opacity:.55;display:flex;justify-co
 
 <section id="turnos">
   <div class="in">
+    <div class="agenda" id="agenda">
+      <p class="eyebrow">Agenda</p>
+      <h2>Elegí tu turno</h2>
+      <p class="lead">Seleccioná el servicio, el día y un horario libre. Después lo confirmás por WhatsApp.</p>
+      <div class="ag-grid">
+        <div><label class="ag-et" for="ag-serv">1. Servicio</label><select id="ag-serv"></select></div>
+        <div><span class="ag-et" id="ag-et-dia">2. Día</span><div class="ag-dias" id="ag-dias" role="group" aria-labelledby="ag-et-dia"></div></div>
+        <div><span class="ag-et" id="ag-et-hora">3. Horario</span><div class="ag-horas" id="ag-horas" role="group" aria-labelledby="ag-et-hora"></div></div>
+      </div>
+      <p class="ag-res" id="ag-res" role="status"></p>
+      <a class="btn btn-a" id="ag-wa" href="#agenda" target="_blank" rel="noopener" aria-disabled="true">Confirmar por WhatsApp</a>
+      <p class="aviso">Muestra de diseño: los horarios ocupados son de ejemplo. En la web real, la agenda se conecta con la del salón.</p>
+    </div>
     <div class="turno">
       <h2>Cómo pedir turno</h2>
       <ol class="pasos">
-        <li><b>Escribinos</b><span>Por WhatsApp, contándonos qué servicio querés y con quién.</span></li>
-        <li><b>Elegimos el horario</b><span>Te pasamos los disponibles de la semana y reservamos el que te sirva.</span></li>
+        <li><b>Elegí en la agenda</b><span>El servicio, el día y un horario libre.</span></li>
+        <li><b>Confirmás por WhatsApp</b><span>Te llega el turno armado y lo reservamos a tu nombre.</span></li>
         <li><b>Seña</b><span>Para color y tratamientos pedimos seña por transferencia. Se descuenta del total.</span></li>
         <li><b>Te esperamos</b><span>Llegá cinco minutos antes. Si te demorás más de quince, el turno puede reprogramarse.</span></li>
       </ol>
@@ -233,7 +262,7 @@ footer .in{padding-block:15px;font-size:12px;opacity:.55;display:flex;justify-co
     <div>
       <h2>Reservá tu turno</h2>
       <p class="dato" style="max-width:36ch;margin-top:10px">Escribinos y te pasamos los horarios disponibles de esta semana.</p>
-      <div class="btns" style="margin-top:17px"><a class="btn btn-a" href="#contacto">Escribir por WhatsApp</a></div>
+      <div class="btns" style="margin-top:17px"><a class="btn btn-a" href="https://wa.me/5491126339350?text=Hola!%20Vi%20la%20muestra%20del%20Sal%C3%B3n%20Quebracho%20(StudioProAr)%20y%20quiero%20consultar%3A%20" target="_blank" rel="noopener">Escribir por WhatsApp</a></div>
     </div>
     <div>
       <p class="dato"><b>Dirección</b>Constitución 0000<br>San Fernando, Buenos Aires</p>
@@ -290,6 +319,69 @@ function ver(i){
   ).join('');
 }
 ver(0);
+
+/* ---- Agenda de turnos (muestra: la ocupación de los horarios es de ejemplo) ---- */
+(function(){
+  const NUM='5491126339350',PASO=30;
+  const DIAS=['dom','lun','mar','mié','jue','vie','sáb'];
+  const HORARIO={2:[9,19],3:[9,19],4:[9,19],5:[9,19],6:[9,16]}; /* martes a sábado */
+  const minutos=t=>{const h=/(\d+)\s*h/.exec(t),m=/(\d+)\s*min/.exec(t)||/h\s*(\d+)/.exec(t);return (h?+h[1]*60:0)+(m?+m[1]:0);};
+  const hhmm=n=>String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0');
+  const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  const servicios=[];
+  k.forEach(cat=>S[cat].forEach(x=>servicios.push({cat:cat,nombre:x[0],dur:x[1],min:minutos(x[1]),precio:x[2]})));
+  const dias=[];
+  for(let i=0;i<21&&dias.length<12;i++){const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()+i);if(HORARIO[d.getDay()])dias.push(d);}
+  const sel={s:0,d:dias[0],h:null};
+  const $=id=>document.getElementById(id);
+  /* turnos ya tomados de ejemplo: 2 o 3 por día, de 30 a 90 min, siempre los mismos para cada fecha */
+  const tomados={};
+  function ocupados(d){
+    const key=iso(d);
+    if(tomados[key])return tomados[key];
+    const [ab,ce]=HORARIO[d.getDay()],n=(ce-ab)*60/PASO,sem=Math.floor(d.getTime()/864e5),s=new Set();
+    for(let a=0,cant=2+sem%2;a<cant;a++){
+      const ini=(sem*7+a*11+a*a*5)%n,len=1+((sem+a*3)%3);
+      for(let j=0;j<len;j++)s.add(ab*60+(ini+j)*PASO);
+    }
+    return (tomados[key]=s);
+  }
+  const ocupado=(d,m)=>ocupados(d).has(m);
+  const ahora=()=>{const n=new Date();return n.getHours()*60+n.getMinutes();};
+
+  $('ag-serv').innerHTML=k.map(cat=>'<optgroup label="'+cat+'">'+servicios.map((x,i)=>x.cat===cat?'<option value="'+i+'">'+x.nombre+' · '+x.dur+'</option>':'').join('')+'</optgroup>').join('');
+
+  function libres(){
+    const d=sel.d,[ab,ce]=HORARIO[d.getDay()],need=Math.ceil(servicios[sel.s].min/PASO),r=[];
+    const esHoy=iso(d)===iso(new Date());
+    for(let m=ab*60;m+need*PASO<=ce*60;m+=PASO){
+      let ok=!(esHoy&&m<=ahora()+60);
+      for(let j=0;ok&&j<need;j++)if(ocupado(d,m+j*PASO))ok=false;
+      r.push([m,ok]);
+    }
+    return r;
+  }
+  function pintar(){
+    $('ag-dias').innerHTML=dias.map(d=>'<button type="button" class="ag-b" data-d="'+iso(d)+'" aria-pressed="'+(iso(d)===iso(sel.d))+'">'+DIAS[d.getDay()]+'<small>'+d.getDate()+'/'+(d.getMonth()+1)+'</small></button>').join('');
+    const l=libres();
+    if(sel.h!==null&&!l.some(x=>x[0]===sel.h&&x[1]))sel.h=null;
+    $('ag-horas').innerHTML=l.map(x=>'<button type="button" class="ag-b" data-h="'+x[0]+'"'+(x[1]?'':' disabled')+' aria-pressed="'+(x[0]===sel.h)+'">'+hhmm(x[0])+'</button>').join('');
+    const s=servicios[sel.s],a=$('ag-wa');
+    if(sel.h===null){
+      $('ag-res').innerHTML='Elegí un horario libre para <b>'+s.nombre+'</b> ('+s.dur+').';
+      a.setAttribute('aria-disabled','true');a.href='#agenda';
+    }else{
+      const fecha=DIAS[sel.d.getDay()]+' '+sel.d.getDate()+'/'+(sel.d.getMonth()+1);
+      $('ag-res').innerHTML='<b>'+s.nombre+'</b> · '+fecha+' · '+hhmm(sel.h)+' a '+hhmm(sel.h+s.min)+(s.precio==='sin cargo'?'':' · $'+s.precio);
+      a.removeAttribute('aria-disabled');
+      a.href='https://wa.me/'+NUM+'?text='+encodeURIComponent('Hola! Probé la agenda de la muestra del Salón Quebracho (StudioProAr) y quiero este turno:\n'+s.nombre+' ('+s.dur+')\n'+fecha+' a las '+hhmm(sel.h));
+    }
+  }
+  $('ag-serv').addEventListener('change',e=>{sel.s=+e.target.value;pintar();});
+  $('ag-dias').addEventListener('click',e=>{const b=e.target.closest('[data-d]');if(!b)return;sel.d=dias.find(d=>iso(d)===b.dataset.d);sel.h=null;pintar();});
+  $('ag-horas').addEventListener('click',e=>{const b=e.target.closest('[data-h]');if(!b||b.disabled)return;sel.h=+b.dataset.h;pintar();});
+  pintar();
+})();
 </script>
 
 </body>
