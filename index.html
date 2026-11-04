@@ -99,6 +99,7 @@ nav ul a:hover{color:var(--ink)}
 .obra a{margin-top:auto;font-size:14px;font-weight:600;text-decoration:none}
 .obra a:hover{text-decoration:underline}
 .obra .cab{background-size:cover;background-position:center}
+.obra .links{margin-top:auto;display:flex;gap:6px 18px;flex-wrap:wrap}.obra .links a{margin-top:0}
 .obra .cab.logo{background-color:#fff8f4;background-position:center;background-size:auto 86%;background-repeat:no-repeat}
 .obra .cab.logo b{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .obra .et{display:inline-block;align-self:flex-start;font-size:11px;font-weight:700;color:var(--blue);background:color-mix(in srgb,var(--blue) 10%,transparent);border-radius:20px;padding:3px 9px;margin:0 0 10px}
@@ -191,12 +192,12 @@ footer a{color:inherit}
           <li>Hasta 10 fotos</li>
           <li>Botón de WhatsApp, ubicación y horarios</li>
           <li>Adaptada al celular</li>
-          <li>Estadísticas de visitas</li>
+          <li>Panel con tus visitas y de dónde llegan</li>
         </ul>
         <a class="btn btn-b" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20me%20interesa%20el%20plan%20Esencial.%20Mi%20duda%3A%20" target="_blank" rel="noopener">Consultar</a>
       </article>
       <article class="plan dest">
-        <p class="tag">El más elegido</p>
+        <p class="tag">Recomendado</p>
         <h3>Completa</h3>
         <p class="precio">$154.000</p>
         <p class="unidad">Lanzamiento · lista <s>$220.000</s> · pago único</p>
@@ -220,6 +221,7 @@ footer a{color:inherit}
           <li>Colores, talles y fotos por variante</li>
           <li>Filtros por categoría, talle y precio</li>
           <li>Carrito que manda el pedido por WhatsApp</li>
+          <li>Los pedidos quedan guardados en tu panel</li>
           <li>Todo lo del plan Completa</li>
         </ul>
         <a class="btn btn-b" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20me%20interesa%20el%20plan%20Cat%C3%A1logo%20y%20pedidos.%20Mi%20duda%3A%20" target="_blank" rel="noopener">Consultar</a>
@@ -232,8 +234,8 @@ footer a{color:inherit}
         <p class="desc">Tus clientes eligen un horario libre y confirman el turno.</p>
         <ul>
           <li>Agenda con servicios, días y horarios</li>
-          <li>Confirmación del turno en la web</li>
-          <li>Listado privado de turnos confirmados</li>
+          <li>El cliente confirma el turno en la web</li>
+          <li>Agenda de turnos en tu panel</li>
           <li>Todo lo del plan Completa</li>
         </ul>
         <a class="btn btn-b" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20me%20interesa%20el%20plan%20Turnos.%20Mi%20duda%3A%20" target="_blank" rel="noopener">Consultar</a>
@@ -246,8 +248,8 @@ footer a{color:inherit}
         <p class="desc">Con panel propio: cambiás precios, fotos y textos vos mismo.</p>
         <ul>
           <li>Panel privado con usuario y contraseña</li>
-          <li>Pedidos o turnos en el panel</li>
-          <li>Edición de la web y del catálogo</li>
+          <li>Pedidos o turnos, según tu rubro</li>
+          <li>Editás precios, fotos, textos y avisos</li>
           <li>Estadísticas y resumen del mes</li>
           <li>Capacitación para usarlo</li>
         </ul>
@@ -280,7 +282,7 @@ footer a{color:inherit}
     <div class="head">
       <p class="eyebrow">Trabajos</p>
       <h2>Cómo queda una web hecha para tu rubro</h2>
-      <p class="lead">Son webs funcionando, no capturas. Entrá, probá el carrito, pedí un turno o hacé un pedido desde la mesa.</p>
+      <p class="lead">Son webs funcionando, no capturas. Entrá, probá el carrito, reservá un turno o hacé un pedido desde la mesa. Y mirá el panel que recibe cada negocio, con datos de ejemplo.</p>
     </div>
     <div class="obras">
       <article class="obra real">
@@ -289,7 +291,7 @@ footer a{color:inherit}
           <p class="rubro">Cliente · Rosas eternas</p>
           <p class="et">Plan 5 · Autogestionable</p>
           <p>Armador de ramos, galería editable y panel con estadísticas.</p>
-          <a href="https://studioproar.github.io/reina-dabi/" target="_blank" rel="noopener">Ver el sitio →</a>
+          <div class="links"><a href="https://studioproar.github.io/reina-dabi/" target="_blank" rel="noopener">Ver el sitio →</a><a href="demos/panel/?n=reina" target="_blank" rel="noopener">Ver el panel →</a></div>
         </div>
       </article>
       <article class="obra">
@@ -298,7 +300,7 @@ footer a{color:inherit}
           <p class="rubro">Muestra · Ferretería</p>
           <p class="et">Plan 1 · Esencial</p>
           <p>Una página con rubros, horarios, ubicación y consulta por WhatsApp.</p>
-          <a href="https://studioproar.github.io/demos/ferreteria/" target="_blank" rel="noopener">Ver la muestra →</a>
+          <div class="links"><a href="demos/ferreteria/" target="_blank" rel="noopener">Ver la muestra →</a><a href="demos/panel/?n=ferreteria" target="_blank" rel="noopener">Ver el panel →</a></div>
         </div>
       </article>
       <article class="obra">
@@ -307,7 +309,7 @@ footer a{color:inherit}
           <p class="rubro">Muestra · Náutica</p>
           <p class="et">Plan 2 · Completa</p>
           <p>Cuatro páginas: servicios, tarifas por eslora, trabajos y contacto.</p>
-          <a href="https://studioproar.github.io/demos/nautica/" target="_blank" rel="noopener">Ver la muestra →</a>
+          <div class="links"><a href="demos/nautica/" target="_blank" rel="noopener">Ver la muestra →</a><a href="demos/panel/?n=nautica" target="_blank" rel="noopener">Ver el panel →</a></div>
         </div>
       </article>
       <article class="obra">
@@ -316,7 +318,7 @@ footer a{color:inherit}
           <p class="rubro">Muestra · Indumentaria</p>
           <p class="et">Plan 3 · Catálogo y pedidos</p>
           <p>Catálogo con colores y talles, filtros y carrito que manda el pedido por WhatsApp.</p>
-          <a href="https://tienda-ropa-prueba.pages.dev/" target="_blank" rel="noopener">Ver la muestra →</a>
+          <div class="links"><a href="https://tienda-ropa-prueba.pages.dev/" target="_blank" rel="noopener">Ver la muestra →</a><a href="demos/panel/?n=tienda#pedidos" target="_blank" rel="noopener">Ver el panel →</a></div>
         </div>
       </article>
       <article class="obra">
@@ -324,8 +326,8 @@ footer a{color:inherit}
         <div class="cu">
           <p class="rubro">Muestra · Peluquería</p>
           <p class="et">Plan 4 · Turnos</p>
-          <p>Servicios con precio y duración, y agenda para elegir un turno libre.</p>
-          <a href="https://studioproar.github.io/demos/peluqueria/" target="_blank" rel="noopener">Ver la muestra →</a>
+          <p>Servicios con precio y duración, y agenda donde el cliente reserva su turno y el salón lo ve en su panel.</p>
+          <div class="links"><a href="demos/peluqueria/" target="_blank" rel="noopener">Ver la muestra →</a><a href="demos/panel/?n=salon" target="_blank" rel="noopener">Ver el panel →</a></div>
         </div>
       </article>
       <article class="obra">
@@ -334,7 +336,7 @@ footer a{color:inherit}
           <p class="rubro">Muestra · Gastronomía</p>
           <p class="et">Plan 5 · Autogestionable</p>
           <p>Carta por QR en cada mesa: el pedido llega directo al tablero de la cocina.</p>
-          <a href="https://bodegon-demo-prueba.pages.dev/" target="_blank" rel="noopener">Ver la muestra →</a>
+          <div class="links"><a href="https://bodegon-demo-prueba.pages.dev/" target="_blank" rel="noopener">Ver la muestra →</a><a href="demos/panel/?n=bodegon" target="_blank" rel="noopener">Ver el panel →</a></div>
         </div>
       </article>
       <article class="obra">
@@ -343,7 +345,7 @@ footer a{color:inherit}
           <p class="rubro">Muestra · Emprendimiento</p>
           <p class="et">Plan 5 · Autogestionable</p>
           <p>La web y el panel del emprendedor: pedidos, catálogo editable y estadísticas.</p>
-          <a href="https://luciernaga-prueba.pages.dev/" target="_blank" rel="noopener">Ver la muestra →</a>
+          <div class="links"><a href="https://luciernaga-prueba.pages.dev/" target="_blank" rel="noopener">Ver la muestra →</a><a href="https://luciernaga-prueba.pages.dev/#panel" target="_blank" rel="noopener">Ver el panel →</a></div>
         </div>
       </article>
     </div>
@@ -361,7 +363,7 @@ footer a{color:inherit}
       <li><b>Hablamos</b><span>Nos contás qué negocio tenés y qué necesitás. Te decimos qué plan te conviene, sin venderte de más.</span></li>
       <li><b>Propuesta por escrito</b><span>Alcance, precio y plazo en un documento. Si estás de acuerdo, se abona el 50% y arrancamos.</span></li>
       <li><b>Nos pasás el material</b><span>Te mandamos una lista de qué textos y fotos hacen falta. El plazo arranca cuando llega todo.</span></li>
-      <li><b>Armamos la web</b><span>La ves funcionando antes de publicarla. Una ronda de cambios está incluida.</span></li>
+      <li><b>Armamos la web</b><span>La ves funcionando antes de publicarla. Incluye una ronda de cambios en el plan Esencial y dos desde el plan Completa.</span></li>
       <li><b>Publicamos</b><span>Dominio, certificado de seguridad y la web online. Si tiene panel, te enseñamos a usarlo.</span></li>
     </ol>
   </div>
@@ -371,12 +373,12 @@ footer a{color:inherit}
   <div class="in">
     <div class="head">
       <p class="eyebrow">Por qué nosotros</p>
-      <h2>Tres cosas que no vas a encontrar en otro lado</h2>
+      <h2>Lo que te garantizamos por escrito</h2>
     </div>
     <div class="dif">
-      <div><h3>El dominio es tuyo</h3><p>Se registra a nombre de tu negocio, con tu CUIT. La mayoría lo pone a nombre propio y así te ata. Si un día te vas, te llevás lo tuyo.</p></div>
-      <div><h3>Sin costo mensual obligatorio</h3><p>El alojamiento y el certificado de seguridad no te cuestan nada, ni el primer año ni nunca. El mantenimiento lo contratás solo si lo querés.</p></div>
-      <div><h3>Hecha a mano, no con plantilla</h3><p>No instalamos un tema y le cambiamos el color. Cada web se escribe desde cero, por eso carga rápido y hace exactamente lo que tu rubro necesita.</p></div>
+      <div><h3>El dominio es tuyo</h3><p>Se registra a nombre de tu negocio, con tu CUIT. Si un día te vas, te llevás la web, los archivos y el dominio, sin permanencia ni multa.</p></div>
+      <div><h3>Sin costo mensual de alojamiento</h3><p>El alojamiento y el certificado de seguridad no tienen costo mensual. El mantenimiento lo contratás solo si lo querés.</p></div>
+      <div><h3>Precio cerrado en pesos</h3><p>Lo que dice la propuesta es lo que pagás: sin dólares, sin sorpresas. Y cada web se arma a medida de tu rubro, sin plantillas de terceros, por eso carga rápido.</p></div>
     </div>
   </div>
 </section>
@@ -384,12 +386,12 @@ footer a{color:inherit}
 <section>
   <div class="in">
     <div class="head"><p class="eyebrow">Consultas frecuentes</p><h2>Preguntas</h2></div>
-    <details open><summary>¿Cuánto tarda?</summary><p>Entre 7 y 15 días hábiles según el plan, contados desde que recibimos todos los textos y las fotos. Si el material llega a medias, el plazo arranca cuando está completo.</p></details>
+    <details open><summary>¿Cuánto tarda?</summary><p>Entre 7 y 20 días hábiles según el plan, contados desde que recibimos todos los textos y las fotos. Si el material llega a medias, el plazo arranca cuando está completo.</p></details>
     <details><summary>¿Qué pasa si no tengo fotos?</summary><p>Lo charlamos. Podemos ir a sacarlas al local o usar imágenes con licencia libre mientras conseguís las propias. Nunca usamos fotos bajadas de internet sin derecho de uso: es un riesgo legal que no vale la pena.</p></details>
     <details><summary>¿Necesito el dominio propio?</summary><p>No es obligatorio, pero conviene. Te da una dirección corta y profesional, te habilita correos con el nombre del negocio y ayuda a que Google te encuentre. Sin dominio propio la web funciona igual, con una dirección más larga.</p></details>
     <details><summary>¿Y si quiero cambiar algo después?</summary><p>Con mantenimiento, entran hasta dos cambios por mes sin costo adicional. Sin mantenimiento, se cotiza cada pedido. Y si elegiste el plan Autogestionable, los cambios de contenido los hacés vos desde el panel.</p></details>
     <details><summary>¿Si dejo de trabajar con ustedes, pierdo la web?</summary><p>No. La web es tuya desde que la pagás. Si decidís terminar, te entregamos todos los archivos y el control del dominio sin cargo, dentro de los 15 días. No hay permanencia mínima ni multa.</p></details>
-    <details><summary>¿Hacen tiendas online?</summary><p>Por ahora no. Preferimos decirlo antes que hacerlo a medias. Si necesitás vender con carrito y medios de pago, te podemos orientar sobre qué plataforma te conviene.</p></details>
+    <details><summary>¿Hacen tiendas online?</summary><p>Sí, con el plan Catálogo y pedidos: catálogo con carrito que te manda el pedido armado por WhatsApp y queda guardado en tu panel. El cobro lo hacés por transferencia o alias; el pago con tarjeta dentro de la web todavía no lo ofrecemos. Si necesitás eso, te orientamos sobre qué plataforma te conviene.</p></details>
   </div>
 </section>
 

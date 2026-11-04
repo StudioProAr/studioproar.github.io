@@ -97,6 +97,11 @@ nav a:hover{color:var(--ink)}
 .ag-b:focus-visible,.agenda select:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
 .ag-res{margin:18px 0 12px;font-size:15px;min-height:1.6em}
 .ag-res b{font-weight:600}
+.ag-conf{display:flex;gap:8px;flex-wrap:wrap}
+.ag-conf input{flex:1;min-width:160px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);font:500 14px var(--body);padding:10px 12px;border-radius:2px}
+.ag-conf .btn:disabled{opacity:.45;cursor:not-allowed}
+.ag-listo{margin:14px 0 0;padding:12px 14px;border-left:3px solid var(--copper);background:var(--paper);font-size:14px}
+.ag-listo a{font-weight:600}
 .agenda .btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
 .turno{background:var(--forest);color:#fff;border-radius:2px;padding:26px}
 .turno h2{color:#fff;margin-bottom:16px}
@@ -192,14 +197,15 @@ footer .in{padding-block:15px;font-size:12px;opacity:.55;display:flex;justify-co
         <div><span class="ag-et" id="ag-et-hora">3. Horario</span><div class="ag-horas" id="ag-horas" role="group" aria-labelledby="ag-et-hora"></div></div>
       </div>
       <p class="ag-res" id="ag-res" role="status"></p>
-      <a class="btn btn-a" id="ag-wa" href="#agenda" target="_blank" rel="noopener" aria-disabled="true">Confirmar por WhatsApp</a>
-      <p class="aviso">Muestra de diseño: los horarios ocupados son de ejemplo. En la web real, la agenda se conecta con la del salón.</p>
+      <div class="ag-conf"><input id="ag-nom" type="text" maxlength="40" placeholder="Tu nombre" autocomplete="given-name" aria-label="Tu nombre"><button class="btn btn-a" id="ag-ok" type="button" disabled>Confirmar turno</button></div>
+      <p class="ag-listo" id="ag-listo" role="status" hidden></p>
+      <p class="aviso">Muestra de diseño: los turnos que confirmes se guardan solo en tu navegador y los ves en el <a href="../panel/?n=salon">panel de ejemplo del salón</a>. En la web real quedan en la agenda del salón.</p>
     </div>
     <div class="turno">
       <h2>Cómo pedir turno</h2>
       <ol class="pasos">
         <li><b>Elegí en la agenda</b><span>El servicio, el día y un horario libre.</span></li>
-        <li><b>Confirmás por WhatsApp</b><span>Te llega el turno armado y lo reservamos a tu nombre.</span></li>
+        <li><b>Confirmás en la web</b><span>El turno queda reservado a tu nombre y el salón lo ve al instante en su agenda.</span></li>
         <li><b>Seña</b><span>Para color y tratamientos pedimos seña por transferencia. Se descuenta del total.</span></li>
         <li><b>Te esperamos</b><span>Llegá cinco minutos antes. Si te demorás más de quince, el turno puede reprogramarse.</span></li>
       </ol>
@@ -346,7 +352,9 @@ ver(0);
     }
     return (tomados[key]=s);
   }
-  const ocupado=(d,m)=>ocupados(d).has(m);
+  const KEY='sq_turnos';
+  const guardados=()=>{try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(e){return []}};
+  const ocupado=(d,m)=>ocupados(d).has(m)||guardados().some(t=>t.fecha===iso(d)&&m>=t.ini&&m<t.ini+t.min);
   const ahora=()=>{const n=new Date();return n.getHours()*60+n.getMinutes();};
 
   $('ag-serv').innerHTML=k.map(cat=>'<optgroup label="'+cat+'">'+servicios.map((x,i)=>x.cat===cat?'<option value="'+i+'">'+x.nombre+' · '+x.dur+'</option>':'').join('')+'</optgroup>').join('');
@@ -366,17 +374,27 @@ ver(0);
     const l=libres();
     if(sel.h!==null&&!l.some(x=>x[0]===sel.h&&x[1]))sel.h=null;
     $('ag-horas').innerHTML=l.map(x=>'<button type="button" class="ag-b" data-h="'+x[0]+'"'+(x[1]?'':' disabled')+' aria-pressed="'+(x[0]===sel.h)+'">'+hhmm(x[0])+'</button>').join('');
-    const s=servicios[sel.s],a=$('ag-wa');
+    const s=servicios[sel.s];
     if(sel.h===null){
       $('ag-res').innerHTML='Elegí un horario libre para <b>'+s.nombre+'</b> ('+s.dur+').';
-      a.setAttribute('aria-disabled','true');a.href='#agenda';
+      $('ag-ok').disabled=true;
     }else{
       const fecha=DIAS[sel.d.getDay()]+' '+sel.d.getDate()+'/'+(sel.d.getMonth()+1);
       $('ag-res').innerHTML='<b>'+s.nombre+'</b> · '+fecha+' · '+hhmm(sel.h)+' a '+hhmm(sel.h+s.min)+(s.precio==='sin cargo'?'':' · $'+s.precio);
-      a.removeAttribute('aria-disabled');
-      a.href='https://wa.me/'+NUM+'?text='+encodeURIComponent('Hola! Probé la agenda de la muestra del Salón Quebracho (StudioProAr) y quiero este turno:\n'+s.nombre+' ('+s.dur+')\n'+fecha+' a las '+hhmm(sel.h));
+      $('ag-ok').disabled=false;
     }
   }
+  $('ag-ok').addEventListener('click',()=>{
+    if(sel.h===null)return;
+    const s=servicios[sel.s],nom=($('ag-nom').value.trim()||'Cliente de prueba').slice(0,40);
+    const t={id:Date.now(),fecha:iso(sel.d),ini:sel.h,min:s.min,servicio:s.nombre,dur:s.dur,precio:s.precio,nombre:nom,estado:'confirmado'};
+    const l=guardados();l.push(t);
+    try{localStorage.setItem(KEY,JSON.stringify(l));}catch(e){}
+    const fecha=DIAS[sel.d.getDay()]+' '+sel.d.getDate()+'/'+(sel.d.getMonth()+1);
+    const ok=$('ag-listo');ok.hidden=false;
+    ok.innerHTML='Turno confirmado ✓ '+s.nombre+' · '+fecha+' a las '+hhmm(sel.h)+', a nombre de '+nom.replace(/[<>&"]/g,'')+'. <a href="../panel/?n=salon#turnos">Ver cómo lo ve el salón en su panel →</a>';
+    sel.h=null;pintar();
+  });
   $('ag-serv').addEventListener('change',e=>{sel.s=+e.target.value;pintar();});
   $('ag-dias').addEventListener('click',e=>{const b=e.target.closest('[data-d]');if(!b)return;sel.d=dias.find(d=>iso(d)===b.dataset.d);sel.h=null;pintar();});
   $('ag-horas').addEventListener('click',e=>{const b=e.target.closest('[data-h]');if(!b||b.disabled)return;sel.h=+b.dataset.h;pintar();});
