@@ -86,6 +86,18 @@ const N={
  bodegon:{nom:'Bodegón Chapaleofú',plan:'Plan 5 · Autogestionable',tabs:['cocina','editar','estadisticas','resumen'],base:85,tipo:'bodegon',
   paginas:[['Carta (QR en mesa)',63],['Inicio',22],['Menú del mediodía',10],['Contacto',5]],
   prods:[['Provoleta a la parrilla',11800,'Entradas'],['Empanadas de carne x3',9900,'Entradas'],['Bife de chorizo',26500,'Parrilla'],['Asado de tira',24800,'Parrilla'],['Vacío',23900,'Parrilla'],['Ñoquis con tuco',14500,'Pastas'],['Papas fritas',7500,'Guarniciones'],['Flan con dulce de leche',6900,'Postres'],['Gaseosa 500 ml',3500,'Bebidas']]},
+ cafe:{nom:'Café Muelle',plan:'Plan 1 · Esencial',tabs:['estadisticas'],base:47,paginas:null},
+ panaderia:{nom:'El Horno de Victoria',plan:'Plan 3 · Catálogo y pedidos',tabs:['pedidos','estadisticas'],base:58,tipo:'tienda',
+  paginas:[['Encargá',49],['Inicio',31],['Cómo funciona',12],['Dónde estamos',8]],
+  prods:[['Medialunas de manteca (docena)',9600],['Torta de cumpleaños 1,5 kg',38000],['Facturas surtidas (docena)',9000],['Pan de masa madre',6500],['Sándwiches de miga x12',11000],['Pastafrola',11500],['Chipá x12',7200]]},
+ veterinaria:{nom:'Veterinaria Patitas del Delta',plan:'Plan 4 · Turnos',tabs:['turnos','estadisticas'],base:36,
+  paginas:[['Inicio',40],['Sacá turno',34],['Servicios',19],['Dónde estamos',7]],
+  tur:{hor:{1:[9,20],2:[9,20],3:[9,20],4:[9,20],5:[9,20],6:[9,13]},f:[5,13,7,2,3],key:'vet_turnos',link:'../veterinaria/#turnos',txt:'agenda de la veterinaria',
+   largo:{1:['Vacunación','Consulta clínica','Consulta felina'],2:['Baño y corte de uñas','Consulta clínica','Control de cachorro'],3:['Peluquería canina','Peluquería canina','Baño y corte de uñas']},
+   nombres:['Rocco (Lucía)','Luna (Martín)','Simba (Sofía)','Toby (Joaquín)','Mora (Valentina)','Milo (Tomás)','Kira (Camila)','Coco (Mateo)']}},
+ cerveceria:{nom:'Cervecería Remanso',plan:'Plan 5 · Autogestionable',tabs:['editar','estadisticas','resumen'],base:72,tipo:'cerve',
+  paginas:[['Canillas de hoy',44],['Inicio',29],['Agenda',15],['Comida',12]],
+  prods:[['Golden Ale (pinta)',5200,'Canilla 1'],['IPA del Delta (pinta)',6300,'Canilla 2'],['Honey (pinta)',5600,'Canilla 3'],['Irish Red (pinta)',5600,'Canilla 4'],['Stout (pinta)',5900,'Canilla 5'],['APA (pinta)',5800,'Canilla 6'],['Hamburguesa Remanso',13900,'Cocina']]},
  reina:{nom:'Reina Dabi · panel de ejemplo',plan:'Plan 5 · Autogestionable',tabs:['pedidos','editar','estadisticas','resumen'],base:42,tipo:'emprende',
   sub:'Panel de ejemplo con el modelo de Reina Dabi. Nombres, pedidos y números inventados.',
   paginas:[['Inicio',46],['Armá tu ramo',31],['Galería',18],['Cómo comprar',5]],
@@ -123,6 +135,7 @@ if(neg.prods&&neg.tipo!=='bodegon'){
  for(let i=0;i<9;i++){const d=new Date();d.setMinutes(d.getMinutes()-Math.round(i*i*55+rnd()*40));const n=1+Math.floor(rnd()*3),it=[];for(let j=0;j<n;j++){const p=neg.prods[Math.floor(rnd()*neg.prods.length)];it.push([p[0],1+Math.floor(rnd()*2),p[1]]);}
   pedidos.push({id:1040-i,nom:NOMBRES[i],fecha:d,it,estado:i<2?'nuevo':i<5?'confirmado':'entregado',via:i%3===0?'Instagram':'Web'});}
 }
+if(qn==='panaderia'){try{const w=JSON.parse(localStorage.getItem('pan_pedidos')||'[]');w.forEach(x=>pedidos.unshift({id:'W'+String(x.id).slice(-4),nom:x.nom+' (vos)',fecha:new Date(x.fecha),it:x.it,estado:x.estado||'nuevo',via:'la web · retira '+x.ret}));}catch(e){}}
 let filtroP='todos';
 function pedidosV(){
  const l=pedidos.filter(p=>filtroP==='todos'||p.estado===filtroP);
@@ -146,19 +159,20 @@ function cocina(){
 }
 
 /* ---------- turnos (salón) ---------- */
-const HOR={2:[9,19],3:[9,19],4:[9,19],5:[9,19],6:[9,16]};
+const TUR=neg.tur||{hor:{2:[9,19],3:[9,19],4:[9,19],5:[9,19],6:[9,16]},f:[7,11,5,3,2],key:'sq_turnos',link:'../peluqueria/#agenda',txt:'agenda del salón',largo:null,nombres:null};
+const HOR=TUR.hor;
 const SERV=[['Corte de dama',50],['Color raíz',90],['Corte y barba',55],['Brushing',40],['Hidratación profunda',45],['Corte de caballero',35],['Mechas o babylights',150]];
 const diasT=[];for(let i=0;i<21&&diasT.length<8;i++){const d=new Date(hoy);d.setDate(d.getDate()+i);if(HOR[d.getDay()])diasT.push(d);}
 const turnosEj={},bloqueos=new Set(),cancelados=new Set();
 /* mismos horarios ocupados que muestra la agenda del salón (misma fórmula) */
-const PORLARGO={1:['Brushing','Corte de caballero','Perfilado de barba'],2:['Corte de dama','Corte y barba','Hidratación profunda'],3:['Color raíz','Peinado de evento','Botox capilar']};
+const PORLARGO=TUR.largo||{1:['Brushing','Corte de caballero','Perfilado de barba'],2:['Corte de dama','Corte y barba','Hidratación profunda'],3:['Color raíz','Peinado de evento','Botox capilar']};
 diasT.forEach((d,k)=>{const [a,c]=HOR[d.getDay()],n=(c-a)*60/30,sem=Math.floor(d.getTime()/864e5),l=[];
- for(let x=0,cant=2+sem%2;x<cant;x++){const ini=a*60+((sem*7+x*11+x*x*5)%n)*30,len=1+((sem+x*3)%3);
+ for(let x=0,cant=TUR.f[4]+sem%2;x<cant;x++){const ini=a*60+((sem*TUR.f[0]+x*TUR.f[1]+x*x*TUR.f[2])%n)*30,len=1+((sem+x*TUR.f[3])%3);
   const o=l.find(t=>ini<=t.ini+t.min&&t.ini<=ini+len*30);
   if(o){const fin=Math.max(o.ini+o.min,ini+len*30);o.ini=Math.min(o.ini,ini);o.min=fin-o.ini;continue;}
-  l.push({id:'e'+k+'_'+ini,ini,min:len*30,servicio:PORLARGO[len][(sem+x)%3],nombre:NOMBRES[(sem+x*5)%NOMBRES.length]});}
+  l.push({id:'e'+k+'_'+ini,ini,min:len*30,servicio:PORLARGO[len][(sem+x)%3],nombre:(TUR.nombres||NOMBRES)[(sem+x*5)%(TUR.nombres||NOMBRES).length]});}
  turnosEj[iso(d)]=l;});
-const propios=()=>{try{return JSON.parse(localStorage.getItem('sq_turnos'))||[]}catch(e){return []}};
+const propios=()=>{try{return JSON.parse(localStorage.getItem(TUR.key))||[]}catch(e){return []}};
 let diaSel=iso(diasT[0]);
 (function(){const p=propios();if(location.hash==='#turnos'&&p.length){const u=p[p.length-1];if(diasT.some(d=>iso(d)===u.fecha))diaSel=u.fecha;}})();
 function turnos(){
@@ -170,17 +184,17 @@ function turnos(){
  while(m<c*60){h+=slotLibre(m);m+=30;}
  const tot=diasT.reduce((s,x)=>s+cnt(x),0);
  return '<h2>Agenda de turnos</h2><div class="grid k4" style="margin-bottom:12px"><div class="card kpi"><b>'+l.length+'</b><span>Turnos este día</span></div><div class="card kpi"><b>'+tot+'</b><span>Turnos próximos 8 días hábiles</span></div><div class="card kpi"><b>'+propios().length+'</b><span>Turnos que reservaste vos en la muestra</span></div></div>'+
- '<div class="dias">'+diasT.map(x=>'<button data-dia="'+iso(x)+'" aria-pressed="'+(iso(x)===diaSel)+'">'+DIAS[x.getDay()]+' '+x.getDate()+'/'+(x.getMonth()+1)+'<small>'+cnt(x)+' turnos</small></button>').join('')+'</div><div class="card" style="padding:4px 4px">'+h+'</div><p class="nota">Los horarios bloqueados no se pueden reservar desde la web (feriados, vacaciones, trámites). Probá reservar en la <a href="../peluqueria/#agenda">agenda del salón</a> y volvé acá.</p>';
+ '<div class="dias">'+diasT.map(x=>'<button data-dia="'+iso(x)+'" aria-pressed="'+(iso(x)===diaSel)+'">'+DIAS[x.getDay()]+' '+x.getDate()+'/'+(x.getMonth()+1)+'<small>'+cnt(x)+' turnos</small></button>').join('')+'</div><div class="card" style="padding:4px 4px">'+h+'</div><p class="nota">Los horarios bloqueados no se pueden reservar desde la web (feriados, vacaciones, trámites). Probá reservar en la <a href="'+TUR.link+'">'+TUR.txt+'</a> y volvé acá.</p>';
 }
 function slotLibre(m){const k=diaSel+'_'+m,b=bloqueos.has(k);return '<div class="slot '+(b?'bloq':'libre')+'"><span class="h">'+hhmm(m)+'</span><span class="d">'+(b?'Bloqueado':'Libre')+'</span><span class="acc"><button data-bloq="'+k+'">'+(b?'Desbloquear':'Bloquear')+'</button></span></div>';}
 
 /* ---------- editar (plan 5) ---------- */
-const agot=new Set();let aviso=neg.tipo==='bodegon'?'Este domingo abrimos al mediodía con menú de pastas caseras.':'Hacemos envíos a San Fernando, Tigre y Victoria.';
+const agot=new Set();let aviso=neg.tipo==='bodegon'?'Este domingo abrimos al mediodía con menú de pastas caseras.':neg.tipo==='cerve'?'Happy hour de 18 a 20: segunda pinta al 50%':'Hacemos envíos a San Fernando, Tigre y Victoria.';
 function editar(){
- return '<h2>Editar la web</h2><div class="grid k2"><div class="card"><h3>'+(neg.tipo==='bodegon'?'Carta':'Productos')+'</h3>'+neg.prods.map((p,i)=>'<div class="ed"><span>'+esc(p[0])+(p[2]?'<small style="display:block;color:var(--soft);font-size:12px">'+p[2]+'</small>':'')+'</span><input type="text" inputmode="numeric" value="'+pesos(p[1])+'" data-pr="'+i+'" aria-label="Precio de '+esc(p[0])+'"><label class="sw"><input type="checkbox" data-ag="'+i+'"'+(agot.has(i)?' checked':'')+'> Agotado</label></div>').join('')+'<p class="nota">Los cambios se ven en la web al instante. Marcá "Agotado" para frenar un producto sin borrarlo.</p></div>'+
+ return '<h2>Editar la web</h2><div class="grid k2"><div class="card"><h3>'+(neg.tipo==='bodegon'?'Carta':neg.tipo==='cerve'?'Canillas y carta':'Productos')+'</h3>'+neg.prods.map((p,i)=>'<div class="ed"><span>'+esc(p[0])+(p[2]?'<small style="display:block;color:var(--soft);font-size:12px">'+p[2]+'</small>':'')+'</span><input type="text" inputmode="numeric" value="'+pesos(p[1])+'" data-pr="'+i+'" aria-label="Precio de '+esc(p[0])+'"><label class="sw"><input type="checkbox" data-ag="'+i+'"'+(agot.has(i)?' checked':'')+'> Agotado</label></div>').join('')+'<p class="nota">Los cambios se ven en la web al instante. Marcá "Agotado" para frenar un producto sin borrarlo.</p></div>'+
  '<div><div class="card"><h3>Aviso arriba de la web</h3><textarea id="aviso">'+esc(aviso)+'</textarea><div class="acc"><button class="p" id="guardarAviso">Guardar aviso</button></div></div>'+
  '<div class="card" style="margin-top:12px"><h3>Fotos de la galería</h3><p class="nota" style="margin:0 0 8px">Subís una foto desde el celular y aparece en la galería. Podés ordenarlas y borrar las viejas.</p><div class="acc"><button data-toast="En la web real se abre la cámara o la galería del celular">Subir foto</button></div></div>'+
- '<div class="card" style="margin-top:12px"><h3>Horarios</h3><p class="nota" style="margin:0 0 8px">'+(neg.tipo==='bodegon'?'Mar a dom · 12 a 15.30 y 20 a 00':'Lun a sáb · 10 a 19')+'</p><div class="acc"><button data-toast="En la web real cambiás los horarios y se actualizan solos">Cambiar horarios</button></div></div></div></div>';
+ '<div class="card" style="margin-top:12px"><h3>Horarios</h3><p class="nota" style="margin:0 0 8px">'+(neg.tipo==='bodegon'?'Mar a dom · 12 a 15.30 y 20 a 00':neg.tipo==='cerve'?'Mar a dom · 18 a 2':'Lun a sáb · 10 a 19')+'</p><div class="acc"><button data-toast="En la web real cambiás los horarios y se actualizan solos">Cambiar horarios</button></div></div></div></div>';
 }
 
 /* ---------- resumen del mes ---------- */
@@ -188,7 +202,7 @@ function resumen(){
  const mes=hoy.toLocaleDateString('es-AR',{month:'long',year:'numeric'});
  const ventas=neg.prods.map(p=>[p[0],Math.round(4+rnd()*(neg.tipo==='bodegon'?60:14))]).sort((a,b)=>b[1]-a[1]);
  const unid=ventas.reduce((a,x)=>a+x[1],0),fact=ventas.reduce((a,x,i)=>a+x[1]*neg.prods.find(p=>p[0]===x[0])[1],0);
- return '<h2>Resumen del mes · '+mes+'</h2><div class="grid k4">'+[[neg.tipo==='bodegon'?'Pedidos por QR':'Pedidos recibidos',Math.round(unid*.6)],['Facturado (estimado)',pesos(fact)],['Visitas',total30.toLocaleString('es-AR')],['Consultas por WhatsApp',clicsWA]].map(k=>'<div class="card kpi"><b>'+k[1]+'</b><span>'+k[0]+'</span></div>').join('')+
+ return '<h2>Resumen del mes · '+mes+'</h2><div class="grid k4">'+[[neg.tipo==='bodegon'?'Pedidos por QR':neg.tipo==='cerve'?'Pintas vendidas (estimado)':'Pedidos recibidos',Math.round(unid*.6)],['Facturado (estimado)',pesos(fact)],['Visitas',total30.toLocaleString('es-AR')],['Consultas por WhatsApp',clicsWA]].map(k=>'<div class="card kpi"><b>'+k[1]+'</b><span>'+k[0]+'</span></div>').join('')+
  '</div><div class="card" style="margin-top:12px"><h3>'+(neg.tipo==='bodegon'?'Platos más pedidos':'Productos más pedidos')+'</h3><table><thead><tr><th>'+(neg.tipo==='bodegon'?'Plato':'Producto')+'</th><th>Unidades</th></tr></thead><tbody>'+ventas.slice(0,6).map(v=>'<tr><td>'+esc(v[0])+'</td><td>'+v[1]+'</td></tr>').join('')+'</tbody></table><div class="acc" style="margin-top:12px"><button id="imprimir">Imprimir o guardar en PDF</button></div></div>';
 }
 
