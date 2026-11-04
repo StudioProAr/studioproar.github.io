@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Panel de ejemplo · StudioProAr</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1452e6">
+<link rel="apple-touch-icon" href="icono-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Mi panel">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -41,6 +46,8 @@ h2{font:800 18px var(--disp);margin:0 0 14px;letter-spacing:-.01em}h3{font:700 1
 .sw{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--soft);cursor:pointer}
 textarea{width:100%;min-height:70px;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:8px;font:inherit;color:inherit}
 .nota{font-size:12.5px;color:var(--soft);margin:10px 0 0}
+.hd-r{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.inst{border:0;background:var(--a);color:#fff;border-radius:6px;padding:7px 12px;font-weight:700;font-size:13px;cursor:pointer}
+.ios{background:var(--card);border-bottom:1px solid var(--line);padding:10px 20px;font-size:13.5px}
 .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--card);padding:9px 16px;border-radius:8px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none}.toast.on{opacity:1}
 table{width:100%;border-collapse:collapse;font-size:14px}td,th{text-align:left;padding:7px 4px;border-bottom:1px solid var(--line)}th{color:var(--soft);font-weight:600;font-size:12.5px}td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
 .vacio{color:var(--soft);font-size:14px;padding:10px 0}
@@ -49,7 +56,8 @@ table{width:100%;border-collapse:collapse;font-size:14px}td,th{text-align:left;p
 </head>
 <body>
 <div class="demo">Panel de ejemplo · datos inventados · nada de lo que toques se guarda · <a href="../../#trabajos">Volver a StudioProAr</a></div>
-<header><div><h1 id="nom">Panel</h1><small id="sub"></small></div><span class="plan" id="plan"></span></header>
+<header><div><h1 id="nom">Panel</h1><small id="sub"></small></div><div class="hd-r"><button class="inst" id="inst" type="button" hidden>Instalar como app</button><span class="plan" id="plan"></span></div></header>
+<div class="ios" id="ios" hidden>En iPhone: tocá <b>Compartir</b> y después <b>Agregar a inicio</b>. Queda como una app con su ícono.</div>
 <nav id="tabs" role="tablist"></nav>
 <main id="main"></main>
 <div class="toast" id="toast" role="status"></div>
@@ -83,7 +91,8 @@ const N={
   paginas:[['Inicio',46],['Armá tu ramo',31],['Galería',18],['Cómo comprar',5]],
   prods:[['Ramo 12 rosas rojas',38000],['Ramo 6 rosas rosa',22000],['Ramo 24 rosas con mariposas',69000],['Ramo azul con bombones',45000],['Rosa individual con caja',9500],['Ramo lila con corona',52000]]}
 };
-const qn=new URLSearchParams(location.search).get('n');
+let qn=new URLSearchParams(location.search).get('n');
+try{if(qn&&N[qn])localStorage.setItem('panel_n',qn);else qn=localStorage.getItem('panel_n');}catch(e){}
 const neg=N[qn]||N.ferreteria;
 semilla=(qn||'x').length*137+11;
 $('nom').textContent=neg.nom;$('plan').textContent=neg.plan;
@@ -207,6 +216,13 @@ $('main').addEventListener('click',e=>{
 });
 $('main').addEventListener('change',e=>{const t=e.target;if(t.dataset.ag!==undefined){t.checked?agot.add(+t.dataset.ag):agot.delete(+t.dataset.ag);toast(t.checked?'Marcado como agotado':'Disponible otra vez');}else if(t.dataset.pr!==undefined){toast('Precio actualizado (ejemplo)');}});
 pintar();
+/* instalable como app */
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+let aviso2=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();aviso2=e;$('inst').hidden=false;});
+$('inst').addEventListener('click',async()=>{if(aviso2){aviso2.prompt();await aviso2.userChoice;aviso2=null;$('inst').hidden=true;}else{$('ios').hidden=false;}});
+const enApp=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+if(!enApp&&/iPhone|iPad|iPod/.test(navigator.userAgent)){$('inst').hidden=false;}
 })();
 </script>
 </body>

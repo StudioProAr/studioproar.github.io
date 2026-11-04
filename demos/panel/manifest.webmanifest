@@ -1,0 +1,14 @@
+{
+  "name": "Panel de ejemplo · StudioProAr",
+  "short_name": "Mi panel",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b0e15",
+  "theme_color": "#1452e6",
+  "lang": "es-AR",
+  "icons": [
+    {"src": "icono-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "icono-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}
