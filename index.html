@@ -99,6 +99,9 @@ nav ul a:hover{color:var(--ink)}
 .obra a{margin-top:auto;font-size:14px;font-weight:600;text-decoration:none}
 .obra a:hover{text-decoration:underline}
 .real .cab{background:linear-gradient(150deg,#8e1f4e,#2b0a19)}
+.obra .cab.logo{background:#fff8f4;align-items:center;justify-content:center;border-bottom:1px solid var(--line)}
+.obra .cab.logo img{height:88%;width:auto;max-width:100%;object-fit:contain}
+.obra .links{margin-top:auto;display:flex;flex-direction:column;gap:6px}
 
 /* proceso */
 .pasos{counter-reset:p;display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:20px;list-style:none;margin:0;padding:0}
@@ -243,11 +246,14 @@ footer a{color:inherit}
     </div>
     <div class="obras">
       <article class="obra real">
-        <div class="cab"><b>Reina Dabi</b></div>
+        <div class="cab logo"><img src="demos/reina-dabi/img/logo-completo.webp" alt="Logo de Reina Dabi" width="360" height="337" loading="lazy"></div>
         <div class="cu">
           <p class="rubro">Cliente · Emprendimiento</p>
-          <p>Ramos de rosas eternas. Armador de pedido interactivo, galería editable y panel con estadísticas.</p>
-          <a href="https://studioproar.github.io/reina-dabi/" target="_blank" rel="noopener">Ver el sitio →</a>
+          <p>Ramos de rosas eternas. Armador de pedido con colores combinados, y un panel donde llegan los pedidos de la web, con estadísticas y edición.</p>
+          <div class="links">
+            <a href="https://studioproar.github.io/reina-dabi/" target="_blank" rel="noopener">Ver el sitio →</a>
+            <a href="demos/reina-dabi/" target="_blank" rel="noopener">Probar la web + panel →</a>
+          </div>
         </div>
       </article>
       <article class="obra">

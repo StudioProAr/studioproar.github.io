@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Muestra de StudioProAr (plan Autogestionable): web con armador de pedidos y panel. Datos de ejemplo.">
+<link rel="icon" href="img/logo.webp">
+<title>Reina Dabi · Demo web + panel</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Nunito:wght@400;600;700&family=Great+Vibes&display=swap">
+<style>
+:root{--rosa:#e2708c;--rosa-suave:#f7d9e1;--bordo:#8e1e48;--crema:#fff8f4;--dorado:#b8903a;--texto:#3a2630;--gris:#7a6670;--linea:#ecdcd8;--ok:#2f7a63;--warn:#9a6b00;--bad:#b3341f;--blanco:#fff;
+--serif:"Playfair Display",Georgia,serif;--sans:"Nunito",system-ui,sans-serif}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;font-family:var(--sans);background:var(--crema);color:var(--texto);line-height:1.5}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3{font-family:var(--serif);color:var(--bordo);line-height:1.2;margin:0}
+.in{max-width:1120px;margin:0 auto;padding:0 16px}
+.demo{background:var(--dorado);color:#fff;text-align:center;font-size:13px;font-weight:700;padding:6px 12px}
+.switch{position:sticky;top:0;z-index:30;background:var(--bordo);color:#fff}
+.switch .in{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-block:8px;flex-wrap:wrap}
+.switch .et{font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.75}
+.sw2{display:flex;gap:4px;background:rgba(255,255,255,.15);padding:3px;border-radius:999px}
+.sw2 button{border:0;background:none;color:#fff;font-weight:700;padding:6px 16px;border-radius:999px;cursor:pointer}
+.sw2 button[aria-selected="true"]{background:#fff;color:var(--bordo)}
+.reset{border:1px solid rgba(255,255,255,.5);background:none;color:#fff;border-radius:999px;padding:5px 12px;font-size:12px;cursor:pointer}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:999px;padding:11px 20px;font-weight:700;cursor:pointer;text-decoration:none;background:var(--bordo);color:#fff}
+.btn.ghost{background:#fff;color:var(--bordo);border:1.5px solid var(--bordo)}
+.btn.sm{padding:6px 12px;font-size:13px}
+.btn.wa{background:#25d366}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.card{background:#fff;border:1px solid var(--linea);border-radius:18px;padding:18px;min-width:0}
+.sub{color:var(--gris);font-size:14px}
+label,.etq{display:block;font-weight:700;color:var(--bordo);font-size:14px;margin-bottom:6px}
+input[type=text],input[type=tel],input[type=date],input[type=number],select,textarea{width:100%;padding:10px 12px;border:1.5px solid var(--rosa-suave);border-radius:12px;background:var(--crema)}
+textarea{min-height:70px;resize:vertical}
+.fg{margin-bottom:14px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:520px){.two{grid-template-columns:1fr}}
+.swatches{display:flex;flex-wrap:wrap;gap:10px}
+.swc{width:40px;height:40px;border-radius:50%;border:0;padding:0;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
+.swc[aria-pressed="true"]{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--dorado)}
+.colname{font-weight:400;color:var(--texto)}
+.mezcla{margin-top:12px;padding:12px;border:1.5px dashed var(--dorado);border-radius:14px;background:#fffbf7}
+.mz-head{font-size:13px;font-weight:700;color:var(--gris);margin-bottom:8px}
+.mz-head.ok{color:var(--ok)}.mz-head.bad{color:var(--bad)}
+.mezcla .swatches{gap:7px;margin-bottom:6px}
+.mezcla .swc{width:28px;height:28px}
+.mz-row{display:flex;align-items:center;gap:8px;margin-top:6px}
+.mz-row .n{flex:1}
+.mz-row button{width:34px;height:34px;border-radius:50%;border:1px solid var(--linea);background:#fff;font-weight:700;cursor:pointer}
+.mz-row b{min-width:24px;text-align:center}
+.dot{display:inline-block;width:13px;height:13px;border-radius:50%;vertical-align:-2px;margin-right:4px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.2)}
+.seg{display:flex;border:1.5px solid var(--rosa-suave);border-radius:12px;overflow:hidden}
+.seg button{flex:1;border:0;background:#fff;padding:10px;cursor:pointer;font-weight:700}
+.seg button[aria-pressed="true"]{background:var(--bordo);color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--rosa-suave);background:#fff;border-radius:999px;padding:6px 12px;cursor:pointer;font-size:14px}
+.chip[aria-pressed="true"]{background:var(--rosa);border-color:var(--rosa);color:#fff}
+.err{color:var(--bad);font-size:13px;min-height:18px;margin-top:6px}
+/* ---- web ---- */
+.aviso-web{background:var(--rosa-suave);color:var(--bordo);text-align:center;font-weight:700;padding:10px 14px}
+.pub-nav .in{display:flex;justify-content:space-between;align-items:center;padding-block:14px;gap:10px;flex-wrap:wrap}
+.marca{font-family:var(--serif);font-size:24px;font-weight:700;color:var(--bordo)}
+.marca{display:flex;align-items:center;gap:10px}.marca img{width:48px;height:48px;object-fit:contain}
+.hero-logo{width:min(260px,70vw);height:auto;display:block;margin:0 auto 6px}
+.marca small{display:block;font-family:"Great Vibes",cursive;color:var(--rosa);font-size:18px;font-weight:400}
+.hero{padding:30px 0 20px;text-align:center}
+.hero h1{font-size:clamp(30px,6vw,48px)}
+.hero .script{font-family:"Great Vibes",cursive;color:var(--rosa);font-size:clamp(28px,5vw,40px);display:block}
+.hero p{color:var(--gris);max-width:36rem;margin:10px auto 18px}
+.gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:10px 0 30px}
+.ph{aspect-ratio:1;border-radius:16px;display:flex;align-items:flex-end;padding:10px;color:#fff;font-weight:700;font-size:14px;text-shadow:0 1px 3px rgba(0,0,0,.4)}
+.sec{padding:24px 0}
+.sec h2{font-size:clamp(24px,4vw,32px);text-align:center}
+.sec .sub{text-align:center;margin:6px 0 18px}
+.armador{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px;align-items:start}
+@media(max-width:820px){.armador{grid-template-columns:1fr}}
+.resumen{position:sticky;top:60px}
+.resumen dl{margin:0 0 12px;font-size:14px}
+.resumen dl div{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px dashed var(--linea)}
+.resumen dt{color:var(--gris)}.resumen dd{margin:0;text-align:right;font-weight:600}
+.ok-box{background:#e6f4ee;border:1px solid #b9dfcf;color:var(--ok);border-radius:14px;padding:14px;margin-top:12px;font-size:14px}
+.ok-box pre{white-space:pre-wrap;font-family:var(--sans);color:var(--texto);background:#fff;border-radius:10px;padding:10px;margin:8px 0 0;font-size:13px}
+.pausa{background:#fff0c9;color:var(--warn);border-radius:14px;padding:14px;font-weight:700;text-align:center}
+footer{text-align:center;color:var(--gris);font-size:13px;padding:30px 0 40px}
+/* ---- panel ---- */
+.ptop .in{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-block:14px;flex-wrap:wrap}
+.ptabs{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 16px}
+.ptab{border:1.5px solid var(--linea);background:#fff;border-radius:999px;padding:8px 16px;font-weight:700;cursor:pointer;position:relative}
+.ptab[aria-selected="true"]{background:var(--bordo);color:#fff;border-color:var(--bordo)}
+.badge-n{display:inline-block;min-width:20px;padding:0 6px;border-radius:999px;background:var(--rosa);color:#fff;font-size:12px;margin-left:4px}
+.grid-p{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:18px;align-items:start}
+@media(max-width:900px){.grid-p{grid-template-columns:1fr}}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px}
+.kpi{background:#fff;border:1px solid var(--linea);border-top:3px solid var(--dorado);border-radius:14px;padding:12px}
+.kpi .l{font-size:13px;color:var(--gris)}.kpi .v{font-family:var(--serif);font-size:26px;font-weight:700}.kpi .n{font-size:12px;color:var(--gris)}
+.bandeja{border:2px solid var(--rosa);background:#fff6f8;margin-bottom:16px}
+.sol{background:#fff;border:1px solid var(--linea);border-radius:14px;padding:12px;margin-top:10px}
+.sol .t{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-weight:700}
+.sol .d{font-size:14px;color:var(--gris);margin-top:4px}
+.sol .acc{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.lst-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.mini-tabs{display:flex;gap:4px}
+.mini-tabs button{border:1px solid var(--linea);background:#fff;border-radius:999px;padding:5px 12px;cursor:pointer;font-size:13px;font-weight:600}
+.mini-tabs button[aria-pressed="true"]{background:var(--bordo);color:#fff;border-color:var(--bordo)}
+.ped{border-top:1px solid var(--linea);padding:12px 0;display:grid;grid-template-columns:90px minmax(0,1fr) auto;gap:10px;align-items:start}
+@media(max-width:560px){.ped{grid-template-columns:1fr}}
+.ped .f{font-weight:700}
+.tag{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:1px 8px}
+.t-bad{background:#fbe3dc;color:var(--bad)}.t-warn{background:#fff0c9;color:var(--warn)}.t-ok{background:#dff1ee;color:var(--ok)}.t-done{background:#ece7e5;color:#5f4e54}.t-web{background:var(--rosa-suave);color:var(--bordo)}
+.ped .who{font-weight:700}.ped .w{font-size:13px;color:var(--gris)}
+.ped .obs{font-size:13px;color:var(--gris);font-style:italic}
+.ped .der{text-align:right;font-size:14px}
+.ped .der .acc{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap;margin-top:6px}
+.lk{border:0;background:none;color:var(--bordo);font-weight:700;cursor:pointer;padding:2px 4px;font-size:13px;text-decoration:underline}
+.cbar{display:grid;grid-template-columns:130px 1fr 40px;gap:8px;align-items:center;margin-top:8px;font-size:14px}
+.cbar .t{height:9px;background:#f3e6e3;border-radius:999px;overflow:hidden}.cbar .t div{height:100%;background:var(--bordo)}
+.line{display:flex;justify-content:space-between;border-top:1px solid var(--linea);padding-top:8px;margin-top:10px;font-size:14px}
+.calc{background:var(--crema);border-radius:14px;padding:12px;margin-bottom:12px}
+.calc .r{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.calc .r input{width:120px;text-align:right}
+.empty{color:var(--gris);text-align:center;padding:20px}
+.mtabs{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.mtabs button{border:1px solid var(--linea);background:#fff;border-radius:999px;padding:4px 10px;cursor:pointer;font-size:13px}
+.mtabs button[aria-pressed="true"]{background:var(--bordo);color:#fff}
+.chart{width:100%;height:auto;display:block}
+.ed-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.toggle{display:flex;align-items:center;gap:10px;font-weight:700}
+.toggle input{width:20px;height:20px}
+.msg{color:var(--ok);font-size:13px;min-height:18px;margin-top:6px}
+.modal{position:fixed;inset:0;background:rgba(40,15,25,.45);display:flex;align-items:center;justify-content:center;z-index:50;padding:16px}
+.modal .card{max-width:380px;width:100%}
+.modal .acc{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="demo">Muestra de diseño · pedidos y datos de ejemplo, se guardan solo en tu navegador · <a style="color:#fff" href="https://wa.me/5491126339350?text=Hola!%20Vi%20StudioProAr%20y%20quiero%20una%20web%20con%20panel%20como%20la%20de%20Reina%20Dabi." target="_blank" rel="noopener">Quiero una web así →</a></div>
+<div class="switch"><div class="in">
+  <span class="et">Reina Dabi · web + panel</span>
+  <div class="sw2" role="tablist" aria-label="Vista">
+    <button type="button" role="tab" id="t-web" aria-selected="true">La web</button>
+    <button type="button" role="tab" id="t-panel" aria-selected="false">El panel <span class="badge-n" id="nSolTop" hidden></span></button>
+  </div>
+  <button type="button" class="reset" id="reset">Reiniciar demo</button>
+</div></div>
+
+<!-- ============ WEB ============ -->
+<div id="vista-web">
+  <div class="aviso-web" id="avisoWeb" hidden></div>
+  <nav class="pub-nav"><div class="in">
+    <div class="marca"><img src="img/logo.webp" alt=""><span>Reina Dabi<small>rosas eternas</small></span></div>
+    <a class="btn sm" href="#armar">Armá tu ramo</a>
+  </div></nav>
+  <header class="hero"><div class="in">
+    <img class="hero-logo" src="img/logo-completo.webp" alt="Reina Dabi · detalles que duran para siempre" width="360" height="337">
+    <h1>Ramos de rosas eternas de raso</h1>
+    <p>Hechos a mano en San Fernando. Elegí la cantidad, los colores y los detalles, y nos llega tu pedido al instante.</p>
+    <a class="btn" href="#armar">Armar mi ramo</a>
+  </div></header>
+  <div class="in"><div class="gal">
+    <div class="ph" style="background:linear-gradient(150deg,#b3122f,#6e1224)">Rojas clásicas</div>
+    <div class="ph" style="background:linear-gradient(150deg,#e89bb3,#c9a6d9)">Rosa y lila</div>
+    <div class="ph" style="background:linear-gradient(150deg,#f6f1ec,#5e8f6b)">Verde y blanco</div>
+    <div class="ph" style="background:linear-gradient(150deg,#e9b949,#e8752f)">Amarillas</div>
+    <div class="ph" style="background:conic-gradient(#8e1e48,#c9962c,#e4357b,#8e1e48)">Combinados</div>
+  </div></div>
+
+  <section class="sec" id="armar"><div class="in">
+    <h2>Armá tu ramo</h2>
+    <p class="sub">Completá el pedido y te confirmamos precio y entrega por WhatsApp.</p>
+    <div id="pausaWeb" class="pausa" hidden>En este momento no estamos tomando pedidos por la web. Escribinos por WhatsApp.</div>
+    <div class="armador" id="armadorWeb">
+      <form class="card" id="wForm" autocomplete="off">
+        <div class="fg"><label for="wOcasion">Ocasión</label>
+          <select id="wOcasion"><option>Cumpleaños</option><option>Aniversario</option><option>Día de la madre</option><option>San Valentín</option><option>Graduación</option><option>Casamiento / 15</option><option>Porque sí</option></select></div>
+        <div class="fg"><label for="wQty">Cantidad de rosas</label><select id="wQty"></select></div>
+        <div class="fg"><span class="etq">Color: <span class="colname" id="wColorName"></span></span>
+          <div class="swatches" id="wSw" role="group" aria-label="Color de rosas"></div>
+          <div class="mezcla" id="wMz" hidden></div></div>
+        <div class="fg"><label for="wEnv">Envoltorio</label>
+          <select id="wEnv"><option>Papel coreano</option><option>Caja sombrerera</option><option>Arpillera</option><option>A elección</option></select></div>
+        <div class="fg"><span class="etq">Extras</span><div class="chips" id="wExtras"></div></div>
+        <div class="two">
+          <div class="fg"><label for="wFecha">Fecha de entrega</label><input type="date" id="wFecha"></div>
+          <div class="fg"><span class="etq">Entrega</span><div class="seg"><button type="button" id="wRet" aria-pressed="true">Retiro</button><button type="button" id="wEnvio" aria-pressed="false">Envío</button></div></div>
+        </div>
+        <div class="two">
+          <div class="fg"><label for="wNombre">Tu nombre</label><input type="text" id="wNombre" maxlength="60"></div>
+          <div class="fg"><label for="wTel">Tu WhatsApp</label><input type="tel" id="wTel" maxlength="20" placeholder="11 0000 0000"></div>
+        </div>
+        <div class="fg"><label for="wZona">Zona / barrio</label><input type="text" id="wZona" maxlength="60" placeholder="San Fernando, Tigre..."></div>
+        <div class="fg"><label for="wCom">Comentarios <span class="colname">(dedicatoria, detalles)</span></label><textarea id="wCom" maxlength="300"></textarea></div>
+      </form>
+      <aside class="card resumen">
+        <h3>Tu pedido</h3>
+        <dl id="wRes"></dl>
+        <button type="button" class="btn wa" id="wSend" style="width:100%">Enviar pedido</button>
+        <div class="err" id="wErr"></div>
+        <div id="wOk"></div>
+      </aside>
+    </div>
+  </div></section>
+  <footer>Reina Dabi · San Fernando · @lareina.dabi</footer>
+</div>
+
+<!-- ============ PANEL ============ -->
+<div id="vista-panel" hidden>
+  <div class="ptop"><div class="in">
+    <div class="marca"><img src="img/logo.webp" alt=""><span>Panel<small>Reina Dabi</small></span></div>
+    <span class="sub">Sesión de demostración</span>
+  </div></div>
+  <div class="in">
+    <div class="ptabs" role="tablist">
+      <button type="button" class="ptab" data-pt="pedidos" aria-selected="true">📋 Pedidos <span class="badge-n" id="nSol" hidden></span></button>
+      <button type="button" class="ptab" data-pt="stats" aria-selected="false">📊 Estadísticas</button>
+      <button type="button" class="ptab" data-pt="editar" aria-selected="false">✏️ Editar web</button>
+    </div>
+
+    <!-- Pedidos -->
+    <div id="p-pedidos">
+      <div class="grid-p">
+        <div>
+          <div class="card bandeja" id="bandeja">
+            <h2 style="font-size:22px">Pedidos de la web</h2>
+            <div class="sub">Llegaron desde la página. Aceptalos para pasarlos a la lista con precio y seña.</div>
+            <div id="solList"></div>
+          </div>
+          <div class="kpis" id="kpis"></div>
+          <div class="card">
+            <div class="lst-head"><h2 style="font-size:22px">Próximas entregas</h2>
+              <div class="mini-tabs" id="lTabs"><button type="button" data-l="activos" aria-pressed="true">Activos</button><button type="button" data-l="entregados" aria-pressed="false">Entregados</button><button type="button" data-l="todos" aria-pressed="false">Todos</button></div></div>
+            <div id="lista"></div>
+          </div>
+          <div class="card" style="margin-top:16px">
+            <h2 style="font-size:22px">Rosas por color</h2>
+            <div class="sub">Para armar: pedidos reservados o en preparación</div>
+            <div id="colores"></div>
+          </div>
+        </div>
+
+        <form class="card" id="pForm" autocomplete="off">
+          <h2 style="font-size:22px" id="pTitle">Nuevo pedido</h2>
+          <div class="sub" id="pOrigen" style="margin-bottom:10px">Carga manual</div>
+          <div class="fg"><label for="pEnt">Fecha de entrega</label><input type="date" id="pEnt"></div>
+          <div class="fg"><label for="pQty">Cantidad de rosas</label><input type="number" id="pQty" min="1" max="200" value="9"></div>
+          <div class="fg"><span class="etq">Color: <span class="colname" id="pColorName"></span></span>
+            <div class="swatches" id="pSw" role="group" aria-label="Color de rosas"></div>
+            <div class="mezcla" id="pMz" hidden></div></div>
+          <div class="fg"><label for="pNom">Nombre</label><input type="text" id="pNom"></div>
+          <div class="two">
+            <div class="fg"><label for="pTel">Teléfono</label><input type="tel" id="pTel"></div>
+            <div class="fg"><label for="pLug">De dónde es</label><input type="text" id="pLug"></div>
+          </div>
+          <div class="fg"><div class="seg"><button type="button" id="pRet" aria-pressed="true">Retira</button><button type="button" id="pEnv" aria-pressed="false">Se envía</button></div></div>
+          <div class="fg"><label for="pObs">Observaciones</label><textarea id="pObs"></textarea></div>
+          <div class="calc">
+            <div class="r"><span>Precio (según cantidad)</span><input type="number" id="pPrecio" min="0" step="500"></div>
+            <div class="r"><span>Reserva (seña)</span><input type="number" id="pRes" min="0" step="500"></div>
+            <div class="r" style="margin:0"><b>Cuánto debe</b><b id="pDebe" style="color:var(--bad)"></b></div>
+          </div>
+          <button type="submit" class="btn" style="width:100%" id="pSave">Guardar pedido</button>
+          <button type="button" class="btn ghost" style="width:100%;margin-top:8px" id="pCancel" hidden>Cancelar</button>
+          <div class="err" id="pErr"></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Estadísticas -->
+    <div id="p-stats" hidden>
+      <div class="kpis" id="sKpis"></div>
+      <div class="card" style="margin-bottom:16px"><h2 style="font-size:22px">Pedidos por día</h2><div class="sub">Últimos 14 días, según la fecha en que se cargó cada pedido</div><svg class="chart" id="sChart" viewBox="0 0 640 180" role="img" aria-label="Pedidos por día"></svg></div>
+      <div class="grid-p" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+        <div class="card"><h2 style="font-size:22px">Rosas por color por mes</h2><div id="sMes"></div></div>
+        <div class="card"><h2 style="font-size:22px">De dónde vienen los pedidos</h2><div id="sOrigen"></div>
+          <h2 style="font-size:22px;margin-top:18px">Ocasiones (web)</h2><div id="sOcasion"></div></div>
+      </div>
+    </div>
+
+    <!-- Editar web -->
+    <div id="p-editar" hidden>
+      <div class="ed-grid">
+        <div class="card"><h2 style="font-size:20px">Aviso en la portada</h2><p class="sub">Una franja arriba de la web. Dejalo vacío para sacarlo.</p>
+          <input type="text" id="eAviso" maxlength="120" placeholder="Ej: Pedidos para el Día de la Madre hasta el 15/10">
+          <button type="button" class="btn sm" style="margin-top:10px" id="eAvisoBtn">Publicar aviso</button><div class="msg" id="eAvisoMsg"></div></div>
+        <div class="card"><h2 style="font-size:20px">Pedidos por la web</h2><p class="sub">Pausalos si están a full; la web avisa que escriban por WhatsApp.</p>
+          <label class="toggle"><input type="checkbox" id="eAbierto" checked> Tomando pedidos</label><div class="msg" id="eAbMsg"></div></div>
+        <div class="card"><h2 style="font-size:20px">Anticipación mínima</h2><p class="sub">Días entre el pedido y la entrega que la web deja elegir.</p>
+          <select id="eAnt"><option value="1">1 día</option><option value="2">2 días</option><option value="3">3 días</option><option value="7">7 días</option></select><div class="msg" id="eAntMsg"></div></div>
+      </div>
+    </div>
+    <footer>Panel · Reina Dabi · demo</footer>
+  </div>
+</div>
+
+<div class="modal" id="modal" hidden><div class="card"><p id="mTxt" style="margin:0"></p><div class="acc"><button type="button" class="btn ghost sm" id="mNo">Cancelar</button><button type="button" class="btn sm" id="mSi">Sí</button></div></div></div>
+
+<script>
+(function(){
+var COLORS={
+  rojo:['Rojo','#B3122F'],vino:['Vino','#6E1224'],rosa:['Rosa','#E89BB3'],rosaBebe:['Rosa bebé','#F6D3DE'],fucsia:['Fucsia','#E4357B'],
+  blanco:['Blanco','#F6F1EC'],champagne:['Champagne','#E8D9B5'],amarillo:['Amarillo','#E9B949'],naranja:['Naranja','#E8752F'],durazno:['Durazno','#F2957A'],
+  lila:['Lila','#C9A6D9'],violeta:['Violeta','#7B4BA0'],azul:['Azul','#3E6FB0'],celeste:['Celeste','#7EC8E3'],verde:['Verde','#5E8F6B'],
+  negro:['Negro','#1F1B1D'],dorado:['Dorado','#C9962C'],plateado:['Plateado','#C7C7C9'],
+  combinado:['Combinado','conic-gradient(#8E1E48,#C9962C,#E4357B,#8E1E48)'],otro:['Otro','#FFFFFF']
+};
+var EXTRAS=['Mariposas','Moño','Perlas','Corona','Bombones','Luces','Perfumadas','Tarjeta'];
+var ESTADOS=['Reservado','En preparación','Listo','Entregado'];
+var DAYS=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+var MONTHS=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+// Precios de ejemplo (no son los reales)
+var PRICES={1:4500,2:7500,3:9500,4:11500,5:13500,6:15000,7:17000}, BANDAS={p8:2200,p15:1950,p21:1750}, COSTO=750;
+
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function money(n){return '$'+Math.round(n||0).toLocaleString('es-AR')}
+function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function today(){var d=new Date();return new Date(d.getFullYear(),d.getMonth(),d.getDate())}
+function addDays(n){var d=today();d.setDate(d.getDate()+n);return iso(d)}
+function parse(s){var p=s.split('-');return new Date(+p[0],+p[1]-1,+p[2])}
+function fmtDate(s){var d=parse(s);return DAYS[d.getDay()]+' '+String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')}
+function colorDe(k){return COLORS[k]||[k,'#ccc']}
+function porRosa(q){return q<=14?BANDAS.p8:q<=20?BANDAS.p15:BANDAS.p21}
+function priceFor(q){q=Math.max(1,Math.floor(+q||1));var p=0;for(var i=1;i<=q;i++){var v=i<=7?PRICES[i]:Math.round(i*porRosa(i)/1000)*1000;p=i<=7?v:Math.max(v,Math.ceil((p+1000)/1000)*1000)}return p}
+function seña(p){return Math.round(p*0.5/500)*500}
+function uid(){return 'x'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+
+// ---- mezcla (combinado) ----
+function mixOk(o){if(o.color!=='combinado'||!o.mezcla)return false;var t=0;for(var k in o.mezcla)t+=+o.mezcla[k]||0;return t===+o.qty}
+function reparto(o){if(mixOk(o)){var r={};for(var k in o.mezcla)if(o.mezcla[k]>0)r[k]=+o.mezcla[k];return r}var x={};x[o.color]=+o.qty;return x}
+function mixTxt(o){if(!mixOk(o))return '';return ' ('+Object.keys(o.mezcla).sort(function(a,b){return o.mezcla[b]-o.mezcla[a]}).map(function(k){return o.mezcla[k]+' '+colorDe(k)[0]}).join(', ')+')'}
+function dots(o){var r=reparto(o);return Object.keys(r).map(function(k){return '<span class="dot" style="background:'+colorDe(k)[1]+'"></span>'}).join('')}
+function colorTxt(o){return colorDe(o.color)[0]+mixTxt(o)}
+
+// Editor de color reutilizable (web y panel)
+function ColorPicker(swId,mzId,nameId,getQty,onChange){
+  var st={color:'rojo',mezcla:{}};
+  var sw=$(swId),mz=$(mzId);
+  Object.keys(COLORS).forEach(function(k){
+    var b=document.createElement('button');b.type='button';b.className='swc';b.dataset.c=k;
+    b.style.background=COLORS[k][1];b.setAttribute('aria-label',COLORS[k][0]);b.title=COLORS[k][0];
+    b.onclick=function(){st.color=k;draw();onChange&&onChange()};sw.appendChild(b);
+  });
+  mz.onclick=function(e){var b=e.target.closest('button');if(!b)return;var k;
+    if((k=b.dataset.add)){if(st.mezcla[k]>0)delete st.mezcla[k];else st.mezcla[k]=1}
+    else if((k=b.dataset.mas)){st.mezcla[k]++}
+    else if((k=b.dataset.menos)){st.mezcla[k]--;if(st.mezcla[k]<=0)delete st.mezcla[k]}
+    draw();onChange&&onChange()};
+  function sum(){var t=0;for(var k in st.mezcla)t+=st.mezcla[k];return t}
+  function draw(){
+    $(nameId).textContent=COLORS[st.color][0];
+    Array.prototype.forEach.call(sw.children,function(b){b.setAttribute('aria-pressed',String(b.dataset.c===st.color))});
+    if(st.color!=='combinado'){mz.hidden=true;mz.innerHTML='';return}
+    mz.hidden=false;var q=getQty(),t=sum(),cls=t===q?'ok':(t>q?'bad':'');
+    var h='<div class="mz-head '+cls+'">Combinación: '+t+' de '+q+' rosas'+(t>q?' (te pasaste)':t<q?' · faltan '+(q-t):' ✓')+'</div><div class="swatches">';
+    Object.keys(COLORS).forEach(function(k){if(k==='combinado'||k==='otro')return;h+='<button type="button" class="swc" data-add="'+k+'" style="background:'+COLORS[k][1]+'" title="'+COLORS[k][0]+'" aria-label="'+COLORS[k][0]+'" aria-pressed="'+(st.mezcla[k]>0)+'"></button>'});
+    h+='</div>';var ks=Object.keys(st.mezcla);
+    if(!ks.length)h+='<div class="sub">Tocá los colores que lleva el ramo y ajustá cuántas de cada uno.</div>';
+    ks.forEach(function(k){h+='<div class="mz-row"><span class="dot" style="background:'+COLORS[k][1]+'"></span><span class="n">'+COLORS[k][0]+'</span><button type="button" data-menos="'+k+'" aria-label="Una menos de '+COLORS[k][0]+'">−</button><b>'+st.mezcla[k]+'</b><button type="button" data-mas="'+k+'" aria-label="Una más de '+COLORS[k][0]+'">+</button></div>'});
+    mz.innerHTML=h;
+  }
+  return {
+    get:function(){return {color:st.color,mezcla:st.color==='combinado'?JSON.parse(JSON.stringify(st.mezcla)):null}},
+    set:function(c,m){st.color=COLORS[c]?c:'otro';st.mezcla=m?JSON.parse(JSON.stringify(m)):{};draw()},
+    valid:function(){return st.color!=='combinado'||sum()===getQty()},
+    sum:sum,draw:draw
+  };
+}
+
+// ---- estado (localStorage con respaldo en memoria) ----
+var KEY='rd-demo-v1',DB;
+function seed(){
+  return {orders:[
+    {id:uid(),creado:addDays(-6),entrega:addDays(3),nombre:'Lucía Fernández',tel:'11 5555 1234',lugar:'Victoria',envio:false,qty:12,color:'rojo',mezcla:null,precio:priceFor(12),pagado:seña(priceFor(12)),estado:'Reservado',origen:'manual',observaciones:''},
+    {id:uid(),creado:addDays(-4),entrega:addDays(6),nombre:'Martín Gómez',tel:'11 4444 9876',lugar:'Tigre',envio:true,qty:15,color:'combinado',mezcla:{rosa:8,blanco:7},precio:priceFor(15),pagado:seña(priceFor(15)),estado:'En preparación',origen:'web',ocasion:'Aniversario',observaciones:'Tarjeta: "Feliz aniversario, amor"'},
+    {id:uid(),creado:addDays(-9),entrega:addDays(-1),nombre:'Sofía Ruiz',tel:'',lugar:'San Fernando',envio:false,qty:6,color:'lila',mezcla:null,precio:priceFor(6),pagado:priceFor(6),estado:'Entregado',origen:'manual',observaciones:''}
+  ],solicitudes:[
+    {id:uid(),recibido:new Date(Date.now()-3600e3).toISOString(),ocasion:'Cumpleaños',qty:9,color:'combinado',mezcla:{rojo:5,dorado:4},envoltorio:'Caja sombrerera',extras:['Moño','Tarjeta'],entrega:addDays(4),envio:false,nombre:'Carla Benítez',tel:'11 6666 0000',zona:'San Fernando',comentarios:'Para mi mamá, que diga "Feliz cumple Ma"'}
+  ],config:{aviso:'',abierto:true,ant:2},visitas:{}};
+}
+function load(){try{var s=localStorage.getItem(KEY);if(s)return JSON.parse(s)}catch(e){}return seed()}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(DB))}catch(e){}}
+DB=load();
+
+// ---- confirmación propia ----
+function confirmar(txt,cb){$('mTxt').textContent=txt;$('modal').hidden=false;$('mSi').onclick=function(){$('modal').hidden=true;cb()};$('mNo').onclick=function(){$('modal').hidden=true}}
+
+// ---- vistas ----
+function vista(v){var w=v==='web';$('vista-web').hidden=!w;$('vista-panel').hidden=w;$('t-web').setAttribute('aria-selected',w);$('t-panel').setAttribute('aria-selected',!w);
+  if(w){contarVisita();renderWeb()}else renderPanel();scrollTo(0,0)}
+$('t-web').onclick=function(){vista('web')};$('t-panel').onclick=function(){vista('panel')};
+$('reset').onclick=function(){confirmar('¿Volver la demo a los datos de ejemplo?',function(){DB=seed();save();pExit();renderWeb();renderPanel()})};
+var pTab='pedidos';
+document.querySelector('.ptabs').onclick=function(e){var b=e.target.closest('[data-pt]');if(!b)return;pTab=b.dataset.pt;
+  document.querySelectorAll('.ptab').forEach(function(x){x.setAttribute('aria-selected',String(x===b))});
+  ['pedidos','stats','editar'].forEach(function(t){$('p-'+t).hidden=t!==pTab});renderPanel()};
+function contarVisita(){var d=iso(today());DB.visitas[d]=(DB.visitas[d]||0)+1;save()}
+
+// ================= WEB =================
+var W={envio:false,extras:{}};
+(function(){var q=$('wQty');for(var i=1;i<=30;i++)q.add(new Option(i+(i===1?' rosa':' rosas'),i,false,i===12));
+  EXTRAS.forEach(function(x){var b=document.createElement('button');b.type='button';b.className='chip';b.textContent=x;b.setAttribute('aria-pressed','false');
+    b.onclick=function(){W.extras[x]=!W.extras[x];b.setAttribute('aria-pressed',String(!!W.extras[x]));renderRes()};$('wExtras').appendChild(b)})})();
+var wCP=ColorPicker('wSw','wMz','wColorName',function(){return +$('wQty').value},renderRes);
+wCP.set('rojo');
+$('wQty').onchange=function(){wCP.draw();renderRes()};
+$('wForm').oninput=renderRes;
+$('wRet').onclick=function(){W.envio=false;segW()};$('wEnvio').onclick=function(){W.envio=true;segW()};
+function segW(){$('wRet').setAttribute('aria-pressed',String(!W.envio));$('wEnvio').setAttribute('aria-pressed',String(W.envio));renderRes()}
+function wDatos(){var c=wCP.get();return {ocasion:$('wOcasion').value,qty:+$('wQty').value,color:c.color,mezcla:c.mezcla,envoltorio:$('wEnv').value,
+  extras:EXTRAS.filter(function(x){return W.extras[x]}),entrega:$('wFecha').value,envio:W.envio,nombre:$('wNombre').value.trim(),tel:$('wTel').value.trim(),zona:$('wZona').value.trim(),comentarios:$('wCom').value.trim()}}
+function renderRes(){var d=wDatos();
+  var f=[['Ocasión',d.ocasion],['Rosas',d.qty],['Colores',d.color==='combinado'?(mixOk(d)?mixTxt(d).slice(2,-1):'Combinado (a armar)'):colorDe(d.color)[0]],['Envoltorio',d.envoltorio]];
+  if(d.extras.length)f.push(['Extras',d.extras.join(', ')]);
+  f.push(['Entrega',(d.entrega?fmtDate(d.entrega):'—')+' · '+(d.envio?'Envío':'Retiro')]);
+  $('wRes').innerHTML=f.map(function(x){return '<div><dt>'+x[0]+'</dt><dd>'+esc(x[1])+'</dd></div>'}).join('')}
+function renderWeb(){
+  var c=DB.config;$('avisoWeb').hidden=!c.aviso;$('avisoWeb').textContent=c.aviso;
+  $('pausaWeb').hidden=c.abierto;$('armadorWeb').hidden=!c.abierto;
+  $('wFecha').min=addDays(c.ant);renderRes()}
+$('wSend').onclick=function(){
+  var d=wDatos(),e='';
+  if(!wCP.valid())e='La combinación suma '+wCP.sum()+' rosas y elegiste '+d.qty+'. Ajustá las cantidades.';
+  else if(!d.entrega)e='Elegí la fecha de entrega.';
+  else if(d.entrega<addDays(DB.config.ant))e='Necesitamos al menos '+DB.config.ant+' día(s) de anticipación.';
+  else if(!d.nombre)e='Poné tu nombre.';
+  else if(d.tel.replace(/\D/g,'').length<8)e='Poné tu WhatsApp para poder confirmarte.';
+  $('wErr').textContent=e;if(e)return;
+  d.id=uid();d.recibido=new Date().toISOString();DB.solicitudes.push(d);save();
+  var msg='Hola Reina Dabi! Quiero hacer un pedido:\n• Ocasión: '+d.ocasion+'\n• Rosas: '+d.qty+'\n• Colores: '+(d.color==='combinado'?mixTxt(d).slice(2,-1):colorDe(d.color)[0])+'\n• Envoltorio: '+d.envoltorio+(d.extras.length?'\n• Extras: '+d.extras.join(', '):'')+'\n• Entrega: '+fmtDate(d.entrega)+' · '+(d.envio?'Envío':'Retiro')+'\n• Nombre: '+d.nombre+(d.comentarios?'\n• Comentarios: '+d.comentarios:'');
+  $('wOk').innerHTML='<div class="ok-box"><b>¡Pedido enviado!</b> Ya le llegó al panel de Reina Dabi. En la web real además se abre WhatsApp con este mensaje:<pre>'+esc(msg)+'</pre><div style="margin-top:8px">Pasá a <b>El panel</b> para verlo en "Pedidos de la web".</div></div>';
+  $('wNombre').value='';$('wTel').value='';$('wZona').value='';$('wCom').value='';$('wFecha').value='';
+  W.extras={};Array.prototype.forEach.call($('wExtras').children,function(b){b.setAttribute('aria-pressed','false')});
+  wCP.set('rojo');renderRes();badge()};
+
+// ================= PANEL =================
+var P={envio:false,precioManual:false,resManual:false,editId:null,desdeSol:null},lTab='activos',mesSel='';
+var pCP=ColorPicker('pSw','pMz','pColorName',function(){return Math.max(1,parseInt($('pQty').value,10)||1)},function(){});
+pCP.set('verde');
+function pCalc(){var q=Math.max(1,parseInt($('pQty').value,10)||1);
+  if(!P.precioManual)$('pPrecio').value=priceFor(q);
+  if(!P.resManual)$('pRes').value=seña(+$('pPrecio').value||0);
+  $('pDebe').textContent=money(Math.max(0,(+$('pPrecio').value||0)-(+$('pRes').value||0)))}
+$('pQty').oninput=function(){P.precioManual=false;P.resManual=false;pCP.draw();pCalc()};
+$('pPrecio').oninput=function(){P.precioManual=true;pCalc()};
+$('pRes').oninput=function(){P.resManual=true;pCalc()};
+$('pRet').onclick=function(){P.envio=false;segP()};$('pEnv').onclick=function(){P.envio=true;segP()};
+function segP(){$('pRet').setAttribute('aria-pressed',String(!P.envio));$('pEnv').setAttribute('aria-pressed',String(P.envio))}
+function pFill(o){$('pEnt').value=o.entrega||'';$('pQty').value=o.qty||9;pCP.set(o.color||'verde',o.mezcla);$('pNom').value=o.nombre||'';$('pTel').value=o.tel||'';$('pLug').value=o.lugar||o.zona||'';
+  P.envio=!!o.envio;segP();$('pObs').value=o.observaciones!=null?o.observaciones:'';
+  if(o.precio!=null){$('pPrecio').value=o.precio;$('pRes').value=o.pagado;P.precioManual=true;P.resManual=true}else{P.precioManual=false;P.resManual=false}pCalc()}
+function pExit(){P.editId=null;P.desdeSol=null;pFill({qty:9,color:'verde'});$('pTitle').textContent='Nuevo pedido';$('pOrigen').textContent='Carga manual';$('pSave').textContent='Guardar pedido';$('pCancel').hidden=true;$('pErr').textContent=''}
+$('pCancel').onclick=pExit;
+$('pForm').onsubmit=function(ev){ev.preventDefault();
+  var q=Math.max(1,parseInt($('pQty').value,10)||1),c=pCP.get(),e='';
+  if(!$('pEnt').value)e='Falta la fecha de entrega.';else if(!$('pNom').value.trim())e='Falta el nombre.';else if(!pCP.valid())e='La combinación tiene '+pCP.sum()+' rosas y el pedido '+q+'. Tienen que coincidir.';
+  $('pErr').textContent=e;if(e)return;
+  var d={entrega:$('pEnt').value,nombre:$('pNom').value.trim(),tel:$('pTel').value.trim(),lugar:$('pLug').value.trim(),envio:P.envio,qty:q,color:c.color,mezcla:c.mezcla,
+    precio:+$('pPrecio').value||0,pagado:+$('pRes').value||0,observaciones:$('pObs').value.trim()};
+  if(P.editId){var o=DB.orders.filter(function(x){return x.id===P.editId})[0];if(o)Object.assign(o,d)}
+  else{d.id=uid();d.creado=iso(today());d.estado='Reservado';d.origen=P.desdeSol?'web':'manual';
+    if(P.desdeSol){d.ocasion=P.desdeSol.ocasion;DB.solicitudes=DB.solicitudes.filter(function(s){return s.id!==P.desdeSol.id})}
+    DB.orders.push(d)}
+  save();pExit();renderPanel()};
+
+function badge(){var n=DB.solicitudes.length;['nSol','nSolTop'].forEach(function(id){$(id).hidden=!n;$(id).textContent=n})}
+function debe(o){return Math.max(0,(o.precio||0)-(o.pagado||0))}
+
+function renderSol(){var s=DB.solicitudes.slice().sort(function(a,b){return a.recibido<b.recibido?1:-1});
+  $('bandeja').hidden=!s.length;
+  $('solList').innerHTML=s.map(function(x){var r=new Date(x.recibido);
+    return '<div class="sol" data-sid="'+x.id+'"><div class="t"><span>'+esc(x.nombre)+' · '+x.qty+' rosas</span><span class="tag t-web">recibido '+String(r.getDate()).padStart(2,'0')+'/'+String(r.getMonth()+1).padStart(2,'0')+' '+String(r.getHours()).padStart(2,'0')+':'+String(r.getMinutes()).padStart(2,'0')+'</span></div>'+
+      '<div class="d">'+dots(x)+esc(colorTxt(x))+' · '+esc(x.ocasion)+' · '+esc(x.envoltorio)+(x.extras&&x.extras.length?' · '+esc(x.extras.join(', ')):'')+'</div>'+
+      '<div class="d">Entrega '+fmtDate(x.entrega)+' · '+(x.envio?'Envío':'Retira')+' · '+esc([x.zona,x.tel].filter(Boolean).join(' · '))+'</div>'+
+      (x.comentarios?'<div class="d"><i>📝 '+esc(x.comentarios)+'</i></div>':'')+
+      '<div class="acc"><button type="button" class="btn sm" data-sa="ok">Aceptar</button><button type="button" class="btn ghost sm" data-sa="no">Descartar</button></div></div>'}).join('')}
+$('solList').onclick=function(e){var b=e.target.closest('[data-sa]');if(!b)return;var id=b.closest('[data-sid]').dataset.sid,s=DB.solicitudes.filter(function(x){return x.id===id})[0];if(!s)return;
+  if(b.dataset.sa==='no'){confirmar('¿Descartar el pedido de '+s.nombre+'?',function(){DB.solicitudes=DB.solicitudes.filter(function(x){return x.id!==id});save();renderPanel()});return}
+  P.editId=null;P.desdeSol=s;
+  var obs=[s.ocasion,s.envoltorio,s.extras&&s.extras.length?s.extras.join(', '):'',s.comentarios].filter(Boolean).join(' · ');
+  pFill({entrega:s.entrega,qty:s.qty,color:s.color,mezcla:s.mezcla,nombre:s.nombre,tel:s.tel,zona:s.zona,envio:s.envio,observaciones:obs});
+  $('pTitle').textContent='Aceptar pedido de la web';$('pOrigen').textContent='Revisá el precio y la seña, y guardalo.';$('pSave').textContent='Confirmar pedido';$('pCancel').hidden=false;
+  $('pForm').scrollIntoView({behavior:'smooth',block:'start'})};
+
+function renderLista(){
+  var t=today(),L=DB.orders.filter(function(o){return lTab==='todos'?true:lTab==='entregados'?o.estado==='Entregado':o.estado!=='Entregado'}).sort(function(a,b){return a.entrega<b.entrega?-1:1});
+  if(lTab==='entregados')L.reverse();
+  $('lista').innerHTML=L.length?L.map(function(o){
+    var diff=Math.round((parse(o.entrega)-t)/864e5),cls='t-ok',txt='en '+diff+' días';
+    if(o.estado==='Entregado'){cls='t-done';txt='entregado'}else if(diff<0){cls='t-bad';txt='atrasado'}else if(diff===0){cls='t-bad';txt='hoy'}else if(diff===1){cls='t-bad';txt='mañana'}else if(diff<=2)cls='t-bad';else if(diff<=7)cls='t-warn';
+    var d=debe(o);
+    return '<div class="ped" data-id="'+o.id+'"><div><div class="f">'+fmtDate(o.entrega)+'</div><span class="tag '+cls+'">'+txt+'</span></div>'+
+      '<div><div class="who">'+esc(o.nombre)+(o.origen==='web'?' <span class="tag t-web">web</span>':'')+'</div><div class="w">'+esc([o.lugar,o.envio?'Envío':'Retira',o.tel].filter(Boolean).join(' · '))+'</div>'+
+      '<div style="margin-top:4px">'+dots(o)+'<b>'+o.qty+'</b> · '+esc(colorTxt(o))+'</div>'+(o.observaciones?'<div class="obs">📝 '+esc(o.observaciones)+'</div>':'')+'</div>'+
+      '<div class="der"><div>'+money(o.precio)+'</div><div class="w">seña '+money(o.pagado)+'</div>'+(d>0?'<div style="color:var(--bad);font-weight:700">debe '+money(d)+'</div>':'<div class="w">pagado</div>')+
+      '<div class="acc"><button type="button" class="btn ghost sm" data-a="estado">'+o.estado+' ›</button>'+(d>0?'<button type="button" class="lk" data-a="pay">Cobrar</button>':'')+'<button type="button" class="lk" data-a="edit">Editar</button><button type="button" class="lk" data-a="del">Borrar</button></div></div></div>'}).join(''):'<div class="empty">No hay pedidos acá.</div>'}
+$('lTabs').onclick=function(e){var b=e.target.closest('[data-l]');if(!b)return;lTab=b.dataset.l;Array.prototype.forEach.call(this.children,function(x){x.setAttribute('aria-pressed',String(x===b))});renderLista()};
+$('lista').onclick=function(e){var b=e.target.closest('[data-a]');if(!b)return;var id=b.closest('[data-id]').dataset.id,o=DB.orders.filter(function(x){return x.id===id})[0];if(!o)return;var a=b.dataset.a;
+  if(a==='estado'){o.estado=ESTADOS[(ESTADOS.indexOf(o.estado)+1)%ESTADOS.length];save();renderPanel()}
+  else if(a==='pay'){o.pagado=o.precio;save();renderPanel()}
+  else if(a==='del'){confirmar('¿Borrar el pedido de '+o.nombre+'?',function(){DB.orders=DB.orders.filter(function(x){return x.id!==id});save();renderPanel()})}
+  else if(a==='edit'){P.editId=id;P.desdeSol=null;pFill(o);$('pTitle').textContent='Editar pedido';$('pOrigen').textContent=o.origen==='web'?'Llegó desde la web':'Carga manual';$('pSave').textContent='Guardar cambios';$('pCancel').hidden=false;$('pForm').scrollIntoView({behavior:'smooth',block:'start'})}};
+
+function barras(map,total,lbl){var ks=Object.keys(map).sort(function(a,b){return map[b]-map[a]});if(!ks.length)return '<div class="empty">Todavía no hay datos.</div>';var mx=map[ks[0]];
+  return ks.map(function(k){var c=COLORS[k];return '<div class="cbar"><div>'+(c?'<span class="dot" style="background:'+c[1]+'"></span>'+c[0]:esc(k))+'</div><div class="t"><div style="width:'+Math.round(map[k]/mx*100)+'%"></div></div><b style="text-align:right">'+map[k]+'</b></div>'}).join('')+(lbl?'<div class="line"><span>'+lbl+'</span><b>'+total+' rosas</b></div>':'')}
+function kpi(l,v,n){return '<div class="kpi"><div class="l">'+l+'</div><div class="v">'+v+'</div><div class="n">'+n+'</div></div>'}
+
+function renderPedidos(){
+  renderSol();renderLista();
+  var act=DB.orders.filter(function(o){return o.estado!=='Entregado'}),mes=iso(today()).slice(0,7);
+  var rm=DB.orders.filter(function(o){return o.entrega.slice(0,7)===mes}).reduce(function(s,o){return s+o.qty},0);
+  var dd=DB.orders.reduce(function(s,o){return s+debe(o)},0);
+  var prox=act.slice().sort(function(a,b){return a.entrega<b.entrega?-1:1})[0];
+  $('kpis').innerHTML=kpi('Pedidos activos',act.length,prox?'próxima: '+fmtDate(prox.entrega):'sin entregas')+kpi('Rosas del mes',rm,'entregas de este mes')+kpi('Falta cobrar',money(dd),'en todos los pedidos')+kpi('Pedidos web',DB.solicitudes.length,'esperando respuesta');
+  var ct={},tt=0;act.forEach(function(o){if(o.estado==='Listo')return;var r=reparto(o);for(var k in r)ct[k]=(ct[k]||0)+r[k];tt+=o.qty});
+  $('colores').innerHTML=barras(ct,tt,'Total a armar')}
+
+function renderStats(){
+  var vis=0,hoy=iso(today()),v14=0;for(var d in DB.visitas){vis+=DB.visitas[d];if(d>=addDays(-13))v14+=DB.visitas[d]}
+  var web=DB.orders.filter(function(o){return o.origen==='web'}).length,man=DB.orders.length-web;
+  var fact=DB.orders.reduce(function(s,o){return s+(o.precio||0)},0),cob=DB.orders.reduce(function(s,o){return s+(o.pagado||0)},0),costo=DB.orders.reduce(function(s,o){return s+o.qty*COSTO},0);
+  $('sKpis').innerHTML=kpi('Visitas a la web',v14,'últimos 14 días · hoy '+(DB.visitas[hoy]||0))+kpi('Pedidos cargados',DB.orders.length,web+' desde la web · '+man+' manuales')+kpi('Facturado',money(fact),'cobrado '+money(cob))+kpi('Ganancia estimada',money(fact-costo),'costo '+money(COSTO)+' por rosa');
+  // gráfico 14 días
+  var W=640,H=180,pb=24,pt=12,pl=26,pr=6,dias=[];for(var i=13;i>=0;i--){var k=addDays(-i);dias.push([k,DB.orders.filter(function(o){return o.creado===k}).length])}
+  var mx=Math.max(2,Math.max.apply(null,dias.map(function(x){return x[1]}))),alto=H-pb-pt,an=(W-pl-pr)/14,s='';
+  [0,Math.ceil(mx/2),mx].forEach(function(v){var y=pt+alto-(v/mx)*alto;s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y+'" y2="'+y+'" stroke="#8e1e48" stroke-opacity=".12"/><text x="'+(pl-6)+'" y="'+(y+4)+'" text-anchor="end" font-size="10" fill="#7a6670">'+v+'</text>'});
+  dias.forEach(function(x,i){var h=(x[1]/mx)*alto,X=pl+i*an+an*.2,w=an*.6;s+='<rect x="'+X+'" y="'+(pt+alto-h)+'" width="'+w+'" height="'+h+'" rx="3" fill="'+(i===13?'#8e1e48':'#e2708c')+'"><title>'+fmtDate(x[0])+': '+x[1]+'</title></rect>';if(i%2===1||i===13)s+='<text x="'+(X+w/2)+'" y="'+(H-8)+'" text-anchor="middle" font-size="10" fill="#7a6670">'+x[0].slice(8)+'/'+x[0].slice(5,7)+'</text>'});
+  $('sChart').innerHTML=s;
+  // por mes
+  var pm={};DB.orders.forEach(function(o){var m=o.entrega.slice(0,7);pm[m]=pm[m]||{t:0,c:{}};var r=reparto(o);for(var k in r)pm[m].c[k]=(pm[m].c[k]||0)+r[k];pm[m].t+=o.qty});
+  var mk=Object.keys(pm).sort();if(!pm[mesSel])mesSel=pm[hoy.slice(0,7)]?hoy.slice(0,7):mk[mk.length-1]||'';
+  $('sMes').innerHTML=(mk.length?'<div class="mtabs">'+mk.map(function(m){return '<button type="button" data-m="'+m+'" aria-pressed="'+(m===mesSel)+'">'+MONTHS[+m.slice(5)-1]+' '+m.slice(0,4)+'</button>'}).join('')+'</div>':'')+(pm[mesSel]?barras(pm[mesSel].c,pm[mesSel].t,'Total del mes'):'<div class="empty">Todavía no hay datos.</div>');
+  var og={};og['Desde la web']=web;og['Carga manual']=man;if(DB.solicitudes.length)og['Web sin responder']=DB.solicitudes.length;
+  $('sOrigen').innerHTML=barrasN(og);
+  var oc={};DB.orders.concat(DB.solicitudes).forEach(function(o){if(o.ocasion)oc[o.ocasion]=(oc[o.ocasion]||0)+1});$('sOcasion').innerHTML=barrasN(oc)}
+function barrasN(m){var ks=Object.keys(m).filter(function(k){return m[k]>0}).sort(function(a,b){return m[b]-m[a]});if(!ks.length)return '<div class="empty">Todavía no hay datos.</div>';var mx=m[ks[0]];
+  return ks.map(function(k){return '<div class="cbar"><div>'+esc(k)+'</div><div class="t"><div style="width:'+Math.round(m[k]/mx*100)+'%"></div></div><b style="text-align:right">'+m[k]+'</b></div>'}).join('')}
+$('sMes').onclick=function(e){var b=e.target.closest('[data-m]');if(!b)return;mesSel=b.dataset.m;renderStats()};
+
+function renderEditar(){var c=DB.config;$('eAviso').value=c.aviso;$('eAbierto').checked=c.abierto;$('eAnt').value=String(c.ant)}
+$('eAvisoBtn').onclick=function(){DB.config.aviso=$('eAviso').value.trim();save();$('eAvisoMsg').textContent=DB.config.aviso?'Aviso publicado en la web.':'Aviso sacado.';renderWeb()};
+$('eAbierto').onchange=function(){DB.config.abierto=this.checked;save();$('eAbMsg').textContent=this.checked?'La web toma pedidos.':'Pedidos web pausados.';renderWeb()};
+$('eAnt').onchange=function(){DB.config.ant=+this.value;save();$('eAntMsg').textContent='Guardado.';renderWeb()};
+
+function renderPanel(){badge();if(pTab==='pedidos')renderPedidos();else if(pTab==='stats')renderStats();else renderEditar()}
+
+pExit();contarVisita();renderWeb();badge();
+})();
+</script>
+</body>
+</html>
