@@ -47,6 +47,7 @@ textarea{min-height:70px;resize:vertical}
 .mz-head.ok{color:var(--ok)}.mz-head.bad{color:var(--bad)}
 .mezcla .swatches{gap:7px;margin-bottom:6px}
 .mezcla .swc{width:28px;height:28px}
+.mezcla .swc:disabled{opacity:.25;cursor:not-allowed}
 .mz-row{display:flex;align-items:center;gap:8px;margin-top:6px}
 .mz-row .n{flex:1}
 .mz-row button{width:34px;height:34px;border-radius:50%;border:1px solid var(--linea);background:#fff;font-weight:700;cursor:pointer}
@@ -305,6 +306,7 @@ var COLORS={
   negro:['Negro','#1F1B1D'],dorado:['Dorado','#C9962C'],plateado:['Plateado','#C7C7C9'],
   combinado:['Combinado','conic-gradient(#8E1E48,#C9962C,#E4357B,#8E1E48)'],otro:['Otro','#FFFFFF']
 };
+var MAX_MIX=3;
 var EXTRAS=['Mariposas','Moño','Perlas','Corona','Bombones','Luces','Perfumadas','Tarjeta'];
 var ESTADOS=['Reservado','En preparación','Listo','Entregado'];
 var DAYS=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
@@ -343,7 +345,7 @@ function ColorPicker(swId,mzId,nameId,getQty,onChange){
     b.onclick=function(){st.color=k;draw();onChange&&onChange()};sw.appendChild(b);
   });
   mz.onclick=function(e){var b=e.target.closest('button');if(!b)return;var k;
-    if((k=b.dataset.add)){if(st.mezcla[k]>0)delete st.mezcla[k];else st.mezcla[k]=1}
+    if((k=b.dataset.add)){if(st.mezcla[k]>0)delete st.mezcla[k];else if(Object.keys(st.mezcla).length<MAX_MIX)st.mezcla[k]=1}
     else if((k=b.dataset.mas)){st.mezcla[k]++}
     else if((k=b.dataset.menos)){st.mezcla[k]--;if(st.mezcla[k]<=0)delete st.mezcla[k]}
     draw();onChange&&onChange()};
@@ -353,10 +355,12 @@ function ColorPicker(swId,mzId,nameId,getQty,onChange){
     Array.prototype.forEach.call(sw.children,function(b){b.setAttribute('aria-pressed',String(b.dataset.c===st.color))});
     if(st.color!=='combinado'){mz.hidden=true;mz.innerHTML='';return}
     mz.hidden=false;var q=getQty(),t=sum(),cls=t===q?'ok':(t>q?'bad':'');
-    var h='<div class="mz-head '+cls+'">Combinación: '+t+' de '+q+' rosas'+(t>q?' (te pasaste)':t<q?' · faltan '+(q-t):' ✓')+'</div><div class="swatches">';
-    Object.keys(COLORS).forEach(function(k){if(k==='combinado'||k==='otro')return;h+='<button type="button" class="swc" data-add="'+k+'" style="background:'+COLORS[k][1]+'" title="'+COLORS[k][0]+'" aria-label="'+COLORS[k][0]+'" aria-pressed="'+(st.mezcla[k]>0)+'"></button>'});
+    var lleno=Object.keys(st.mezcla).length>=MAX_MIX;
+    var h='<div class="mz-head '+cls+'">Combinación (hasta '+MAX_MIX+' colores): '+t+' de '+q+' rosas'+(t>q?' (te pasaste)':t<q?' · faltan '+(q-t):' ✓')+'</div><div class="swatches">';
+    Object.keys(COLORS).forEach(function(k){if(k==='combinado'||k==='otro')return;h+='<button type="button" class="swc" data-add="'+k+'" style="background:'+COLORS[k][1]+'" title="'+COLORS[k][0]+'" aria-label="'+COLORS[k][0]+'" aria-pressed="'+(st.mezcla[k]>0)+'"'+(lleno&&!(st.mezcla[k]>0)?' disabled':'')+'></button>'});
     h+='</div>';var ks=Object.keys(st.mezcla);
-    if(!ks.length)h+='<div class="sub">Tocá los colores que lleva el ramo y ajustá cuántas de cada uno.</div>';
+    if(!ks.length)h+='<div class="sub">Tocá hasta '+MAX_MIX+' colores y ajustá cuántas rosas de cada uno.</div>';
+    else if(lleno)h+='<div class="sub">Ya elegiste '+MAX_MIX+' colores. Para cambiar uno, tocalo de nuevo para sacarlo.</div>';
     ks.forEach(function(k){h+='<div class="mz-row"><span class="dot" style="background:'+COLORS[k][1]+'"></span><span class="n">'+COLORS[k][0]+'</span><button type="button" data-menos="'+k+'" aria-label="Una menos de '+COLORS[k][0]+'">−</button><b>'+st.mezcla[k]+'</b><button type="button" data-mas="'+k+'" aria-label="Una más de '+COLORS[k][0]+'">+</button></div>'});
     mz.innerHTML=h;
   }
