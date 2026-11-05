@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Mi negocio · panel</title>
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0f1115"><link rel="apple-touch-icon" href="icono-192.png"><meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;800&display=swap">
 <style>
@@ -58,6 +59,8 @@ a{color:var(--ac)}
   var auth = firebase.auth(), db = firebase.database(), app = $('app');
   $('sitio').innerHTML = Object.keys(NEG).map(function (k) { return '<option value="' + k + '"' + (k === s ? ' selected' : '') + '>' + NEG[k].n + '</option>'; }).join('');
   if (window.NEGOCIO) $('sitio').hidden = true;
+  try { var g = localStorage.getItem('mn_sitio'); if (!q.get('s') && g && NEG[g]) { s = g; $('sitio').value = g; } localStorage.setItem('mn_sitio', s); } catch (e) {}
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function () {});
   $('sitio').onchange = function () { location.search = '?s=' + this.value; };
   $('tit').textContent = NEG[s].n;
   var DIAS = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];

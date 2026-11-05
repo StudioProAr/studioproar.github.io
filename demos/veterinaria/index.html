@@ -134,7 +134,7 @@ $('horas').onclick=e=>{const b=e.target.closest('[data-h]');if(b&&!b.disabled){s
 $('conf').onclick=()=>{if(sel.h===null)return;const s=S[sel.s],mas=($('mas').value.trim()||'Mascota de prueba').slice(0,30),due=($('due').value.trim()||'Cliente de prueba').slice(0,40);
  const d0=sel.d,h0=sel.h,cel=$('celv').value.replace(/\D/g,'').slice(0,10);$('conf').disabled=true;$('ok').innerHTML='<div class="ok">Guardando…</div>';
  Reservas.guardar({id:Date.now(),fecha:iso(d0),ini:h0,min:s.m,servicio:s.n,precio:s.p,nombre:mas+' ('+due+')',cel:cel,estado:'confirmado'}).then(()=>{
- $('ok').innerHTML='<div class="ok">Turno confirmado ✓ '+s.n+' para '+mas.replace(/[<>&]/g,'')+', '+D[d0.getDay()]+' '+d0.getDate()+'/'+(d0.getMonth()+1)+' a las '+hh(h0)+'. Te recordamos por WhatsApp el día anterior. '+(Reservas.modo==='real'?'<a href="../mi-negocio/?s=vet">Ver cómo le llega a la veterinaria →</a>':'<a href="../panel/?n=veterinaria#turnos">Ver cómo lo ve la veterinaria →</a>')+'</div>';sel.h=null;pintar();
+ $('ok').innerHTML='<div class="ok">Turno confirmado ✓ '+s.n+' para '+mas.replace(/[<>&]/g,'')+', '+D[d0.getDay()]+' '+d0.getDate()+'/'+(d0.getMonth()+1)+' a las '+hh(h0)+'. '+(Reservas.modo==='real'?'<a href="../mi-negocio/?s=vet">Ver cómo le llega a la veterinaria →</a>':'<a href="../panel/?n=veterinaria#turnos">Ver cómo lo ve la veterinaria →</a>')+'</div>';sel.h=null;pintar();
  }).catch(e=>{$('ok').innerHTML='<div class="ok">'+e.message+'</div>';pintar();});};
 Reservas.alCambiar(pintar);
 pintar();
