@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Cancelar turno</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#f6f3ee;color:#1d1b18;display:grid;place-items:center;min-height:100vh;padding:20px;box-sizing:border-box}
+.c{background:#fff;border-radius:18px;padding:28px;max-width:420px;width:100%;box-shadow:0 10px 30px rgba(0,0,0,.08)}
+h1{font-size:22px;margin:0 0 6px}p{margin:8px 0;color:#555}.t{background:#f6f3ee;border-radius:12px;padding:14px;margin:16px 0;color:#1d1b18}
+button{width:100%;padding:14px;border:0;border-radius:12px;background:#b3261e;color:#fff;font-size:16px;font-weight:600;cursor:pointer}button:disabled{opacity:.5}
+.ok{color:#1e7b3a;font-weight:600}.er{color:#b3261e}a{color:inherit}
+</style></head><body>
+<div class="c"><h1>Cancelar turno</h1><div id="info"></div><div id="msg" role="status"></div></div>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="fb-demos.js"></script>
+<script src="reservas.js"></script>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search),g=function(k){return (q.get(k)||'').slice(0,80);};
+  var s=g('s'),id=g('id'),k=g('k'),f=g('f'),i=+g('i'),n=g('n'),sv=g('sv'),c=g('c');
+  var info=document.getElementById('info'),msg=document.getElementById('msg');
+  var esc=function(x){return String(x).replace(/[<>&"]/g,'');};
+  if(!s||!id||!k||!/^\d{4}-\d\d-\d\d$/.test(f)){info.innerHTML='<p class="er">El link está incompleto. Escribile al negocio para cancelar.</p>';return;}
+  var d=new Date(f+'T12:00:00'),D=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+  var hh=String(Math.floor(i/60)).padStart(2,'0')+':'+String(i%60).padStart(2,'0');
+  info.innerHTML='<div class="t"><b>'+esc(n||'Tu turno')+'</b><br>'+(sv?esc(sv)+'<br>':'')+D[d.getDay()]+' '+d.getDate()+'/'+(d.getMonth()+1)+' a las '+hh+' h</div><p>Si lo cancelás, el horario queda libre para otra persona. No se puede deshacer.</p><button id="b">Sí, cancelar mi turno</button>';
+  var b=document.getElementById('b');
+  if(f<new Date(Date.now()-3*36e5).toISOString().slice(0,10)){b.disabled=true;msg.innerHTML='<p>Este turno ya pasó.</p>';return;}
+  Reservas.iniciar({sitio:s,col:'turnos',clave:c||'x',paso:30});
+  b.onclick=function(){
+    b.disabled=true;msg.textContent='Cancelando…';
+    var p;
+    if(Reservas.modo==='real') p=Reservas.cancelar(s,id,k,f);
+    else p=new Promise(function(ok,no){try{var l=JSON.parse(localStorage.getItem(c))||[],r=l.filter(function(x){return String(x.id)!==id;});if(r.length===l.length)return no(new Error('x'));localStorage.setItem(c,JSON.stringify(r));ok();}catch(e){no(e);}});
+    p.then(function(){info.innerHTML='';msg.innerHTML='<p class="ok">Listo, tu turno quedó cancelado.</p><p>El negocio ya lo ve en su agenda. Si querés, reservá otro horario en la web.</p>';},
+      function(){b.disabled=false;msg.innerHTML='<p class="er">No se pudo cancelar. Puede que ya esté cancelado o que el link no sea válido. Escribile al negocio.</p>';});
+  };
+})();
+</script></body></html>

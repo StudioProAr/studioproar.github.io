@@ -11,6 +11,7 @@
   var cfg = {}, cache = [], fns = [], db = null;
   function local() { try { return JSON.parse(localStorage.getItem(cfg.clave)) || []; } catch (e) { return []; } }
   function avisar() { fns.forEach(function (f) { try { f(); } catch (e) {} }); }
+  function clave() { var a = new Uint8Array(12), c = 'abcdefghijkmnpqrstuvwxyz23456789', r = ''; (window.crypto || window.msCrypto).getRandomValues(a); for (var i = 0; i < a.length; i++) r += c[a[i] % c.length]; return r; }
   var R = window.Reservas = {
     modo: 'demo',
     iniciar: function (c) {
@@ -42,11 +43,27 @@
     },
     celOk: function (c) { return /^[1-9][0-9]{9}$/.test(c) && c.indexOf("15") !== 0; },
     mailOk: function (m) { return !m || /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(m); },
+    /* Link "Cancelar mi turno" que va en el mail de confirmación */
+    linkBaja: function (id, o) {
+      var u = new URL('../comun/baja.html', location.href), q = { s: cfg.sitio, id: id, k: R.ultimaClave, f: o.fecha, i: o.ini, n: o.negocio || '', sv: o.servicio || '', c: R.modo === 'demo' ? cfg.clave : '' };
+      Object.keys(q).forEach(function (x) { if (q[x] !== '' && q[x] != null) u.searchParams.set(x, q[x]); });
+      if (R.modo === 'real') u.searchParams.set('real', '1');
+      return u.href;
+    },
+    /* Cancela un turno con su clave (la usa baja.html). Libera los horarios y marca el turno como cancelado. */
+    cancelar: function (sitio, id, k, fecha) {
+      var base = 'r/' + sitio + '/turnos';
+      return db.ref(base + '/ocupado/' + fecha).once('value').then(function (s) {
+        var up = {}; up[base + '/baja/' + id] = k; up[base + '/lista/' + id + '/estado'] = 'cancelado';
+        s.forEach(function (m) { if (m.val() === id) up[base + '/ocupado/' + fecha + '/' + m.key] = null; });
+        return db.ref().update(up);
+      });
+    },
     lista: function () { return R.modo === 'real' ? cache : local(); },
     alCambiar: function (f) { fns.push(f); },
     guardar: function (o) {
       if (R.modo !== 'real') {
-        var l = local(); l.push(o);
+        R.ultimaClave = 'demo'; var l = local(); l.push(o);
         try { localStorage.setItem(cfg.clave, JSON.stringify(l)); } catch (e) {}
         return Promise.resolve(o.id);
       }
@@ -54,7 +71,8 @@
       Object.keys(o).forEach(function (k) { if (o[k] !== undefined && k !== 'id') x[k] = o[k]; });
       x.creado = firebase.database.ServerValue.TIMESTAMP; x.estado = x.estado || 'nuevo';
       up[base + '/lista/' + id] = x;
-      if (cfg.col === 'turnos') for (var m = o.ini; m < o.ini + o.min; m += cfg.paso) up[base + '/ocupado/' + o.fecha + '/' + m] = id;
+      var k = clave(); R.ultimaClave = k;
+      if (cfg.col === 'turnos') { for (var m = o.ini; m < o.ini + o.min; m += cfg.paso) up[base + '/ocupado/' + o.fecha + '/' + m] = id; up[base + '/claves/' + id] = k; }
       var t = new Promise(function (_, no) { setTimeout(function () { no(new Error('sin conexión')); }, 10000); });
       return Promise.race([db.ref().update(up), t]).then(function () { return id; }, function (e) {
         throw new Error(/permission/i.test(e && e.message) ? 'Ese horario se acaba de ocupar. Elegí otro.' : 'No se pudo guardar. Revisá la conexión.');

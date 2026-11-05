@@ -46,6 +46,7 @@ a{color:var(--ac)}
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>window.SPA_SIEMPRE_REAL = true;</script>
 <script src="../comun/fb-demos.js"></script>
+<script src="../comun/correo.js"></script>
 <!-- En un cliente: reemplazar fb-demos.js por su firebase-config.js y agregar negocio.js -->
 <script>
 (function () {
@@ -139,11 +140,13 @@ a{color:var(--ac)}
     if (b.dataset.blqdia) { if (!confirm('¿Bloquear todos los horarios libres de este día? Los turnos ya tomados se mantienen.')) return; var u2 = {}; [].forEach.call(app.querySelectorAll('[data-blq]'), function (x) { u2[OC + x.dataset.blq] = 'bloqueo'; }); if (Object.keys(u2).length) db.ref().update(u2).catch(function () { alert('No se pudo guardar.'); }); return; }
     if (b.dataset.t) {
       var t = (datos.turnos || []).filter(function (x) { return x._id === b.dataset.t; })[0]; if (!t) return;
-      if (b.dataset.e === 'cancelado' && !confirm('¿Cancelar el turno de ' + t.nombre + '? El horario queda libre en la web.')) return;
+      if (b.dataset.e === 'cancelado' && !confirm('¿Cancelar el turno de ' + t.nombre + '? El horario queda libre en la web' + (t.email && window.Correo && Correo.activo() ? ' y le avisamos por mail a ' + t.email : '') + '.')) return;
       var up = {}; up[base + '/turnos/lista/' + t._id + '/estado'] = b.dataset.e;
       var oc0 = (datos.ocup || {})[t.fecha] || {};
       if (b.dataset.e === 'cancelado') for (var m = t.ini; m < t.ini + t.min; m += (NEG[s].paso || 30)) if (oc0[m] === t._id) up[base + '/turnos/ocupado/' + t.fecha + '/' + m] = null;
-      b.disabled = true; db.ref().update(up).catch(function () { b.disabled = false; alert('No se pudo guardar.'); });
+      b.disabled = true; db.ref().update(up).then(function () {
+        if (b.dataset.e === 'cancelado' && t.email && window.Correo) Correo.cancelacion({ email: t.email, nombre: t.nombre, negocio: NEG[s].n, servicio: t.servicio, fecha: t.fecha, ini: t.ini, web: NEG[s].web ? new URL(NEG[s].web, location.href).href : '' }, false);
+      }).catch(function () { b.disabled = false; alert('No se pudo guardar.'); });
     }
     if (b.dataset.p) { b.disabled = true; db.ref(base + '/encargos/lista/' + b.dataset.p + '/estado').set(b.dataset.e).catch(function () { b.disabled = false; alert('No se pudo guardar.'); }); }
   });
