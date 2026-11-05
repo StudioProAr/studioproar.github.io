@@ -1,60 +1,111 @@
 <!DOCTYPE html>
 <html lang="es-AR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><title>Cervecería Remanso · Tigre</title>
-<meta name="description" content="Cervecería artesanal en Tigre. Canillas que rotan, hamburguesas y música en vivo.">
+<meta name="description" content="Cervecería artesanal en Tigre. Seis canillas que rotan, hamburguesas y música en vivo.">
+<meta name="theme-color" content="#0f231d">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
-<style>:root{--bg:#14110d;--alt:#1d1913;--card:#221d16;--ink:#f3eadb;--soft:#bba98e;--line:#3a3127;--ac:#f2a516;--acink:#14110d;--r:6px;--disp:'Anton',sans-serif;--body:'Barlow',sans-serif}
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f231d;--alt:#14302a;--card:#183a32;--ink:#f1ead8;--soft:#a9b9a8;--line:#2a4c42;--ac:#f2a516;--r:20px;--cerveza:#f5c84c;--disp:'Bricolage Grotesque',system-ui,sans-serif;--body:'IBM Plex Sans',system-ui,sans-serif}
 *{box-sizing:border-box}html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--body)}
-.in{max-width:1080px;margin:0 auto;padding:0 18px}
 a{color:var(--ac)}
-.muestra{background:#111;color:#fff;font-size:12.5px;text-align:center;padding:7px 10px}.muestra a{color:#fff;font-weight:700}
-nav{position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}
-nav .in{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:12px;flex-wrap:wrap}
-.logo{font-family:var(--disp);font-size:22px;font-weight:700;letter-spacing:-.01em;text-decoration:none;color:var(--ink)}
-nav ul{list-style:none;display:flex;gap:16px;margin:0;padding:0;font-size:14px;flex-wrap:wrap}nav ul a{color:var(--soft);text-decoration:none}nav ul a:hover{color:var(--ink)}
-.hero{min-height:min(78vh,620px);display:flex;align-items:flex-end;background-size:cover;background-position:center;color:#fff}
-.hero .in{width:100%;padding-block:56px}
-.hero h1{font-family:var(--disp);font-size:clamp(36px,7vw,68px);line-height:1;margin:0 0 12px;letter-spacing:-.02em;max-width:14ch}
-.hero p{font-size:18px;max-width:46ch;margin:0 0 22px;opacity:.92}
-.btn{display:inline-block;background:var(--ac);color:var(--acink);padding:12px 22px;border-radius:var(--r);font-weight:700;text-decoration:none;border:0;font:700 15px var(--body);cursor:pointer}
-.btn.sec{background:transparent;color:inherit;border:1.5px solid currentColor}
-.btn:disabled{opacity:.45;cursor:not-allowed}
-section{padding-block:56px}
-h2{font-family:var(--disp);font-size:clamp(28px,4.4vw,42px);line-height:1.05;margin:0 0 8px;letter-spacing:-.015em}
+.muestra{background:#081511;color:#f1ead8;font-size:12.5px;text-align:center;padding:7px 10px}.muestra a{color:#fff;font-weight:500}
+.in{max-width:1160px;margin:0 auto;padding:0 20px}
+nav .in{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:16px;flex-wrap:wrap}
+.logo{font:800 26px var(--disp);letter-spacing:.04em;text-decoration:none;color:var(--ink)}.logo span{color:var(--ac)}
+nav ul{list-style:none;display:flex;gap:18px;margin:0;padding:0;font-size:14px}nav ul a{color:var(--soft);text-decoration:none}nav ul a:hover{color:var(--ink)}
+.hero .in{display:grid;gap:20px;grid-template-columns:1fr;align-items:center;padding-block:20px 60px}
+@media (min-width:900px){.hero .in{grid-template-columns:1.15fr .85fr}}
+.hero h1{font:800 clamp(46px,8vw,104px)/.92 var(--disp);margin:0 0 18px;letter-spacing:-.03em}
+.hero h1 span{color:var(--ac)}
+.hero p{color:var(--soft);font-size:18px;max-width:44ch;margin:0 0 24px}
+.btn{display:inline-block;background:var(--ac);color:#1a1205;padding:13px 24px;border-radius:12px;font:800 15px var(--disp);text-decoration:none;border:0;cursor:pointer}
+.btn.sec{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.happy{display:inline-flex;gap:8px;align-items:center;margin-top:22px;font-size:14px;color:var(--ac);border:1px dashed var(--ac);border-radius:999px;padding:6px 14px}
+/* firma: pinta 3D que sigue al mouse */
+.escena{perspective:900px;display:grid;place-items:center;min-height:420px}
+.pinta{position:relative;width:200px;height:330px;transform-style:preserve-3d;transition:transform .25s ease-out;transform:rotateY(-14deg) rotateX(6deg)}
+.vaso{position:absolute;inset:0;clip-path:polygon(4% 0,96% 0,84% 100%,16% 100%);background:linear-gradient(90deg,rgba(255,255,255,.18),rgba(255,255,255,.04) 30%,rgba(255,255,255,.12) 60%,rgba(255,255,255,.03));border-radius:6px}
+.liquido{position:absolute;left:0;right:0;bottom:0;height:86%;clip-path:polygon(5.4% 0,94.6% 0,84% 100%,16% 100%);background:linear-gradient(180deg,color-mix(in srgb,var(--cerveza) 80%,#fff),var(--cerveza) 40%,color-mix(in srgb,var(--cerveza) 70%,#000));transition:background .6s}
+.espuma{position:absolute;left:3%;right:3%;top:6%;height:16%;background:radial-gradient(circle at 20% 60%,#fffaf0 22%,transparent 23%),radial-gradient(circle at 50% 40%,#fffaf0 26%,transparent 27%),radial-gradient(circle at 80% 60%,#fffaf0 22%,transparent 23%),#f6eedd;border-radius:40px 40px 10px 10px;transform:translateZ(1px)}
+.burb{position:absolute;bottom:4%;width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.55);animation:sube 3.2s linear infinite}
+@keyframes sube{to{transform:translateY(-240px);opacity:0}}
+.sombra{position:absolute;bottom:-30px;left:10%;right:10%;height:26px;background:radial-gradient(ellipse,rgba(0,0,0,.5),transparent 70%);transform:rotateX(80deg)}
+.etiqueta{position:absolute;top:44%;left:50%;transform:translate(-50%,-50%) translateZ(20px);background:var(--bg);color:var(--ac);font:800 13px var(--disp);letter-spacing:.12em;padding:6px 12px;border-radius:999px;white-space:nowrap}
+section{padding-block:70px}
+h2{font:800 clamp(32px,5vw,58px)/1 var(--disp);margin:0 0 10px;letter-spacing:-.02em}
 .sub{color:var(--soft);margin:0 0 26px;max-width:60ch}
 .alt{background:var(--alt)}
-.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px}
-.fila{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px dashed var(--line)}.fila:last-child{border:0}
-.fila small{display:block;color:var(--soft);font-size:13px}.fila b{white-space:nowrap;font-variant-numeric:tabular-nums}
-.galeria{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
-.galeria img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r);display:block}
+/* bento de canillas */
+.bento{display:grid;gap:14px;grid-template-columns:repeat(2,1fr)}
+@media (min-width:860px){.bento{grid-template-columns:repeat(4,1fr);grid-auto-rows:150px}.can:nth-child(1){grid-column:span 2;grid-row:span 2}.can:nth-child(4){grid-column:span 2}}
+.can{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;cursor:pointer;text-align:left;font:inherit;color:inherit;transition:transform .2s,border-color .2s}
+.can::before{content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:var(--c);opacity:.22;transition:opacity .2s,transform .3s}
+.can:hover,.can[aria-pressed=true]{border-color:var(--c);transform:translateY(-3px)}
+.can:hover::before,.can[aria-pressed=true]::before{opacity:.5;transform:scale(1.2)}
+.can h3{margin:0;font:800 24px var(--disp)}.can:nth-child(1) h3{font-size:clamp(28px,4vw,44px)}
+.can p{margin:2px 0 10px;color:var(--soft);font-size:14px}
+.can .m{display:flex;gap:12px;font-size:13px;color:var(--soft);align-items:center}.can .m b{margin-left:auto;color:var(--ink);font:800 18px var(--disp)}
+.comida{display:grid;gap:4px 40px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.fila{display:flex;justify-content:space-between;gap:14px;padding:13px 0;border-bottom:1px solid var(--line)}.fila small{display:block;color:var(--soft);font-size:13.5px}.fila b{font:800 18px var(--disp);color:var(--ac);white-space:nowrap}
+.agenda{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.ev{border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.ev b{display:block;font:800 42px/1 var(--disp);color:var(--ac);margin-bottom:8px}
+.ev small{color:var(--soft)}
+.galeria{display:grid;gap:12px;grid-template-columns:2fr 1fr 1fr}
+.galeria img{width:100%;height:260px;object-fit:cover;border-radius:var(--r);display:block;background:var(--card)}
+@media (max-width:700px){.galeria{grid-template-columns:1fr 1fr}.galeria img:first-child{grid-column:span 2}}
 .datos{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
 .datos b{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);margin-bottom:4px}
-footer{border-top:1px solid var(--line);padding:22px 0;font-size:13px;color:var(--soft)}
-.wa{position:fixed;right:16px;bottom:16px;width:56px;height:56px;border-radius:50%;background:#25d366;color:#fff;display:grid;place-items:center;box-shadow:0 8px 22px rgba(0,0,0,.25);z-index:20}
-.chip{display:inline-block;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--alt);color:var(--ink);margin-right:6px}
-.aviso{font-size:13px;color:var(--soft);margin-top:12px}
-.ok{margin-top:14px;padding:12px 14px;border-left:4px solid var(--ac);background:var(--card);border-radius:4px}
-input,select,textarea{font:15px var(--body);color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:var(--r);padding:10px 12px;width:100%}
-label{font-size:13px;font-weight:700;color:var(--soft);display:block;margin:10px 0 5px}
-.logo span{color:var(--ac)}h2{text-transform:uppercase;letter-spacing:.01em}.hero h1{text-transform:uppercase;letter-spacing:.01em}
-.canillas{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
-.can{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--c);border-radius:var(--r);padding:16px}
-.can h3{font-family:var(--disp);font-size:24px;margin:0;letter-spacing:.02em;text-transform:uppercase}.can p{margin:4px 0 10px;color:var(--soft)}
-.can .m{display:flex;gap:8px;flex-wrap:wrap;font-size:13px}.can .m span{background:var(--alt);border-radius:999px;padding:3px 9px}.can .m b{margin-left:auto;color:var(--ac);font-size:16px}
-.can.agot{opacity:.45}.can.agot h3::after{content:" · agotada";font-size:14px;color:var(--soft)}
-.happy{background:var(--ac);color:var(--acink);text-align:center;font-weight:700;padding:12px;font-size:17px}
-.ev{display:grid;grid-template-columns:90px 1fr;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}.ev b{font-family:var(--disp);font-size:28px;color:var(--ac);line-height:1}</style></head><body>
+footer{border-top:1px solid var(--line);padding:24px 0;font-size:13px;color:var(--soft)}
+.wa{position:fixed;right:16px;bottom:16px;width:56px;height:56px;border-radius:50%;background:#25d366;color:#fff;display:grid;place-items:center;box-shadow:0 8px 22px rgba(0,0,0,.35);z-index:20}
+@media (prefers-reduced-motion:reduce){.burb{animation:none;display:none}.pinta{transition:none}}
+</style></head><body>
 <div class="muestra">Muestra de diseño · negocio ficticio · fotos de ejemplo (Unsplash) · <a href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20quiero%20una%20web%20as%C3%AD%20para%20mi%20negocio%3A%20">Quiero una web así →</a></div>
 <nav><div class="in"><a class="logo" href="#">REMANSO<span>·</span></a><ul><li><a href="#canillas">Canillas</a></li><li><a href="#comida">Comida</a></li><li><a href="#agenda">Agenda</a></li><li><a href="#donde">Dónde estamos</a></li></ul></div></nav>
-<header class="hero" style="background-image:linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.72)),url('https://images.unsplash.com/photo-1535958636474-b021ee887b13?w=1600&q=72&auto=format&fit=crop')"><div class="in"><h1>Birra fresca a orillas del río.</h1><p>Cervecería artesanal en Tigre. Seis canillas que rotan, hamburguesas y música en vivo los jueves.</p><a class="btn" href="#canillas">Qué hay hoy</a> <a class="btn sec" href="#reservas">Reservar mesa</a></div></header><div class="happy" id="aviso">Happy hour de 18 a 20: segunda pinta al 50%</div><section id="canillas"><div class="in"><h2>Canillas de hoy</h2><p class="sub">Se actualizan desde nuestro panel cada vez que cambiamos un barril.</p><div class="canillas"><article class="can" style="--c:#f5c84c"><h3>Golden Ale</h3><p>Rubia, suave y refrescante</p><div class="m"><span>4.8% alc.</span><span>18 IBU</span><b>$5.200</b></div></article><article class="can" style="--c:#e8902a"><h3>IPA del Delta</h3><p>Lupulada, cítrica y amarga</p><div class="m"><span>6.5% alc.</span><span>55 IBU</span><b>$6.300</b></div></article><article class="can" style="--c:#f0b43c"><h3>Honey</h3><p>Con miel de la isla</p><div class="m"><span>5.5% alc.</span><span>15 IBU</span><b>$5.600</b></div></article><article class="can" style="--c:#b8432c"><h3>Irish Red</h3><p>Roja, caramelo y tostado</p><div class="m"><span>5.2% alc.</span><span>22 IBU</span><b>$5.600</b></div></article><article class="can" style="--c:#3b2a20"><h3>Stout</h3><p>Negra, café y chocolate</p><div class="m"><span>5.8% alc.</span><span>35 IBU</span><b>$5.900</b></div></article><article class="can" style="--c:#e7a33e"><h3>APA</h3><p>Pale ale americana</p><div class="m"><span>5.4% alc.</span><span>38 IBU</span><b>$5.800</b></div></article></div><p class="aviso">Pinta 500 ml. Growler 1 L para llevar: consultá.</p></div></section><section id="comida" class="alt"><div class="in"><h2>Para acompañar</h2><div class="grid"><div class="card"><div class="fila"><span>Hamburguesa Remanso<small>Doble carne, cheddar, panceta y papas</small></span><b>$13.900</b></div><div class="fila"><span>Papas con cheddar<small>Para compartir</small></span><b>$8.500</b></div><div class="fila"><span>Rabas<small>Con limón y alioli</small></span><b>$12.500</b></div></div><div class="card"><div class="fila"><span>Picada para dos<small>Fiambres, quesos y pan</small></span><b>$15.900</b></div><div class="fila"><span>Nachos con guacamole<small>Para compartir</small></span><b>$9.200</b></div><div class="fila"><span>Pizza a la piedra<small>Muzzarella</small></span><b>$10.500</b></div></div></div></div></section>
-<section class="alt" style="padding-top:0"><div class="in"><div class="galeria"><img loading="lazy" src="https://images.unsplash.com/photo-1436076863939-06870fe779c2?w=700&q=72&auto=format&fit=crop" alt=""><img loading="lazy" src="https://images.unsplash.com/photo-1608270586620-248524c67de9?w=700&q=72&auto=format&fit=crop" alt=""><img loading="lazy" src="https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?w=700&q=72&auto=format&fit=crop" alt=""></div></div></section>
-<section id="agenda"><div class="in"><h2>Agenda</h2><div class="ev"><b>JUE</b><span><strong>Música en vivo</strong><br><small style="color:var(--soft)">Bandas de la zona, desde las 21</small></span></div><div class="ev"><b>VIE</b><span><strong>Noche de trivia</strong><br><small style="color:var(--soft)">Equipos de hasta 5, premio en pintas</small></span></div><div class="ev"><b>DOM</b><span><strong>Fútbol en pantalla grande</strong><br><small style="color:var(--soft)">Todos los partidos de la fecha</small></span></div></div></section>
-<section id="reservas" class="alt"><div class="in"><h2>Reservá tu mesa</h2><p class="sub">Para grupos de más de 6, escribinos con un día de anticipación.</p><a class="btn" href="https://wa.me/5491126339350?text=Hola%20Remanso!%20Quiero%20reservar%20una%20mesa%20para%20" target="_blank" rel="noopener">Reservar por WhatsApp</a></div></section>
-<section id="donde"><div class="in"><h2>Dónde estamos</h2><div class="datos"><p><b>Dirección</b>Paseo de ejemplo 300, Tigre</p><p><b>Horarios</b>Martes a domingo de 18 a 2</p><p><b>Mayores de 18</b>Se pide documento</p></div></div></section>
+<header class="hero"><div class="in">
+  <div><h1>Birra fresca a orillas <span>del río.</span></h1><p>Cervecería artesanal en Tigre. Seis canillas que rotan, hamburguesas y música en vivo los jueves.</p>
+  <a class="btn" href="#canillas">Qué hay hoy</a> <a class="btn sec" href="#reservas">Reservar mesa</a><br><span class="happy">● Happy hour de 18 a 20: segunda pinta al 50%</span></div>
+  <div class="escena" id="escena" aria-hidden="true"><div class="pinta" id="pinta"><div class="liquido"></div><div class="vaso"></div><div class="espuma"></div><span class="etiqueta" id="etq">GOLDEN ALE</span><div class="sombra"></div></div></div>
+</div></header>
+<section id="canillas" class="alt"><div class="in"><h2>Canillas de hoy</h2><p class="sub">Tocá una para servirla. Se actualizan desde nuestro panel cada vez que cambiamos un barril.</p>
+<div class="bento" id="bento">
+<button type="button" class="can" style="--c:#f5c84c" aria-pressed="true"><h3>Golden Ale</h3><p>Rubia, suave y refrescante</p><div class="m"><span>4.8% alc.</span><span>18 IBU</span><b>$5.200</b></div></button>
+<button type="button" class="can" style="--c:#e8902a"><h3>IPA del Delta</h3><p>Lupulada, cítrica y amarga</p><div class="m"><span>6.5%</span><span>55 IBU</span><b>$6.300</b></div></button>
+<button type="button" class="can" style="--c:#f0b43c"><h3>Honey</h3><p>Con miel de la isla</p><div class="m"><span>5.5%</span><span>15 IBU</span><b>$5.600</b></div></button>
+<button type="button" class="can" style="--c:#b8432c"><h3>Irish Red</h3><p>Roja, caramelo y tostado</p><div class="m"><span>5.2% alc.</span><span>22 IBU</span><b>$5.600</b></div></button>
+<button type="button" class="can" style="--c:#3b2a20"><h3>Stout</h3><p>Negra, café y chocolate</p><div class="m"><span>5.8%</span><span>35 IBU</span><b>$5.900</b></div></button>
+<button type="button" class="can" style="--c:#e7a33e"><h3>APA</h3><p>Pale ale americana</p><div class="m"><span>5.4%</span><span>38 IBU</span><b>$5.800</b></div></button>
+</div></div></section>
+<section id="comida"><div class="in"><h2>Para acompañar</h2><p class="sub">Cocina abierta hasta la 1.</p><div class="comida">
+<div class="fila"><span>Hamburguesa Remanso<small>Doble carne, cheddar, panceta y papas</small></span><b>$13.900</b></div>
+<div class="fila"><span>Papas con cheddar<small>Para compartir</small></span><b>$8.500</b></div>
+<div class="fila"><span>Rabas<small>Con limón y alioli</small></span><b>$12.500</b></div>
+<div class="fila"><span>Picada para dos<small>Fiambres, quesos y pan</small></span><b>$15.900</b></div>
+<div class="fila"><span>Nachos con guacamole<small>Para compartir</small></span><b>$9.200</b></div>
+<div class="fila"><span>Pizza a la piedra<small>Muzzarella</small></span><b>$10.500</b></div>
+</div></div></section>
+<section style="padding-top:0"><div class="in"><div class="galeria"><img loading="lazy" src="https://images.unsplash.com/photo-1535958636474-b021ee887b13?w=1000&q=72&auto=format&fit=crop" alt="Barra de la cervecería"><img loading="lazy" src="https://images.unsplash.com/photo-1436076863939-06870fe779c2?w=600&q=72&auto=format&fit=crop" alt="Pintas"><img loading="lazy" src="https://images.unsplash.com/photo-1608270586620-248524c67de9?w=600&q=72&auto=format&fit=crop" alt="Cerveza servida"></div></div></section>
+<section id="agenda" class="alt"><div class="in"><h2>Esta semana</h2><div class="agenda">
+<div class="ev"><b>JUE</b><strong>Música en vivo</strong><br><small>Bandas de la zona, desde las 21</small></div>
+<div class="ev"><b>VIE</b><strong>Noche de trivia</strong><br><small>Equipos de hasta 5, premio en pintas</small></div>
+<div class="ev"><b>DOM</b><strong>Fútbol en pantalla grande</strong><br><small>Todos los partidos de la fecha</small></div>
+</div></div></section>
+<section id="reservas"><div class="in"><h2>Guardamos tu mesa</h2><p class="sub">Para grupos de más de 6, escribinos con un día de anticipación.</p><a class="btn" href="https://wa.me/5491126339350?text=Hola%20Remanso!%20Quiero%20reservar%20una%20mesa%20para%20" target="_blank" rel="noopener">Reservar por WhatsApp</a></div></section>
+<section id="donde" class="alt"><div class="in"><h2>Dónde estamos</h2><div class="datos"><p><b>Dirección</b>Paseo de ejemplo 300, Tigre</p><p><b>Horarios</b>Martes a domingo de 18 a 2</p><p><b>Mayores de 18</b>Se pide documento</p></div></div></section>
 <footer><div class="in">Cervecería Remanso · Tigre · Muestra de diseño hecha por <a href="../../">StudioProAr</a></div></footer>
 <a class="wa" href="https://wa.me/5491126339350?text=Hola%20Cervecer%C3%ADa%20Remanso%21%20Vi%20su%20web%20y%20quiero%20consultar%3A%20" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.6 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1a14 14 0 0 1-6.1-5.4c-.6-.9-1-1.9-1-2.9 0-1 .5-1.6.8-1.9.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.4z"/></svg></a>
-<script></script></body></html>
+<script>
+(function(){
+  var p=document.getElementById('pinta'),e=document.getElementById('escena'),etq=document.getElementById('etq'),b=document.getElementById('bento');
+  var quieto=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!quieto){var l=p.querySelector('.liquido');for(var i=0;i<9;i++){var s=document.createElement('i');s.className='burb';s.style.left=(22+Math.random()*56)+'%';s.style.animationDelay=(Math.random()*3.2)+'s';l.appendChild(s);}}
+  if(!quieto&&matchMedia('(hover:hover)').matches){var raf=0;addEventListener('pointermove',function(ev){if(raf)return;raf=requestAnimationFrame(function(){raf=0;var x=ev.clientX/innerWidth-.5,y=ev.clientY/innerHeight-.5;p.style.transform='rotateY('+(x*36-8)+'deg) rotateX('+(-y*18+4)+'deg)';});});}
+  else if(!quieto){var t=0;setInterval(function(){t+=.05;p.style.transform='rotateY('+(Math.sin(t)*20-8)+'deg) rotateX(6deg)';},50);}
+  b.addEventListener('click',function(ev){var c=ev.target.closest('.can');if(!c)return;[].forEach.call(b.children,function(x){x.setAttribute('aria-pressed',x===c);});
+    document.documentElement.style.setProperty('--cerveza',c.style.getPropertyValue('--c'));etq.textContent=c.querySelector('h3').textContent.toUpperCase();
+    if(innerWidth<900)e.scrollIntoView({behavior:quieto?'auto':'smooth',block:'center'});});
+})();
+</script>
+</body></html>

@@ -2,60 +2,111 @@
 <html lang="es-AR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><title>Veterinaria Patitas del Delta · Tigre</title>
 <meta name="description" content="Veterinaria en Tigre: consultas, vacunas y peluquería canina. Sacá turno online.">
+<meta name="theme-color" content="#e9f7f1">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-<style>:root{--bg:#f4fbf8;--alt:#e4f4ee;--card:#fff;--ink:#12332a;--soft:#4f7266;--line:#cfe7de;--ac:#14896b;--acink:#fff;--r:16px;--disp:'Baloo 2',sans-serif;--body:'Inter',sans-serif}
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fdfcf8;--menta:#e3f5ee;--lila:#ece9fb;--card:#fff;--ink:#1e3a34;--soft:#5d7770;--line:#d6ebe3;--ac:#1d9a76;--coral:#ff7a59;--r:22px;--disp:'Fredoka',system-ui,sans-serif;--body:'Lexend',system-ui,sans-serif}
 *{box-sizing:border-box}html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--body)}
-.in{max-width:1080px;margin:0 auto;padding:0 18px}
+body{margin:0;background:var(--bg);color:var(--ink);font:300 16px/1.65 var(--body);overflow-x:hidden}
+b,strong{font-weight:500}
 a{color:var(--ac)}
-.muestra{background:#111;color:#fff;font-size:12.5px;text-align:center;padding:7px 10px}.muestra a{color:#fff;font-weight:700}
-nav{position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}
-nav .in{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:12px;flex-wrap:wrap}
-.logo{font-family:var(--disp);font-size:22px;font-weight:700;letter-spacing:-.01em;text-decoration:none;color:var(--ink)}
-nav ul{list-style:none;display:flex;gap:16px;margin:0;padding:0;font-size:14px;flex-wrap:wrap}nav ul a{color:var(--soft);text-decoration:none}nav ul a:hover{color:var(--ink)}
-.hero{min-height:min(78vh,620px);display:flex;align-items:flex-end;background-size:cover;background-position:center;color:#fff}
-.hero .in{width:100%;padding-block:56px}
-.hero h1{font-family:var(--disp);font-size:clamp(36px,7vw,68px);line-height:1;margin:0 0 12px;letter-spacing:-.02em;max-width:14ch}
-.hero p{font-size:18px;max-width:46ch;margin:0 0 22px;opacity:.92}
-.btn{display:inline-block;background:var(--ac);color:var(--acink);padding:12px 22px;border-radius:var(--r);font-weight:700;text-decoration:none;border:0;font:700 15px var(--body);cursor:pointer}
-.btn.sec{background:transparent;color:inherit;border:1.5px solid currentColor}
+.muestra{background:var(--ink);color:#fff;font-size:12.5px;text-align:center;padding:7px 10px}.muestra a{color:#fff;font-weight:500}
+.in{max-width:1100px;margin:0 auto;padding:0 20px}
+nav{background:var(--menta)}
+nav .in{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:14px;flex-wrap:wrap}
+.logo{font:700 24px var(--disp);text-decoration:none;color:var(--ink)}.logo span{color:var(--ac)}
+nav ul{list-style:none;display:flex;gap:18px;margin:0;padding:0;font-size:14px}nav ul a{color:var(--soft);text-decoration:none}
+.hero{background:var(--menta);position:relative}
+.hero .in{display:grid;gap:30px;grid-template-columns:1fr;align-items:center;padding-block:30px 40px}
+@media (min-width:880px){.hero .in{grid-template-columns:1fr 1fr}}
+.hero h1{font:700 clamp(40px,6.5vw,72px)/1.02 var(--disp);margin:0 0 16px;letter-spacing:-.01em}
+.hero h1 span{color:var(--coral)}
+.hero p{font-size:18px;color:var(--soft);max-width:44ch;margin:0 0 24px}
+.blob{position:relative;aspect-ratio:1;width:100%;max-width:460px;margin:0 auto}
+.blob .foto{position:absolute;inset:6%;border-radius:62% 38% 55% 45%/48% 58% 42% 52%;overflow:hidden;background:#cdeee2;animation:mueve 12s ease-in-out infinite alternate}
+.blob .foto img{width:100%;height:100%;object-fit:cover;display:block}
+@keyframes mueve{to{border-radius:42% 58% 38% 62%/58% 42% 58% 42%}}
+.blob svg{position:absolute;width:64px;height:64px;color:var(--coral)}
+.blob .p1{top:0;right:6%;transform:rotate(18deg)}.blob .p2{bottom:4%;left:0;transform:rotate(-20deg);color:var(--ac)}
+.burbuja{position:absolute;bottom:12%;right:2%;background:#fff;border-radius:18px;padding:10px 14px;font-size:14px;box-shadow:0 14px 30px -14px rgba(30,58,52,.35)}
+.burbuja b{display:block;font-family:var(--disp);font-size:18px;color:var(--ac)}
+.btn{display:inline-block;background:var(--coral);color:#fff;padding:13px 24px;border-radius:999px;font:600 16px var(--disp);text-decoration:none;border:0;cursor:pointer;box-shadow:0 6px 0 #d65f41;transition:transform .15s,box-shadow .15s}
+.btn:active{transform:translateY(4px);box-shadow:0 2px 0 #d65f41}
+.btn.sec{background:#fff;color:var(--ink);box-shadow:0 6px 0 var(--line)}
 .btn:disabled{opacity:.45;cursor:not-allowed}
-section{padding-block:56px}
-h2{font-family:var(--disp);font-size:clamp(28px,4.4vw,42px);line-height:1.05;margin:0 0 8px;letter-spacing:-.015em}
+.ola{display:block;width:100%;height:60px}
+section{padding-block:60px}
+h2{font:700 clamp(30px,4.6vw,46px)/1.05 var(--disp);margin:0 0 8px}
 .sub{color:var(--soft);margin:0 0 26px;max-width:60ch}
-.alt{background:var(--alt)}
-.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px}
-.fila{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px dashed var(--line)}.fila:last-child{border:0}
-.fila small{display:block;color:var(--soft);font-size:13px}.fila b{white-space:nowrap;font-variant-numeric:tabular-nums}
-.galeria{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
-.galeria img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r);display:block}
-.datos{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-.datos b{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);margin-bottom:4px}
-footer{border-top:1px solid var(--line);padding:22px 0;font-size:13px;color:var(--soft)}
-.wa{position:fixed;right:16px;bottom:16px;width:56px;height:56px;border-radius:50%;background:#25d366;color:#fff;display:grid;place-items:center;box-shadow:0 8px 22px rgba(0,0,0,.25);z-index:20}
-.chip{display:inline-block;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--alt);color:var(--ink);margin-right:6px}
+.servs{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.serv{background:var(--card);border:2px solid var(--line);border-radius:var(--r);padding:18px 20px;display:flex;gap:14px;align-items:flex-start}
+.serv .ic{flex:none;width:46px;height:46px;border-radius:14px;background:var(--lila);display:grid;place-items:center;font-size:22px}
+.serv h3{margin:0;font:600 19px var(--disp)}.serv p{margin:2px 0 0;color:var(--soft);font-size:14.5px}.serv b{color:var(--ac)}
+.lila{background:var(--lila)}
+.turno{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:880px){.turno{grid-template-columns:repeat(3,1fr)}}
+.pt{background:#fff;border-radius:var(--r);padding:20px;position:relative}
+.pt .n{position:absolute;top:-14px;left:18px;width:34px;height:34px;border-radius:50%;background:var(--coral);color:#fff;display:grid;place-items:center;font:700 17px var(--disp)}
+.pt h3{margin:8px 0 10px;font:600 18px var(--disp)}
+input,select{font:15px var(--body);color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:14px;padding:10px 12px;width:100%}
+label{font-size:13px;font-weight:500;color:var(--soft);display:block;margin:10px 0 5px}
+.dias,.horas{display:flex;flex-wrap:wrap;gap:6px}
+.dias button,.horas button{border:2px solid var(--line);background:var(--bg);color:var(--ink);border-radius:14px;padding:7px 10px;font:500 14px var(--body);cursor:pointer;min-width:58px}
+.dias button small{display:block;font-size:11.5px;color:var(--soft)}
+.dias button[aria-pressed=true],.horas button[aria-pressed=true]{background:var(--ac);border-color:var(--ac);color:#fff}
+.dias button[aria-pressed=true] small{color:#e3f5ee}
+.horas button:disabled{opacity:.35;text-decoration:line-through;cursor:not-allowed}
+.confirmar{margin-top:20px;background:#fff;border-radius:var(--r);padding:18px 20px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px}
+#res{margin:0;font-weight:500}
 .aviso{font-size:13px;color:var(--soft);margin-top:12px}
-.ok{margin-top:14px;padding:12px 14px;border-left:4px solid var(--ac);background:var(--card);border-radius:4px}
-input,select,textarea{font:15px var(--body);color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:var(--r);padding:10px 12px;width:100%}
-label{font-size:13px;font-weight:700;color:var(--soft);display:block;margin:10px 0 5px}
-.logo span{color:var(--ac)}
-.ag{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
-.dias,.horas{display:flex;flex-wrap:wrap;gap:6px}.dias button,.horas button{border:1.5px solid var(--line);background:var(--card);border-radius:10px;padding:8px 11px;font:700 13px var(--body);color:var(--ink);cursor:pointer;min-width:66px}
-.dias button small{display:block;font-weight:500;font-size:11px;color:var(--soft)}.dias button[aria-pressed=true],.horas button[aria-pressed=true]{background:var(--ac);border-color:var(--ac);color:#fff}.dias button[aria-pressed=true] small{color:#fff}
-.horas button:disabled{opacity:.35;text-decoration:line-through;cursor:not-allowed}</style></head><body>
+.ok{margin-top:14px;padding:12px 14px;border-left:4px solid var(--ac);background:#fff;border-radius:8px}
+.galeria{display:grid;gap:12px;grid-template-columns:repeat(3,1fr)}
+.galeria img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:50%;display:block;border:6px solid #fff;box-shadow:0 10px 24px -14px rgba(30,58,52,.4)}
+.galeria img:nth-child(2){border-radius:30px}
+.datos{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.datos b{display:block;font:600 15px var(--disp);color:var(--ac)}
+footer{background:var(--menta);padding:24px 0;font-size:13px;color:var(--soft)}
+.wa{position:fixed;right:16px;bottom:16px;width:56px;height:56px;border-radius:50%;background:#25d366;color:#fff;display:grid;place-items:center;box-shadow:0 8px 22px rgba(0,0,0,.2);z-index:20}
+/* firma: huellitas que siguen el scroll */
+#huellas{position:fixed;left:10px;top:0;bottom:0;width:40px;pointer-events:none;z-index:5}
+#huellas svg{position:absolute;width:22px;height:22px;color:var(--coral);opacity:0;transition:opacity .4s}
+#huellas svg.on{opacity:.55}
+@media (max-width:700px){#huellas{display:none}}
+@media (prefers-reduced-motion:reduce){.blob .foto{animation:none}#huellas{display:none}}
+</style></head><body>
 <div class="muestra">Muestra de diseño · negocio ficticio · fotos de ejemplo (Unsplash) · <a href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20quiero%20una%20web%20as%C3%AD%20para%20mi%20negocio%3A%20">Quiero una web así →</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="pata" viewBox="0 0 24 24"><g fill="currentColor"><ellipse cx="12" cy="16" rx="5" ry="4.2"/><circle cx="6" cy="10" r="2.2"/><circle cx="10" cy="6.5" r="2.2"/><circle cx="14.5" cy="6.5" r="2.2"/><circle cx="18.5" cy="10" r="2.2"/></g></symbol></svg>
+<div id="huellas" aria-hidden="true"></div>
 <nav><div class="in"><a class="logo" href="#">Patitas <span>del Delta</span></a><ul><li><a href="#servicios">Servicios</a></li><li><a href="#turnos">Sacá turno</a></li><li><a href="#donde">Dónde estamos</a></li></ul></div></nav>
-<header class="hero" style="background-image:linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.72)),url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=1600&q=72&auto=format&fit=crop')"><div class="in"><h1>Tu mascota, atendida como de la familia.</h1><p>Consultas, vacunas y peluquería canina en Tigre. Sacá turno online en un minuto, sin llamar.</p><a class="btn" href="#turnos">Sacar turno</a> <a class="btn sec" href="#servicios">Ver servicios</a></div></header><section id="servicios"><div class="in"><h2>Servicios</h2><p class="sub">Atendemos perros y gatos. Urgencias: escribinos por WhatsApp.</p>
-<div class="grid"><div class="card"><h3>Clínica</h3><div class="fila"><span>Consulta clínica<small>30 min</small></span><b>$14.000</b></div><div class="fila"><span>Vacunación<small>30 min</small></span><b>$12.500</b></div><div class="fila"><span>Control de cachorro<small>30 min</small></span><b>$11.000</b></div><div class="fila"><span>Consulta felina<small>30 min</small></span><b>$14.000</b></div></div><div class="card"><h3>Estética</h3><div class="fila"><span>Peluquería canina<small>90 min</small></span><b>$22.000</b></div><div class="fila"><span>Baño y corte de uñas<small>60 min</small></span><b>$15.000</b></div></div></div></div></section>
-<section class="alt"><div class="in"><div class="galeria"><img loading="lazy" src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=700&q=72&auto=format&fit=crop" alt=""><img loading="lazy" src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=700&q=72&auto=format&fit=crop" alt=""><img loading="lazy" src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=700&q=72&auto=format&fit=crop" alt=""></div></div></section>
-<section id="turnos"><div class="in"><h2>Sacá turno</h2><p class="sub">Elegí el servicio, el día y un horario libre. El turno queda confirmado al instante.</p>
-<div class="ag"><div class="card"><label for="sv">Servicio</label><select id="sv"></select><label for="mas">Nombre de tu mascota</label><input id="mas" maxlength="30" placeholder="Ej: Rocco"><label for="due">Tu nombre</label><input id="due" maxlength="40" placeholder="Nombre y apellido"></div>
-<div class="card"><label>Día</label><div class="dias" id="dias"></div><label>Horario</label><div class="horas" id="horas"></div></div></div>
-<p id="res" style="margin:16px 0 10px;font-weight:600"></p><button class="btn" id="conf" type="button" disabled>Confirmar turno</button><div id="ok"></div>
+<header class="hero"><div class="in">
+  <div><h1>Tu mascota, atendida como <span>de la familia.</span></h1><p>Consultas, vacunas y peluquería canina en Tigre. Sacá turno online en un minuto, sin llamar.</p><a class="btn" href="#turnos">Sacar turno</a> <a class="btn sec" href="#servicios">Ver servicios</a></div>
+  <div class="blob"><div class="foto"><img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=1000&q=72&auto=format&fit=crop" alt="Dos perros contentos"></div>
+    <svg class="p1"><use href="#pata"/></svg><svg class="p2"><use href="#pata"/></svg>
+    <div class="burbuja"><b>+1.200</b>mascotas atendidas (ejemplo)</div></div>
+</div></header>
+<svg class="ola" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0,0 C360,60 1080,0 1440,40 L1440,0 Z" fill="#e3f5ee"/></svg>
+<section id="servicios"><div class="in"><h2>¿En qué te ayudamos?</h2><p class="sub">Atendemos perros y gatos. Urgencias: escribinos por WhatsApp.</p>
+<div class="servs">
+<div class="serv"><span class="ic">🩺</span><div><h3>Consulta clínica</h3><p>30 min · <b>$14.000</b></p></div></div>
+<div class="serv"><span class="ic">💉</span><div><h3>Vacunación</h3><p>30 min · <b>$12.500</b></p></div></div>
+<div class="serv"><span class="ic">🐶</span><div><h3>Control de cachorro</h3><p>30 min · <b>$11.000</b></p></div></div>
+<div class="serv"><span class="ic">🐱</span><div><h3>Consulta felina</h3><p>30 min · <b>$14.000</b></p></div></div>
+<div class="serv"><span class="ic">✂️</span><div><h3>Peluquería canina</h3><p>90 min · <b>$22.000</b></p></div></div>
+<div class="serv"><span class="ic">🛁</span><div><h3>Baño y corte de uñas</h3><p>60 min · <b>$15.000</b></p></div></div>
+</div></div></section>
+<svg class="ola" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0,60 C420,0 1020,60 1440,10 L1440,60 Z" fill="#ece9fb"/></svg>
+<section id="turnos" class="lila"><div class="in"><h2>Sacá turno en 3 pasos</h2><p class="sub">El turno queda confirmado al instante y te lo recordamos por WhatsApp el día anterior.</p>
+<div class="turno">
+  <div class="pt"><span class="n">1</span><h3>¿Qué necesita?</h3><label for="sv">Servicio</label><select id="sv"></select><label for="mas">Nombre de tu mascota</label><input id="mas" maxlength="30" placeholder="Ej: Rocco"><label for="due">Tu nombre</label><input id="due" maxlength="40" placeholder="Nombre y apellido"></div>
+  <div class="pt"><span class="n">2</span><h3>¿Qué día?</h3><div class="dias" id="dias"></div></div>
+  <div class="pt"><span class="n">3</span><h3>¿A qué hora?</h3><div class="horas" id="horas"></div></div>
+</div>
+<div class="confirmar"><p id="res"></p><button class="btn" id="conf" type="button" disabled>Confirmar turno</button></div><div id="ok"></div>
 <p class="aviso">Muestra: el turno se guarda solo en tu navegador y lo ves en el <a href="../panel/?n=veterinaria">panel de ejemplo de la veterinaria</a>.</p></div></section>
-<section id="donde" class="alt"><div class="in"><h2>Dónde estamos</h2><div class="datos"><p><b>Dirección</b>Calle de ejemplo 800, Tigre</p><p><b>Horarios</b>Lunes a viernes 9 a 20 · Sábados 9 a 13</p><p><b>Urgencias</b>Por WhatsApp, todos los días</p></div></div></section>
+<svg class="ola" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true" style="background:#ece9fb"><path d="M0,60 C360,0 1080,60 1440,20 L1440,60 Z" fill="#fdfcf8"/></svg>
+<section><div class="in"><div class="galeria"><img loading="lazy" src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=600&q=72&auto=format&fit=crop" alt="Perro en consulta"><img loading="lazy" src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600&q=72&auto=format&fit=crop" alt="Gato"><img loading="lazy" src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600&q=72&auto=format&fit=crop" alt="Cachorro"></div></div></section>
+<section id="donde" style="padding-top:10px"><div class="in"><h2>Dónde estamos</h2><div class="datos"><p><b>Dirección</b>Calle de ejemplo 800, Tigre</p><p><b>Horarios</b>Lunes a viernes 9 a 20 · Sábados 9 a 13</p><p><b>Urgencias</b>Por WhatsApp, todos los días</p></div></div></section>
 <footer><div class="in">Veterinaria Patitas del Delta · Tigre · Muestra de diseño hecha por <a href="../../">StudioProAr</a></div></footer>
 <a class="wa" href="https://wa.me/5491126339350?text=Hola%20Veterinaria%20Patitas%20del%20Delta%21%20Vi%20su%20web%20y%20quiero%20consultar%3A%20" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.6 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1a14 14 0 0 1-6.1-5.4c-.6-.9-1-1.9-1-2.9 0-1 .5-1.6.8-1.9.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.4z"/></svg></a>
 <script>const S=[{"n": "Consulta clínica", "m": 30, "p": "14.000"}, {"n": "Vacunación", "m": 30, "p": "12.500"}, {"n": "Control de cachorro", "m": 30, "p": "11.000"}, {"n": "Peluquería canina", "m": 90, "p": "22.000"}, {"n": "Baño y corte de uñas", "m": 60, "p": "15.000"}, {"n": "Consulta felina", "m": 30, "p": "14.000"}];
@@ -78,4 +129,11 @@ $('horas').onclick=e=>{const b=e.target.closest('[data-h]');if(b&&!b.disabled){s
 $('conf').onclick=()=>{if(sel.h===null)return;const s=S[sel.s],mas=($('mas').value.trim()||'Mascota de prueba').slice(0,30),due=($('due').value.trim()||'Cliente de prueba').slice(0,40);
  const l=guard();l.push({id:Date.now(),fecha:iso(sel.d),ini:sel.h,min:s.m,servicio:s.n,nombre:mas+' ('+due+')'});try{localStorage.setItem(KEY,JSON.stringify(l));}catch(e){}
  $('ok').innerHTML='<div class="ok">Turno confirmado ✓ '+s.n+' para '+mas.replace(/[<>&]/g,'')+', '+D[sel.d.getDay()]+' '+sel.d.getDate()+'/'+(sel.d.getMonth()+1)+' a las '+hh(sel.h)+'. Te recordamos por WhatsApp el día anterior. <a href="../panel/?n=veterinaria#turnos">Ver cómo lo ve la veterinaria →</a></div>';sel.h=null;pintar();};
-pintar();</script></body></html>
+pintar();
+/* firma: huellitas que van apareciendo al bajar */
+(function(){var c=document.getElementById('huellas');if(!c||matchMedia('(prefers-reduced-motion: reduce)').matches)return;var N=14,h='';
+for(var i=0;i<N;i++)h+='<svg style="top:'+(6+i*6.5)+'%;left:'+(i%2?18:2)+'px;transform:rotate('+(i%2?14:-8)+'deg)"><use href="#pata"/></svg>';c.innerHTML=h;var p=[].slice.call(c.children),t=false;
+function f(){t=false;var d=document.documentElement,k=Math.round(d.scrollTop/Math.max(1,d.scrollHeight-innerHeight)*N);p.forEach(function(s,i){s.classList.toggle('on',i<k);});}
+addEventListener('scroll',function(){if(!t){t=true;requestAnimationFrame(f);}},{passive:true});f();})();
+</script>
+</body></html>
