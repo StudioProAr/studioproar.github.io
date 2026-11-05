@@ -45,6 +45,7 @@
     mailOk: function (m) { return !m || /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(m); },
     /* Link "Cancelar mi turno" que va en el mail de confirmación */
     linkBaja: function (id, o) {
+      if (!R.ultimaClave) return '';
       var u = new URL('../comun/baja.html', location.href), q = { s: cfg.sitio, id: id, k: R.ultimaClave, f: o.fecha, i: o.ini, n: o.negocio || '', sv: o.servicio || '', c: R.modo === 'demo' ? cfg.clave : '' };
       Object.keys(q).forEach(function (x) { if (q[x] !== '' && q[x] != null) u.searchParams.set(x, q[x]); });
       if (R.modo === 'real') u.searchParams.set('real', '1');
@@ -74,7 +75,11 @@
       var k = clave(); R.ultimaClave = k;
       if (cfg.col === 'turnos') { for (var m = o.ini; m < o.ini + o.min; m += cfg.paso) up[base + '/ocupado/' + o.fecha + '/' + m] = id; up[base + '/claves/' + id] = k; }
       var t = new Promise(function (_, no) { setTimeout(function () { no(new Error('sin conexión')); }, 10000); });
-      return Promise.race([db.ref().update(up), t]).then(function () { return id; }, function (e) {
+      var ir = function (u) { return Promise.race([db.ref().update(u), t]); };
+      return ir(up).catch(function (e) { /* reglas viejas sin "claves": reintenta sin el link de baja */
+        if (!/permission/i.test(e && e.message) || !up[base + '/claves/' + id]) throw e;
+        delete up[base + '/claves/' + id]; R.ultimaClave = null; return ir(up);
+      }).then(function () { return id; }, function (e) {
         throw new Error(/permission/i.test(e && e.message) ? 'Ese horario se acaba de ocupar. Elegí otro.' : 'No se pudo guardar. Revisá la conexión.');
       });
     }
