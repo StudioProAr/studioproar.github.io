@@ -4,7 +4,7 @@
 <meta name="description" content="Gimnasio en Victoria: musculación, funcional y clases. Pase libre, credencial en el celular y clase de prueba gratis.">
 <meta name="theme-color" content="#0d0f12">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#0d0f12;--alt:#15181d;--card:#1b1f25;--ink:#f3f5f7;--soft:#a3abb6;--line:#2a3039;--ac:#c6ff3d;--acink:#0d0f12;--r:14px;--disp:'Anton',Impact,'Arial Narrow',sans-serif,sans-serif;--body:'Inter',sans-serif}
 *{box-sizing:border-box}html{scroll-behavior:smooth}
@@ -66,6 +66,18 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--soft);font-si
 .wa{position:fixed;right:16px;bottom:16px;width:56px;height:56px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 10px 24px rgba(0,0,0,.4);z-index:20}
 .rv{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}.rv.vis{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}}
+/* estilo propio: brutalista */
+:root{--r:0px}
+body{background-image:repeating-linear-gradient(90deg,transparent 0 calc(100%/12 - 1px),rgba(255,255,255,.05) calc(100%/12 - 1px) calc(100%/12))}
+.hero h1,h2{text-transform:uppercase;letter-spacing:-.01em;line-height:.9}
+.hero h1{font-size:clamp(56px,13vw,170px)}
+.lead,.cifras,.precio,.dias{font-family:"Space Mono",ui-monospace,monospace}
+.card,.clase,.btn{border-radius:0!important;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ac);transition:background .15s,color .15s,transform .15s,box-shadow .15s}
+.card:hover,.clase:hover{background:var(--ac);color:var(--acink);transform:translate(-3px,-3px);box-shadow:9px 9px 0 var(--ink)}
+.card:hover *,.clase:hover *{color:var(--acink)!important}
+.btn:hover{background:var(--ink);color:var(--bg);box-shadow:0 0 0 var(--ac);transform:translate(4px,4px)}
+.galeria img{border-radius:0!important;filter:grayscale(1) contrast(1.15);transition:filter .3s}
+.galeria img:hover{filter:none}
 </style></head>
 <body>
 <div class="muestra">Muestra de diseño · negocio ficticio · fotos de ejemplo (Unsplash) · <a href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20quiero%20una%20web%20as%C3%AD%20para%20mi%20gimnasio%3A%20">Quiero una web así →</a></div>
