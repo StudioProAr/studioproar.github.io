@@ -15,11 +15,10 @@
   }
 
   // ---------- Botones de WhatsApp (en la demo no abren el WhatsApp real) ----------
-  document.querySelectorAll('[data-wa]').forEach(function (a) {
-    a.addEventListener('click', function (ev) {
-      ev.preventDefault(); RD.evento('wa', a.dataset.wa);
-      avisar('En la web real esto abre el WhatsApp de Reina Dabi. El clic quedó contado en el panel.');
-    });
+  document.addEventListener('click', function (ev) {
+    var a = ev.target.closest('[data-wa]'); if (!a) return;
+    ev.preventDefault(); RD.evento('wa', a.dataset.wa);
+    avisar('En la web real esto abre el WhatsApp de Reina Dabi. El clic quedó contado en el panel.');
   });
 
   // ---------- Galería con detalles (lo que antes era "Hacelo tuyo") ----------
@@ -35,25 +34,21 @@
     lila: ['mariposas'], rojas: [], perfumadas: ['perfumadas', 'corona'], verde_blanco: ['mariposas'],
     azul: ['bombones'], mariposa_rosa: ['mariposas'], amarillo: ['cinta'], rosa: ['cinta', 'mariposas']
   };
-  var zoom = $('zoom');
   document.querySelectorAll('#galeria figure').forEach(function (fig) {
-    var img = fig.querySelector('img'), id = (img.getAttribute('src').match(/([\w]+)\.jpg/) || [])[1];
-    fig.tabIndex = 0; fig.setAttribute('role', 'button'); fig.setAttribute('aria-label', 'Ver ' + (fig.textContent || 'ramo').trim());
-    function abrir() {
-      zoom.querySelector('img').src = img.src; zoom.querySelector('img').alt = img.alt;
-      zoom.querySelector('h3').textContent = fig.textContent.trim();
-      var ds = FOTO_DET[id] || [];
-      $('zoom-det').innerHTML = ds.length ? ds.map(function (k) { var d = DET[k]; return '<div class="det"><span class="ico">' + d[0] + '</span><div><b>' + d[1] + '</b><p>' + d[2] + '</p></div></div>'; }).join('') : '<p style="color:var(--gris)">Pedilo en los colores y la cantidad que quieras.</p>';
-      if (zoom.showModal) zoom.showModal(); else zoom.setAttribute('open', '');
-      RD.evento('foto', id);
+    var img = fig.querySelector('img'), cap = fig.querySelector('figcaption'), id = (img.getAttribute('src').match(/([\w]+)\.jpg/) || [])[1];
+    var ds = FOTO_DET[id] || [], titulo = cap.textContent.trim();
+    cap.innerHTML = RD.esc(titulo) + (ds.length ? '<span class="ver">Tocá para ver detalles</span>' : '') +
+      '<div class="mas"><div>' + ds.map(function (k) { var d = DET[k]; return '<div class="det"><span>' + d[0] + '</span><div><b>' + d[1] + '</b><span>' + d[2] + '</span></div></div>'; }).join('') + '</div></div>';
+    fig.tabIndex = 0; fig.setAttribute('role', 'button'); fig.setAttribute('aria-expanded', 'false'); fig.setAttribute('aria-label', titulo + (ds.length ? ': ver detalles' : ''));
+    function alternar() {
+      var abrir = !fig.classList.contains('abierta');
+      document.querySelectorAll('#galeria figure.abierta').forEach(function (f) { f.classList.remove('abierta'); f.setAttribute('aria-expanded', 'false'); });
+      if (abrir && ds.length) { fig.classList.add('abierta'); fig.setAttribute('aria-expanded', 'true'); setTimeout(function () { fig.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 60); }
+      if (abrir) RD.evento('foto', id);
     }
-    fig.addEventListener('click', abrir);
-    fig.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrir(); } });
+    fig.addEventListener('click', alternar);
+    fig.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); alternar(); } });
   });
-  function cerrarZoom() { if (zoom.close) zoom.close(); else zoom.removeAttribute('open'); }
-  $('zoom-x').addEventListener('click', cerrarZoom);
-  $('zoom-armar').addEventListener('click', cerrarZoom);
-  zoom.addEventListener('click', function (e) { if (e.target === zoom) cerrarZoom(); });
 
   // ---------- Armador de ramo ----------
   var EXTRAS = ['🦋 Mariposas', '🎀 Moño', '🤍 Perlas', '👑 Corona', '🍫 Bombones', '💡 Luces', '🌸 Perfumadas', '💌 Tarjeta'];
@@ -170,10 +165,16 @@
   if (new URLSearchParams(location.search).has('demo')) $('testimonios').hidden = false;
 
   // ---------- Banner y pausa (se manejan desde el panel) ----------
+  var WA_SVG = '<svg viewBox="0 0 32 32" fill="#25d366" aria-hidden="true"><path d="M16 3C9 3 3.3 8.6 3.3 15.6c0 2.3.6 4.5 1.8 6.4L3 29l7.2-1.9c1.8 1 3.8 1.5 5.9 1.5 7 0 12.7-5.6 12.7-12.6S23 3 16 3zm0 23.1c-1.9 0-3.8-.5-5.4-1.5l-.4-.2-4.3 1.1 1.1-4.2-.3-.4c-1.1-1.7-1.6-3.6-1.6-5.6C5.1 9.8 10 5 16 5s10.9 4.8 10.9 10.6S22 26.1 16 26.1z"/></svg>';
   function pintarBanner(texto) {
     var el = $('banner'), pista = document.createElement('div');
     pista.className = 'banner-pista';
-    function item(oculto) { var s = document.createElement('span'); s.className = 'banner-item'; if (oculto) s.setAttribute('aria-hidden', 'true'); s.append('✨ ' + texto); return s; }
+    function item(oculto) {
+      var s = document.createElement('span'); s.className = 'banner-item'; if (oculto) s.setAttribute('aria-hidden', 'true');
+      s.append('✨ ' + texto + ' ');
+      var a = document.createElement('a'); a.href = '#'; a.dataset.wa = 'banner'; a.innerHTML = WA_SVG + ' Pedí tu ramo'; if (oculto) a.tabIndex = -1;
+      s.append(a); return s;
+    }
     el.replaceChildren(pista); el.hidden = false;
     var primero = item(false); pista.append(primero);
     var w = primero.getBoundingClientRect().width || 320, porMitad = Math.max(1, Math.ceil(el.clientWidth / w));
@@ -181,9 +182,9 @@
     for (i = 0; i < porMitad; i++) pista.append(item(true));
     el.style.setProperty('--dur', Math.max(10, Math.round((w * porMitad) / 60)) + 's');
   }
-  var cfg = DB.config || {};
-  if (cfg.banner) { pintarBanner(cfg.banner); var tB = 0; addEventListener('resize', function () { clearTimeout(tB); tB = setTimeout(function () { pintarBanner(cfg.banner); }, 250); }); }
-  else $('barra').classList.add('solo');
+  var cfg = DB.config || {}, txtBanner = cfg.banner || 'Ramos de flores perfumadas, hechos a mano en San Fernando';
+  pintarBanner(txtBanner);
+  var tB = 0; addEventListener('resize', function () { clearTimeout(tB); tB = setTimeout(function () { pintarBanner(txtBanner); }, 250); });
   if (cfg.abierto === false) { $('arm-grid').hidden = true; $('pausa').hidden = false; }
 
   actualizar();

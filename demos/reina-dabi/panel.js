@@ -229,7 +229,7 @@
     var u = b.dataset.copy, ok = function () { $('eLinkMsg').textContent = 'Link copiado.'; }, mal = function () { $('eLinkMsg').textContent = 'No se pudo copiar: mantené apretado el link y copialo a mano.'; };
     try { navigator.clipboard.writeText(u).then(ok, mal); } catch (x) { mal(); }
   };
-  $('eBanOk').onclick = function () { DB.config.banner = $('eBan').value.trim(); guardar(); $('eBanMsg').textContent = DB.config.banner ? 'Banner publicado. Ya se ve en la web.' : 'Banner sacado: queda solo "Pedí tu ramo".'; };
+  $('eBanOk').onclick = function () { DB.config.banner = $('eBan').value.trim(); guardar(); $('eBanMsg').textContent = DB.config.banner ? 'Banner publicado. Ya se ve en la web.' : 'Banner sin texto propio: muestra el texto de siempre con "Pedí tu ramo".'; };
   $('eAb').onchange = function () { DB.config.abierto = this.checked; guardar(); $('eAbMsg').textContent = this.checked ? 'La web vuelve a tomar pedidos.' : 'Pedidos web pausados: la web avisa que escriban por WhatsApp.'; };
 
   function badge() { var n = DB.solicitudes.length; $('nSol').hidden = !n; $('nSol').textContent = n; }
