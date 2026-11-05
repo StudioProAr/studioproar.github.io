@@ -148,7 +148,7 @@ footer .in{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;pa
         <div><span class="ag-et" id="ag-et-hora">3. Horario</span><div class="ag-horas" id="ag-horas" role="group" aria-labelledby="ag-et-hora"></div></div>
       </div>
       <p class="ag-res" id="ag-res" role="status"></p>
-      <div class="ag-conf"><input id="ag-nom" type="text" maxlength="40" placeholder="Tu nombre" autocomplete="given-name" aria-label="Tu nombre"><button class="btn btn-a" id="ag-ok" type="button" disabled>Confirmar turno</button></div>
+      <div class="ag-conf"><input id="ag-nom" type="text" maxlength="40" placeholder="Tu nombre" autocomplete="given-name" aria-label="Tu nombre"><input id="ag-cel" type="tel" inputmode="numeric" maxlength="10" placeholder="Celular (opcional)" autocomplete="tel-national" aria-label="Tu celular"><button class="btn btn-a" id="ag-ok" type="button" disabled>Confirmar turno</button></div>
       <p class="ag-listo" id="ag-listo" role="status" hidden></p>
       <p class="aviso">Muestra de diseño: los turnos que confirmes se guardan solo en tu navegador y los ves en el <a href="../panel/?n=salon">panel de ejemplo del salón</a>. En la web real quedan en la agenda del salón.</p>
     </div>
@@ -234,6 +234,10 @@ footer .in{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;pa
 
 <footer><div class="in"><span>Salón Quebracho · San Fernando</span><span>Sitio de muestra</span></div></footer>
 
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="../comun/fb-demos.js"></script>
+<script src="../comun/reservas.js"></script>
 <script>
 const S={
  "Cabello":[
@@ -304,8 +308,9 @@ ver(0);
     return (tomados[key]=s);
   }
   const KEY='sq_turnos';
-  const guardados=()=>{try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(e){return []}};
-  const ocupado=(d,m)=>ocupados(d).has(m)||guardados().some(t=>t.fecha===iso(d)&&m>=t.ini&&m<t.ini+t.min);
+  Reservas.iniciar({sitio:'salon',col:'turnos',clave:KEY,paso:PASO});
+  const guardados=()=>Reservas.lista();
+  const ocupado=(d,m)=>(Reservas.modo==='demo'&&ocupados(d).has(m))||guardados().some(t=>t.fecha===iso(d)&&m>=t.ini&&m<t.ini+t.min);
   const ahora=()=>{const n=new Date();return n.getHours()*60+n.getMinutes();};
 
   $('ag-serv').innerHTML=k.map(cat=>'<optgroup label="'+cat+'">'+servicios.map((x,i)=>x.cat===cat?'<option value="'+i+'">'+x.nombre+' · '+x.dur+'</option>':'').join('')+'</optgroup>').join('');
@@ -338,14 +343,16 @@ ver(0);
   $('ag-ok').addEventListener('click',()=>{
     if(sel.h===null)return;
     const s=servicios[sel.s],nom=($('ag-nom').value.trim()||'Cliente de prueba').slice(0,40);
-    const t={id:Date.now(),fecha:iso(sel.d),ini:sel.h,min:s.min,servicio:s.nombre,dur:s.dur,precio:s.precio,nombre:nom,estado:'confirmado'};
-    const l=guardados();l.push(t);
-    try{localStorage.setItem(KEY,JSON.stringify(l));}catch(e){}
-    const fecha=DIAS[sel.d.getDay()]+' '+sel.d.getDate()+'/'+(sel.d.getMonth()+1);
-    const ok=$('ag-listo');ok.hidden=false;
-    ok.innerHTML='Turno confirmado ✓ '+s.nombre+' · '+fecha+' a las '+hhmm(sel.h)+', a nombre de '+nom.replace(/[<>&"]/g,'')+'. <a href="../panel/?n=salon#turnos">Ver cómo lo ve el salón en su panel →</a>';
-    sel.h=null;pintar();
+    const cel=$('ag-cel').value.replace(/\D/g,'').slice(0,10);
+    const t={id:Date.now(),fecha:iso(sel.d),ini:sel.h,min:s.min,servicio:s.nombre,dur:s.dur,precio:String(s.precio),nombre:nom,cel:cel,estado:'confirmado'};
+    const fecha=DIAS[sel.d.getDay()]+' '+sel.d.getDate()+'/'+(sel.d.getMonth()+1),h0=sel.h,ok=$('ag-listo'),bt=$('ag-ok');
+    bt.disabled=true;ok.hidden=false;ok.textContent='Guardando…';
+    Reservas.guardar(t).then(()=>{
+      ok.innerHTML='Turno confirmado ✓ '+s.nombre+' · '+fecha+' a las '+hhmm(h0)+', a nombre de '+nom.replace(/[<>&"]/g,'')+'. '+(Reservas.modo==='real'?'<a href="../mi-negocio/?s=salon">Ver cómo le llega al salón →</a>':'<a href="../panel/?n=salon#turnos">Ver cómo lo ve el salón en su panel →</a>');
+      sel.h=null;pintar();
+    }).catch(e=>{ok.textContent=e.message;bt.disabled=false;pintar();});
   });
+  Reservas.alCambiar(pintar);
   $('ag-serv').addEventListener('change',e=>{sel.s=+e.target.value;pintar();});
   $('ag-dias').addEventListener('click',e=>{const b=e.target.closest('[data-d]');if(!b)return;sel.d=dias.find(d=>iso(d)===b.dataset.d);sel.h=null;pintar();});
   $('ag-horas').addEventListener('click',e=>{const b=e.target.closest('[data-h]');if(!b||b.disabled)return;sel.h=+b.dataset.h;pintar();});
@@ -357,5 +364,6 @@ ver(0);
 (function(){var b=document.getElementById('lectura');if(!b)return;var t=false;function f(){t=false;var d=document.documentElement;b.style.transform='scaleX('+(d.scrollTop/Math.max(1,d.scrollHeight-innerHeight))+')';}
 addEventListener('scroll',function(){if(!t){t=true;requestAnimationFrame(f);}},{passive:true});f();})();
 </script>
+<script>window.SPA_STATS={db:"https://studioproar-demos-default-rtdb.firebaseio.com",sitio:"salon"};</script><script src="../../stats.js" defer></script>
 </body>
 </html>

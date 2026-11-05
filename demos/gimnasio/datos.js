@@ -37,10 +37,41 @@ var GYM = (function () {
     });
     return { socios: socios, asis: asis, pagos: pagos };
   }
+  /* Modo real: si hay FIREBASE_CONFIG (con ?real=1 en la muestra), los datos viven en Firebase g/<sitio>/ y hace falta entrar con el usuario del gimnasio */
+  var C = window.FIREBASE_CONFIG, REAL = !!(C && C.apiKey && window.firebase && firebase.auth), SITIO = window.GYM_SITIO || 'gimnasio', fb = null, fns = [];
   var db;
-  try { db = JSON.parse(localStorage.getItem(K)); } catch (e) { db = null; }
-  if (!db || !db.socios) { db = semilla(); guardar(); }
-  function guardar() { try { localStorage.setItem(K, JSON.stringify(db)); } catch (e) { /* sin almacenamiento */ } }
+  if (REAL) { db = { socios: [], asis: [], pagos: [] }; }
+  else {
+    try { db = JSON.parse(localStorage.getItem(K)); } catch (e) { db = null; }
+    if (!db || !db.socios) { db = semilla(); guardar(); }
+  }
+  function guardar() { if (REAL) return; try { localStorage.setItem(K, JSON.stringify(db)); } catch (e) { /* sin almacenamiento */ } }
+  function avisar() { fns.forEach(function (f) { try { f(); } catch (e) {} }); }
+  function err() { alert('No se pudo guardar en la base. Revisá la conexión.'); }
+  if (REAL && !window.GYM_SIN_LOGIN) {
+    if (!firebase.apps.length) firebase.initializeApp(C);
+    var au = firebase.auth(), base = function (x) { return firebase.database().ref('g/' + SITIO + (x ? '/' + x : '')); }, ref = null;
+    var caja = document.createElement('div');
+    caja.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;font:16px system-ui,sans-serif';
+    caja.innerHTML = '<form style="background:#15181d;color:#f3f5f7;padding:24px;border-radius:14px;width:min(360px,92vw)"><h2 style="margin:0 0 6px">Entrar</h2><p style="color:#a3abb6;margin:0 0 14px">Usuario del gimnasio</p><input name="e" type="email" placeholder="Mail" autocomplete="username" required style="width:100%;padding:10px;margin-bottom:8px;box-sizing:border-box"><input name="p" type="password" placeholder="Clave" autocomplete="current-password" required style="width:100%;padding:10px;margin-bottom:12px;box-sizing:border-box"><button style="width:100%;padding:11px;background:#c6ff3d;border:0;font-weight:700;cursor:pointer">Entrar</button><p class="m" style="color:#ef6b6b;min-height:1em"></p></form>';
+    var arma = function () { document.body.appendChild(caja); };
+    if (document.body) arma(); else document.addEventListener('DOMContentLoaded', arma);
+    caja.querySelector('form').onsubmit = function (e) { e.preventDefault(); var f = e.target; au.signInWithEmailAndPassword(f.e.value.trim(), f.p.value).catch(function () { f.querySelector('.m').textContent = 'Mail o clave incorrectos.'; }); };
+    au.onAuthStateChanged(function (u) {
+      if (ref) { ref.off(); ref = null; }
+      if (!u) { caja.style.display = 'flex'; return; }
+      firebase.database().ref('web/roles/' + u.uid).once('value').then(function (r) {
+        if (r.val() !== 'admin') { au.signOut(); caja.querySelector('.m').textContent = 'Este usuario no tiene permiso.'; return; }
+        caja.style.display = 'none'; ref = base();
+        ref.on('value', function (sn) {
+          var v = sn.val() || {}, o = function (x) { return Object.keys(x || {}).map(function (k) { return x[k]; }); };
+          db = { socios: o(v.socios).sort(function (a, b) { return a.nom < b.nom ? -1 : 1; }), asis: o(v.asis).sort(function (a, b) { return a.t - b.t; }), pagos: o(v.pagos).sort(function (a, b) { return a.t - b.t; }) };
+          avisar();
+        });
+      });
+    });
+    fb = { socio: function (s) { base('socios/' + s.dni).set(s).catch(err); }, push: function (k, x) { base(k).push(x).catch(err); } };
+  }
   function socio(dni) { return db.socios.filter(function (s) { return s.dni === String(dni); })[0] || null; }
   function dias(s) { return Math.round((s.vence - hoy0().getTime()) / 864e5); }
   return {
@@ -50,16 +81,17 @@ var GYM = (function () {
     fichar: function (dni) {
       var s = socio(dni); if (!s) return { estado: 'nadie' };
       var ok = dias(s) >= 0;
-      db.asis.push({ dni: s.dni, t: Date.now(), ok: ok }); guardar();
+      var a = { dni: s.dni, t: Date.now(), ok: ok }; db.asis.push(a); guardar(); if (fb) fb.push('asis', a);
       return { estado: ok ? 'ok' : 'vencido', socio: s, dias: dias(s) };
     },
     pagar: function (dni, medio) {
       var s = socio(dni); if (!s) return;
       var base = Math.max(s.vence, hoy0().getTime()), d = new Date(base); d.setMonth(d.getMonth() + 1);
       s.vence = d.getTime();
-      db.pagos.push({ dni: s.dni, monto: PLANES[s.plan].precio, t: Date.now(), medio: medio || 'Efectivo' }); guardar();
+      var pg = { dni: s.dni, monto: PLANES[s.plan].precio, t: Date.now(), medio: medio || 'Efectivo' }; db.pagos.push(pg); guardar(); if (fb) { fb.socio(s); fb.push('pagos', pg); }
     },
-    alta: function (o) { db.socios.unshift({ dni: o.dni, nom: o.nom, plan: o.plan, tel: o.tel, vence: hoy0().getTime() - 864e5 }); guardar(); },
-    reset: function () { db = semilla(); guardar(); }
+    alta: function (o) { var n = { dni: String(o.dni), nom: o.nom, plan: o.plan, tel: o.tel || '', vence: hoy0().getTime() - 864e5 }; db.socios.unshift(n); guardar(); if (fb) fb.socio(n); },
+    reset: function () { if (REAL) { alert('En la versión real no se reinician los datos.'); return; } db = semilla(); guardar(); },
+    real: REAL, alCambiar: function (f) { fns.push(f); }
   };
 })();

@@ -35,19 +35,20 @@ button.sec{background:transparent;color:var(--soft);border:1px solid var(--line)
   <div id="cred" hidden></div>
 </div></main>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>window.GYM_SIN_LOGIN=true;</script>
 <script src="datos.js"></script>
 <script>
 (function(){
   var $=function(id){return document.getElementById(id);};
   function muestra(d){
-    var s=GYM.socio(d);if(!s){$('err').textContent='No encontramos ese DNI. Probá con 12345678.';return;}
+    var s=GYM.socio(d);if(!s&&GYM.real&&/^\d{7,9}$/.test(d))s={dni:d,nom:'Tu credencial',plan:'',vence:0,sinDatos:1};if(!s){$('err').textContent='No encontramos ese DNI. Probá con 12345678.';return;}
     try{localStorage.setItem('gym_mi_dni',d);}catch(e){}
-    var dias=GYM.dias(s),ok=dias>=0,qr='';
+    var dias=s.sinDatos?0:GYM.dias(s),ok=s.sinDatos||dias>=0,qr='';
     try{var q=qrcode(0,'M');q.addData('GYM:'+s.dni);q.make();qr=q.createSvgTag({cellSize:6,margin:0,scalable:true});}catch(e){qr='<p style="color:#000">QR no disponible</p>';}
     var ult=GYM.db().asis.filter(function(a){return a.dni===s.dni;}).slice(-1)[0];
     $('pedir').hidden=true;$('cred').hidden=false;
-    $('cred').innerHTML='<div class="cred"><span class="estado'+(ok?'':' no')+'">'+(ok?'Cuota al día':'Cuota vencida')+'</span><div class="qr">'+qr+'</div><h1>'+s.nom+'</h1><p>'+GYM.PLANES[s.plan].nom+'</p>'+
-      '<div class="dato"><span>DNI</span><b>'+s.dni+'</b></div><div class="dato"><span>'+(ok?'Vence':'Venció')+'</span><b>'+GYM.fecha(s.vence)+(ok?' · quedan '+dias+' días':'')+'</b></div>'+
+    $('cred').innerHTML='<div class="cred"><span class="estado'+(ok?'':' no')+'">'+(s.sinDatos?'Socio':ok?'Cuota al día':'Cuota vencida')+'</span><div class="qr">'+qr+'</div><h1>'+s.nom+'</h1><p>'+(GYM.PLANES[s.plan]?GYM.PLANES[s.plan].nom:'')+'</p>'+
+      '<div class="dato"><span>DNI</span><b>'+s.dni+'</b></div>'+(s.sinDatos?'':'<div class="dato"><span>'+(ok?'Vence':'Venció')+'</span><b>'+GYM.fecha(s.vence)+(ok?' · quedan '+dias+' días':'')+'</b></div>')+
       (ult?'<div class="dato"><span>Último ingreso</span><b>'+GYM.fecha(ult.t)+'</b></div>':'')+'</div>'+
       '<p class="tip">Mostrá este QR en la tablet de la entrada. Guardala en tu pantalla de inicio para tenerla siempre a mano.</p><button class="sec" id="otro" type="button">Usar otro DNI</button>';
     $('otro').onclick=function(){try{localStorage.removeItem('gym_mi_dni');}catch(e){}$('cred').hidden=true;$('pedir').hidden=false;$('dni').value='';};

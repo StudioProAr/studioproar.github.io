@@ -75,6 +75,10 @@ label{display:block;font-size:13px;color:var(--soft);margin:12px 0 4px}
 </nav>
 <dialog id="dlg"><div class="dlg" id="dlg-in"></div></dialog>
 <div class="toast" id="toast"></div>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="../comun/fb-demos.js"></script>
 <script src="datos.js"></script>
 <script>
 (function(){
@@ -160,7 +164,7 @@ label{display:block;font-size:13px;color:var(--soft);margin:12px 0 4px}
   });
   $('vista').addEventListener('input',function(e){if(e.target.id==='q'){q=e.target.value;var p=e.target.selectionStart;pinta();var i=$('q');i.focus();i.setSelectionRange(p,p);}});
   addEventListener('storage',pinta);
-  pinta();
+  pinta();GYM.alCambiar(pinta);
 })();
 </script>
 </body></html>

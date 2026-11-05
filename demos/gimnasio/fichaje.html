@@ -65,6 +65,10 @@ video{width:100%;max-width:420px;border-radius:16px;margin-top:12px;display:none
   </aside>
 </main>
 <div id="res" role="alert"></div>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="../comun/fb-demos.js"></script>
 <script src="datos.js"></script>
 <script>
 (function(){
@@ -109,7 +113,7 @@ video{width:100%;max-width:420px;border-radius:16px;margin-top:12px;display:none
       }catch(e){$('qrb').textContent='No se pudo abrir la cámara';}
     });
   }
-  lista();
+  lista();GYM.alCambiar(lista);
   try{navigator.wakeLock&&navigator.wakeLock.request('screen');}catch(e){}
 })();
 </script>
