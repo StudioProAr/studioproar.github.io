@@ -201,12 +201,71 @@ footer a{color:inherit}
 .ph-row i{font-style:normal;font-size:10.5px;font-weight:700;color:#fff;background:var(--blue);border-radius:999px;padding:1px 7px;margin-left:4px}
 .ph-bar{display:flex;justify-content:space-around;border-top:1px solid var(--line);margin-top:8px;padding-top:9px;font-size:11.5px;font-weight:600;color:var(--soft)}
 .ph-bar span:first-child{color:var(--blue)}
-.quien .in{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center}
 .avatar{width:96px;height:96px;border-radius:50%;background:linear-gradient(150deg,var(--blue),#0a1c42);color:#fff;font-family:var(--disp);font-weight:800;font-size:42px;display:grid;place-items:center}
-@media (max-width:560px){.quien .in{grid-template-columns:1fr}.calc-out{grid-template-columns:1fr}}
+@media (max-width:560px){.calc-out{grid-template-columns:1fr}}
 .wa-fijo{position:fixed;right:16px;bottom:16px;z-index:30;width:56px;height:56px;border-radius:50%;background:#25d366;color:#fff;display:none;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.25)}
 @media (max-width:760px){.wa-fijo{display:grid}nav ul li:not(:last-child){display:none}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* ---------- movimiento ---------- */
+.prog{position:fixed;top:0;left:0;height:3px;width:100%;background:linear-gradient(90deg,var(--blue),#22c38e);transform-origin:0 50%;transform:scaleX(0);z-index:60;pointer-events:none}
+.hero{position:relative;overflow:hidden;isolation:isolate}
+.hero .fondo{position:absolute;inset:0;z-index:-1;pointer-events:none}
+.hero .fondo i{position:absolute;border-radius:50%;filter:blur(60px);opacity:.38;animation:flota 18s ease-in-out infinite alternate}
+.hero .fondo i:nth-child(1){width:420px;height:420px;background:#7aa2ff;top:-140px;right:-80px}
+.hero .fondo i:nth-child(2){width:320px;height:320px;background:#7fe3c0;bottom:-140px;left:-60px;animation-duration:22s}
+.hero .fondo i:nth-child(3){width:240px;height:240px;background:#ffc58a;top:40%;left:45%;opacity:.22;animation-duration:26s}
+@keyframes flota{to{transform:translate(60px,40px) scale(1.15)}}
+.hero .in.hero-in{max-width:1120px;display:grid;grid-template-columns:minmax(0,1fr);gap:34px;align-items:center}
+@media (min-width:960px){.hero .in.hero-in{grid-template-columns:minmax(0,1fr) 300px}}
+.cel{justify-self:center;width:min(280px,82vw);aspect-ratio:9/18.5;border-radius:38px;background:#0c1424;padding:11px;box-shadow:0 30px 60px -20px rgba(12,20,36,.45),inset 0 0 0 2px #26324a;animation:levita 6s ease-in-out infinite}
+@keyframes levita{50%{transform:translateY(-10px) rotate(-1deg)}}
+.cel-pant{position:relative;height:100%;border-radius:28px;background:#f4f6fb;overflow:hidden;padding:20px 14px 14px;display:flex;flex-direction:column;gap:12px;font-size:12px;color:#0c1424}
+.cel-top{display:flex;justify-content:space-between;align-items:center}
+.cel-top b{font-family:var(--disp);font-size:16px}
+.cel-top span{font-size:11px;color:#58637a;background:#fff;border:1px solid #e0e3ea;padding:2px 9px;border-radius:999px}
+.cel-kpi{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cel-kpi div{background:#fff;border-radius:14px;padding:10px;border:1px solid #e0e3ea}
+.cel-kpi b{display:block;font:800 24px var(--disp);color:var(--blue);font-variant-numeric:tabular-nums}
+.cel-kpi div+div b{color:#0f7a5a}
+.cel-kpi span{color:#58637a;font-size:11px}
+.cel-bars{display:flex;align-items:flex-end;gap:6px;height:70px;background:#fff;border:1px solid #e0e3ea;border-radius:14px;padding:10px}
+.cel-bars i{flex:1;background:color-mix(in srgb,var(--blue) 30%,#fff);border-radius:4px 4px 2px 2px;height:20%;transition:height .9s cubic-bezier(.2,.8,.2,1)}
+.cel-bars i:last-child{background:var(--blue)}
+.cel-src{display:grid;gap:6px;background:#fff;border:1px solid #e0e3ea;border-radius:14px;padding:10px}
+.cel-src span{position:relative;font-size:11px;padding-left:2px;z-index:0}
+.cel-src span::before{content:"";position:absolute;inset:0 auto 0 0;width:0;background:color-mix(in srgb,var(--blue) 16%,transparent);border-radius:4px;z-index:-1;transition:width 1.2s ease}
+.cel.on .cel-src span::before{width:calc(var(--w)*2)}
+.cel-notis{position:absolute;left:10px;right:10px;top:10px;display:grid;gap:6px;pointer-events:none}
+.noti{background:#fff;border-radius:14px;padding:9px 11px;box-shadow:0 10px 24px -8px rgba(12,20,36,.35);display:grid;grid-template-columns:28px 1fr;gap:9px;align-items:center;animation:noti 4.2s ease forwards}
+.noti .ico{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;color:#fff;font:800 11px var(--disp)}
+.noti b{display:block;font-size:12px}.noti small{color:#58637a;font-size:11px}
+@keyframes noti{0%{opacity:0;transform:translateY(-120%)}10%,82%{opacity:1;transform:none}100%{opacity:0;transform:translateY(-30%)}}
+.cel-ped{list-style:none;margin:0;padding:6px 10px;background:#fff;border:1px solid #e0e3ea;border-radius:14px}
+.cel-ped li{display:flex;align-items:center;gap:5px;font-size:11px;padding:6px 0;border-bottom:1px solid #eef0f4;white-space:nowrap;overflow:hidden}
+.cel-ped li:last-child{border:0}
+.cel-ped em{margin-left:auto;font-style:normal;font-size:10px;padding:2px 7px;border-radius:999px;background:#e8eefc;color:var(--blue)}
+.cel-ped em.ok{background:#e3f4ee;color:#0f7a5a}
+.cel-ej{margin:auto 0 0;text-align:center;font-size:10px;color:#8a93a6;letter-spacing:.06em;text-transform:uppercase}
+/* aparición al hacer scroll */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1);transition-delay:var(--d,0s)}
+.rv.vis{opacity:1;transform:none}
+/* flujo "todo conectado" que se va encendiendo */
+.flujo li{transition:transform .4s ease,box-shadow .4s ease,border-color .4s ease}
+.flujo li.on{transform:translateY(-6px);border-color:var(--blue);box-shadow:0 14px 30px -14px color-mix(in srgb,var(--blue) 60%,transparent)}
+.flujo li.on .ic{background:var(--blue);color:#fff;animation:pulso 1.2s ease}
+@keyframes pulso{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--blue) 50%,transparent)}100%{box-shadow:0 0 0 14px transparent}}
+/* tarjetas con relieve */
+.obra,.plan{transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease;will-change:transform}
+@media (hover:hover){.obra:hover,.plan:hover{box-shadow:0 22px 44px -22px rgba(12,20,36,.35)}}
+/* brillo en botones */
+.btn-a{position:relative;overflow:hidden}
+.btn-a::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-20deg);animation:brillo 4.5s ease-in-out infinite}
+@keyframes brillo{0%,70%{left:-60%}100%{left:130%}}
+@media (prefers-reduced-motion:reduce){
+  .hero .fondo i,.cel,.btn-a::after,.noti{animation:none!important}
+  .rv{opacity:1;transform:none;transition:none}
+  .prog{display:none}
+}
 </style>
 </head>
 <body>
@@ -226,7 +285,9 @@ footer a{color:inherit}
 </nav>
 
 <header class="hero">
-  <div class="in">
+  <div class="fondo" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="in hero-in">
+  <div class="hero-txt">
     <p class="eyebrow">Diseño de páginas web para negocios</p>
     <h1>Que cuando te busquen, te encuentren.</h1>
     <p class="rota" aria-live="polite">Tu <span id="rota">carta, con pedidos desde la mesa</span>.</p>
@@ -241,6 +302,18 @@ footer a{color:inherit}
     <div class="marcas" aria-label="Rubros">
       <a href="https://bodegon-demo-prueba.pages.dev/" target="_blank" rel="noopener">Gastronomía</a><a href="demos/nautica/" target="_blank" rel="noopener">Náutica</a><a href="demos/peluqueria/" target="_blank" rel="noopener">Peluquería y estética</a><a href="https://tienda-ropa-prueba.pages.dev/" target="_blank" rel="noopener">Indumentaria</a><a href="demos/ferreteria/" target="_blank" rel="noopener">Comercios</a><a href="demos/cafe/" target="_blank" rel="noopener">Cafeterías</a><a href="demos/panaderia/" target="_blank" rel="noopener">Panaderías</a><a href="demos/veterinaria/" target="_blank" rel="noopener">Veterinarias</a><a href="demos/cerveceria/" target="_blank" rel="noopener">Cervecerías</a><a href="https://luciernaga-prueba.pages.dev/" target="_blank" rel="noopener">Emprendedores</a><a href="https://netsur-prueba.pages.dev/" target="_blank" rel="noopener">Empresas</a>
     </div>
+    </div>
+  <div class="cel" aria-hidden="true">
+    <div class="cel-pant">
+      <div class="cel-top"><b>Tu panel</b><span>Hoy</span></div>
+      <div class="cel-kpi"><div><b id="cel-v">38</b><span>visitas</span></div><div><b id="cel-w">6</b><span>WhatsApp</span></div></div>
+      <div class="cel-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="cel-src"><span style="--w:42%">Instagram</span><span style="--w:28%">Google</span><span style="--w:18%">WhatsApp</span></div>
+      <ul class="cel-ped"><li><b>#1042</b> Sofía · Buzo negro M<em class="ok">Pagado</em></li><li><b>#1041</b> Martín · 2 remeras<em>Confirmado</em></li><li><b>#1040</b> Julieta · Turno 17:00<em>Nuevo</em></li></ul>
+      <div class="cel-notis" id="cel-notis"></div>
+      <p class="cel-ej">Ejemplo</p>
+    </div>
+  </div>
   </div>
 </header>
 
@@ -601,16 +674,6 @@ footer a{color:inherit}
   </div>
 </section>
 
-<section class="quien">
-  <div class="in">
-    <div class="avatar" aria-hidden="true">J</div>
-    <div>
-      <p class="eyebrow">Quién está detrás</p>
-      <h2>Una persona, no un call center</h2>
-      <p class="lead">Soy Javi, de zona norte del Gran Buenos Aires. Si estás cerca, te visito en el local; si no, lo hacemos por videollamada desde cualquier punto del país. Armamos la web juntos y después me tenés a un WhatsApp de distancia. Nuestro primer cliente fue <a href="https://studioproar.github.io/reina-dabi/" target="_blank" rel="noopener">Reina Dabi</a>, un emprendimiento de rosas eternas de acá: su web toma pedidos y muestra estadísticas desde un panel propio.</p>
-    </div>
-  </div>
-</section>
 
 <section>
   <div class="in">
@@ -709,6 +772,69 @@ document.querySelectorAll('.copiar').forEach(b=>{
     setTimeout(()=>{b.textContent=prev},1800);
   });
 });
+/* ---------- movimiento ---------- */
+(function(){
+  const quieto=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* barra de progreso de lectura */
+  const pr=document.createElement('div');pr.className='prog';pr.setAttribute('aria-hidden','true');document.body.appendChild(pr);
+  let tic=false;
+  addEventListener('scroll',()=>{if(tic)return;tic=true;requestAnimationFrame(()=>{const h=document.documentElement;pr.style.transform='scaleX('+(h.scrollTop/Math.max(1,h.scrollHeight-h.clientHeight))+')';tic=false;});},{passive:true});
+
+  /* aparición escalonada al hacer scroll */
+  const grupos='.head,.flujo li,.obra,.plan,section .in > p,section .in > ul > li,section .in > ol > li,details,.cierre .in > *';
+  const els=[...document.querySelectorAll(grupos)].filter(e=>!e.closest('.hero'));
+  if(!quieto&&'IntersectionObserver' in window){
+    els.forEach(e=>{const h=[...e.parentElement.children].filter(x=>els.includes(x));e.style.setProperty('--d',Math.min(h.indexOf(e),6)*0.08+'s');e.classList.add('rv');});
+    const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('vis');io.unobserve(x.target);}}),{rootMargin:'0px 0px -8% 0px'});
+    els.forEach(e=>io.observe(e));
+  }
+
+  /* celular del hero: barras, contadores y avisos que entran */
+  const cel=document.querySelector('.cel');
+  if(cel){
+    const bars=[...cel.querySelectorAll('.cel-bars i')],v=document.getElementById('cel-v'),w=document.getElementById('cel-w'),box=document.getElementById('cel-notis');
+    const pinta=()=>bars.forEach(b=>b.style.height=(25+Math.random()*70)+'%');
+    setTimeout(()=>{cel.classList.add('on');pinta();},300);
+    const N=[['WA','#25d366','Nuevo pedido #1043','2 remeras · $37.000'],['✓','#1452e6','Turno confirmado','Martes 10:30 · Corte'],['IG','#d62976','+12 visitas desde Instagram','en la última hora'],['▦','#c2410c','Mesa 4 pidió la cuenta','Total $28.400'],['G','#0f7a5a','Te encontraron en Google','"ferretería san fernando"']];
+    let i=0,nv=38,nw=6;
+    const ciclo=()=>{
+      const n=N[i++%N.length],d=document.createElement('div');d.className='noti';
+      d.innerHTML='<span class="ico" style="background:'+n[1]+'">'+n[0]+'</span><div><b>'+n[2]+'</b><small>'+n[3]+'</small></div>';
+      box.replaceChildren(d);
+      nv+=1+Math.floor(Math.random()*3);v.textContent=nv;if(n[0]==='WA'){nw++;w.textContent=nw;}
+      pinta();
+    };
+    if(!quieto){ciclo();setInterval(ciclo,3600);}
+  }
+
+  /* flujo "todo conectado": se enciende paso por paso */
+  const pasos=[...document.querySelectorAll('.flujo li')];
+  if(pasos.length&&!quieto){
+    let k=0,t=null;
+    const corre=()=>{pasos.forEach((p,j)=>p.classList.toggle('on',j===k));k=(k+1)%pasos.length;};
+    new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting&&!t){corre();t=setInterval(corre,1400);}else if(!x.isIntersecting&&t){clearInterval(t);t=null;}}),{threshold:.3}).observe(pasos[0].parentElement);
+  }
+
+  /* relieve 3D en tarjetas (solo con mouse) */
+  if(!quieto&&matchMedia('(hover:hover) and (pointer:fine)').matches){
+    document.querySelectorAll('.obra,.plan').forEach(c=>{
+      c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform='perspective(800px) rotateY('+(x*6)+'deg) rotateX('+(-y*6)+'deg) translateY(-4px)';});
+      c.addEventListener('pointerleave',()=>{c.style.transform='';});
+    });
+  }
+
+  /* precios que cuentan hasta su valor la primera vez que se ven */
+  if(!quieto){
+    const io2=new IntersectionObserver(es=>es.forEach(x=>{
+      if(!x.isIntersecting)return;io2.unobserve(x.target);
+      const el=x.target,fin=el.textContent,num=+fin.replace(/\D/g,'');if(!num)return;
+      const t0=performance.now(),dur=900;
+      const paso=t=>{const p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);el.textContent='$'+(Math.round(num*e/500)*500).toLocaleString('es-AR');if(p<1)requestAnimationFrame(paso);else el.textContent=fin;};
+      requestAnimationFrame(paso);
+    }),{threshold:.6});
+    document.querySelectorAll('.plan .precio').forEach(p=>io2.observe(p));
+  }
+})();
 </script>
 
 </body>
