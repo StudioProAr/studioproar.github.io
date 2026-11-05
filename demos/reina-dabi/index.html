@@ -1,556 +1,431 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fff8f4">
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Muestra de StudioProAr (plan Autogestionable): web con armador de pedidos y panel. Datos de ejemplo.">
-<link rel="icon" href="img/logo.webp">
-<title>Reina Dabi · Demo web + panel</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Nunito:wght@400;600;700&family=Great+Vibes&display=swap">
+<link rel="icon" href="img/logo.jpg">
+<link rel="apple-touch-icon" href="img/logo.jpg">
+<title>Reina Dabi · Ramos de flores perfumadas</title>
+<meta name="description" content="Ramos de rosas eternas hechos a mano en San Fernando, Buenos Aires. Personalizados para cumpleaños, quinceañeras, egresados, aniversarios y más.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--rosa:#e2708c;--rosa-suave:#f7d9e1;--bordo:#8e1e48;--crema:#fff8f4;--dorado:#b8903a;--texto:#3a2630;--gris:#7a6670;--linea:#ecdcd8;--ok:#2f7a63;--warn:#9a6b00;--bad:#b3341f;--blanco:#fff;
---serif:"Playfair Display",Georgia,serif;--sans:"Nunito",system-ui,sans-serif}
-*{box-sizing:border-box}
+:root{
+  --rosa:#e2708c; --rosa-suave:#fbe3ea; --bordo:#9e2f5f; --crema:#fff8f4;
+  --dorado:#c49a45; --texto:#3b2630; --gris:#7a6670; --blanco:#fff;
+  --sombra:0 10px 30px rgba(158,47,95,.12); --radio:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Nunito",system-ui,sans-serif;background:var(--crema);color:var(--texto);line-height:1.6}
+img{max-width:100%;display:block}
+a{color:inherit}
+.contenedor{width:min(1100px,100% - 32px);margin-inline:auto}
+h1,h2,h3{font-family:"Playfair Display",serif;line-height:1.2;color:var(--bordo)}
+.script{font-family:"Great Vibes",cursive;color:var(--rosa);font-weight:400}
+
+/* Botones */
+.btn{display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 1.5rem;border-radius:999px;font-weight:700;text-decoration:none;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn-wa{background:#25d366;color:#fff;box-shadow:0 8px 20px rgba(37,211,102,.35)}
+.btn-borde{border:2px solid var(--bordo);color:var(--bordo)}
+.btn svg{width:22px;height:22px;flex:none}
+
+/* Encabezado */
+header{position:sticky;top:0;z-index:20;background:rgba(255,248,244,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--rosa-suave)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:.6rem 0}
+.marca{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+.marca img{height:40px;width:auto}
+.marca span{font-family:"Playfair Display",serif;font-weight:700;color:var(--bordo);font-size:1.15rem}
+.nav .btn{padding:.55rem 1rem;font-size:.9rem}
+
+/* Hero */
+.hero{padding:3rem 0 2.5rem;background:radial-gradient(circle at 85% 10%,var(--rosa-suave),transparent 55%)}
+.hero-grid{display:grid;gap:2rem;align-items:center}
+.hero-logo{width:230px;max-width:70vw;height:auto;margin-bottom:.5rem}
+.hero h1{font-size:clamp(2rem,6vw,3.2rem)}
+.hero .script{font-size:clamp(1.8rem,5vw,2.5rem);display:block;margin:.3rem 0 1rem}
+.hero p{color:var(--gris);font-size:1.1rem;max-width:34rem}
+.acciones{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.6rem}
+.hero-foto{border-radius:28px;overflow:hidden;box-shadow:var(--sombra);aspect-ratio:4/5;max-width:440px;justify-self:center;border:6px solid #fff}
+.hero-foto img{width:100%;height:100%;object-fit:cover}
+
+/* Secciones */
+section{padding:3.5rem 0}
+.titulo{text-align:center;margin-bottom:2rem}
+.titulo h2{font-size:clamp(1.6rem,4.5vw,2.3rem)}
+.titulo p{color:var(--gris);margin-top:.4rem}
+
+/* Ocasiones */
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:.7rem}
+.chip{background:#fff;border:1px solid var(--rosa-suave);padding:.6rem 1.1rem;border-radius:999px;font-weight:600;color:var(--bordo);box-shadow:0 4px 12px rgba(158,47,95,.06)}
+
+/* Galería */
+.galeria{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem}
+.galeria figure{position:relative;border-radius:var(--radio);overflow:hidden;background:#fff;box-shadow:var(--sombra);aspect-ratio:4/5}
+.galeria img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.galeria figure:hover img{transform:scale(1.05)}
+.galeria figcaption{position:absolute;inset:auto 0 0 0;padding:1.6rem .8rem .7rem;font-weight:700;font-size:.9rem;color:#fff;background:linear-gradient(transparent,rgba(60,20,40,.75))}
+
+/* Personalización */
+.extras{background:#fff}
+.tarjetas{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.tarjeta{background:var(--crema);border-radius:var(--radio);padding:1.3rem 1rem;text-align:center;border:1px solid var(--rosa-suave)}
+.tarjeta .ico{font-size:1.8rem}
+.tarjeta h3{font-size:1.05rem;margin:.4rem 0 .2rem}
+.tarjeta p{font-size:.92rem;color:var(--gris)}
+
+/* Pasos */
+.pasos{display:grid;gap:1rem;counter-reset:paso}
+.paso{display:flex;gap:1rem;background:#fff;border-radius:var(--radio);padding:1.2rem;box-shadow:var(--sombra)}
+.paso::before{counter-increment:paso;content:counter(paso);flex:none;width:42px;height:42px;border-radius:50%;background:var(--rosa);color:#fff;display:grid;place-items:center;font-weight:700;font-size:1.1rem}
+.paso h3{font-size:1.05rem}
+.paso p{color:var(--gris);font-size:.95rem}
+.aviso{margin-top:1.4rem;text-align:center;background:var(--rosa-suave);color:var(--bordo);border-radius:var(--radio);padding:1rem;font-weight:600}
+
+/* Llamado final */
+.cta{background:linear-gradient(135deg,var(--bordo),var(--rosa));color:#fff;text-align:center;border-radius:28px;padding:2.5rem 1.2rem}
+.cta h2{color:#fff;font-size:clamp(1.6rem,4.5vw,2.2rem)}
+.cta .script{color:#fff;font-size:2rem;display:block}
+.cta p{opacity:.92;margin:.6rem auto 1.5rem;max-width:32rem}
+.cta .acciones{justify-content:center}
+.cta .btn-borde{border-color:#fff;color:#fff}
+
+footer{padding:2.5rem 0 6rem;text-align:center;color:var(--gris);font-size:.92rem}
+footer .marca{justify-content:center;margin-bottom:.6rem}
+
+/* WhatsApp flotante */
+.wa-flotante{position:fixed;right:16px;bottom:16px;z-index:30;width:60px;height:60px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 10px 25px rgba(0,0,0,.25)}
+.wa-flotante svg{width:32px;height:32px}
+
+@media (min-width:760px){
+  .hero-grid{grid-template-columns:1.1fr .9fr}
+  .galeria{grid-template-columns:repeat(4,1fr)}
+  .tarjetas{grid-template-columns:repeat(3,1fr)}
+  .pasos{grid-template-columns:repeat(2,1fr)}
+}
+
+/* Armador de ramo */
+.armador{background:linear-gradient(180deg,var(--crema),var(--rosa-suave))}
+.arm-grid{display:grid;gap:1.2rem;align-items:start}
+.panel{background:#fff;border-radius:22px;box-shadow:var(--sombra);padding:1.3rem}
+.campo{margin-bottom:1.2rem}
+.campo>label,.campo>.etiqueta{display:block;font-weight:700;color:var(--bordo);margin-bottom:.45rem}
+.campo small{color:var(--gris);font-weight:400}
+select,input[type=text],input[type=date],textarea{width:100%;font:inherit;padding:.7rem .85rem;border:1.5px solid var(--rosa-suave);border-radius:12px;background:var(--crema);color:var(--texto)}
+select:focus,input:focus,textarea:focus{outline:2px solid var(--rosa);border-color:transparent}
+textarea{resize:vertical;min-height:70px}
+.colores{display:flex;flex-wrap:wrap;gap:.5rem}
+.color{display:flex;align-items:center;gap:.4rem;padding:.4rem .75rem .4rem .45rem;border-radius:999px;border:1.5px solid var(--rosa-suave);background:#fff;cursor:pointer;font-weight:600;font-size:.9rem;color:var(--texto)}
+.color i{width:20px;height:20px;border-radius:50%;border:1px solid rgba(0,0,0,.15);flex:none}
+.color[aria-pressed=true]{border-color:var(--bordo);background:var(--rosa-suave);color:var(--bordo)}
+.color:disabled{opacity:.4;cursor:not-allowed}
+.opciones{display:flex;flex-wrap:wrap;gap:.5rem}
+.opcion{position:relative}
+.opcion input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.opcion span{display:block;padding:.45rem .85rem;border-radius:999px;border:1.5px solid var(--rosa-suave);background:#fff;font-weight:600;font-size:.9rem}
+.opcion input:checked+span{border-color:var(--bordo);background:var(--rosa-suave);color:var(--bordo)}
+.opcion input:focus-visible+span{outline:2px solid var(--rosa)}
+.contador-txt{text-align:right;font-size:.8rem;color:var(--gris)}
+.resumen{position:static}
+.vista-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;margin-bottom:.7rem}
+.vista-tabs button{font:inherit;font-weight:700;padding:.5rem;border-radius:999px;border:1.5px solid var(--rosa-suave);background:#fff;color:var(--bordo);cursor:pointer}
+.vista-tabs button[aria-pressed=true]{background:var(--bordo);color:#fff;border-color:var(--bordo)}
+.vista{position:relative;aspect-ratio:1/1;width:100%;border-radius:18px;background:radial-gradient(ellipse at 50% 38%,#6A2238 0%,#2E0C18 55%,#12040A 100%);overflow:hidden;display:grid;place-items:center;transition:background .4s}
+.vista[data-fondo=neutro]{background:radial-gradient(ellipse at 50% 38%,#fff 0%,#efefef 55%,#dcdcdc 100%)}
+.vista[data-fondo=rosa]{background:radial-gradient(ellipse at 50% 36%,#fff6f8 0%,#f6dce3 50%,#e9bdc9 100%)}
+.vista canvas{position:absolute;inset:0}
+.vista-cargando{color:#f3d9e2}.vista[data-fondo=neutro] .vista-cargando,.vista[data-fondo=rosa] .vista-cargando{color:var(--gris)}
+.vista-ctrl{position:absolute;right:.5rem;top:.5rem;display:flex;flex-direction:column;gap:.3rem}
+.vista-ctrl button{width:36px;height:36px;border-radius:50%;border:0;background:rgba(255,255,255,.85);color:var(--bordo);font:inherit;font-weight:800;cursor:pointer}
+.vista-angulo{position:absolute;left:.5rem;top:.5rem;border:0;border-radius:999px;padding:.45rem .8rem;background:rgba(255,255,255,.88);color:var(--bordo);font:inherit;font-size:.8rem;font-weight:800;cursor:pointer}
+.vista-info{position:absolute;left:.5rem;right:.5rem;bottom:.5rem;background:rgba(255,255,255,.94);border-radius:14px;padding:.6rem 2.6rem .6rem .8rem;text-align:left;font-size:.85rem;color:var(--texto)}
+.vista-info b{display:block;font-family:"Playfair Display",serif;font-size:1rem;color:var(--bordo)}
+.vista-info span{font-size:.72rem;font-weight:700;color:var(--gris)}
+.vista-info p{margin:.25rem 0 0}
+.vista-info button{position:absolute;top:.35rem;right:.35rem;width:32px;height:32px;border-radius:50%;border:0;background:var(--rosa-suave);color:var(--bordo);font-weight:800;cursor:pointer}
+.vista svg,.vista canvas{width:100%;height:100%;display:block}
+.vista-cargando{font-weight:600}
+.vista-aviso{text-align:center;font-size:.8rem;color:var(--gris);margin:.4rem 0 1rem}
+.resumen h3{margin-bottom:.8rem}
+.resumen ul{list-style:none;display:grid;gap:.45rem;margin-bottom:1.2rem}
+.resumen li{display:flex;justify-content:space-between;gap:1rem;border-bottom:1px dashed var(--rosa-suave);padding-bottom:.4rem;font-size:.95rem}
+.resumen li b{color:var(--bordo)}
+.resumen li span{text-align:right}
+.resumen .btn{width:100%;justify-content:center}
+.nota{font-size:.85rem;color:var(--gris);margin-top:.7rem;text-align:center}
+.error{color:#b42318;font-weight:700;font-size:.9rem;margin-top:.5rem;text-align:center;min-height:1.2em}
+/* Banner de fecha especial */
+.banner{position:relative;overflow:hidden;white-space:nowrap;color:#fff;font-weight:800;font-size:1rem;padding:.7rem 0;background:linear-gradient(90deg,var(--bordo),var(--rosa),var(--bordo));background-size:200% 100%;animation:banner-fondo 8s linear infinite;box-shadow:inset 0 -2px 0 rgba(255,255,255,.25)}
+.banner-pista{display:inline-flex;animation:banner-pasa var(--dur,20s) linear infinite;will-change:transform}
+.banner-item{display:inline-flex;align-items:center;gap:.6rem;padding:0 2rem}
+.banner-item a{color:var(--bordo);background:#fff;border-radius:999px;padding:.2rem .8rem;text-decoration:none;font-size:.85rem}
+@media (hover:hover) and (pointer:fine){.banner:hover .banner-pista{animation-play-state:paused}}
+.banner:has(:focus-visible) .banner-pista{animation-play-state:paused}
+@keyframes banner-pasa{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes banner-fondo{to{background-position:200% 0}}
+@media (prefers-reduced-motion:reduce){.banner{animation:none}.banner-pista{animation-duration:calc(var(--dur,20s) * 2)}}
+.nota-fecha{margin-top:.45rem;font-size:.9rem;font-weight:600;color:var(--bordo);background:var(--rosa-suave);border-radius:10px;padding:.5rem .7rem}
+/* Por qué */
+.porque{display:grid;gap:1rem}
+.porque div{background:#fff;border-radius:var(--radio);padding:1.3rem;text-align:center;box-shadow:var(--sombra)}
+.porque b{display:block;font-family:"Playfair Display",serif;color:var(--bordo);font-size:1.15rem;margin:.3rem 0}
+.porque span{font-size:2rem}
+.porque p{color:var(--gris);font-size:.95rem}
+/* Tamaños */
+.tamanos{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-top:1.4rem}
+.tamano{background:#fff;border:1.5px solid var(--rosa-suave);border-radius:var(--radio);padding:1rem .5rem;text-align:center;cursor:pointer;font:inherit;color:var(--texto)}
+.tamano:hover{border-color:var(--rosa)}
+.tamano b{display:block;font-family:"Playfair Display",serif;color:var(--bordo);font-size:1.1rem}
+.tamano small{color:var(--gris);display:block}
+.tamano em{font-style:normal;font-size:.8rem;color:var(--rosa);font-weight:700}
+/* Testimonios */
+.testis{display:grid;gap:1rem}
+.testi{background:#fff;border-radius:var(--radio);padding:1.2rem;box-shadow:var(--sombra);position:relative}
+.testi p{font-style:italic}
+.testi b{display:block;margin-top:.6rem;color:var(--bordo)}
+.estrellas{color:#e0a100;letter-spacing:2px}
+.demo{display:inline-block;background:#fff3cd;color:#7a4b00;border:1px dashed #c9a24a;border-radius:8px;padding:.3rem .7rem;font-size:.8rem;font-weight:700;margin-top:.5rem}
+/* FAQ */
+.faq{max-width:760px;margin:0 auto;display:grid;gap:.6rem}
+.faq details{background:#fff;border-radius:14px;padding:1rem 1.2rem;box-shadow:0 4px 14px rgba(158,47,95,.07)}
+.faq summary{cursor:pointer;font-weight:700;color:var(--bordo);list-style:none;display:flex;justify-content:space-between;gap:1rem}
+.faq summary::after{content:"+";font-size:1.3rem;line-height:1}
+.faq details[open] summary::after{content:"–"}
+.faq summary::-webkit-details-marker{display:none}
+.faq p{margin-top:.6rem;color:var(--gris)}
+@media (min-width:760px){.porque,.testis{grid-template-columns:repeat(3,1fr)}}
+/* iPhone / Android: sin zoom al escribir, controles parejos, respeta la barra inferior */
+html{-webkit-text-size-adjust:100%}
+select,input[type=text],input[type=date],textarea{font-size:16px;min-height:46px;-webkit-appearance:none;appearance:none}
+select{background-image:linear-gradient(45deg,transparent 50%,var(--bordo) 50%),linear-gradient(135deg,var(--bordo) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px;background-repeat:no-repeat;padding-right:2.4rem}
+input[type=date]{display:block}
+input[type=date]::-webkit-date-and-time-value{text-align:left}
+.btn,.color,.opcion span{-webkit-tap-highlight-color:transparent}
+.wa-flotante{bottom:calc(16px + env(safe-area-inset-bottom));right:calc(16px + env(safe-area-inset-right))}
+footer{padding-bottom:calc(6rem + env(safe-area-inset-bottom))}
+@media (min-width:860px){.arm-grid{grid-template-columns:1.25fr .75fr}}
+/* ===== Cambios de la demo ===== */
 [hidden]{display:none!important}
-body{margin:0;font-family:var(--sans);background:var(--crema);color:var(--texto);line-height:1.5}
-button,input,select,textarea{font:inherit;color:inherit}
-h1,h2,h3{font-family:var(--serif);color:var(--bordo);line-height:1.2;margin:0}
-.in{max-width:1120px;margin:0 auto;padding:0 16px}
-.demo{background:var(--dorado);color:#fff;text-align:center;font-size:13px;font-weight:700;padding:6px 12px}
-.switch{position:sticky;top:0;z-index:30;background:var(--bordo);color:#fff}
-.switch .in{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-block:8px;flex-wrap:wrap}
-.switch .et{font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.75}
-.sw2{display:flex;gap:4px;background:rgba(255,255,255,.15);padding:3px;border-radius:999px}
-.sw2 button{border:0;background:none;color:#fff;font-weight:700;padding:6px 16px;border-radius:999px;cursor:pointer}
-.sw2 button[aria-selected="true"]{background:#fff;color:var(--bordo)}
-.reset{border:1px solid rgba(255,255,255,.5);background:none;color:#fff;border-radius:999px;padding:5px 12px;font-size:12px;cursor:pointer}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:999px;padding:11px 20px;font-weight:700;cursor:pointer;text-decoration:none;background:var(--bordo);color:#fff}
-.btn.ghost{background:#fff;color:var(--bordo);border:1.5px solid var(--bordo)}
-.btn.sm{padding:6px 12px;font-size:13px}
-.btn.wa{background:#25d366}
-.btn:disabled{opacity:.5;cursor:not-allowed}
-.card{background:#fff;border:1px solid var(--linea);border-radius:18px;padding:18px;min-width:0}
-.sub{color:var(--gris);font-size:14px}
-label,.etq{display:block;font-weight:700;color:var(--bordo);font-size:14px;margin-bottom:6px}
-input[type=text],input[type=tel],input[type=date],input[type=number],select,textarea{width:100%;padding:10px 12px;border:1.5px solid var(--rosa-suave);border-radius:12px;background:var(--crema)}
-textarea{min-height:70px;resize:vertical}
-.fg{margin-bottom:14px}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-@media(max-width:520px){.two{grid-template-columns:1fr}}
-.swatches{display:flex;flex-wrap:wrap;gap:10px}
-.swc{width:40px;height:40px;border-radius:50%;border:0;padding:0;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
-.swc[aria-pressed="true"]{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--dorado)}
-.colname{font-weight:400;color:var(--texto)}
-.mezcla{margin-top:12px;padding:12px;border:1.5px dashed var(--dorado);border-radius:14px;background:#fffbf7}
-.mz-head{font-size:13px;font-weight:700;color:var(--gris);margin-bottom:8px}
-.mz-head.ok{color:var(--ok)}.mz-head.bad{color:var(--bad)}
-.mezcla .swatches{gap:7px;margin-bottom:6px}
-.mezcla .swc{width:28px;height:28px}
-.mezcla .swc:disabled{opacity:.25;cursor:not-allowed}
-.mz-row{display:flex;align-items:center;gap:8px;margin-top:6px}
-.mz-row .n{flex:1}
-.mz-row button{width:34px;height:34px;border-radius:50%;border:1px solid var(--linea);background:#fff;font-weight:700;cursor:pointer}
-.mz-row b{min-width:24px;text-align:center}
-.dot{display:inline-block;width:13px;height:13px;border-radius:50%;vertical-align:-2px;margin-right:4px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.2)}
-.seg{display:flex;border:1.5px solid var(--rosa-suave);border-radius:12px;overflow:hidden}
-.seg button{flex:1;border:0;background:#fff;padding:10px;cursor:pointer;font-weight:700}
-.seg button[aria-pressed="true"]{background:var(--bordo);color:#fff}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{border:1.5px solid var(--rosa-suave);background:#fff;border-radius:999px;padding:6px 12px;cursor:pointer;font-size:14px}
-.chip[aria-pressed="true"]{background:var(--rosa);border-color:var(--rosa);color:#fff}
-.err{color:var(--bad);font-size:13px;min-height:18px;margin-top:6px}
-/* ---- web ---- */
-.aviso-web{background:var(--rosa-suave);color:var(--bordo);text-align:center;font-weight:700;padding:10px 14px}
-.pub-nav .in{display:flex;justify-content:space-between;align-items:center;padding-block:14px;gap:10px;flex-wrap:wrap}
-.marca{font-family:var(--serif);font-size:24px;font-weight:700;color:var(--bordo)}
-.marca{display:flex;align-items:center;gap:10px}.marca img{width:48px;height:48px;object-fit:contain}
-.hero-logo{width:min(260px,70vw);height:auto;display:block;margin:0 auto 6px}
-.marca small{display:block;font-family:"Great Vibes",cursive;color:var(--rosa);font-size:18px;font-weight:400}
-.hero{padding:30px 0 20px;text-align:center}
-.hero h1{font-size:clamp(30px,6vw,48px)}
-.hero .script{font-family:"Great Vibes",cursive;color:var(--rosa);font-size:clamp(28px,5vw,40px);display:block}
-.hero p{color:var(--gris);max-width:36rem;margin:10px auto 18px}
-.gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:10px 0 30px}
-.ph{aspect-ratio:1;border-radius:16px;display:flex;align-items:flex-end;padding:10px;color:#fff;font-weight:700;font-size:14px;text-shadow:0 1px 3px rgba(0,0,0,.4)}
-.sec{padding:24px 0}
-.sec h2{font-size:clamp(24px,4vw,32px);text-align:center}
-.sec .sub{text-align:center;margin:6px 0 18px}
-.armador{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px;align-items:start}
-@media(max-width:820px){.armador{grid-template-columns:1fr}}
-.resumen{position:sticky;top:60px}
-.resumen dl{margin:0 0 12px;font-size:14px}
-.resumen dl div{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px dashed var(--linea)}
-.resumen dt{color:var(--gris)}.resumen dd{margin:0;text-align:right;font-weight:600}
-.ok-box{background:#e6f4ee;border:1px solid #b9dfcf;color:var(--ok);border-radius:14px;padding:14px;margin-top:12px;font-size:14px}
-.ok-box pre{white-space:pre-wrap;font-family:var(--sans);color:var(--texto);background:#fff;border-radius:10px;padding:10px;margin:8px 0 0;font-size:13px}
-.pausa{background:#fff0c9;color:var(--warn);border-radius:14px;padding:14px;font-weight:700;text-align:center}
-footer{text-align:center;color:var(--gris);font-size:13px;padding:30px 0 40px}
-/* ---- panel ---- */
-.ptop .in{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-block:14px;flex-wrap:wrap}
-.ptabs{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 16px}
-.ptab{border:1.5px solid var(--linea);background:#fff;border-radius:999px;padding:8px 16px;font-weight:700;cursor:pointer;position:relative}
-.ptab[aria-selected="true"]{background:var(--bordo);color:#fff;border-color:var(--bordo)}
-.badge-n{display:inline-block;min-width:20px;padding:0 6px;border-radius:999px;background:var(--rosa);color:#fff;font-size:12px;margin-left:4px}
-.grid-p{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:18px;align-items:start}
-@media(max-width:900px){.grid-p{grid-template-columns:1fr}}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px}
-.kpi{background:#fff;border:1px solid var(--linea);border-top:3px solid var(--dorado);border-radius:14px;padding:12px}
-.kpi .l{font-size:13px;color:var(--gris)}.kpi .v{font-family:var(--serif);font-size:26px;font-weight:700}.kpi .n{font-size:12px;color:var(--gris)}
-.bandeja{border:2px solid var(--rosa);background:#fff6f8;margin-bottom:16px}
-.sol{background:#fff;border:1px solid var(--linea);border-radius:14px;padding:12px;margin-top:10px}
-.sol .t{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-weight:700}
-.sol .d{font-size:14px;color:var(--gris);margin-top:4px}
-.sol .acc{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
-.lst-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
-.mini-tabs{display:flex;gap:4px}
-.mini-tabs button{border:1px solid var(--linea);background:#fff;border-radius:999px;padding:5px 12px;cursor:pointer;font-size:13px;font-weight:600}
-.mini-tabs button[aria-pressed="true"]{background:var(--bordo);color:#fff;border-color:var(--bordo)}
-.ped{border-top:1px solid var(--linea);padding:12px 0;display:grid;grid-template-columns:90px minmax(0,1fr) auto;gap:10px;align-items:start}
-@media(max-width:560px){.ped{grid-template-columns:1fr}}
-.ped .f{font-weight:700}
-.tag{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:1px 8px}
-.t-bad{background:#fbe3dc;color:var(--bad)}.t-warn{background:#fff0c9;color:var(--warn)}.t-ok{background:#dff1ee;color:var(--ok)}.t-done{background:#ece7e5;color:#5f4e54}.t-web{background:var(--rosa-suave);color:var(--bordo)}
-.ped .who{font-weight:700}.ped .w{font-size:13px;color:var(--gris)}
-.ped .obs{font-size:13px;color:var(--gris);font-style:italic}
-.ped .der{text-align:right;font-size:14px}
-.ped .der .acc{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap;margin-top:6px}
-.lk{border:0;background:none;color:var(--bordo);font-weight:700;cursor:pointer;padding:2px 4px;font-size:13px;text-decoration:underline}
-.cbar{display:grid;grid-template-columns:130px 1fr 40px;gap:8px;align-items:center;margin-top:8px;font-size:14px}
-.cbar .t{height:9px;background:#f3e6e3;border-radius:999px;overflow:hidden}.cbar .t div{height:100%;background:var(--bordo)}
-.line{display:flex;justify-content:space-between;border-top:1px solid var(--linea);padding-top:8px;margin-top:10px;font-size:14px}
-.calc{background:var(--crema);border-radius:14px;padding:12px;margin-bottom:12px}
-.calc .r{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
-.calc .r input{width:120px;text-align:right}
-.empty{color:var(--gris);text-align:center;padding:20px}
-.mtabs{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.mtabs button{border:1px solid var(--linea);background:#fff;border-radius:999px;padding:4px 10px;cursor:pointer;font-size:13px}
-.mtabs button[aria-pressed="true"]{background:var(--bordo);color:#fff}
-.chart{width:100%;height:auto;display:block}
-.ed-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
-.toggle{display:flex;align-items:center;gap:10px;font-weight:700}
-.toggle input{width:20px;height:20px}
-.msg{color:var(--ok);font-size:13px;min-height:18px;margin-top:6px}
-.modal{position:fixed;inset:0;background:rgba(40,15,25,.45);display:flex;align-items:center;justify-content:center;z-index:50;padding:16px}
-.modal .card{max-width:380px;width:100%}
-.modal .acc{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
+.demo-tira{background:#2b1220;color:#f7e3ea;font-size:.8rem;font-weight:600;text-align:center;padding:.45rem .8rem}
+.demo-tira a{color:#fff}
+.barra{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:.6rem;color:#fff;background:linear-gradient(90deg,var(--bordo),var(--rosa),var(--bordo));background-size:200% 100%;animation:banner-fondo 8s linear infinite;padding:.45rem 0 .45rem 0;box-shadow:inset 0 -2px 0 rgba(255,255,255,.25)}
+.barra .banner{flex:1;min-width:0;background:none;animation:none;box-shadow:none;padding:.25rem 0}
+.barra .banner .banner-item{color:#fff}
+.barra .btn{flex:none;margin-right:12px;padding:.5rem 1rem;font-size:.9rem;background:#fff;color:var(--bordo);box-shadow:0 6px 16px rgba(0,0,0,.18)}
+.barra .btn svg{width:18px;height:18px}
+.barra.solo{justify-content:center}.barra.solo .btn{margin:0}
+.hero{text-align:center}
+.hero-grid{grid-template-columns:1fr!important;justify-items:center}
+.hero-logo{margin:0 auto .6rem}
+.hero p{margin:.6rem auto 0}
+.galeria figure{cursor:zoom-in}
+.galeria figure:focus-visible{outline:3px solid var(--rosa);outline-offset:3px}
+dialog.zoom{margin:auto;max-height:94vh;overflow:auto;border:0;border-radius:22px;padding:0;max-width:min(560px,94vw);width:100%;box-shadow:0 30px 80px rgba(60,20,40,.45);background:#fff}
+dialog.zoom::backdrop{background:rgba(40,12,25,.6)}
+.zoom img{width:100%;max-height:62vh;object-fit:cover}
+.zoom .zc{padding:1rem 1.1rem 1.2rem}
+.zoom h3{font-size:1.25rem;margin-bottom:.6rem}
+.zoom .det{display:flex;gap:.7rem;align-items:flex-start;background:var(--crema);border:1px solid var(--rosa-suave);border-radius:14px;padding:.7rem .8rem;margin-top:.5rem}
+.zoom .det .ico{font-size:1.5rem;line-height:1}
+.zoom .det b{display:block;color:var(--bordo)}
+.zoom .det p{font-size:.92rem;color:var(--gris)}
+.zoom .acciones{margin-top:1rem;justify-content:space-between}
+.zoom .cerrar{position:absolute;top:.6rem;right:.6rem;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:var(--bordo);font-size:1.3rem;font-weight:800;cursor:pointer}
+.mezcla{margin-top:.8rem;padding:.8rem;border:1.5px dashed var(--dorado);border-radius:14px;background:#fffbf7}
+.mezcla .mz-t{font-weight:700;font-size:.9rem;color:var(--gris)}
+.mezcla .mz-t.ok{color:#2f7a63}.mezcla .mz-t.mal{color:#b42318}
+.mz-fila{display:flex;align-items:center;gap:.5rem;margin-top:.5rem}
+.mz-fila i{width:20px;height:20px;border-radius:50%;border:1px solid rgba(0,0,0,.15);flex:none}
+.mz-fila span{flex:1;font-weight:600}
+.mz-fila button{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--rosa-suave);background:#fff;color:var(--bordo);font:inherit;font-weight:800;font-size:1.1rem;cursor:pointer}
+.mz-fila b{min-width:26px;text-align:center}
+.ok-box{background:#e6f4ee;border:1px solid #b9dfcf;color:#2f7a63;border-radius:14px;padding:.9rem;margin-top:.8rem;font-size:.92rem;text-align:left}
+.ok-box pre{white-space:pre-wrap;font-family:inherit;color:var(--texto);background:#fff;border-radius:10px;padding:.7rem;margin:.5rem 0 0;font-size:.85rem}
+.pausa{background:#fff3cd;color:#7a4b00;border-radius:var(--radio);padding:1.2rem;text-align:center;font-weight:700}
+.aviso-demo{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#2b1220;color:#fff;padding:.7rem 1rem;border-radius:12px;font-size:.88rem;font-weight:600;z-index:40;max-width:90vw;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.ir-panel{position:fixed;left:16px;bottom:calc(20px + env(safe-area-inset-bottom));z-index:30;background:#2b1220;color:#fff;text-decoration:none;font-weight:700;font-size:.9rem;padding:.7rem 1rem;border-radius:999px;box-shadow:0 10px 25px rgba(0,0,0,.25)}
 </style>
 </head>
 <body>
-<div class="demo">Muestra de diseño · pedidos y datos de ejemplo, se guardan solo en tu navegador · <a style="color:#fff" href="https://wa.me/5491126339350?text=Hola!%20Vi%20StudioProAr%20y%20quiero%20una%20web%20con%20panel%20como%20la%20de%20Reina%20Dabi." target="_blank" rel="noopener">Quiero una web así →</a></div>
-<div class="switch"><div class="in">
-  <span class="et">Reina Dabi · web + panel</span>
-  <div class="sw2" role="tablist" aria-label="Vista">
-    <button type="button" role="tab" id="t-web" aria-selected="true">La web</button>
-    <button type="button" role="tab" id="t-panel" aria-selected="false">El panel <span class="badge-n" id="nSolTop" hidden></span></button>
-  </div>
-  <button type="button" class="reset" id="reset">Reiniciar demo</button>
-</div></div>
 
-<!-- ============ WEB ============ -->
-<div id="vista-web">
-  <div class="aviso-web" id="avisoWeb" hidden></div>
-  <nav class="pub-nav"><div class="in">
-    <div class="marca"><img src="img/logo.webp" alt=""><span>Reina Dabi<small>rosas eternas</small></span></div>
-    <a class="btn sm" href="#armar">Armá tu ramo</a>
-  </div></nav>
-  <header class="hero"><div class="in">
-    <img class="hero-logo" src="img/logo-completo.webp" alt="Reina Dabi · detalles que duran para siempre" width="360" height="337">
-    <h1>Ramos de rosas eternas de raso</h1>
-    <p>Hechos a mano en San Fernando. Elegí la cantidad, los colores y los detalles, y nos llega tu pedido al instante.</p>
-    <a class="btn" href="#armar">Armar mi ramo</a>
-  </div></header>
-  <div class="in"><div class="gal">
-    <div class="ph" style="background:linear-gradient(150deg,#b3122f,#6e1224)">Rojas clásicas</div>
-    <div class="ph" style="background:linear-gradient(150deg,#e89bb3,#c9a6d9)">Rosa y lila</div>
-    <div class="ph" style="background:linear-gradient(150deg,#f6f1ec,#5e8f6b)">Verde y blanco</div>
-    <div class="ph" style="background:linear-gradient(150deg,#e9b949,#e8752f)">Amarillas</div>
-    <div class="ph" style="background:conic-gradient(#8e1e48,#c9962c,#e4357b,#8e1e48)">Combinados</div>
-  </div></div>
-
-  <section class="sec" id="armar"><div class="in">
-    <h2>Armá tu ramo</h2>
-    <p class="sub">Completá el pedido y te confirmamos precio y entrega por WhatsApp.</p>
-    <div id="pausaWeb" class="pausa" hidden>En este momento no estamos tomando pedidos por la web. Escribinos por WhatsApp.</div>
-    <div class="armador" id="armadorWeb">
-      <form class="card" id="wForm" autocomplete="off">
-        <div class="fg"><label for="wOcasion">Ocasión</label>
-          <select id="wOcasion"><option>Cumpleaños</option><option>Aniversario</option><option>Día de la madre</option><option>San Valentín</option><option>Graduación</option><option>Casamiento / 15</option><option>Porque sí</option></select></div>
-        <div class="fg"><label for="wQty">Cantidad de rosas</label><select id="wQty"></select></div>
-        <div class="fg"><span class="etq">Color: <span class="colname" id="wColorName"></span></span>
-          <div class="swatches" id="wSw" role="group" aria-label="Color de rosas"></div>
-          <div class="mezcla" id="wMz" hidden></div></div>
-        <div class="fg"><label for="wEnv">Envoltorio</label>
-          <select id="wEnv"><option>Papel coreano</option><option>Caja sombrerera</option><option>Arpillera</option><option>A elección</option></select></div>
-        <div class="fg"><span class="etq">Extras</span><div class="chips" id="wExtras"></div></div>
-        <div class="two">
-          <div class="fg"><label for="wFecha">Fecha de entrega</label><input type="date" id="wFecha"></div>
-          <div class="fg"><span class="etq">Entrega</span><div class="seg"><button type="button" id="wRet" aria-pressed="true">Retiro</button><button type="button" id="wEnvio" aria-pressed="false">Envío</button></div></div>
-        </div>
-        <div class="two">
-          <div class="fg"><label for="wNombre">Tu nombre</label><input type="text" id="wNombre" maxlength="60"></div>
-          <div class="fg"><label for="wTel">Tu WhatsApp</label><input type="tel" id="wTel" maxlength="20" placeholder="11 0000 0000"></div>
-        </div>
-        <div class="fg"><label for="wZona">Zona / barrio</label><input type="text" id="wZona" maxlength="60" placeholder="San Fernando, Tigre..."></div>
-        <div class="fg"><label for="wCom">Comentarios <span class="colname">(dedicatoria, detalles)</span></label><textarea id="wCom" maxlength="300"></textarea></div>
-      </form>
-      <aside class="card resumen">
-        <h3>Tu pedido</h3>
-        <dl id="wRes"></dl>
-        <button type="button" class="btn wa" id="wSend" style="width:100%">Enviar pedido</button>
-        <div class="err" id="wErr"></div>
-        <div id="wOk"></div>
-      </aside>
-    </div>
-  </div></section>
-  <footer>Reina Dabi · San Fernando · @lareina.dabi</footer>
+<div class="demo-tira">Muestra de StudioProAr · los pedidos y datos son de ejemplo y quedan en tu navegador · <a href="https://wa.me/5491126339350?text=Hola!%20Vi%20la%20muestra%20de%20Reina%20Dabi%20y%20quiero%20una%20web%20as%C3%AD." target="_blank" rel="noopener">Quiero una web así →</a></div>
+<div class="barra" id="barra">
+  <div class="banner" id="banner" hidden></div>
+  <a class="btn" data-wa="banner" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 32 32" fill="#25d366" aria-hidden="true"><path d="M16 3C9 3 3.3 8.6 3.3 15.6c0 2.3.6 4.5 1.8 6.4L3 29l7.2-1.9c1.8 1 3.8 1.5 5.9 1.5 7 0 12.7-5.6 12.7-12.6S23 3 16 3zm0 23.1c-1.9 0-3.8-.5-5.4-1.5l-.4-.2-4.3 1.1 1.1-4.2-.3-.4c-1.1-1.7-1.6-3.6-1.6-5.6C5.1 9.8 10 5 16 5s10.9 4.8 10.9 10.6S22 26.1 16 26.1z"/></svg> Pedí tu ramo</a>
 </div>
 
-<!-- ============ PANEL ============ -->
-<div id="vista-panel" hidden>
-  <div class="ptop"><div class="in">
-    <div class="marca"><img src="img/logo.webp" alt=""><span>Panel<small>Reina Dabi</small></span></div>
-    <span class="sub">Sesión de demostración</span>
-  </div></div>
-  <div class="in">
-    <div class="ptabs" role="tablist">
-      <button type="button" class="ptab" data-pt="pedidos" aria-selected="true">📋 Pedidos <span class="badge-n" id="nSol" hidden></span></button>
-      <button type="button" class="ptab" data-pt="stats" aria-selected="false">📊 Estadísticas</button>
-      <button type="button" class="ptab" data-pt="editar" aria-selected="false">✏️ Editar web</button>
+<main id="inicio">
+  <section class="hero">
+    <div class="contenedor hero-grid">
+      <div>
+        <img class="hero-logo" src="img/logo-completo.webp" alt="Reina Dabi, detalles que duran para siempre" width="360" height="337">
+        <h1>Ramos de flores perfumadas</h1>
+        <p>Personalizamos cada ramo con cintas con mensaje, mariposas, perlas y coronas.</p>
+      </div>
     </div>
+  </section>
 
-    <!-- Pedidos -->
-    <div id="p-pedidos">
-      <div class="grid-p">
-        <div>
-          <div class="card bandeja" id="bandeja">
-            <h2 style="font-size:22px">Pedidos de la web</h2>
-            <div class="sub">Llegaron desde la página. Aceptalos para pasarlos a la lista con precio y seña.</div>
-            <div id="solList"></div>
-          </div>
-          <div class="kpis" id="kpis"></div>
-          <div class="card">
-            <div class="lst-head"><h2 style="font-size:22px">Próximas entregas</h2>
-              <div class="mini-tabs" id="lTabs"><button type="button" data-l="activos" aria-pressed="true">Activos</button><button type="button" data-l="entregados" aria-pressed="false">Entregados</button><button type="button" data-l="todos" aria-pressed="false">Todos</button></div></div>
-            <div id="lista"></div>
-          </div>
-          <div class="card" style="margin-top:16px">
-            <h2 style="font-size:22px">Rosas por color</h2>
-            <div class="sub">Para armar: pedidos reservados o en preparación</div>
-            <div id="colores"></div>
-          </div>
-        </div>
+  <section>
+    <div class="contenedor">
+      <div class="titulo"><h2>Un ramo para cada momento</h2><p>Hacemos ramos a pedido para</p></div>
+      <div class="chips">
+        <span class="chip">🎓 Egresados</span><span class="chip">🎂 Cumpleaños</span><span class="chip">💍 Casamientos</span>
+        <span class="chip">👑 Quinceañeras</span><span class="chip">💞 Aniversarios</span><span class="chip">💌 Propuestas</span>
+        <span class="chip">🌸 Días especiales</span>
+      </div>
+    </div>
+  </section>
 
-        <form class="card" id="pForm" autocomplete="off">
-          <h2 style="font-size:22px" id="pTitle">Nuevo pedido</h2>
-          <div class="sub" id="pOrigen" style="margin-bottom:10px">Carga manual</div>
-          <div class="fg"><label for="pEnt">Fecha de entrega</label><input type="date" id="pEnt"></div>
-          <div class="fg"><label for="pQty">Cantidad de rosas</label><input type="number" id="pQty" min="1" max="200" value="9"></div>
-          <div class="fg"><span class="etq">Color: <span class="colname" id="pColorName"></span></span>
-            <div class="swatches" id="pSw" role="group" aria-label="Color de rosas"></div>
-            <div class="mezcla" id="pMz" hidden></div></div>
-          <div class="fg"><label for="pNom">Nombre</label><input type="text" id="pNom"></div>
-          <div class="two">
-            <div class="fg"><label for="pTel">Teléfono</label><input type="tel" id="pTel"></div>
-            <div class="fg"><label for="pLug">De dónde es</label><input type="text" id="pLug"></div>
-          </div>
-          <div class="fg"><div class="seg"><button type="button" id="pRet" aria-pressed="true">Retira</button><button type="button" id="pEnv" aria-pressed="false">Se envía</button></div></div>
-          <div class="fg"><label for="pObs">Observaciones</label><textarea id="pObs"></textarea></div>
-          <div class="calc">
-            <div class="r"><span>Precio (según cantidad)</span><input type="number" id="pPrecio" min="0" step="500"></div>
-            <div class="r"><span>Reserva (seña)</span><input type="number" id="pRes" min="0" step="500"></div>
-            <div class="r" style="margin:0"><b>Cuánto debe</b><b id="pDebe" style="color:var(--bad)"></b></div>
-          </div>
-          <button type="submit" class="btn" style="width:100%" id="pSave">Guardar pedido</button>
-          <button type="button" class="btn ghost" style="width:100%;margin-top:8px" id="pCancel" hidden>Cancelar</button>
-          <div class="err" id="pErr"></div>
+  <section style="padding-top:0">
+    <div class="contenedor">
+      <div class="titulo"><h2>¿Por qué rosas eternas?</h2></div>
+      <div class="porque">
+        <div><span>♾️</span><b>Duran años</b><p>No se marchitan: el regalo queda como recuerdo para siempre.</p></div>
+        <div><span>💧</span><b>Sin agua ni cuidados</b><p>No necesitan riego. Solo un lugar lejos de la humedad.</p></div>
+        <div><span>✋</span><b>Hechas a mano</b><p>Cada rosa se arma una por una, en el color y diseño que elijas.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="ramos" style="padding-top:0">
+    <div class="contenedor">
+      <div class="titulo"><h2>Algunos de nuestros ramos</h2><p>Cada uno es único: elegí colores, tamaño y detalles</p></div>
+      <div class="galeria" id="galeria">
+        <figure><img src="img/lila.jpg" alt="Ramo lila y dorado con mariposas" loading="lazy"><figcaption>Lila y dorado</figcaption></figure>
+        <figure><img src="img/rojas.jpg" alt="Ramo de rosas rojas con tallo" loading="lazy"><figcaption>Rojas con tallo</figcaption></figure>
+        <figure><img src="img/perfumadas.jpg" alt="Ramo de 21 rosas perfumadas con corona" loading="lazy"><figcaption>21 rosas perfumadas + corona</figcaption></figure>
+        <figure><img src="img/verde_blanco.jpg" alt="Ramo verde y blanco con mariposa dorada" loading="lazy"><figcaption>Verde y blanco</figcaption></figure>
+        <figure><img src="img/azul.jpg" alt="Ramo de rosas azules con bombones" loading="lazy"><figcaption>Azul con bombones</figcaption></figure>
+        <figure><img src="img/mariposa_rosa.jpg" alt="Ramo rosa claro con mariposa" loading="lazy"><figcaption>Rosa con mariposa</figcaption></figure>
+        <figure><img src="img/amarillo.jpg" alt="Ramo amarillo con cinta Feliz Cumple" loading="lazy"><figcaption>Cumpleaños con cinta</figcaption></figure>
+        <figure><img src="img/rosa.jpg" alt="Ramo rosa con cinta personalizada y mariposa" loading="lazy"><figcaption>Rosa con mensaje</figcaption></figure>
+      </div>
+      <div class="titulo" style="margin:2.5rem 0 0"><h2 style="font-size:1.5rem">¿No sabés cuántas rosas pedir?</h2><p>Tocá un tamaño y lo cargamos en el armador</p></div>
+      <div class="tamanos">
+        <button class="tamano" type="button" data-rosas="5"><b>Chico</b><small>3 a 7 rosas</small><em>Un detalle</em></button>
+        <button class="tamano" type="button" data-rosas="12"><b>Mediano</b><small>10 a 14 rosas</small><em>El más pedido</em></button>
+        <button class="tamano" type="button" data-rosas="21"><b>Grande</b><small>20 a 25 rosas</small><em>Para lucirse</em></button>
+      </div>
+    </div>
+  </section>
+
+    <section class="armador" id="armador">
+    <div class="contenedor">
+      <div class="titulo"><h2>Armá tu ramo</h2><p>Elegí cómo lo querés y te pasamos el presupuesto por WhatsApp</p></div>
+      <div class="pausa" id="pausa" hidden>En este momento no estamos tomando pedidos por la web. Escribinos por WhatsApp y te contamos qué hay disponible 🌹</div>
+      <div class="arm-grid" id="arm-grid">
+        <form class="panel" id="form-ramo" autocomplete="off">
+          <div class="campo"><label for="ocasion">¿Para qué ocasión?</label>
+            <select id="ocasion">
+              <option>Cumpleaños</option><option>Quinceañera</option><option>Egresados</option><option>Aniversario</option>
+              <option>Casamiento</option><option>Propuesta</option><option>San Valentín</option><option>Día de la Madre</option>
+              <option>Día de la Primavera</option><option>Porque sí</option><option>Otra</option>
+            </select></div>
+          <div class="campo"><label for="cantidad">Cantidad de rosas</label><select id="cantidad"></select></div>
+          <div class="campo"><span class="etiqueta">Colores de las rosas <small>(hasta 3: si elegís más de uno, repartís cuántas de cada color)</small></span><div class="colores" id="colores"></div><div class="mezcla" id="mezcla" hidden></div></div>
+          <div class="campo"><label for="envoltorio">Color del envoltorio</label>
+            <select id="envoltorio">
+              <option>A elección de Reina Dabi</option><option>Blanco</option><option>Negro</option><option>Rosa</option>
+              <option>Lila</option><option>Celeste</option><option>Dorado</option><option>Papel diario</option>
+            </select></div>
+          <div class="campo"><span class="etiqueta">Cinta con mensaje</span>
+            <div class="opciones"><label class="opcion"><input type="checkbox" id="con-cinta"><span>🎀 Quiero cinta con mensaje</span></label></div>
+            <div id="cinta-box" hidden style="margin-top:.6rem">
+              <input type="text" id="cinta" maxlength="40" placeholder="Ej: Feliz cumple, ma ❤">
+              <div class="contador-txt"><span id="cinta-n">0</span>/40</div>
+            </div></div>
+          <div class="campo"><span class="etiqueta">Extras</span><div class="opciones" id="extras"></div></div>
+          <div class="campo"><label for="fecha">¿Para cuándo lo necesitás? <small>(ideal con 48 hs de anticipación)</small></label><input type="date" id="fecha"><p class="nota-fecha" id="nota-fecha" hidden>⏳ Para antes de 48 hs, consultanos stock disponible.</p></div>
+          <div class="campo"><span class="etiqueta">Entrega</span>
+            <div class="opciones">
+              <label class="opcion"><input type="radio" name="entrega" value="Punto de encuentro" checked><span>📍 Punto de encuentro</span></label>
+              <label class="opcion"><input type="radio" name="entrega" value="Retiro"><span>🏠 Retiro</span></label>
+              <label class="opcion"><input type="radio" name="entrega" value="Envío"><span>🚗 Envío</span></label>
+            </div></div>
+          <div class="campo"><label for="nombre">Tu nombre <small>(opcional)</small></label><input type="text" id="nombre" maxlength="40"></div>
+          <div class="campo" style="margin-bottom:0"><label for="comentarios">Comentarios <small>(opcional)</small></label><textarea id="comentarios" maxlength="300" placeholder="Ej: tengo una foto de referencia"></textarea></div>
         </form>
+        <aside class="panel resumen">
+                    <h3>Tu ramo</h3>
+          <ul id="resumen" aria-live="polite"></ul>
+          <a class="btn btn-wa" id="enviar-ramo" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 32 32" fill="#fff" aria-hidden="true"><path d="M16 3C9 3 3.3 8.6 3.3 15.6c0 2.3.6 4.5 1.8 6.4L3 29l7.2-1.9c1.8 1 3.8 1.5 5.9 1.5 7 0 12.7-5.6 12.7-12.6S23 3 16 3zm0 23.1c-1.9 0-3.8-.5-5.4-1.5l-.4-.2-4.3 1.1 1.1-4.2-.3-.4c-1.1-1.7-1.6-3.6-1.6-5.6C5.1 9.8 10 5 16 5s10.9 4.8 10.9 10.6S22 26.1 16 26.1zm6-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.3.3-.6.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.8 5 .8.3 1.4.5 1.9.7.8.3 1.5.2 2.1.1.6-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></svg> Enviar pedido por WhatsApp</a>
+          <p class="error" id="error-ramo"></p>
+          <div id="ok-ramo"></div>
+          <p class="nota">Te respondemos con el presupuesto. Nada se cobra hasta que confirmes.</p>
+        </aside>
       </div>
     </div>
+  </section>
 
-    <!-- Estadísticas -->
-    <div id="p-stats" hidden>
-      <div class="kpis" id="sKpis"></div>
-      <div class="card" style="margin-bottom:16px"><h2 style="font-size:22px">Pedidos por día</h2><div class="sub">Últimos 14 días, según la fecha en que se cargó cada pedido</div><svg class="chart" id="sChart" viewBox="0 0 640 180" role="img" aria-label="Pedidos por día"></svg></div>
-      <div class="grid-p" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
-        <div class="card"><h2 style="font-size:22px">Rosas por color por mes</h2><div id="sMes"></div></div>
-        <div class="card"><h2 style="font-size:22px">De dónde vienen los pedidos</h2><div id="sOrigen"></div>
-          <h2 style="font-size:22px;margin-top:18px">Ocasiones (web)</h2><div id="sOcasion"></div></div>
+  <section>
+    <div class="contenedor">
+      <div class="titulo"><h2>¿Cómo trabajamos?</h2><p>Simple y por WhatsApp</p></div>
+      <div class="pasos">
+        <div class="paso"><div><h3>Contanos qué buscás</h3><p>Usá el armador, elegí uno de nuestros diseños o mandanos una foto de referencia.</p></div></div>
+        <div class="paso"><div><h3>Te pasamos el presupuesto</h3><p>Si estás de acuerdo, ¡avanzamos!</p></div></div>
+        <div class="paso"><div><h3>Reservás con seña</h3><p>Coordinado por transferencia o efectivo.</p></div></div>
+        <div class="paso"><div><h3>Te lo entregamos</h3><p>En un punto de encuentro, retiro o envío.</p></div></div>
       </div>
+      <p class="aviso">Pedidos con 48 hs de anticipación · ¡Consultanos por stock, siempre hay algo hermoso disponible! ✨</p>
     </div>
+  </section>
 
-    <!-- Editar web -->
-    <div id="p-editar" hidden>
-      <div class="ed-grid">
-        <div class="card"><h2 style="font-size:20px">Aviso en la portada</h2><p class="sub">Una franja arriba de la web. Dejalo vacío para sacarlo.</p>
-          <input type="text" id="eAviso" maxlength="120" placeholder="Ej: Pedidos para el Día de la Madre hasta el 15/10">
-          <button type="button" class="btn sm" style="margin-top:10px" id="eAvisoBtn">Publicar aviso</button><div class="msg" id="eAvisoMsg"></div></div>
-        <div class="card"><h2 style="font-size:20px">Pedidos por la web</h2><p class="sub">Pausalos si están a full; la web avisa que escriban por WhatsApp.</p>
-          <label class="toggle"><input type="checkbox" id="eAbierto" checked> Tomando pedidos</label><div class="msg" id="eAbMsg"></div></div>
-        <div class="card"><h2 style="font-size:20px">Anticipación mínima</h2><p class="sub">Días entre el pedido y la entrega que la web deja elegir.</p>
-          <select id="eAnt"><option value="1">1 día</option><option value="2">2 días</option><option value="3">3 días</option><option value="7">7 días</option></select><div class="msg" id="eAntMsg"></div></div>
+  <section id="testimonios" hidden style="padding-top:0">
+    <div class="contenedor">
+      <div class="titulo"><h2>Lo que dicen nuestras clientas</h2><span class="demo">⚠️ SIMULACIÓN · textos de ejemplo, reemplazar por testimonios reales antes de publicar</span></div>
+      <div class="testis">
+        <div class="testi"><div class="estrellas">★★★★★</div><p>"Le regalé un ramo a mi mamá para su cumple y quedó hermoso, igual a la foto que les mandé."</p><b>— Ejemplo 1</b></div>
+        <div class="testi"><div class="estrellas">★★★★★</div><p>"El ramo de 15 con la corona fue lo más lindo de la fiesta. Súper atentas con cada detalle."</p><b>— Ejemplo 2</b></div>
+        <div class="testi"><div class="estrellas">★★★★★</div><p>"Lo pedí con poco tiempo y igual me consiguieron uno precioso. ¡Gracias!"</p><b>— Ejemplo 3</b></div>
       </div>
     </div>
-    <footer>Panel · Reina Dabi · demo</footer>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="contenedor">
+      <div class="titulo"><h2>Preguntas frecuentes</h2></div>
+      <div class="faq">
+        <details><summary>¿Cuánto duran las rosas eternas?</summary><p>Años. Son de satén, no se marchitan ni pierden el color si las cuidás de la humedad y del sol directo.</p></details>
+        <details><summary>¿Cómo se cuidan?</summary><p>No necesitan agua. Mantenelas en un lugar seco y, si juntan polvo, pasales un plumero suave o un secador de pelo con aire frío.</p></details>
+        <details><summary>¿Con cuánta anticipación tengo que pedir?</summary><p>Lo ideal es 48 hs antes. Si lo necesitás antes, consultanos: siempre hay algo hermoso disponible.</p></details>
+        <details><summary>¿Hacen envíos?</summary><p>Sí. Podés elegir punto de encuentro, retiro o envío. Te pasamos los detalles por WhatsApp.</p></details>
+        <details><summary>¿Puedo pedir un diseño de una foto?</summary><p>¡Claro! Mandanos la foto de referencia por WhatsApp y lo armamos a tu gusto.</p></details>
+        <details><summary>¿Cómo se reserva?</summary><p>Con una seña, coordinada por transferencia o efectivo.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="contenedor">
+      <div class="cta">
+        <span class="script">Regalá algo que dure</span>
+        <h2>Fechas especiales: reservá con tiempo</h2>
+        <p>Para cumpleaños, egresados y fechas de mucha demanda, reservá tu ramo con anticipación y congelá el precio.</p>
+        <div class="acciones">
+          <a class="btn btn-wa" data-wa="cierre" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 32 32" fill="#fff" aria-hidden="true"><path d="M16 3C9 3 3.3 8.6 3.3 15.6c0 2.3.6 4.5 1.8 6.4L3 29l7.2-1.9c1.8 1 3.8 1.5 5.9 1.5 7 0 12.7-5.6 12.7-12.6S23 3 16 3zm0 23.1c-1.9 0-3.8-.5-5.4-1.5l-.4-.2-4.3 1.1 1.1-4.2-.3-.4c-1.1-1.7-1.6-3.6-1.6-5.6C5.1 9.8 10 5 16 5s10.9 4.8 10.9 10.6S22 26.1 16 26.1zm6-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.3.3-.6.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.8 5 .8.3 1.4.5 1.9.7.8.3 1.5.2 2.1.1.6-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></svg> Escribinos</a>
+          <a class="btn btn-borde" href="https://www.instagram.com/lareina.dabi/" target="_blank" rel="noopener">@lareina.dabi</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="contenedor">
+    <a class="marca" href="#inicio"><img src="img/marca.png" alt="" width="62" height="40"><span>Reina Dabi</span></a>
+    <p>Ramos de flores eternas · San Fernando, Buenos Aires · Hacemos envíos</p>
+    <p>WhatsApp <a data-wa="pie" href="#" target="_blank" rel="noopener">11 6650-4492</a> · Instagram <a href="https://www.instagram.com/lareina.dabi/" target="_blank" rel="noopener">@lareina.dabi</a></p>
   </div>
-</div>
+</footer>
 
-<div class="modal" id="modal" hidden><div class="card"><p id="mTxt" style="margin:0"></p><div class="acc"><button type="button" class="btn ghost sm" id="mNo">Cancelar</button><button type="button" class="btn sm" id="mSi">Sí</button></div></div></div>
-
-<script>
-(function(){
-var COLORS={
-  rojo:['Rojo','#B3122F'],vino:['Vino','#6E1224'],rosa:['Rosa','#E89BB3'],rosaBebe:['Rosa bebé','#F6D3DE'],fucsia:['Fucsia','#E4357B'],
-  blanco:['Blanco','#F6F1EC'],champagne:['Champagne','#E8D9B5'],amarillo:['Amarillo','#E9B949'],naranja:['Naranja','#E8752F'],durazno:['Durazno','#F2957A'],
-  lila:['Lila','#C9A6D9'],violeta:['Violeta','#7B4BA0'],azul:['Azul','#3E6FB0'],celeste:['Celeste','#7EC8E3'],verde:['Verde','#5E8F6B'],
-  negro:['Negro','#1F1B1D'],dorado:['Dorado','#C9962C'],plateado:['Plateado','#C7C7C9'],
-  combinado:['Combinado','conic-gradient(#8E1E48,#C9962C,#E4357B,#8E1E48)'],otro:['Otro','#FFFFFF']
-};
-var MAX_MIX=3;
-var EXTRAS=['Mariposas','Moño','Perlas','Corona','Bombones','Luces','Perfumadas','Tarjeta'];
-var ESTADOS=['Reservado','En preparación','Listo','Entregado'];
-var DAYS=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
-var MONTHS=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
-// Precios de ejemplo (no son los reales)
-var PRICES={1:4500,2:7500,3:9500,4:11500,5:13500,6:15000,7:17000}, BANDAS={p8:2200,p15:1950,p21:1750}, COSTO=750;
-
-function $(id){return document.getElementById(id)}
-function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
-function money(n){return '$'+Math.round(n||0).toLocaleString('es-AR')}
-function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
-function today(){var d=new Date();return new Date(d.getFullYear(),d.getMonth(),d.getDate())}
-function addDays(n){var d=today();d.setDate(d.getDate()+n);return iso(d)}
-function parse(s){var p=s.split('-');return new Date(+p[0],+p[1]-1,+p[2])}
-function fmtDate(s){var d=parse(s);return DAYS[d.getDay()]+' '+String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')}
-function colorDe(k){return COLORS[k]||[k,'#ccc']}
-function porRosa(q){return q<=14?BANDAS.p8:q<=20?BANDAS.p15:BANDAS.p21}
-function priceFor(q){q=Math.max(1,Math.floor(+q||1));var p=0;for(var i=1;i<=q;i++){var v=i<=7?PRICES[i]:Math.round(i*porRosa(i)/1000)*1000;p=i<=7?v:Math.max(v,Math.ceil((p+1000)/1000)*1000)}return p}
-function seña(p){return Math.round(p*0.5/500)*500}
-function uid(){return 'x'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
-
-// ---- mezcla (combinado) ----
-function mixOk(o){if(o.color!=='combinado'||!o.mezcla)return false;var t=0;for(var k in o.mezcla)t+=+o.mezcla[k]||0;return t===+o.qty}
-function reparto(o){if(mixOk(o)){var r={};for(var k in o.mezcla)if(o.mezcla[k]>0)r[k]=+o.mezcla[k];return r}var x={};x[o.color]=+o.qty;return x}
-function mixTxt(o){if(!mixOk(o))return '';return ' ('+Object.keys(o.mezcla).sort(function(a,b){return o.mezcla[b]-o.mezcla[a]}).map(function(k){return o.mezcla[k]+' '+colorDe(k)[0]}).join(', ')+')'}
-function dots(o){var r=reparto(o);return Object.keys(r).map(function(k){return '<span class="dot" style="background:'+colorDe(k)[1]+'"></span>'}).join('')}
-function colorTxt(o){return colorDe(o.color)[0]+mixTxt(o)}
-
-// Editor de color reutilizable (web y panel)
-function ColorPicker(swId,mzId,nameId,getQty,onChange){
-  var st={color:'rojo',mezcla:{}};
-  var sw=$(swId),mz=$(mzId);
-  Object.keys(COLORS).forEach(function(k){
-    var b=document.createElement('button');b.type='button';b.className='swc';b.dataset.c=k;
-    b.style.background=COLORS[k][1];b.setAttribute('aria-label',COLORS[k][0]);b.title=COLORS[k][0];
-    b.onclick=function(){st.color=k;draw();onChange&&onChange()};sw.appendChild(b);
-  });
-  mz.onclick=function(e){var b=e.target.closest('button');if(!b)return;var k;
-    if((k=b.dataset.add)){if(st.mezcla[k]>0)delete st.mezcla[k];else if(Object.keys(st.mezcla).length<MAX_MIX)st.mezcla[k]=1}
-    else if((k=b.dataset.mas)){st.mezcla[k]++}
-    else if((k=b.dataset.menos)){st.mezcla[k]--;if(st.mezcla[k]<=0)delete st.mezcla[k]}
-    draw();onChange&&onChange()};
-  function sum(){var t=0;for(var k in st.mezcla)t+=st.mezcla[k];return t}
-  function draw(){
-    $(nameId).textContent=COLORS[st.color][0];
-    Array.prototype.forEach.call(sw.children,function(b){b.setAttribute('aria-pressed',String(b.dataset.c===st.color))});
-    if(st.color!=='combinado'){mz.hidden=true;mz.innerHTML='';return}
-    mz.hidden=false;var q=getQty(),t=sum(),cls=t===q?'ok':(t>q?'bad':'');
-    var lleno=Object.keys(st.mezcla).length>=MAX_MIX;
-    var h='<div class="mz-head '+cls+'">Combinación (hasta '+MAX_MIX+' colores): '+t+' de '+q+' rosas'+(t>q?' (te pasaste)':t<q?' · faltan '+(q-t):' ✓')+'</div><div class="swatches">';
-    Object.keys(COLORS).forEach(function(k){if(k==='combinado'||k==='otro')return;h+='<button type="button" class="swc" data-add="'+k+'" style="background:'+COLORS[k][1]+'" title="'+COLORS[k][0]+'" aria-label="'+COLORS[k][0]+'" aria-pressed="'+(st.mezcla[k]>0)+'"'+(lleno&&!(st.mezcla[k]>0)?' disabled':'')+'></button>'});
-    h+='</div>';var ks=Object.keys(st.mezcla);
-    if(!ks.length)h+='<div class="sub">Tocá hasta '+MAX_MIX+' colores y ajustá cuántas rosas de cada uno.</div>';
-    else if(lleno)h+='<div class="sub">Ya elegiste '+MAX_MIX+' colores. Para cambiar uno, tocalo de nuevo para sacarlo.</div>';
-    ks.forEach(function(k){h+='<div class="mz-row"><span class="dot" style="background:'+COLORS[k][1]+'"></span><span class="n">'+COLORS[k][0]+'</span><button type="button" data-menos="'+k+'" aria-label="Una menos de '+COLORS[k][0]+'">−</button><b>'+st.mezcla[k]+'</b><button type="button" data-mas="'+k+'" aria-label="Una más de '+COLORS[k][0]+'">+</button></div>'});
-    mz.innerHTML=h;
-  }
-  return {
-    get:function(){return {color:st.color,mezcla:st.color==='combinado'?JSON.parse(JSON.stringify(st.mezcla)):null}},
-    set:function(c,m){st.color=COLORS[c]?c:'otro';st.mezcla=m?JSON.parse(JSON.stringify(m)):{};draw()},
-    valid:function(){return st.color!=='combinado'||sum()===getQty()},
-    sum:sum,draw:draw
-  };
-}
-
-// ---- estado (localStorage con respaldo en memoria) ----
-var KEY='rd-demo-v1',DB;
-function seed(){
-  return {orders:[
-    {id:uid(),creado:addDays(-6),entrega:addDays(3),nombre:'Lucía Fernández',tel:'11 5555 1234',lugar:'Victoria',envio:false,qty:12,color:'rojo',mezcla:null,precio:priceFor(12),pagado:seña(priceFor(12)),estado:'Reservado',origen:'manual',observaciones:''},
-    {id:uid(),creado:addDays(-4),entrega:addDays(6),nombre:'Martín Gómez',tel:'11 4444 9876',lugar:'Tigre',envio:true,qty:15,color:'combinado',mezcla:{rosa:8,blanco:7},precio:priceFor(15),pagado:seña(priceFor(15)),estado:'En preparación',origen:'web',ocasion:'Aniversario',observaciones:'Tarjeta: "Feliz aniversario, amor"'},
-    {id:uid(),creado:addDays(-9),entrega:addDays(-1),nombre:'Sofía Ruiz',tel:'',lugar:'San Fernando',envio:false,qty:6,color:'lila',mezcla:null,precio:priceFor(6),pagado:priceFor(6),estado:'Entregado',origen:'manual',observaciones:''}
-  ],solicitudes:[
-    {id:uid(),recibido:new Date(Date.now()-3600e3).toISOString(),ocasion:'Cumpleaños',qty:9,color:'combinado',mezcla:{rojo:5,dorado:4},envoltorio:'Caja sombrerera',extras:['Moño','Tarjeta'],entrega:addDays(4),envio:false,nombre:'Carla Benítez',tel:'11 6666 0000',zona:'San Fernando',comentarios:'Para mi mamá, que diga "Feliz cumple Ma"'}
-  ],config:{aviso:'',abierto:true,ant:2},visitas:{}};
-}
-function load(){try{var s=localStorage.getItem(KEY);if(s)return JSON.parse(s)}catch(e){}return seed()}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(DB))}catch(e){}}
-DB=load();
-
-// ---- confirmación propia ----
-function confirmar(txt,cb){$('mTxt').textContent=txt;$('modal').hidden=false;$('mSi').onclick=function(){$('modal').hidden=true;cb()};$('mNo').onclick=function(){$('modal').hidden=true}}
-
-// ---- vistas ----
-function vista(v){var w=v==='web';$('vista-web').hidden=!w;$('vista-panel').hidden=w;$('t-web').setAttribute('aria-selected',w);$('t-panel').setAttribute('aria-selected',!w);
-  if(w){contarVisita();renderWeb()}else renderPanel();scrollTo(0,0)}
-$('t-web').onclick=function(){vista('web')};$('t-panel').onclick=function(){vista('panel')};
-$('reset').onclick=function(){confirmar('¿Volver la demo a los datos de ejemplo?',function(){DB=seed();save();pExit();renderWeb();renderPanel()})};
-var pTab='pedidos';
-document.querySelector('.ptabs').onclick=function(e){var b=e.target.closest('[data-pt]');if(!b)return;pTab=b.dataset.pt;
-  document.querySelectorAll('.ptab').forEach(function(x){x.setAttribute('aria-selected',String(x===b))});
-  ['pedidos','stats','editar'].forEach(function(t){$('p-'+t).hidden=t!==pTab});renderPanel()};
-function contarVisita(){var d=iso(today());DB.visitas[d]=(DB.visitas[d]||0)+1;save()}
-
-// ================= WEB =================
-var W={envio:false,extras:{}};
-(function(){var q=$('wQty');for(var i=1;i<=30;i++)q.add(new Option(i+(i===1?' rosa':' rosas'),i,false,i===12));
-  EXTRAS.forEach(function(x){var b=document.createElement('button');b.type='button';b.className='chip';b.textContent=x;b.setAttribute('aria-pressed','false');
-    b.onclick=function(){W.extras[x]=!W.extras[x];b.setAttribute('aria-pressed',String(!!W.extras[x]));renderRes()};$('wExtras').appendChild(b)})})();
-var wCP=ColorPicker('wSw','wMz','wColorName',function(){return +$('wQty').value},renderRes);
-wCP.set('rojo');
-$('wQty').onchange=function(){wCP.draw();renderRes()};
-$('wForm').oninput=renderRes;
-$('wRet').onclick=function(){W.envio=false;segW()};$('wEnvio').onclick=function(){W.envio=true;segW()};
-function segW(){$('wRet').setAttribute('aria-pressed',String(!W.envio));$('wEnvio').setAttribute('aria-pressed',String(W.envio));renderRes()}
-function wDatos(){var c=wCP.get();return {ocasion:$('wOcasion').value,qty:+$('wQty').value,color:c.color,mezcla:c.mezcla,envoltorio:$('wEnv').value,
-  extras:EXTRAS.filter(function(x){return W.extras[x]}),entrega:$('wFecha').value,envio:W.envio,nombre:$('wNombre').value.trim(),tel:$('wTel').value.trim(),zona:$('wZona').value.trim(),comentarios:$('wCom').value.trim()}}
-function renderRes(){var d=wDatos();
-  var f=[['Ocasión',d.ocasion],['Rosas',d.qty],['Colores',d.color==='combinado'?(mixOk(d)?mixTxt(d).slice(2,-1):'Combinado (a armar)'):colorDe(d.color)[0]],['Envoltorio',d.envoltorio]];
-  if(d.extras.length)f.push(['Extras',d.extras.join(', ')]);
-  f.push(['Entrega',(d.entrega?fmtDate(d.entrega):'—')+' · '+(d.envio?'Envío':'Retiro')]);
-  $('wRes').innerHTML=f.map(function(x){return '<div><dt>'+x[0]+'</dt><dd>'+esc(x[1])+'</dd></div>'}).join('')}
-function renderWeb(){
-  var c=DB.config;$('avisoWeb').hidden=!c.aviso;$('avisoWeb').textContent=c.aviso;
-  $('pausaWeb').hidden=c.abierto;$('armadorWeb').hidden=!c.abierto;
-  $('wFecha').min=addDays(c.ant);renderRes()}
-$('wSend').onclick=function(){
-  var d=wDatos(),e='';
-  if(!wCP.valid())e='La combinación suma '+wCP.sum()+' rosas y elegiste '+d.qty+'. Ajustá las cantidades.';
-  else if(!d.entrega)e='Elegí la fecha de entrega.';
-  else if(d.entrega<addDays(DB.config.ant))e='Necesitamos al menos '+DB.config.ant+' día(s) de anticipación.';
-  else if(!d.nombre)e='Poné tu nombre.';
-  else if(d.tel.replace(/\D/g,'').length<8)e='Poné tu WhatsApp para poder confirmarte.';
-  $('wErr').textContent=e;if(e)return;
-  d.id=uid();d.recibido=new Date().toISOString();DB.solicitudes.push(d);save();
-  var msg='Hola Reina Dabi! Quiero hacer un pedido:\n• Ocasión: '+d.ocasion+'\n• Rosas: '+d.qty+'\n• Colores: '+(d.color==='combinado'?mixTxt(d).slice(2,-1):colorDe(d.color)[0])+'\n• Envoltorio: '+d.envoltorio+(d.extras.length?'\n• Extras: '+d.extras.join(', '):'')+'\n• Entrega: '+fmtDate(d.entrega)+' · '+(d.envio?'Envío':'Retiro')+'\n• Nombre: '+d.nombre+(d.comentarios?'\n• Comentarios: '+d.comentarios:'');
-  $('wOk').innerHTML='<div class="ok-box"><b>¡Pedido enviado!</b> Ya le llegó al panel de Reina Dabi. En la web real además se abre WhatsApp con este mensaje:<pre>'+esc(msg)+'</pre><div style="margin-top:8px">Pasá a <b>El panel</b> para verlo en "Pedidos de la web".</div></div>';
-  $('wNombre').value='';$('wTel').value='';$('wZona').value='';$('wCom').value='';$('wFecha').value='';
-  W.extras={};Array.prototype.forEach.call($('wExtras').children,function(b){b.setAttribute('aria-pressed','false')});
-  wCP.set('rojo');renderRes();badge()};
-
-// ================= PANEL =================
-var P={envio:false,precioManual:false,resManual:false,editId:null,desdeSol:null},lTab='activos',mesSel='';
-var pCP=ColorPicker('pSw','pMz','pColorName',function(){return Math.max(1,parseInt($('pQty').value,10)||1)},function(){});
-pCP.set('verde');
-function pCalc(){var q=Math.max(1,parseInt($('pQty').value,10)||1);
-  if(!P.precioManual)$('pPrecio').value=priceFor(q);
-  if(!P.resManual)$('pRes').value=seña(+$('pPrecio').value||0);
-  $('pDebe').textContent=money(Math.max(0,(+$('pPrecio').value||0)-(+$('pRes').value||0)))}
-$('pQty').oninput=function(){P.precioManual=false;P.resManual=false;pCP.draw();pCalc()};
-$('pPrecio').oninput=function(){P.precioManual=true;pCalc()};
-$('pRes').oninput=function(){P.resManual=true;pCalc()};
-$('pRet').onclick=function(){P.envio=false;segP()};$('pEnv').onclick=function(){P.envio=true;segP()};
-function segP(){$('pRet').setAttribute('aria-pressed',String(!P.envio));$('pEnv').setAttribute('aria-pressed',String(P.envio))}
-function pFill(o){$('pEnt').value=o.entrega||'';$('pQty').value=o.qty||9;pCP.set(o.color||'verde',o.mezcla);$('pNom').value=o.nombre||'';$('pTel').value=o.tel||'';$('pLug').value=o.lugar||o.zona||'';
-  P.envio=!!o.envio;segP();$('pObs').value=o.observaciones!=null?o.observaciones:'';
-  if(o.precio!=null){$('pPrecio').value=o.precio;$('pRes').value=o.pagado;P.precioManual=true;P.resManual=true}else{P.precioManual=false;P.resManual=false}pCalc()}
-function pExit(){P.editId=null;P.desdeSol=null;pFill({qty:9,color:'verde'});$('pTitle').textContent='Nuevo pedido';$('pOrigen').textContent='Carga manual';$('pSave').textContent='Guardar pedido';$('pCancel').hidden=true;$('pErr').textContent=''}
-$('pCancel').onclick=pExit;
-$('pForm').onsubmit=function(ev){ev.preventDefault();
-  var q=Math.max(1,parseInt($('pQty').value,10)||1),c=pCP.get(),e='';
-  if(!$('pEnt').value)e='Falta la fecha de entrega.';else if(!$('pNom').value.trim())e='Falta el nombre.';else if(!pCP.valid())e='La combinación tiene '+pCP.sum()+' rosas y el pedido '+q+'. Tienen que coincidir.';
-  $('pErr').textContent=e;if(e)return;
-  var d={entrega:$('pEnt').value,nombre:$('pNom').value.trim(),tel:$('pTel').value.trim(),lugar:$('pLug').value.trim(),envio:P.envio,qty:q,color:c.color,mezcla:c.mezcla,
-    precio:+$('pPrecio').value||0,pagado:+$('pRes').value||0,observaciones:$('pObs').value.trim()};
-  if(P.editId){var o=DB.orders.filter(function(x){return x.id===P.editId})[0];if(o)Object.assign(o,d)}
-  else{d.id=uid();d.creado=iso(today());d.estado='Reservado';d.origen=P.desdeSol?'web':'manual';
-    if(P.desdeSol){d.ocasion=P.desdeSol.ocasion;DB.solicitudes=DB.solicitudes.filter(function(s){return s.id!==P.desdeSol.id})}
-    DB.orders.push(d)}
-  save();pExit();renderPanel()};
-
-function badge(){var n=DB.solicitudes.length;['nSol','nSolTop'].forEach(function(id){$(id).hidden=!n;$(id).textContent=n})}
-function debe(o){return Math.max(0,(o.precio||0)-(o.pagado||0))}
-
-function renderSol(){var s=DB.solicitudes.slice().sort(function(a,b){return a.recibido<b.recibido?1:-1});
-  $('bandeja').hidden=!s.length;
-  $('solList').innerHTML=s.map(function(x){var r=new Date(x.recibido);
-    return '<div class="sol" data-sid="'+x.id+'"><div class="t"><span>'+esc(x.nombre)+' · '+x.qty+' rosas</span><span class="tag t-web">recibido '+String(r.getDate()).padStart(2,'0')+'/'+String(r.getMonth()+1).padStart(2,'0')+' '+String(r.getHours()).padStart(2,'0')+':'+String(r.getMinutes()).padStart(2,'0')+'</span></div>'+
-      '<div class="d">'+dots(x)+esc(colorTxt(x))+' · '+esc(x.ocasion)+' · '+esc(x.envoltorio)+(x.extras&&x.extras.length?' · '+esc(x.extras.join(', ')):'')+'</div>'+
-      '<div class="d">Entrega '+fmtDate(x.entrega)+' · '+(x.envio?'Envío':'Retira')+' · '+esc([x.zona,x.tel].filter(Boolean).join(' · '))+'</div>'+
-      (x.comentarios?'<div class="d"><i>📝 '+esc(x.comentarios)+'</i></div>':'')+
-      '<div class="acc"><button type="button" class="btn sm" data-sa="ok">Aceptar</button><button type="button" class="btn ghost sm" data-sa="no">Descartar</button></div></div>'}).join('')}
-$('solList').onclick=function(e){var b=e.target.closest('[data-sa]');if(!b)return;var id=b.closest('[data-sid]').dataset.sid,s=DB.solicitudes.filter(function(x){return x.id===id})[0];if(!s)return;
-  if(b.dataset.sa==='no'){confirmar('¿Descartar el pedido de '+s.nombre+'?',function(){DB.solicitudes=DB.solicitudes.filter(function(x){return x.id!==id});save();renderPanel()});return}
-  P.editId=null;P.desdeSol=s;
-  var obs=[s.ocasion,s.envoltorio,s.extras&&s.extras.length?s.extras.join(', '):'',s.comentarios].filter(Boolean).join(' · ');
-  pFill({entrega:s.entrega,qty:s.qty,color:s.color,mezcla:s.mezcla,nombre:s.nombre,tel:s.tel,zona:s.zona,envio:s.envio,observaciones:obs});
-  $('pTitle').textContent='Aceptar pedido de la web';$('pOrigen').textContent='Revisá el precio y la seña, y guardalo.';$('pSave').textContent='Confirmar pedido';$('pCancel').hidden=false;
-  $('pForm').scrollIntoView({behavior:'smooth',block:'start'})};
-
-function renderLista(){
-  var t=today(),L=DB.orders.filter(function(o){return lTab==='todos'?true:lTab==='entregados'?o.estado==='Entregado':o.estado!=='Entregado'}).sort(function(a,b){return a.entrega<b.entrega?-1:1});
-  if(lTab==='entregados')L.reverse();
-  $('lista').innerHTML=L.length?L.map(function(o){
-    var diff=Math.round((parse(o.entrega)-t)/864e5),cls='t-ok',txt='en '+diff+' días';
-    if(o.estado==='Entregado'){cls='t-done';txt='entregado'}else if(diff<0){cls='t-bad';txt='atrasado'}else if(diff===0){cls='t-bad';txt='hoy'}else if(diff===1){cls='t-bad';txt='mañana'}else if(diff<=2)cls='t-bad';else if(diff<=7)cls='t-warn';
-    var d=debe(o);
-    return '<div class="ped" data-id="'+o.id+'"><div><div class="f">'+fmtDate(o.entrega)+'</div><span class="tag '+cls+'">'+txt+'</span></div>'+
-      '<div><div class="who">'+esc(o.nombre)+(o.origen==='web'?' <span class="tag t-web">web</span>':'')+'</div><div class="w">'+esc([o.lugar,o.envio?'Envío':'Retira',o.tel].filter(Boolean).join(' · '))+'</div>'+
-      '<div style="margin-top:4px">'+dots(o)+'<b>'+o.qty+'</b> · '+esc(colorTxt(o))+'</div>'+(o.observaciones?'<div class="obs">📝 '+esc(o.observaciones)+'</div>':'')+'</div>'+
-      '<div class="der"><div>'+money(o.precio)+'</div><div class="w">seña '+money(o.pagado)+'</div>'+(d>0?'<div style="color:var(--bad);font-weight:700">debe '+money(d)+'</div>':'<div class="w">pagado</div>')+
-      '<div class="acc"><button type="button" class="btn ghost sm" data-a="estado">'+o.estado+' ›</button>'+(d>0?'<button type="button" class="lk" data-a="pay">Cobrar</button>':'')+'<button type="button" class="lk" data-a="edit">Editar</button><button type="button" class="lk" data-a="del">Borrar</button></div></div></div>'}).join(''):'<div class="empty">No hay pedidos acá.</div>'}
-$('lTabs').onclick=function(e){var b=e.target.closest('[data-l]');if(!b)return;lTab=b.dataset.l;Array.prototype.forEach.call(this.children,function(x){x.setAttribute('aria-pressed',String(x===b))});renderLista()};
-$('lista').onclick=function(e){var b=e.target.closest('[data-a]');if(!b)return;var id=b.closest('[data-id]').dataset.id,o=DB.orders.filter(function(x){return x.id===id})[0];if(!o)return;var a=b.dataset.a;
-  if(a==='estado'){o.estado=ESTADOS[(ESTADOS.indexOf(o.estado)+1)%ESTADOS.length];save();renderPanel()}
-  else if(a==='pay'){o.pagado=o.precio;save();renderPanel()}
-  else if(a==='del'){confirmar('¿Borrar el pedido de '+o.nombre+'?',function(){DB.orders=DB.orders.filter(function(x){return x.id!==id});save();renderPanel()})}
-  else if(a==='edit'){P.editId=id;P.desdeSol=null;pFill(o);$('pTitle').textContent='Editar pedido';$('pOrigen').textContent=o.origen==='web'?'Llegó desde la web':'Carga manual';$('pSave').textContent='Guardar cambios';$('pCancel').hidden=false;$('pForm').scrollIntoView({behavior:'smooth',block:'start'})}};
-
-function barras(map,total,lbl){var ks=Object.keys(map).sort(function(a,b){return map[b]-map[a]});if(!ks.length)return '<div class="empty">Todavía no hay datos.</div>';var mx=map[ks[0]];
-  return ks.map(function(k){var c=COLORS[k];return '<div class="cbar"><div>'+(c?'<span class="dot" style="background:'+c[1]+'"></span>'+c[0]:esc(k))+'</div><div class="t"><div style="width:'+Math.round(map[k]/mx*100)+'%"></div></div><b style="text-align:right">'+map[k]+'</b></div>'}).join('')+(lbl?'<div class="line"><span>'+lbl+'</span><b>'+total+' rosas</b></div>':'')}
-function kpi(l,v,n){return '<div class="kpi"><div class="l">'+l+'</div><div class="v">'+v+'</div><div class="n">'+n+'</div></div>'}
-
-function renderPedidos(){
-  renderSol();renderLista();
-  var act=DB.orders.filter(function(o){return o.estado!=='Entregado'}),mes=iso(today()).slice(0,7);
-  var rm=DB.orders.filter(function(o){return o.entrega.slice(0,7)===mes}).reduce(function(s,o){return s+o.qty},0);
-  var dd=DB.orders.reduce(function(s,o){return s+debe(o)},0);
-  var prox=act.slice().sort(function(a,b){return a.entrega<b.entrega?-1:1})[0];
-  $('kpis').innerHTML=kpi('Pedidos activos',act.length,prox?'próxima: '+fmtDate(prox.entrega):'sin entregas')+kpi('Rosas del mes',rm,'entregas de este mes')+kpi('Falta cobrar',money(dd),'en todos los pedidos')+kpi('Pedidos web',DB.solicitudes.length,'esperando respuesta');
-  var ct={},tt=0;act.forEach(function(o){if(o.estado==='Listo')return;var r=reparto(o);for(var k in r)ct[k]=(ct[k]||0)+r[k];tt+=o.qty});
-  $('colores').innerHTML=barras(ct,tt,'Total a armar')}
-
-function renderStats(){
-  var vis=0,hoy=iso(today()),v14=0;for(var d in DB.visitas){vis+=DB.visitas[d];if(d>=addDays(-13))v14+=DB.visitas[d]}
-  var web=DB.orders.filter(function(o){return o.origen==='web'}).length,man=DB.orders.length-web;
-  var fact=DB.orders.reduce(function(s,o){return s+(o.precio||0)},0),cob=DB.orders.reduce(function(s,o){return s+(o.pagado||0)},0),costo=DB.orders.reduce(function(s,o){return s+o.qty*COSTO},0);
-  $('sKpis').innerHTML=kpi('Visitas a la web',v14,'últimos 14 días · hoy '+(DB.visitas[hoy]||0))+kpi('Pedidos cargados',DB.orders.length,web+' desde la web · '+man+' manuales')+kpi('Facturado',money(fact),'cobrado '+money(cob))+kpi('Ganancia estimada',money(fact-costo),'costo '+money(COSTO)+' por rosa');
-  // gráfico 14 días
-  var W=640,H=180,pb=24,pt=12,pl=26,pr=6,dias=[];for(var i=13;i>=0;i--){var k=addDays(-i);dias.push([k,DB.orders.filter(function(o){return o.creado===k}).length])}
-  var mx=Math.max(2,Math.max.apply(null,dias.map(function(x){return x[1]}))),alto=H-pb-pt,an=(W-pl-pr)/14,s='';
-  [0,Math.ceil(mx/2),mx].forEach(function(v){var y=pt+alto-(v/mx)*alto;s+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y+'" y2="'+y+'" stroke="#8e1e48" stroke-opacity=".12"/><text x="'+(pl-6)+'" y="'+(y+4)+'" text-anchor="end" font-size="10" fill="#7a6670">'+v+'</text>'});
-  dias.forEach(function(x,i){var h=(x[1]/mx)*alto,X=pl+i*an+an*.2,w=an*.6;s+='<rect x="'+X+'" y="'+(pt+alto-h)+'" width="'+w+'" height="'+h+'" rx="3" fill="'+(i===13?'#8e1e48':'#e2708c')+'"><title>'+fmtDate(x[0])+': '+x[1]+'</title></rect>';if(i%2===1||i===13)s+='<text x="'+(X+w/2)+'" y="'+(H-8)+'" text-anchor="middle" font-size="10" fill="#7a6670">'+x[0].slice(8)+'/'+x[0].slice(5,7)+'</text>'});
-  $('sChart').innerHTML=s;
-  // por mes
-  var pm={};DB.orders.forEach(function(o){var m=o.entrega.slice(0,7);pm[m]=pm[m]||{t:0,c:{}};var r=reparto(o);for(var k in r)pm[m].c[k]=(pm[m].c[k]||0)+r[k];pm[m].t+=o.qty});
-  var mk=Object.keys(pm).sort();if(!pm[mesSel])mesSel=pm[hoy.slice(0,7)]?hoy.slice(0,7):mk[mk.length-1]||'';
-  $('sMes').innerHTML=(mk.length?'<div class="mtabs">'+mk.map(function(m){return '<button type="button" data-m="'+m+'" aria-pressed="'+(m===mesSel)+'">'+MONTHS[+m.slice(5)-1]+' '+m.slice(0,4)+'</button>'}).join('')+'</div>':'')+(pm[mesSel]?barras(pm[mesSel].c,pm[mesSel].t,'Total del mes'):'<div class="empty">Todavía no hay datos.</div>');
-  var og={};og['Desde la web']=web;og['Carga manual']=man;if(DB.solicitudes.length)og['Web sin responder']=DB.solicitudes.length;
-  $('sOrigen').innerHTML=barrasN(og);
-  var oc={};DB.orders.concat(DB.solicitudes).forEach(function(o){if(o.ocasion)oc[o.ocasion]=(oc[o.ocasion]||0)+1});$('sOcasion').innerHTML=barrasN(oc)}
-function barrasN(m){var ks=Object.keys(m).filter(function(k){return m[k]>0}).sort(function(a,b){return m[b]-m[a]});if(!ks.length)return '<div class="empty">Todavía no hay datos.</div>';var mx=m[ks[0]];
-  return ks.map(function(k){return '<div class="cbar"><div>'+esc(k)+'</div><div class="t"><div style="width:'+Math.round(m[k]/mx*100)+'%"></div></div><b style="text-align:right">'+m[k]+'</b></div>'}).join('')}
-$('sMes').onclick=function(e){var b=e.target.closest('[data-m]');if(!b)return;mesSel=b.dataset.m;renderStats()};
-
-function renderEditar(){var c=DB.config;$('eAviso').value=c.aviso;$('eAbierto').checked=c.abierto;$('eAnt').value=String(c.ant)}
-$('eAvisoBtn').onclick=function(){DB.config.aviso=$('eAviso').value.trim();save();$('eAvisoMsg').textContent=DB.config.aviso?'Aviso publicado en la web.':'Aviso sacado.';renderWeb()};
-$('eAbierto').onchange=function(){DB.config.abierto=this.checked;save();$('eAbMsg').textContent=this.checked?'La web toma pedidos.':'Pedidos web pausados.';renderWeb()};
-$('eAnt').onchange=function(){DB.config.ant=+this.value;save();$('eAntMsg').textContent='Guardado.';renderWeb()};
-
-function renderPanel(){badge();if(pTab==='pedidos')renderPedidos();else if(pTab==='stats')renderStats();else renderEditar()}
-
-pExit();contarVisita();renderWeb();badge();
-})();
-</script>
+<a class="wa-flotante" data-wa="flotante" href="#" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp"><svg viewBox="0 0 32 32" fill="#fff" aria-hidden="true"><path d="M16 3C9 3 3.3 8.6 3.3 15.6c0 2.3.6 4.5 1.8 6.4L3 29l7.2-1.9c1.8 1 3.8 1.5 5.9 1.5 7 0 12.7-5.6 12.7-12.6S23 3 16 3zm0 23.1c-1.9 0-3.8-.5-5.4-1.5l-.4-.2-4.3 1.1 1.1-4.2-.3-.4c-1.1-1.7-1.6-3.6-1.6-5.6C5.1 9.8 10 5 16 5s10.9 4.8 10.9 10.6S22 26.1 16 26.1zm6-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.3.3-.6.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.8 5 .8.3 1.4.5 1.9.7.8.3 1.5.2 2.1.1.6-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></svg></a>
+<dialog class="zoom" id="zoom" aria-label="Foto del ramo"><button type="button" class="cerrar" id="zoom-x" aria-label="Cerrar">×</button><img alt=""><div class="zc"><h3></h3><div id="zoom-det"></div><div class="acciones"><a class="btn btn-borde" href="#armador" id="zoom-armar">Quiero uno así</a></div></div></dialog>
+<a class="ir-panel" href="panel.html">⚙ Ver el panel</a>
+<script src="comun.js"></script>
+<script src="web.js"></script>
 </body>
 </html>

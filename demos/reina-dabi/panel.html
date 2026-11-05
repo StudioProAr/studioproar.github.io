@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#9e2f5f">
+<title>Panel · Reina Dabi (demo)</title>
+<link rel="icon" href="img/logo.jpg">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+:root{--rosa:#e2708c;--rosa-suave:#fbe3ea;--bordo:#9e2f5f;--crema:#fff8f4;--dorado:#c49a45;--texto:#3b2630;--gris:#7a6670;--linea:#efdcd8;--ok:#2f7a63;--warn:#9a6b00;--bad:#b3341f;
+--serif:"Playfair Display",Georgia,serif;--sans:"Nunito",system-ui,sans-serif}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;font-family:var(--sans);background:var(--crema);color:var(--texto);line-height:1.45}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3{font-family:var(--serif);color:var(--bordo);line-height:1.2;margin:0}
+h2{font-size:21px}
+.in{max-width:1180px;margin:0 auto;padding:0 14px}
+.demo-tira{background:#2b1220;color:#f7e3ea;font-size:13px;font-weight:600;text-align:center;padding:7px 12px}
+.demo-tira a{color:#fff}
+.top{background:#fff;border-bottom:1px solid var(--linea);position:sticky;top:0;z-index:20}
+.top .in{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-block:10px;flex-wrap:wrap}
+.marca{display:flex;align-items:center;gap:10px}
+.marca img{width:46px;height:46px;object-fit:contain}
+.marca b{font-family:var(--serif);font-size:22px;color:var(--bordo);display:block;line-height:1}
+.marca small{color:var(--gris);font-size:13px}
+.top-acc{display:flex;gap:8px;flex-wrap:wrap}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0}
+.tab{border:1.5px solid var(--linea);background:#fff;border-radius:999px;padding:9px 16px;font-weight:800;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--bordo);border-color:var(--bordo);color:#fff}
+.nb{display:inline-block;min-width:20px;padding:0 6px;border-radius:999px;background:var(--rosa);color:#fff;font-size:12px;margin-left:4px;text-align:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:999px;padding:10px 18px;font-weight:800;cursor:pointer;text-decoration:none;background:var(--bordo);color:#fff}
+.btn.ghost{background:#fff;color:var(--bordo);border:1.5px solid var(--bordo)}
+.btn.sm{padding:6px 12px;font-size:13px}
+.card{background:#fff;border:1px solid var(--linea);border-radius:18px;padding:16px;min-width:0}
+.sub{color:var(--gris);font-size:14px}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:16px;align-items:start}
+@media(max-width:920px){.grid{grid-template-columns:1fr}}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px;margin-top:16px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+.kpi{background:#fff;border:1px solid var(--linea);border-top:3px solid var(--dorado);border-radius:14px;padding:12px}
+.kpi .l{font-size:13px;color:var(--gris)}.kpi .v{font-family:var(--serif);font-size:26px;font-weight:700}.kpi .n{font-size:12px;color:var(--gris)}
+label,.etq{display:block;font-weight:800;color:var(--bordo);font-size:14px;margin-bottom:6px}
+input[type=text],input[type=tel],input[type=date],input[type=number],select,textarea{width:100%;padding:10px 12px;border:1.5px solid var(--rosa-suave);border-radius:12px;background:var(--crema);font-size:16px}
+textarea{min-height:64px;resize:vertical}
+.fg{margin-bottom:13px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sws{display:flex;flex-wrap:wrap;gap:8px}
+.sw{width:36px;height:36px;border-radius:50%;border:0;padding:0;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
+.sw[aria-pressed="true"]{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--dorado)}
+.sw:disabled{opacity:.25;cursor:not-allowed}
+.nom{font-weight:400;color:var(--texto)}
+.mezcla{margin-top:10px;padding:10px;border:1.5px dashed var(--dorado);border-radius:14px;background:#fffbf7}
+.mezcla .sw{width:28px;height:28px}
+.mz-t{font-size:13px;font-weight:800;color:var(--gris);margin-bottom:8px}.mz-t.ok{color:var(--ok)}.mz-t.mal{color:var(--bad)}
+.mz-f{display:flex;align-items:center;gap:8px;margin-top:6px}.mz-f span{flex:1}
+.mz-f button{width:34px;height:34px;border-radius:50%;border:1px solid var(--linea);background:#fff;font-weight:800;cursor:pointer}
+.mz-f b{min-width:24px;text-align:center}
+.dot{display:inline-block;width:13px;height:13px;border-radius:50%;vertical-align:-2px;margin-right:3px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.2)}
+.seg{display:flex;border:1.5px solid var(--rosa-suave);border-radius:12px;overflow:hidden}
+.seg button{flex:1;border:0;background:#fff;padding:9px 4px;cursor:pointer;font-weight:700;font-size:14px}
+.seg button[aria-pressed="true"]{background:var(--bordo);color:#fff}
+.calc{background:var(--crema);border-radius:14px;padding:12px;margin-bottom:12px}
+.calc .r{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.calc .r input{width:120px;text-align:right}
+.err{color:var(--bad);font-size:13px;min-height:18px;margin-top:6px}
+.bandeja{border:2px solid var(--rosa);background:#fff6f8;margin-bottom:16px}
+.sol{background:#fff;border:1px solid var(--linea);border-radius:14px;padding:12px;margin-top:10px}
+.sol .t{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-weight:800}
+.sol .d{font-size:14px;color:var(--gris);margin-top:4px}
+.acc{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.tag{display:inline-block;font-size:12px;font-weight:800;border-radius:999px;padding:1px 8px;white-space:nowrap}
+.t-bad{background:#fbe3dc;color:var(--bad)}.t-warn{background:#fff0c9;color:var(--warn)}.t-ok{background:#dff1ee;color:var(--ok)}.t-done{background:#ece7e5;color:#5f4e54}.t-web{background:var(--rosa-suave);color:var(--bordo)}
+.lh{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.mini{display:flex;gap:4px;flex-wrap:wrap}
+.mini button{border:1px solid var(--linea);background:#fff;border-radius:999px;padding:5px 12px;cursor:pointer;font-size:13px;font-weight:700}
+.mini button[aria-pressed="true"]{background:var(--bordo);color:#fff;border-color:var(--bordo)}
+.ped{border-top:1px solid var(--linea);padding:12px 0;display:grid;grid-template-columns:86px minmax(0,1fr) auto;gap:10px;align-items:start}
+@media(max-width:560px){.ped{grid-template-columns:1fr}.ped .der{text-align:left!important}.ped .der .acc{justify-content:flex-start!important}}
+.ped .f{font-weight:800}.ped .who{font-weight:800}.ped .w{font-size:13px;color:var(--gris)}.ped .obs{font-size:13px;color:var(--gris);font-style:italic}
+.ped .der{text-align:right;font-size:14px}.ped .der .acc{justify-content:flex-end;margin-top:6px}
+.lk{border:0;background:none;color:var(--bordo);font-weight:800;cursor:pointer;padding:2px 4px;font-size:13px;text-decoration:underline}
+.bar{display:grid;grid-template-columns:minmax(90px,140px) 1fr auto;gap:8px;align-items:center;margin-top:8px;font-size:14px}
+.bar .t{height:10px;background:#f6e9e6;border-radius:999px;overflow:hidden}.bar .t div{height:100%;background:var(--bordo);border-radius:999px}
+.bar b{text-align:right;white-space:nowrap}
+.bar b small{color:var(--gris);font-weight:400}
+.line{display:flex;justify-content:space-between;border-top:1px solid var(--linea);padding-top:8px;margin-top:10px;font-size:14px}
+.empty{color:var(--gris);text-align:center;padding:18px}
+table.emb{width:100%;border-collapse:collapse;font-size:14px;margin-top:8px}
+.emb th,.emb td{padding:8px 6px;border-bottom:1px solid var(--linea);text-align:right}
+.emb th:first-child,.emb td:first-child{text-align:left}
+@media(max-width:480px){.emb{font-size:13px}.emb th,.emb td{padding:7px 4px}.emb th{font-size:10.5px!important}}
+.emb th{font-size:12px;color:var(--gris);font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+.chart{width:100%;height:auto;display:block;margin-top:6px}
+.links .lnk{display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap}
+.links code{flex:1;min-width:0;background:var(--crema);border:1px solid var(--linea);border-radius:10px;padding:7px 10px;font-size:12.5px;overflow-wrap:anywhere}
+.links b{min-width:84px}
+.toggle{display:flex;align-items:center;gap:10px;font-weight:800}
+.toggle input{width:20px;height:20px}
+.msg{color:var(--ok);font-size:13px;min-height:18px;margin-top:6px}
+.modal{position:fixed;inset:0;background:rgba(40,15,25,.45);display:flex;align-items:center;justify-content:center;z-index:50;padding:16px}
+.modal .card{max-width:380px;width:100%}
+.modal .acc{justify-content:flex-end}
+footer{text-align:center;color:var(--gris);font-size:13px;padding:26px 0 40px}
+</style>
+</head>
+<body>
+<div class="demo-tira">Muestra del panel de StudioProAr · datos de ejemplo guardados en tu navegador · en la versión real se entra con usuario y contraseña</div>
+<div class="top"><div class="in">
+  <div class="marca"><img src="img/logo.jpg" alt=""><div><b>Panel</b><small>Reina Dabi</small></div></div>
+  <div class="top-acc"><a class="btn ghost sm" href="index.html">🌹 Ver la web</a><button type="button" class="btn ghost sm" id="reset">Reiniciar demo</button></div>
+</div></div>
+
+<div class="in">
+  <div class="tabs" role="tablist">
+    <button type="button" class="tab" role="tab" data-t="pedidos" aria-selected="true">📋 Pedidos <span class="nb" id="nSol" hidden></span></button>
+    <button type="button" class="tab" role="tab" data-t="stats" aria-selected="false">📊 Estadísticas</button>
+    <button type="button" class="tab" role="tab" data-t="editar" aria-selected="false">✏️ Editar web</button>
+  </div>
+
+  <!-- ===== PEDIDOS ===== -->
+  <div id="v-pedidos">
+    <div class="grid">
+      <div>
+        <div class="card bandeja" id="bandeja">
+          <h2>Pedidos de la web</h2>
+          <div class="sub">Llegaron desde la página. Aceptalos para pasarlos a la lista con precio y seña.</div>
+          <div id="solList"></div>
+        </div>
+        <div class="kpis" id="kpis"></div>
+        <div class="card">
+          <div class="lh"><h2>Próximas entregas</h2>
+            <div class="mini" id="lTabs"><button type="button" data-l="activos" aria-pressed="true">Activos</button><button type="button" data-l="entregados" aria-pressed="false">Entregados</button><button type="button" data-l="todos" aria-pressed="false">Todos</button></div></div>
+          <div id="lista"></div>
+        </div>
+        <div class="card" style="margin-top:16px">
+          <h2>Rosas por color</h2>
+          <div class="sub">Para armar: pedidos reservados o en preparación</div>
+          <div id="colores"></div>
+        </div>
+      </div>
+
+      <form class="card" id="pf" autocomplete="off">
+        <h2 id="pfTit">Nuevo pedido</h2>
+        <div class="sub" id="pfSub" style="margin-bottom:10px">Carga manual (pedidos que llegan por WhatsApp o en persona)</div>
+        <div class="fg"><label for="fEnt">Fecha de entrega</label><input type="date" id="fEnt"></div>
+        <div class="two">
+          <div class="fg"><label for="fQty">Cantidad de rosas</label><input type="number" id="fQty" min="1" max="200" value="12"></div>
+          <div class="fg"><label for="fOca">Ocasión</label><select id="fOca"><option>Cumpleaños</option><option>Quinceañera</option><option>Egresados</option><option>Aniversario</option><option>Casamiento</option><option>Propuesta</option><option>San Valentín</option><option>Día de la Madre</option><option>Día de la Primavera</option><option>Porque sí</option><option>Otra</option></select></div>
+        </div>
+        <div class="fg"><span class="etq">Color: <span class="nom" id="fColNom"></span></span>
+          <div class="sws" id="fSw" role="group" aria-label="Color de rosas"></div>
+          <div class="mezcla" id="fMz" hidden></div></div>
+        <div class="fg"><label for="fNom">Nombre</label><input type="text" id="fNom"></div>
+        <div class="two">
+          <div class="fg"><label for="fTel">Teléfono</label><input type="tel" id="fTel"></div>
+          <div class="fg"><label for="fLug">De dónde es</label><input type="text" id="fLug"></div>
+        </div>
+        <div class="fg"><span class="etq">Entrega</span><div class="seg" id="fEntTipo"></div></div>
+        <div class="fg"><label for="fObs">Observaciones</label><textarea id="fObs"></textarea></div>
+        <div class="calc">
+          <div class="r"><span>Precio (según cantidad)</span><input type="number" id="fPre" min="0" step="500"></div>
+          <div class="r"><span>Seña</span><input type="number" id="fSen" min="0" step="500"></div>
+          <div class="r" style="margin:0"><b>Cuánto debe</b><b id="fDebe" style="color:var(--bad)"></b></div>
+        </div>
+        <button type="submit" class="btn" style="width:100%" id="fSave">Guardar pedido</button>
+        <button type="button" class="btn ghost" style="width:100%;margin-top:8px" id="fCancel" hidden>Cancelar</button>
+        <div class="err" id="fErr"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== ESTADÍSTICAS ===== -->
+  <div id="v-stats" hidden>
+    <div class="lh" style="margin-bottom:12px"><div class="sub">Se mide desde la propia web, sin cookies ni Google Analytics.</div>
+      <div class="mini" id="rango"><button type="button" data-r="7" aria-pressed="false">7 días</button><button type="button" data-r="14" aria-pressed="true">14 días</button><button type="button" data-r="0" aria-pressed="false">Todo</button></div></div>
+    <div class="kpis" id="sKpis"></div>
+    <div class="cols" style="margin-top:0">
+      <div class="card"><h2>De dónde vienen las visitas</h2><div class="sub">Instagram, WhatsApp, Google o directo</div><div id="sOrigen"></div></div>
+      <div class="card"><h2>Embudo por origen</h2><div class="sub">De las visitas, cuántas arman un ramo y cuántas envían el pedido</div><div id="sEmbudo"></div></div>
+    </div>
+    <div class="card" style="margin-top:16px"><h2>Visitas por día</h2><svg class="chart" id="sChart" viewBox="0 0 640 190" role="img" aria-label="Visitas por día"></svg></div>
+    <div class="cols">
+      <div class="card"><h2>Días con más visitas</h2><div id="sDias"></div></div>
+      <div class="card"><h2>Horarios con más visitas</h2><div class="sub">Para saber cuándo conviene publicar</div><div id="sHoras"></div></div>
+      <div class="card"><h2>Celular o compu</h2><div id="sDisp"></div></div>
+    </div>
+    <div class="cols">
+      <div class="card"><h2>Colores más pedidos</h2><div class="sub">En rosas, sumando los pedidos y los combinados</div><div id="sColores"></div></div>
+      <div class="card"><h2>Cantidad de rosas más pedida</h2><div id="sCant"></div></div>
+      <div class="card"><h2>Ocasiones</h2><div id="sOca"></div></div>
+    </div>
+    <div class="cols">
+      <div class="card"><h2>Clics a WhatsApp</h2><div class="sub">Por botón de la web</div><div id="sWa"></div></div>
+      <div class="card"><h2>Fotos más tocadas</h2><div id="sFotos"></div></div>
+    </div>
+  </div>
+
+  <!-- ===== EDITAR WEB ===== -->
+  <div id="v-editar" hidden>
+    <div class="cols" style="margin-top:0">
+      <div class="card"><h2>Banner de arriba</h2><p class="sub">El texto que pasa por la franja de arriba, al lado de "Pedí tu ramo". Dejalo vacío para sacarlo.</p>
+        <input type="text" id="eBan" maxlength="120" placeholder="Ej: Día de la Madre: reservá con anticipación">
+        <div class="acc"><button type="button" class="btn sm" id="eBanOk">Publicar</button></div><div class="msg" id="eBanMsg" role="status"></div></div>
+      <div class="card"><h2>Pedidos por la web</h2><p class="sub">Pausalos si están a full: la web avisa que escriban por WhatsApp.</p>
+        <label class="toggle"><input type="checkbox" id="eAb"> Tomando pedidos por la web</label><div class="msg" id="eAbMsg" role="status"></div></div>
+    </div>
+    <div class="card links" style="margin-top:16px"><h2>Links para compartir</h2>
+      <p class="sub">Usá cada link en su lugar para saber de dónde llega la gente. Por ejemplo, el de Instagram en la bio y el de WhatsApp en los estados y mensajes.</p>
+      <div id="eLinks"></div><div class="msg" id="eLinkMsg" role="status"></div></div>
+  </div>
+  <footer>Panel · Reina Dabi · muestra de StudioProAr</footer>
+</div>
+
+<div class="modal" id="modal" hidden><div class="card"><p id="mTxt" style="margin:0"></p><div class="acc"><button type="button" class="btn ghost sm" id="mNo">Cancelar</button><button type="button" class="btn sm" id="mSi">Sí</button></div></div></div>
+
+<script src="comun.js"></script>
+<script src="panel.js"></script>
+</body>
+</html>
