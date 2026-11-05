@@ -102,7 +102,8 @@ label{display:block;font-size:13px;color:var(--soft);margin:12px 0 4px}
     var act=db.socios.filter(function(s){return GYM.dias(s)>=0;}),pv=db.socios.filter(function(s){var d=GYM.dias(s);return d>=0&&d<=7;}).sort(function(a,b){return a.vence-b.vence;}),venc=db.socios.filter(function(s){return GYM.dias(s)<0;});
     var horas=[];for(var h=6;h<=22;h++)horas.push([h,Math.round(db.asis.filter(function(a){return new Date(a.t).getHours()===h;}).length/14*10)/10]);
     var mx=Math.max(1,Math.max.apply(null,horas.map(function(x){return x[1];})));
-    return '<h2>Hoy</h2><div class="kpis"><div class="kpi"><b>'+as.length+'</b><span>ingresos hoy</span></div><div class="kpi"><b>'+act.length+'</b><span>socios al día</span></div><div class="kpi am"><b>'+pv.length+'</b><span>vencen esta semana</span></div><div class="kpi ro"><b>'+venc.length+'</b><span>con cuota vencida</span></div></div>'+
+    var sol=(db.solicitudes||[]).map(function(x){return '<div class="fila"><div class="av">'+ini(x.nom)+'</div><div class="tx"><b>'+esc(x.nom)+'</b><span>DNI '+esc(x.dni)+' · '+(GYM.PLANES[x.plan]?GYM.PLANES[x.plan].nom:'')+' · '+esc(x.tel)+(x.mail?' · '+esc(x.mail):'')+'</span></div><a class="wa" href="https://wa.me/549'+esc(x.tel)+'?text='+encodeURIComponent('Hola '+x.nom.split(' ')[0]+'! Recibimos tu solicitud para Ribera Training. Ya quedaste dado de alta: venite cuando quieras y abonás en recepción. Tu credencial está en la web con tu DNI.')+'" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">'+WA+'</a><button class="btn" data-ok="'+x._id+'" type="button">Dar de alta</button><button class="btn sec" data-no="'+x._id+'" type="button" aria-label="Descartar">✕</button></div>';}).join('');
+    return (sol?'<h2>Solicitudes nuevas desde la web</h2><div class="lista">'+sol+'</div>':'')+'<h2>Hoy</h2><div class="kpis"><div class="kpi"><b>'+as.length+'</b><span>ingresos hoy</span></div><div class="kpi"><b>'+act.length+'</b><span>socios al día</span></div><div class="kpi am"><b>'+pv.length+'</b><span>vencen esta semana</span></div><div class="kpi ro"><b>'+venc.length+'</b><span>con cuota vencida</span></div></div>'+
       '<h3>Ingresos por hora · promedio de 2 semanas</h3><div class="barras">'+horas.map(function(x){return '<i style="height:'+(x[1]/mx*100)+'%" data-l="'+(x[0]%3===0?x[0]:'')+'" title="'+x[0]+' h: '+x[1]+'"></i>';}).join('')+'</div>'+
       '<h3>Vencen esta semana · avisales con un toque</h3><div class="lista">'+(pv.map(function(s){return fila(s,true);}).join('')||'<p class="vacio">Nadie vence esta semana.</p>')+'</div>'+
       '<h3>Cuota vencida</h3><div class="lista">'+(venc.map(function(s){return fila(s,true);}).join('')||'<p class="vacio">No hay cuotas vencidas.</p>')+'</div>';
@@ -159,6 +160,8 @@ label{display:block;font-size:13px;color:var(--soft);margin:12px 0 4px}
     if(e.target.closest('a'))return;
     var f=e.target.closest('[data-f]');if(f){filtro=f.dataset.f;pinta();return;}
     if(e.target.id==='nuevo')return nuevo();
+    var ok=e.target.closest('[data-ok]');if(ok){GYM.aprobar(ok.dataset.ok);toast('Socio dado de alta. Registrale el pago cuando abone.');pinta();return;}
+    var no=e.target.closest('[data-no]');if(no){if(confirm('¿Descartar esta solicitud?')){GYM.descartar(no.dataset.no);pinta();}return;}
     if(e.target.id==='reset'){GYM.reset();toast('Datos de ejemplo reiniciados');pinta();return;}
     var r=e.target.closest('.fila[data-dni]');if(r)ficha(r.dataset.dni);
   });

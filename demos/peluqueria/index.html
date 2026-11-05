@@ -25,6 +25,7 @@ nav ul{list-style:none;display:flex;gap:22px;margin:0;padding:0;font-size:12.5px
 @media (min-width:900px){.hero .in{grid-template-columns:1fr 1fr;min-height:82svh}}
 .hero .in>div:first-child{padding:56px 40px 56px 0;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--ink)}
 @media (max-width:899px){.hero .in>div:first-child{border:0;padding:40px 0}}
+@media (max-width:600px){nav ul{gap:12px;letter-spacing:.08em;font-size:11.5px;flex-wrap:wrap;justify-content:flex-end}}html,body{overflow-x:clip}
 .hero h1{font:400 clamp(52px,7.6vw,110px)/.92 var(--disp);margin:0 0 22px;letter-spacing:-.02em}
 .hero h1::first-line{font-style:italic}
 .hero p{max-width:40ch;color:var(--soft);font-size:18px;margin:0 0 26px}
@@ -148,7 +149,7 @@ footer .in{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;pa
         <div><span class="ag-et" id="ag-et-hora">3. Horario</span><div class="ag-horas" id="ag-horas" role="group" aria-labelledby="ag-et-hora"></div></div>
       </div>
       <p class="ag-res" id="ag-res" role="status"></p>
-      <div class="ag-conf"><input id="ag-nom" type="text" maxlength="40" placeholder="Tu nombre" autocomplete="given-name" aria-label="Tu nombre"><input id="ag-cel" type="tel" inputmode="numeric" maxlength="10" placeholder="Celular (opcional)" autocomplete="tel-national" aria-label="Tu celular"><button class="btn btn-a" id="ag-ok" type="button" disabled>Confirmar turno</button></div>
+      <div class="ag-conf"><input id="ag-nom" type="text" maxlength="40" placeholder="Tu nombre" autocomplete="given-name" aria-label="Tu nombre"><input id="ag-cel" type="tel" inputmode="tel" maxlength="20" placeholder="Celular (ej. 1155554444)" autocomplete="tel-national" aria-label="Tu celular" required><input id="ag-mail" type="email" maxlength="80" placeholder="Mail (opcional, para la confirmación)" autocomplete="email" aria-label="Tu mail"><button class="btn btn-a" id="ag-ok" type="button" disabled>Confirmar turno</button></div>
       <p class="ag-listo" id="ag-listo" role="status" hidden></p>
       <p class="aviso">Muestra de diseño: los turnos que confirmes se guardan solo en tu navegador y los ves en el <a href="../panel/?n=salon">panel de ejemplo del salón</a>. En la web real quedan en la agenda del salón.</p>
     </div>
@@ -342,13 +343,17 @@ ver(0);
   }
   $('ag-ok').addEventListener('click',()=>{
     if(sel.h===null)return;
-    const s=servicios[sel.s],nom=($('ag-nom').value.trim()||'Cliente de prueba').slice(0,40);
-    const cel=$('ag-cel').value.replace(/\D/g,'').slice(0,10);
-    const t={id:Date.now(),fecha:iso(sel.d),ini:sel.h,min:s.min,servicio:s.nombre,dur:s.dur,precio:String(s.precio),nombre:nom,cel:cel,estado:'confirmado'};
+    const s=servicios[sel.s],nom=$('ag-nom').value.trim().slice(0,40),ok0=$('ag-listo');
+    const cel=Reservas.normCel($('ag-cel').value),mail=$('ag-mail').value.trim();
+    if(nom.length<2){ok0.hidden=false;ok0.textContent='Escribí tu nombre.';$('ag-nom').focus();return;}
+    if(!Reservas.celOk(cel)){ok0.hidden=false;ok0.textContent='Escribí tu celular con código de área, sin 0 ni 15 (ej. 1155554444). Ahí te llega la confirmación.';$('ag-cel').focus();return;}
+    if(!Reservas.mailOk(mail)){ok0.hidden=false;ok0.textContent='Revisá el mail.';$('ag-mail').focus();return;}
+    const t={id:Date.now(),fecha:iso(sel.d),ini:sel.h,min:s.min,servicio:s.nombre,dur:s.dur,precio:String(s.precio),nombre:nom,cel:cel,email:mail||undefined,estado:'confirmado'};
     const fecha=DIAS[sel.d.getDay()]+' '+sel.d.getDate()+'/'+(sel.d.getMonth()+1),h0=sel.h,ok=$('ag-listo'),bt=$('ag-ok');
     bt.disabled=true;ok.hidden=false;ok.textContent='Guardando…';
     Reservas.guardar(t).then(()=>{
-      ok.innerHTML='Turno confirmado ✓ '+s.nombre+' · '+fecha+' a las '+hhmm(h0)+', a nombre de '+nom.replace(/[<>&"]/g,'')+'. '+(Reservas.modo==='real'?'<a href="../mi-negocio/?s=salon">Ver cómo le llega al salón →</a>':'<a href="../panel/?n=salon#turnos">Ver cómo lo ve el salón en su panel →</a>');
+      const cal=Reservas.calendario({titulo:s.nombre+' · Salón Quebracho',fecha:t.fecha,ini:h0,min:s.min,lugar:'Salón Quebracho',detalle:'Turno reservado desde la web.'});
+      ok.innerHTML='Turno confirmado ✓ '+s.nombre+' · '+fecha+' a las '+hhmm(h0)+', a nombre de '+nom.replace(/[<>&"]/g,'')+'. <a href="'+cal+'" target="_blank" rel="noopener">Agregar a mi calendario</a> · <a href="https://wa.me/'+NUM+'?text='+encodeURIComponent('Hola! Reservé '+s.nombre+' para el '+fecha+' a las '+hhmm(h0)+' a nombre de '+nom+'.')+'" target="_blank" rel="noopener">Avisar por WhatsApp</a> · '+(Reservas.modo==='real'?'<a href="../mi-negocio/?s=salon">Ver cómo le llega al salón →</a>':'<a href="../panel/?n=salon#turnos">Ver cómo lo ve el salón en su panel →</a>');
       sel.h=null;pintar();
     }).catch(e=>{ok.textContent=e.message;bt.disabled=false;pintar();});
   });

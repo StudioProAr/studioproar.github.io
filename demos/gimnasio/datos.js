@@ -38,7 +38,7 @@ var GYM = (function () {
     return { socios: socios, asis: asis, pagos: pagos };
   }
   /* Modo real: si hay FIREBASE_CONFIG (con ?real=1 en la muestra), los datos viven en Firebase g/<sitio>/ y hace falta entrar con el usuario del gimnasio */
-  var C = window.FIREBASE_CONFIG, REAL = !!(C && C.apiKey && window.firebase && firebase.auth), SITIO = window.GYM_SITIO || 'gimnasio', fb = null, fns = [];
+  var C = window.FIREBASE_CONFIG, REAL = !!(C && C.apiKey && window.firebase && firebase.database), SITIO = window.GYM_SITIO || 'gimnasio', fb = null, fns = [];
   var db;
   if (REAL) { db = { socios: [], asis: [], pagos: [] }; }
   else {
@@ -48,7 +48,8 @@ var GYM = (function () {
   function guardar() { if (REAL) return; try { localStorage.setItem(K, JSON.stringify(db)); } catch (e) { /* sin almacenamiento */ } }
   function avisar() { fns.forEach(function (f) { try { f(); } catch (e) {} }); }
   function err() { alert('No se pudo guardar en la base. Revisá la conexión.'); }
-  if (REAL && !window.GYM_SIN_LOGIN) {
+  if (!db.solicitudes) db.solicitudes = [];
+  if (REAL && !window.GYM_SIN_LOGIN && firebase.auth) {
     if (!firebase.apps.length) firebase.initializeApp(C);
     var au = firebase.auth(), base = function (x) { return firebase.database().ref('g/' + SITIO + (x ? '/' + x : '')); }, ref = null;
     var caja = document.createElement('div');
@@ -65,12 +66,13 @@ var GYM = (function () {
         caja.style.display = 'none'; ref = base();
         ref.on('value', function (sn) {
           var v = sn.val() || {}, o = function (x) { return Object.keys(x || {}).map(function (k) { return x[k]; }); };
-          db = { socios: o(v.socios).sort(function (a, b) { return a.nom < b.nom ? -1 : 1; }), asis: o(v.asis).sort(function (a, b) { return a.t - b.t; }), pagos: o(v.pagos).sort(function (a, b) { return a.t - b.t; }) };
+          var sol = Object.keys(v.solicitudes || {}).map(function (k) { var x = v.solicitudes[k]; x._id = k; return x; }).sort(function (a, b) { return b.t - a.t; });
+          db = { solicitudes: sol, socios: o(v.socios).sort(function (a, b) { return a.nom < b.nom ? -1 : 1; }), asis: o(v.asis).sort(function (a, b) { return a.t - b.t; }), pagos: o(v.pagos).sort(function (a, b) { return a.t - b.t; }) };
           avisar();
         });
       });
     });
-    fb = { socio: function (s) { base('socios/' + s.dni).set(s).catch(err); }, push: function (k, x) { base(k).push(x).catch(err); } };
+    fb = { socio: function (s) { base('socios/' + s.dni).set(s).catch(err); }, push: function (k, x) { base(k).push(x).catch(err); }, quitarSol: function (id) { base('solicitudes/' + id).remove().catch(err); } };
   }
   function socio(dni) { return db.socios.filter(function (s) { return s.dni === String(dni); })[0] || null; }
   function dias(s) { return Math.round((s.vence - hoy0().getTime()) / 864e5); }
@@ -92,6 +94,23 @@ var GYM = (function () {
     },
     alta: function (o) { var n = { dni: String(o.dni), nom: o.nom, plan: o.plan, tel: o.tel || '', vence: hoy0().getTime() - 864e5 }; db.socios.unshift(n); guardar(); if (fb) fb.socio(n); },
     reset: function () { if (REAL) { alert('En la versión real no se reinician los datos.'); return; } db = semilla(); guardar(); },
-    real: REAL, alCambiar: function (f) { fns.push(f); }
+    real: REAL, alCambiar: function (f) { fns.push(f); },
+    /* Solicitud de alta desde la web pública (no necesita usuario) */
+    solicitar: function (o) {
+      var x = { nom: String(o.nom).slice(0, 60), dni: String(o.dni), tel: String(o.tel), mail: String(o.mail || '').slice(0, 80), plan: o.plan, t: Date.now() };
+      if (REAL) {
+        if (!firebase.apps.length) firebase.initializeApp(C);
+        x.t = firebase.database.ServerValue.TIMESTAMP;
+        var to = new Promise(function (_, no) { setTimeout(function () { no(new Error('t')); }, 10000); });
+        return Promise.race([firebase.database().ref('g/' + SITIO + '/solicitudes').push(x), to]);
+      }
+      x._id = 's' + Date.now(); db.solicitudes.unshift(x); guardar(); return Promise.resolve();
+    },
+    aprobar: function (id) {
+      var x = db.solicitudes.filter(function (y) { return y._id === id; })[0]; if (!x) return;
+      if (!socio(x.dni)) GYM.alta({ dni: x.dni, nom: x.nom, plan: x.plan, tel: x.tel });
+      GYM.descartar(id);
+    },
+    descartar: function (id) { db.solicitudes = db.solicitudes.filter(function (y) { return y._id !== id; }); guardar(); if (fb) fb.quitarSol(id); avisar(); }
   };
 })();

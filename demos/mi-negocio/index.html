@@ -23,7 +23,7 @@ input,select{background:var(--card);color:var(--ink);border:1px solid var(--line
 .it{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:8px;display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center}
 .it .h{font-weight:800;font-size:18px;min-width:56px}.it small{color:var(--soft)}.it .ac{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 .tag{font-size:12px;border-radius:999px;padding:2px 8px;border:1px solid var(--line)}.tag.nuevo{border-color:var(--warn);color:var(--warn)}.tag.listo,.tag.atendido{border-color:var(--ok);color:var(--ok)}.tag.cancelado{color:var(--ro);border-color:var(--ro)}
-.vacio{color:var(--soft);padding:20px 0}.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.vacio{color:var(--soft);padding:20px 0}.it.lib{padding:8px 12px;background:transparent}.it.pas{opacity:.5}.tabs.dias{overflow-x:auto;flex-wrap:nowrap;padding-bottom:6px}.tabs.dias button{white-space:nowrap}.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
 .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}.kpi b{display:block;font-size:26px}.kpi span{color:var(--soft);font-size:13px}
 .bar{display:flex;align-items:flex-end;gap:3px;height:120px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px}.bar i{flex:1;background:var(--ac);border-radius:3px 3px 0 0;min-height:2px}
 .fila{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:6px 0}
@@ -50,15 +50,16 @@ a{color:var(--ac)}
 <script>
 (function () {
   /* Para un cliente: definir window.NEGOCIO = { sitio:'mi-local', nombre:'Mi Local', secciones:['turnos','stats'] } en negocio.js */
-  var NEG = window.NEGOCIO ? {} : { salon: { n: 'Salón Quebracho', t: ['turnos', 'stats'] }, vet: { n: 'Patitas del Delta', t: ['turnos', 'stats'] }, panaderia: { n: 'El Horno de Victoria', t: ['encargos', 'stats'] }, cafe: { n: 'Café Muelle', t: ['stats'] }, ferreteria: { n: 'Ferretería La Llave', t: ['stats'] }, fogon: { n: 'Parrilla El Fogón', t: ['stats'] }, astillero: { n: 'Astillero Marea Alta', t: ['stats'] } };
-  if (window.NEGOCIO) NEG[window.NEGOCIO.sitio] = { n: window.NEGOCIO.nombre, t: window.NEGOCIO.secciones || ['stats'] };
+  var NEG = window.NEGOCIO ? {} : { salon: { n: 'Salón Quebracho', t: ['turnos', 'stats'], hor: { 2: [9, 19], 3: [9, 19], 4: [9, 19], 5: [9, 19], 6: [9, 16] }, web: '../peluqueria/?real=1#agenda' }, vet: { n: 'Patitas del Delta', t: ['turnos', 'stats'], hor: { 1: [9, 20], 2: [9, 20], 3: [9, 20], 4: [9, 20], 5: [9, 20], 6: [9, 13] }, web: '../veterinaria/?real=1#turnos' }, panaderia: { n: 'El Horno de Victoria', t: ['encargos', 'stats'] }, cafe: { n: 'Café Muelle', t: ['stats'] }, ferreteria: { n: 'Ferretería La Llave', t: ['stats'] }, fogon: { n: 'Parrilla El Fogón', t: ['stats'] }, astillero: { n: 'Astillero Marea Alta', t: ['stats'] } };
+  if (window.NEGOCIO) NEG[window.NEGOCIO.sitio] = { n: window.NEGOCIO.nombre, t: window.NEGOCIO.secciones || ['stats'], hor: window.NEGOCIO.horario, paso: window.NEGOCIO.paso, web: window.NEGOCIO.web };
   var NOM = { turnos: 'Turnos', encargos: 'Encargos', stats: 'Estadísticas' };
   var $ = function (id) { return document.getElementById(id); }, esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   var q = new URLSearchParams(location.search), s = NEG[q.get('s')] ? q.get('s') : 'salon', vista = NEG[s].t[0], datos = {}, refs = [], vistos = null;
   firebase.initializeApp(window.FIREBASE_CONFIG);
   var auth = firebase.auth(), db = firebase.database(), app = $('app');
   $('sitio').innerHTML = Object.keys(NEG).map(function (k) { return '<option value="' + k + '"' + (k === s ? ' selected' : '') + '>' + NEG[k].n + '</option>'; }).join('');
-  if (window.NEGOCIO) $('sitio').hidden = true;
+  $('sitio').hidden = true;
+  if (!window.NEGOCIO) document.querySelector('.in').insertAdjacentHTML('beforeend', '<p style="color:var(--soft);font-size:13px;margin-top:40px;border-top:1px solid var(--line);padding-top:12px">Paneles de las muestras: ' + Object.keys(NEG).map(function (k) { return '<a href="?s=' + k + '">' + NEG[k].n + '</a>'; }).join(' · ') + '</p>');
   try { var g = localStorage.getItem('mn_sitio'); if (!q.get('s') && g && NEG[g]) { s = g; $('sitio').value = g; } localStorage.setItem('mn_sitio', s); } catch (e) {}
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function () {});
   $('sitio').onchange = function () { location.search = '?s=' + this.value; };
@@ -70,15 +71,38 @@ a{color:var(--ac)}
   var wa = function (cel, txt) { return cel ? '<a class="sec" style="text-decoration:none" target="_blank" rel="noopener" href="https://wa.me/549' + esc(cel) + '?text=' + encodeURIComponent(txt) + '">WhatsApp</a>' : ''; };
   function beep() { try { var a = new AudioContext(), o = a.createOscillator(), g = a.createGain(); o.connect(g); g.connect(a.destination); o.frequency.value = 880; g.gain.value = .15; o.start(); setTimeout(function () { o.stop(); a.close(); }, 250); } catch (e) {} }
 
+  var diaSel = null;
+  function diasAbiertos() { var r = [], h = NEG[s].hor || {}; for (var i = 0; i < 21 && r.length < 14; i++) { var d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() + i); if (h[d.getDay()]) r.push(d); } return r; }
   function turnosV() {
-    var l = datos.turnos || [], hoy = hoyIso(), fut = l.filter(function (t) { return t.fecha >= hoy && t.estado !== 'cancelado'; }), h = '', dia = '';
-    if (!fut.length) return '<p class="vacio">No hay turnos próximos. Cuando alguien reserve en la web, aparece acá al instante.</p>';
-    fut.forEach(function (t) {
-      if (t.fecha !== dia) { dia = t.fecha; h += '<h2>' + fechaTxt(dia) + '</h2>'; }
-      h += '<div class="it"><div class="h">' + hh(t.ini) + '</div><div><b>' + esc(t.nombre) + '</b> <span class="tag ' + esc(t.estado) + '">' + esc(t.estado) + '</span><br><small>' + esc(t.servicio) + ' · ' + t.min + ' min' + (t.cel ? ' · ' + esc(t.cel) : '') + '</small></div><div class="ac">' +
-        wa(t.cel, 'Hola ' + t.nombre + '! Te recordamos tu turno de ' + t.servicio + ' el ' + fechaTxt(t.fecha) + ' a las ' + hh(t.ini) + '. Te esperamos!') +
-        (t.estado !== 'atendido' ? '<button class="sec" data-t="' + t._id + '" data-e="atendido">Atendido</button>' : '') + '<button class="sec" data-t="' + t._id + '" data-e="cancelado">Cancelar</button></div></div>';
-    });
+    var l = datos.turnos || [], oc = datos.ocup || {}, P = NEG[s].paso || 30, hoy = hoyIso(), dias = diasAbiertos();
+    if (!dias.length) return '<p class="vacio">Falta cargar el horario del negocio.</p>';
+    if (!diaSel || !dias.some(function (d) { return hoyIso(d) === diaSel; })) diaSel = hoyIso(dias[0]);
+    var act = function (t) { return t.estado !== 'cancelado'; };
+    var cuenta = function (f) { return l.filter(function (t) { return t.fecha === f && act(t); }).length; };
+    var sem = 0; dias.slice(0, 7).forEach(function (d) { sem += cuenta(hoyIso(d)); });
+    var h = '<div class="kpis"><div class="kpi"><b>' + cuenta(hoy) + '</b><span>turnos hoy</span></div><div class="kpi"><b>' + sem + '</b><span>turnos en los próximos 7 días abiertos</span></div><div class="kpi"><b>' + l.filter(function (t) { return t.fecha >= hoy && t.estado === 'cancelado'; }).length + '</b><span>cancelados próximos</span></div></div>';
+    h += '<div class="tabs dias">' + dias.map(function (d) { var f = hoyIso(d), n = cuenta(f); return '<button data-dia="' + f + '" aria-pressed="' + (f === diaSel) + '">' + (f === hoy ? 'Hoy' : DIAS[d.getDay()].slice(0, 3)) + ' ' + d.getDate() + '/' + (d.getMonth() + 1) + (n ? ' · ' + n : '') + '</button>'; }).join('') + '</div>';
+    var p = diaSel.split('-'), dd = new Date(+p[0], p[1] - 1, +p[2]), ab = (NEG[s].hor || {})[dd.getDay()], ahora = new Date().getHours() * 60 + new Date().getMinutes(), esHoy = diaSel === hoy, del = oc[diaSel] || {};
+    var delDia = l.filter(function (t) { return t.fecha === diaSel; });
+    h += '<h2>' + fechaTxt(diaSel) + '</h2>';
+    for (var m = ab[0] * 60; m < ab[1] * 60; m += P) {
+      var t = delDia.filter(function (x) { return act(x) && m >= x.ini && m < x.ini + x.min; })[0], pasado = esHoy && m + P <= ahora;
+      if (t && t.ini !== m) continue;
+      if (t) {
+        h += '<div class="it' + (pasado ? ' pas' : '') + '"><div class="h">' + hh(m) + '</div><div><b>' + esc(t.nombre) + '</b> <span class="tag ' + esc(t.estado) + '">' + esc(t.estado) + '</span><br><small>' + esc(t.servicio || '') + ' · ' + hh(t.ini) + ' a ' + hh(t.ini + t.min) + (t.cel ? ' · ' + esc(t.cel) : '') + (t.email ? ' · ' + esc(t.email) : '') + '</small></div><div class="ac">' +
+          wa(t.cel, 'Hola ' + t.nombre + '! Te confirmamos tu turno de ' + (t.servicio || '') + ' el ' + fechaTxt(t.fecha) + ' a las ' + hh(t.ini) + ' en ' + NEG[s].n + '. Si no podés venir, avisanos por acá. ¡Te esperamos!') +
+          (t.estado !== 'atendido' ? '<button class="sec" data-t="' + t._id + '" data-e="atendido">Atendido</button>' : '') + '<button class="sec" data-t="' + t._id + '" data-e="cancelado">Cancelar</button></div></div>';
+      } else if (del[m] === 'bloqueo') {
+        h += '<div class="it lib"><div class="h">' + hh(m) + '</div><div><span class="tag cancelado">Bloqueado</span></div><div class="ac"><button class="sec" data-desb="' + m + '">Desbloquear</button></div></div>';
+      } else if (del[m]) {
+        h += '<div class="it lib"><div class="h">' + hh(m) + '</div><div><small>Ocupado</small></div><div class="ac"></div></div>';
+      } else {
+        h += '<div class="it lib' + (pasado ? ' pas' : '') + '"><div class="h">' + hh(m) + '</div><div><small>Libre</small></div><div class="ac">' + (pasado ? '' : '<button class="sec" data-blq="' + m + '">Bloquear</button>') + '</div></div>';
+      }
+    }
+    h += '<p><button class="sec" data-blqdia="1">Bloquear todo el día</button> <a class="sec" style="text-decoration:none" href="' + (NEG[s].web || '#') + '" target="_blank" rel="noopener">Ver la agenda como el cliente</a></p>';
+    var canc = delDia.filter(function (x) { return x.estado === 'cancelado'; });
+    if (canc.length) h += '<h2>Cancelados de este día</h2>' + canc.map(function (t) { return '<div class="it pas"><div class="h">' + hh(t.ini) + '</div><div><b>' + esc(t.nombre) + '</b> <span class="tag cancelado">cancelado</span><br><small>' + esc(t.servicio || '') + '</small></div><div class="ac">' + wa(t.cel, 'Hola ' + t.nombre + '! Tu turno del ' + fechaTxt(t.fecha) + ' a las ' + hh(t.ini) + ' quedó cancelado. Si querés, reservá otro en la web.') + '</div></div>'; }).join('');
     return h;
   }
   function encargosV() {
@@ -86,7 +110,7 @@ a{color:var(--ac)}
     if (!l.length) return '<p class="vacio">No hay encargos. Cuando alguien encargue en la web, aparece acá al instante.</p>';
     return l.map(function (p) {
       var sig = { nuevo: 'listo', listo: 'entregado' }[p.estado];
-      return '<div class="it"><div class="h">$' + Number(p.total || 0).toLocaleString('es-AR') + '</div><div><b>' + esc(p.nombre) + '</b> <span class="tag ' + esc(p.estado) + '">' + esc(p.estado) + '</span><br><small>Retiro: ' + esc(p.ret) + '</small><br><small>' + (p.items || []).map(function (x) { return x.c + ' × ' + esc(x.n); }).join(' · ') + '</small></div><div class="ac">' +
+      return '<div class="it"><div class="h">$' + Number(p.total || 0).toLocaleString('es-AR') + '</div><div><b>' + esc(p.nombre) + '</b> <span class="tag ' + esc(p.estado) + '">' + esc(p.estado) + '</span><br><small>Retiro: ' + esc(p.ret) + '</small><br><small>' + (function (it) { it = it || []; return Array.isArray(it) ? it : Object.keys(it).map(function (k) { return it[k]; }); })(p.items).map(function (x) { return x.c + ' × ' + esc(x.n); }).join(' · ') + '</small></div><div class="ac">' +
         wa(p.cel, 'Hola ' + p.nombre + '! Tu encargo ya está listo para retirar (' + p.ret + ').') +
         (sig ? '<button class="sec" data-p="' + p._id + '" data-e="' + sig + '">Marcar ' + sig + '</button>' : '') + (p.estado !== 'cancelado' && p.estado !== 'entregado' ? '<button class="sec" data-p="' + p._id + '" data-e="cancelado">Cancelar</button>' : '') + '</div></div>';
     }).join('');
@@ -109,12 +133,16 @@ a{color:var(--ac)}
   app.addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;
     if (b.dataset.v) { vista = b.dataset.v; pinta(); return; }
-    var base = 'r/' + s;
+    if (b.dataset.dia) { diaSel = b.dataset.dia; pinta(); return; }
+    var base = 'r/' + s, OC = base + '/turnos/ocupado/' + diaSel + '/';
+    if (b.dataset.blq || b.dataset.desb) { var u = {}; u[OC + (b.dataset.blq || b.dataset.desb)] = b.dataset.blq ? 'bloqueo' : null; b.disabled = true; db.ref().update(u).catch(function () { b.disabled = false; alert('No se pudo guardar. Puede que alguien haya reservado ese horario recién.'); }); return; }
+    if (b.dataset.blqdia) { if (!confirm('¿Bloquear todos los horarios libres de este día? Los turnos ya tomados se mantienen.')) return; var u2 = {}; [].forEach.call(app.querySelectorAll('[data-blq]'), function (x) { u2[OC + x.dataset.blq] = 'bloqueo'; }); if (Object.keys(u2).length) db.ref().update(u2).catch(function () { alert('No se pudo guardar.'); }); return; }
     if (b.dataset.t) {
       var t = (datos.turnos || []).filter(function (x) { return x._id === b.dataset.t; })[0]; if (!t) return;
       if (b.dataset.e === 'cancelado' && !confirm('¿Cancelar el turno de ' + t.nombre + '? El horario queda libre en la web.')) return;
       var up = {}; up[base + '/turnos/lista/' + t._id + '/estado'] = b.dataset.e;
-      if (b.dataset.e === 'cancelado') for (var m = t.ini; m < t.ini + t.min; m += 30) up[base + '/turnos/ocupado/' + t.fecha + '/' + m] = null;
+      var oc0 = (datos.ocup || {})[t.fecha] || {};
+      if (b.dataset.e === 'cancelado') for (var m = t.ini; m < t.ini + t.min; m += (NEG[s].paso || 30)) if (oc0[m] === t._id) up[base + '/turnos/ocupado/' + t.fecha + '/' + m] = null;
       b.disabled = true; db.ref().update(up).catch(function () { b.disabled = false; alert('No se pudo guardar.'); });
     }
     if (b.dataset.p) { b.disabled = true; db.ref(base + '/encargos/lista/' + b.dataset.p + '/estado').set(b.dataset.e).catch(function () { b.disabled = false; alert('No se pudo guardar.'); }); }
@@ -122,6 +150,7 @@ a{color:var(--ac)}
   function escuchar() {
     refs.forEach(function (r) { r.off(); }); refs = [];
     NEG[s].t.forEach(function (t) {
+      if (t === 'turnos') { var ro = db.ref('r/' + s + '/turnos/ocupado'); refs.push(ro); ro.on('value', function (sn) { datos.ocup = sn.val() || {}; pinta(); }); }
       var r = t === 'stats' ? db.ref('sitios/' + s + '/stats') : db.ref('r/' + s + '/' + t + '/lista');
       refs.push(r);
       r.on('value', function (sn) {

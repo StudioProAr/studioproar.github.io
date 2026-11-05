@@ -90,7 +90,7 @@ footer{border-top:1px solid var(--line);padding:24px 0 90px;font-size:13px;color
 <section id="donde" class="alt"><div class="in"><h2>Dónde estamos</h2><div class="datos"><p><b>Dirección</b>Calle de ejemplo 1500, Victoria</p><p><b>Horarios</b>Lunes a sábados 7 a 13 y 16 a 20.30 · Domingos 7 a 13.30</p><p><b>Encargos de tortas</b>Con 48 horas de anticipación</p></div></div></section>
 <div class="barra" id="barra" hidden><div class="in"><span id="resumen"></span><button type="button" id="ver">Ver mi encargo</button></div></div>
 <dialog id="dlg"><h3 style="margin-top:0;font:400 28px var(--disp)">Tu encargo</h3><div id="items"></div><p style="display:flex;justify-content:space-between;font-weight:800;margin:12px 0"><span>Total</span><span id="total"></span></p>
-<label for="nom">Tu nombre</label><input id="nom" maxlength="40" placeholder="Nombre"><label for="celp">Tu celular (opcional)</label><input id="celp" type="tel" inputmode="numeric" maxlength="10" placeholder="1155554444" autocomplete="tel-national">
+<label for="nom">Tu nombre</label><input id="nom" maxlength="40" placeholder="Nombre"><label for="celp">Tu celular (opcional)</label><input id="celp" type="tel" inputmode="tel" maxlength="20" placeholder="1155554444" autocomplete="tel-national">
 <label for="ret">¿Cuándo pasás a retirar?</label><select id="ret"></select>
 <p class="aviso">Muestra: el encargo se guarda solo en tu navegador y lo ves en el <a href="../panel/?n=panaderia#pedidos">panel de ejemplo</a>.</p>
 <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap"><button class="btn" type="button" id="enviar">Enviar encargo</button><button class="btn sec" type="button" id="cerrar">Seguir eligiendo</button></div><div id="listo"></div></dialog>
@@ -115,7 +115,7 @@ const D=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];c
 $('ret').innerHTML=op.map(o=>'<option>'+o+'</option>').join('');
 Reservas.iniciar({sitio:'panaderia',col:'encargos',clave:'pan_pedidos'});
 $('enviar').onclick=()=>{const it=Object.keys(car).map(k=>[P[k].n,car[k],P[k].p]);if(!it.length)return;const nom=($('nom').value.trim()||'Cliente de prueba').slice(0,40);
- const ped={id:Date.now(),nom,it,ret:$('ret').value,fecha:Date.now(),estado:'nuevo'};const cel=$('celp').value.replace(/\D/g,'').slice(0,10);
+ const ped={id:Date.now(),nom,it,ret:$('ret').value,fecha:Date.now(),estado:'nuevo'};const cel=Reservas.normCel($('celp').value);if($('celp').value&&!Reservas.celOk(cel)){$('listo').innerHTML='<div class="ok">Revisá el celular: con código de área, sin 0 ni 15 (ej. 1155554444).</div>';return;}
  if(Reservas.modo==='real'){$('listo').innerHTML='<div class="ok">Enviando…</div>';Reservas.guardar({nombre:nom,cel:cel,ret:ped.ret,total:it.reduce((a,x)=>a+x[1]*x[2],0),items:it.map(x=>({n:x[0],c:x[1],p:x[2]}))}).then(()=>{$('listo').innerHTML='<div class="ok">Encargo enviado ✓ Retiro: '+ped.ret+'. <a href="../mi-negocio/?s=panaderia">Ver cómo le llega a la panadería →</a></div>';Object.keys(car).forEach(k=>delete car[k]);prods();barra();}).catch(e=>{$('listo').innerHTML='<div class="ok">'+e.message+'</div>';});return;}
  Reservas.guardar(ped);
  const txt='Hola! Quiero hacer este encargo (muestra StudioProAr):\n'+it.map(x=>x[1]+' x '+x[0]+' = '+pes(x[1]*x[2])).join('\n')+'\nTotal: '+$('total').textContent+'\nRetiro: '+ped.ret+'\nNombre: '+nom;

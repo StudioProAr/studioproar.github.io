@@ -98,7 +98,7 @@ footer{background:var(--menta);padding:24px 0;font-size:13px;color:var(--soft)}
 <svg class="ola" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0,60 C420,0 1020,60 1440,10 L1440,60 Z" fill="#ece9fb"/></svg>
 <section id="turnos" class="lila"><div class="in"><h2>Sacá turno en 3 pasos</h2><p class="sub">El turno queda confirmado al instante y te lo recordamos por WhatsApp el día anterior.</p>
 <div class="turno">
-  <div class="pt"><span class="n">1</span><h3>¿Qué necesita?</h3><label for="sv">Servicio</label><select id="sv"></select><label for="mas">Nombre de tu mascota</label><input id="mas" maxlength="30" placeholder="Ej: Rocco"><label for="due">Tu nombre</label><input id="due" maxlength="40" placeholder="Nombre y apellido"><label for="celv">Tu celular (opcional)</label><input id="celv" type="tel" inputmode="numeric" maxlength="10" placeholder="1155554444" autocomplete="tel-national"></div>
+  <div class="pt"><span class="n">1</span><h3>¿Qué necesita?</h3><label for="sv">Servicio</label><select id="sv"></select><label for="mas">Nombre de tu mascota</label><input id="mas" maxlength="30" placeholder="Ej: Rocco"><label for="due">Tu nombre</label><input id="due" maxlength="40" placeholder="Nombre y apellido"><label for="celv">Tu celular</label><input id="celv" type="tel" inputmode="tel" maxlength="20" placeholder="1155554444" autocomplete="tel-national" required><label for="mailv">Tu mail (opcional)</label><input id="mailv" type="email" maxlength="80" placeholder="para la confirmación" autocomplete="email"></div>
   <div class="pt"><span class="n">2</span><h3>¿Qué día?</h3><div class="dias" id="dias"></div></div>
   <div class="pt"><span class="n">3</span><h3>¿A qué hora?</h3><div class="horas" id="horas"></div></div>
 </div>
@@ -131,10 +131,12 @@ function pintar(){$('dias').innerHTML=dias.map(d=>'<button type="button" data-d=
 $('sv').onchange=e=>{sel.s=+e.target.value;sel.h=null;pintar();};
 $('dias').onclick=e=>{const b=e.target.closest('[data-d]');if(b){sel.d=dias.find(d=>iso(d)===b.dataset.d);sel.h=null;pintar();}};
 $('horas').onclick=e=>{const b=e.target.closest('[data-h]');if(b&&!b.disabled){sel.h=+b.dataset.h;pintar();}};
-$('conf').onclick=()=>{if(sel.h===null)return;const s=S[sel.s],mas=($('mas').value.trim()||'Mascota de prueba').slice(0,30),due=($('due').value.trim()||'Cliente de prueba').slice(0,40);
- const d0=sel.d,h0=sel.h,cel=$('celv').value.replace(/\D/g,'').slice(0,10);$('conf').disabled=true;$('ok').innerHTML='<div class="ok">Guardando…</div>';
- Reservas.guardar({id:Date.now(),fecha:iso(d0),ini:h0,min:s.m,servicio:s.n,precio:s.p,nombre:mas+' ('+due+')',cel:cel,estado:'confirmado'}).then(()=>{
- $('ok').innerHTML='<div class="ok">Turno confirmado ✓ '+s.n+' para '+mas.replace(/[<>&]/g,'')+', '+D[d0.getDay()]+' '+d0.getDate()+'/'+(d0.getMonth()+1)+' a las '+hh(h0)+'. '+(Reservas.modo==='real'?'<a href="../mi-negocio/?s=vet">Ver cómo le llega a la veterinaria →</a>':'<a href="../panel/?n=veterinaria#turnos">Ver cómo lo ve la veterinaria →</a>')+'</div>';sel.h=null;pintar();
+$('conf').onclick=()=>{if(sel.h===null)return;const s=S[sel.s],mas=$('mas').value.trim().slice(0,30),due=$('due').value.trim().slice(0,40);
+ const d0=sel.d,h0=sel.h,cel=Reservas.normCel($('celv').value),mail=$('mailv').value.trim(),er=m=>{$('ok').innerHTML='<div class="ok">'+m+'</div>';};
+ if(mas.length<2)return er('Escribí el nombre de tu mascota.');if(due.length<2)return er('Escribí tu nombre.');if(!Reservas.celOk(cel))return er('Escribí tu celular con código de área, sin 0 ni 15 (ej. 1155554444).');if(!Reservas.mailOk(mail))return er('Revisá el mail.');$('conf').disabled=true;$('ok').innerHTML='<div class="ok">Guardando…</div>';
+ Reservas.guardar({id:Date.now(),fecha:iso(d0),ini:h0,min:s.m,servicio:s.n,precio:s.p,nombre:mas+' ('+due+')',cel:cel,email:mail||undefined,estado:'confirmado'}).then(()=>{
+ const cal=Reservas.calendario({titulo:s.n+' · Patitas del Delta',fecha:iso(d0),ini:h0,min:s.m,lugar:'Veterinaria Patitas del Delta',detalle:'Turno para '+mas});
+ $('ok').innerHTML='<div class="ok">Turno confirmado ✓ '+s.n+' para '+mas.replace(/[<>&]/g,'')+', '+D[d0.getDay()]+' '+d0.getDate()+'/'+(d0.getMonth()+1)+' a las '+hh(h0)+'. <a href="'+cal+'" target="_blank" rel="noopener">Agregar a mi calendario</a> · '+(Reservas.modo==='real'?'<a href="../mi-negocio/?s=vet">Ver cómo le llega a la veterinaria →</a>':'<a href="../panel/?n=veterinaria#turnos">Ver cómo lo ve la veterinaria →</a>')+'</div>';sel.h=null;pintar();
  }).catch(e=>{$('ok').innerHTML='<div class="ok">'+e.message+'</div>';pintar();});};
 Reservas.alCambiar(pintar);
 pintar();

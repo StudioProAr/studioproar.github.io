@@ -26,6 +26,22 @@
       });
       return R;
     },
+    /* Link para agregar el turno a Google Calendar (fecha 'AAAA-MM-DD', ini y min en minutos) */
+    calendario: function (o) {
+      var f = o.fecha.replace(/-/g, ''), t = function (m) { return f + 'T' + String(Math.floor(m / 60)).padStart(2, '0') + String(m % 60).padStart(2, '0') + '00'; };
+      return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(o.titulo) + '&dates=' + t(o.ini) + '/' + t(o.ini + o.min) + '&ctz=America/Argentina/Buenos_Aires&details=' + encodeURIComponent(o.detalle || '') + '&location=' + encodeURIComponent(o.lugar || '');
+    },
+    /* Celular argentino a 10 dígitos: saca +54, 9, 0 y el 15 (ej. "011 15 5555-4444" -> "1155554444") */
+    normCel: function (x) {
+      var d = String(x || '').replace(/\D/g, '');
+      if (d.indexOf('54') === 0 && d.length > 11) d = d.slice(2);
+      if (d.charAt(0) === '9' && d.length === 11) d = d.slice(1);
+      if (d.charAt(0) === '0') d = d.slice(1);
+      if (d.length === 12) for (var L = 2; L <= 4; L++) if (d.substr(L, 2) === '15') { d = d.slice(0, L) + d.slice(L + 2); break; }
+      return d;
+    },
+    celOk: function (c) { return /^[1-9][0-9]{9}$/.test(c) && c.indexOf("15") !== 0; },
+    mailOk: function (m) { return !m || /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(m); },
     lista: function () { return R.modo === 'real' ? cache : local(); },
     alCambiar: function (f) { fns.push(f); },
     guardar: function (o) {
