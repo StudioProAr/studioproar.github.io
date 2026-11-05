@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es-AR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow"><title>App · Ribera Training</title><meta name="theme-color" content="#0d0f12">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d0f12;--card:#1b1f25;--card2:#232830;--ink:#f3f5f7;--soft:#a3abb6;--line:#2a3039;--ac:#c6ff3d;--rojo:#ff5c5c;--amar:#ffc247}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 'Inter',sans-serif;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+.muestra{background:#000;font-size:12px;text-align:center;padding:6px;color:var(--soft)}.muestra a{color:#fff}
+header{position:sticky;top:0;z-index:5;background:rgba(13,15,18,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header .in{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;max-width:760px;margin:0 auto}
+.logo{font:400 20px 'Anton',Impact,'Arial Narrow',sans-serif;text-transform:uppercase}.logo b{color:var(--ac);font-weight:400}
+.logo small{display:block;font:500 11px 'Inter';color:var(--soft);text-transform:none}
+.chip{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:5px 11px;color:var(--soft);text-decoration:none}
+main{max-width:760px;margin:0 auto;padding:16px}
+h2{font:400 26px 'Anton',Impact,'Arial Narrow',sans-serif;text-transform:uppercase;margin:6px 0 12px}
+h3{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--soft);margin:22px 0 10px}
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media (min-width:600px){.kpis{grid-template-columns:repeat(4,1fr)}}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+.kpi b{display:block;font:400 32px/1.1 'Anton',Impact,'Arial Narrow',sans-serif;color:var(--ac)}.kpi.am b{color:var(--amar)}.kpi.ro b{color:var(--rojo)}
+.kpi span{font-size:12.5px;color:var(--soft)}
+.lista{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.fila{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--line);cursor:pointer}
+.fila:last-child{border:0}
+.fila:hover{background:var(--card2)}
+.av{width:38px;height:38px;border-radius:50%;background:var(--card2);display:grid;place-items:center;font-weight:800;font-size:14px;flex:none}
+.fila .tx{flex:1;min-width:0}.fila .tx b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.fila .tx span{font-size:13px;color:var(--soft)}
+.est{font-size:11.5px;font-weight:800;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.est.ok{background:color-mix(in srgb,var(--ac) 18%,transparent);color:var(--ac)}.est.am{background:color-mix(in srgb,var(--amar) 18%,transparent);color:var(--amar)}.est.ro{background:color-mix(in srgb,var(--rojo) 18%,transparent);color:var(--rojo)}
+.wa{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:12px;background:#25d366;flex:none}
+.vacio{padding:16px;color:var(--soft);text-align:center}
+.barras{display:flex;align-items:flex-end;gap:5px;height:140px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 12px 26px;position:relative}
+.barras i{flex:1;background:color-mix(in srgb,var(--ac) 35%,var(--card2));border-radius:4px 4px 2px 2px;position:relative;min-height:2px}
+.barras i.hoy{background:var(--ac)}
+.barras i::after{content:attr(data-l);position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--soft);font-style:normal}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--ac);color:#0d0f12;border:0;border-radius:999px;padding:12px 18px;font:800 15px 'Inter';cursor:pointer;text-decoration:none}
+.btn.sec{background:var(--card2);color:var(--ink)}
+.btn.full{width:100%}
+.busca{display:flex;gap:8px;margin-bottom:10px}
+.busca input{flex:1;font:500 15px 'Inter';padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.filtros{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.filtros button{background:var(--card);color:var(--soft);border:1px solid var(--line);border-radius:999px;padding:7px 13px;font:600 13px 'Inter';cursor:pointer}
+.filtros button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+nav.tabs{position:fixed;bottom:0;left:0;right:0;z-index:6;background:rgba(21,24,29,.97);border-top:1px solid var(--line);display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom)}
+nav.tabs button{flex:1;max-width:150px;background:none;border:0;color:var(--soft);font:600 11.5px 'Inter';padding:10px 0 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}
+nav.tabs button svg{width:22px;height:22px}
+nav.tabs button[aria-selected=true]{color:var(--ac)}
+dialog{border:0;padding:0;background:var(--card);color:var(--ink);border-radius:22px 22px 0 0;width:100%;max-width:560px;margin:auto auto 0;max-height:88vh}
+@media (min-width:600px){dialog{border-radius:22px;margin:auto}}
+dialog::backdrop{background:rgba(0,0,0,.6)}
+.dlg{padding:20px}
+.dlg h2{margin-top:0}
+.dlg .cerrar{float:right;background:var(--card2);border:0;color:var(--ink);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:18px}
+.dato{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:14.5px}.dato span{color:var(--soft)}
+.acc{display:grid;gap:8px;margin-top:16px}
+label{display:block;font-size:13px;color:var(--soft);margin:12px 0 4px}
+.dlg input,.dlg select{width:100%;font:500 15px 'Inter';padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%) translateY(20px);background:var(--ac);color:#0d0f12;font-weight:800;padding:10px 18px;border-radius:999px;opacity:0;transition:.3s;z-index:20;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%)}
+.medios{display:grid;gap:8px}
+.medio{display:flex;justify-content:space-between;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.medio .bar{height:6px;border-radius:3px;background:var(--ac);margin-top:6px}
+.nota{font-size:12.5px;color:var(--soft);margin-top:8px}
+</style></head>
+<body>
+<div class="muestra">Muestra · app del dueño · datos de ejemplo guardados en este navegador · <a href="index.html">Ver la web</a> · <a href="fichaje.html">Modo fichaje</a></div>
+<header><div class="in"><div class="logo">Ribera<b>.</b>Training<small>App del gimnasio</small></div><a class="chip" href="fichaje.html">Abrir fichaje</a></div></header>
+<main id="vista"></main>
+<nav class="tabs" role="tablist">
+  <button role="tab" data-v="hoy" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-8 9 8M5 10v10h14V10"/></svg>Hoy</button>
+  <button role="tab" data-v="socios"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6M17 11a3 3 0 1 0 0-6M22 20c0-3-2-5-5-5"/></svg>Socios</button>
+  <button role="tab" data-v="cobros"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20M6 15h4"/></svg>Cobros</button>
+  <button role="tab" data-v="stats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Estadísticas</button>
+</nav>
+<dialog id="dlg"><div class="dlg" id="dlg-in"></div></dialog>
+<div class="toast" id="toast"></div>
+<script src="datos.js"></script>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id);},vista='hoy',filtro='todos',q='';
+  var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
+  var WA='<svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>';
+  function toast(t){var e=$('toast');e.textContent=t;e.classList.add('on');setTimeout(function(){e.classList.remove('on');},1800);}
+  function estado(s){var d=GYM.dias(s);return d<0?['ro','Vencida hace '+(-d)+' d']:d<=7?['am','Vence en '+d+' d']:['ok','Al día'];}
+  function ini(n){return n.split(' ').map(function(x){return x[0];}).join('').slice(0,2);}
+  function waLink(s,tipo){
+    var n=s.nom.split(' ')[0],p=GYM.PLANES[s.plan],d=GYM.dias(s),t;
+    if(tipo==='cred')t='Hola '+n+'! Esta es tu credencial de Ribera Training: '+location.href.replace(/app\.html.*$/,'credencial.html')+' . Guardala en la pantalla de inicio y mostrá el QR al entrar.';
+    else if(d<0)t='Hola '+n+'! Te escribimos de Ribera Training: tu cuota del plan '+p.nom+' venció el '+GYM.fecha(s.vence)+'. Podés renovarla en recepción o por transferencia ('+GYM.pesos(p.precio)+'). ¡Te esperamos!';
+    else t='Hola '+n+'! Te recordamos que tu cuota de Ribera Training vence el '+GYM.fecha(s.vence)+'. Monto: '+GYM.pesos(p.precio)+'. ¡Gracias!';
+    return 'https://wa.me/549'+s.tel+'?text='+encodeURIComponent(t);
+  }
+  function fila(s,conWa){var e=estado(s);return '<div class="fila" data-dni="'+s.dni+'"><div class="av">'+ini(s.nom)+'</div><div class="tx"><b>'+esc(s.nom)+'</b><span>'+GYM.PLANES[s.plan].nom+' · vence '+GYM.fecha(s.vence)+'</span></div>'+(conWa?'<a class="wa" href="'+waLink(s)+'" target="_blank" rel="noopener" aria-label="Avisar por WhatsApp">'+WA+'</a>':'<span class="est '+e[0]+'">'+e[1]+'</span>')+'</div>';}
+
+  function hoy(){
+    var db=GYM.db(),h0=GYM.hoy0().getTime(),as=db.asis.filter(function(a){return a.t>=h0;});
+    var act=db.socios.filter(function(s){return GYM.dias(s)>=0;}),pv=db.socios.filter(function(s){var d=GYM.dias(s);return d>=0&&d<=7;}).sort(function(a,b){return a.vence-b.vence;}),venc=db.socios.filter(function(s){return GYM.dias(s)<0;});
+    var horas=[];for(var h=6;h<=22;h++)horas.push([h,Math.round(db.asis.filter(function(a){return new Date(a.t).getHours()===h;}).length/14*10)/10]);
+    var mx=Math.max(1,Math.max.apply(null,horas.map(function(x){return x[1];})));
+    return '<h2>Hoy</h2><div class="kpis"><div class="kpi"><b>'+as.length+'</b><span>ingresos hoy</span></div><div class="kpi"><b>'+act.length+'</b><span>socios al día</span></div><div class="kpi am"><b>'+pv.length+'</b><span>vencen esta semana</span></div><div class="kpi ro"><b>'+venc.length+'</b><span>con cuota vencida</span></div></div>'+
+      '<h3>Ingresos por hora · promedio de 2 semanas</h3><div class="barras">'+horas.map(function(x){return '<i style="height:'+(x[1]/mx*100)+'%" data-l="'+(x[0]%3===0?x[0]:'')+'" title="'+x[0]+' h: '+x[1]+'"></i>';}).join('')+'</div>'+
+      '<h3>Vencen esta semana · avisales con un toque</h3><div class="lista">'+(pv.map(function(s){return fila(s,true);}).join('')||'<p class="vacio">Nadie vence esta semana.</p>')+'</div>'+
+      '<h3>Cuota vencida</h3><div class="lista">'+(venc.map(function(s){return fila(s,true);}).join('')||'<p class="vacio">No hay cuotas vencidas.</p>')+'</div>';
+  }
+  function socios(){
+    var db=GYM.db(),l=db.socios.filter(function(s){var d=GYM.dias(s);
+      if(filtro==='ok'&&d<0)return false;if(filtro==='am'&&(d<0||d>7))return false;if(filtro==='ro'&&d>=0)return false;
+      return !q||(s.nom+' '+s.dni).toLowerCase().indexOf(q.toLowerCase())>=0;});
+    return '<h2>Socios <span style="color:var(--soft);font:500 15px Inter">('+db.socios.length+')</span></h2><div class="busca"><input id="q" type="search" placeholder="Buscar por nombre o DNI" value="'+esc(q)+'"><button class="btn" id="nuevo" type="button">+ Nuevo</button></div>'+
+      '<div class="filtros">'+[['todos','Todos'],['ok','Al día'],['am','Por vencer'],['ro','Vencidos']].map(function(f){return '<button type="button" data-f="'+f[0]+'" aria-pressed="'+(filtro===f[0])+'">'+f[1]+'</button>';}).join('')+'</div>'+
+      '<div class="lista">'+(l.map(function(s){return fila(s,false);}).join('')||'<p class="vacio">No hay socios con ese filtro.</p>')+'</div>';
+  }
+  function cobros(){
+    var db=GYM.db(),d=new Date(),m0=new Date(d.getFullYear(),d.getMonth(),1).getTime(),pm=db.pagos.filter(function(p){return p.t>=m0;});
+    var tot=pm.reduce(function(a,p){return a+p.monto;},0),med={};pm.forEach(function(p){med[p.medio]=(med[p.medio]||0)+p.monto;});
+    var acobrar=db.socios.filter(function(s){return GYM.dias(s)<=7;}).reduce(function(a,s){return a+GYM.PLANES[s.plan].precio;},0);
+    var ult=db.pagos.slice().sort(function(a,b){return b.t-a.t;}).slice(0,8);
+    return '<h2>Cobros</h2><div class="kpis"><div class="kpi"><b>'+GYM.pesos(tot)+'</b><span>cobrado este mes</span></div><div class="kpi"><b>'+pm.length+'</b><span>pagos este mes</span></div><div class="kpi am"><b>'+GYM.pesos(acobrar)+'</b><span>por cobrar (vencidos y semana)</span></div><div class="kpi"><b>'+GYM.pesos(pm.length?tot/pm.length:0)+'</b><span>cuota promedio</span></div></div>'+
+      '<h3>Por medio de pago</h3><div class="medios">'+Object.keys(med).map(function(k){return '<div class="medio"><div style="flex:1"><b>'+k+'</b><div class="bar" style="width:'+(med[k]/tot*100)+'%"></div></div><b style="margin-left:14px">'+GYM.pesos(med[k])+'</b></div>';}).join('')+'</div>'+
+      '<h3>Últimos pagos</h3><div class="lista">'+ult.map(function(p){var s=GYM.socio(p.dni);return '<div class="fila" data-dni="'+p.dni+'"><div class="av">$</div><div class="tx"><b>'+(s?esc(s.nom):p.dni)+'</b><span>'+GYM.fecha(p.t)+' · '+p.medio+'</span></div><b>'+GYM.pesos(p.monto)+'</b></div>';}).join('')+'</div>';
+  }
+  function stats(){
+    var db=GYM.db(),dias=[];for(var i=13;i>=0;i--){var a=GYM.hoy0();a.setDate(a.getDate()-i);var b=a.getTime()+864e5;dias.push([a,db.asis.filter(function(x){return x.t>=a.getTime()&&x.t<b;}).length]);}
+    var mx=Math.max.apply(null,dias.map(function(x){return x[1];}))||1,prom=Math.round(dias.slice(0,13).reduce(function(a,x){return a+x[1];},0)/13);
+    var hs={};db.asis.forEach(function(x){var h=new Date(x.t).getHours();hs[h]=(hs[h]||0)+1;});
+    var pico=Object.keys(hs).sort(function(a,b){return hs[b]-hs[a];}).slice(0,3).map(function(h){return h+' a '+(+h+1)+' h';});
+    return '<h2>Estadísticas</h2><div class="kpis"><div class="kpi"><b>'+prom+'</b><span>ingresos por día (promedio)</span></div><div class="kpi"><b>'+pico[0]+'</b><span>horario más lleno</span></div><div class="kpi"><b>214</b><span>visitas a la web (30 días)</span></div><div class="kpi"><b>31</b><span>consultas por WhatsApp</span></div></div>'+
+      '<h3>Ingresos por día · últimos 14 días</h3><div class="barras">'+dias.map(function(x,i){return '<i class="'+(i===13?'hoy':'')+'" style="height:'+(x[1]/mx*100)+'%" data-l="'+(i%2?'':x[0].getDate())+'" title="'+x[1]+'"></i>';}).join('')+'</div>'+
+      '<h3>Horarios con más gente</h3><div class="lista">'+pico.map(function(p,i){return '<div class="fila"><div class="av">'+(i+1)+'</div><div class="tx"><b>'+p+'</b></div></div>';}).join('')+'</div>'+
+      '<h3>De dónde llegan a la web</h3><div class="medios">'+[['Instagram',46],['Google',31],['WhatsApp',15],['Directo',8]].map(function(x){return '<div class="medio"><div style="flex:1"><b>'+x[0]+'</b><div class="bar" style="width:'+x[1]*2+'%"></div></div><b style="margin-left:14px">'+x[1]+'%</b></div>';}).join('')+'</div>'+
+      '<p class="nota">Visitas y origen: números de ejemplo. Con un cliente real salen del medidor de la web.</p><p style="margin-top:22px"><button class="btn sec" id="reset" type="button">Reiniciar datos de ejemplo</button></p>';
+  }
+  var V={hoy:hoy,socios:socios,cobros:cobros,stats:stats};
+  function pinta(){$('vista').innerHTML=V[vista]();[].forEach.call(document.querySelectorAll('nav.tabs button'),function(b){b.setAttribute('aria-selected',b.dataset.v===vista);});}
+  document.querySelector('nav.tabs').addEventListener('click',function(e){var b=e.target.closest('button');if(b){vista=b.dataset.v;pinta();scrollTo(0,0);}});
+
+  function ficha(dni){
+    var s=GYM.socio(dni);if(!s)return;var e=estado(s),as=GYM.db().asis.filter(function(a){return a.dni===dni;}).slice(-5).reverse();
+    $('dlg-in').innerHTML='<button class="cerrar" type="button" data-c aria-label="Cerrar">×</button><h2>'+esc(s.nom)+'</h2><span class="est '+e[0]+'">'+e[1]+'</span>'+
+      '<div style="margin-top:12px"><div class="dato"><span>DNI</span><b>'+s.dni+'</b></div><div class="dato"><span>Plan</span><b>'+GYM.PLANES[s.plan].nom+' · '+GYM.pesos(GYM.PLANES[s.plan].precio)+'</b></div><div class="dato"><span>Vence</span><b>'+GYM.fecha(s.vence)+'</b></div><div class="dato"><span>Últimos ingresos</span><b>'+(as.map(function(a){return GYM.fecha(a.t);}).join(', ')||'—')+'</b></div></div>'+
+      '<label for="medio">Registrar pago del mes</label><select id="medio"><option>Efectivo</option><option>Transferencia</option><option>Débito</option><option>Mercado Pago</option></select>'+
+      '<div class="acc"><button class="btn full" id="pagar" type="button">Registrar pago · '+GYM.pesos(GYM.PLANES[s.plan].precio)+'</button><a class="btn sec full" href="'+waLink(s)+'" target="_blank" rel="noopener">Avisar por WhatsApp</a><a class="btn sec full" href="'+waLink(s,'cred')+'" target="_blank" rel="noopener">Enviar credencial por WhatsApp</a></div>';
+    $('pagar').onclick=function(){GYM.pagar(dni,$('medio').value);$('dlg').close();toast('Pago registrado · vence '+GYM.fecha(GYM.socio(dni).vence));pinta();};
+    $('dlg').showModal();
+  }
+  function nuevo(){
+    $('dlg-in').innerHTML='<button class="cerrar" type="button" data-c aria-label="Cerrar">×</button><h2>Nuevo socio</h2><form id="fn"><label for="n-nom">Nombre y apellido</label><input id="n-nom" required maxlength="60"><label for="n-dni">DNI</label><input id="n-dni" required inputmode="numeric" pattern="\\d{7,9}" maxlength="9"><label for="n-tel">Celular (sin 0 ni 15)</label><input id="n-tel" required inputmode="numeric" pattern="\\d{10}" maxlength="10" placeholder="1155554444"><label for="n-plan">Plan</label><select id="n-plan">'+Object.keys(GYM.PLANES).map(function(k){return '<option value="'+k+'">'+GYM.PLANES[k].nom+' · '+GYM.pesos(GYM.PLANES[k].precio)+'</option>';}).join('')+'</select><div class="acc"><button class="btn full" type="submit">Dar de alta y cobrar el primer mes</button></div></form>';
+    $('fn').onsubmit=function(e){e.preventDefault();var dni=$('n-dni').value;if(GYM.socio(dni)){toast('Ese DNI ya existe');return;}
+      GYM.alta({nom:$('n-nom').value.trim(),dni:dni,tel:$('n-tel').value,plan:$('n-plan').value});$('dlg').close();vista='socios';q='';filtro='todos';pinta();ficha(dni);};
+    $('dlg').showModal();
+  }
+  $('dlg').addEventListener('click',function(e){if(e.target===this||e.target.closest('[data-c]'))this.close();});
+  $('vista').addEventListener('click',function(e){
+    if(e.target.closest('a'))return;
+    var f=e.target.closest('[data-f]');if(f){filtro=f.dataset.f;pinta();return;}
+    if(e.target.id==='nuevo')return nuevo();
+    if(e.target.id==='reset'){GYM.reset();toast('Datos de ejemplo reiniciados');pinta();return;}
+    var r=e.target.closest('.fila[data-dni]');if(r)ficha(r.dataset.dni);
+  });
+  $('vista').addEventListener('input',function(e){if(e.target.id==='q'){q=e.target.value;var p=e.target.selectionStart;pinta();var i=$('q');i.focus();i.setSelectionRange(p,p);}});
+  addEventListener('storage',pinta);
+  pinta();
+})();
+</script>
+</body></html>

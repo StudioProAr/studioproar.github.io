@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es-AR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<meta name="robots" content="noindex,nofollow"><title>Fichaje · Ribera Training</title><meta name="theme-color" content="#0d0f12">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d0f12;--card:#1b1f25;--ink:#f3f5f7;--soft:#a3abb6;--line:#2a3039;--ac:#c6ff3d;--rojo:#ff4d4d}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 'Inter',sans-serif;display:flex;flex-direction:column;user-select:none}
+.muestra{background:#000;font-size:12px;text-align:center;padding:6px;color:var(--soft)}.muestra a{color:#fff}
+.top{display:flex;justify-content:space-between;align-items:center;padding:16px 24px}
+.logo{font:400 24px 'Anton',Impact,'Arial Narrow',sans-serif;text-transform:uppercase;letter-spacing:.02em}.logo b{color:var(--ac);font-weight:400}
+#reloj{font:400 30px 'Anton',Impact,'Arial Narrow',sans-serif;color:var(--soft)}
+main{flex:1;display:grid;grid-template-columns:minmax(0,1fr);gap:24px;padding:0 24px 24px;align-content:center;max-width:1000px;margin:0 auto;width:100%}
+@media (min-width:820px){main{grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr)}}
+.ficha{text-align:center}
+.ficha h1{font:400 clamp(32px,5vw,48px)/1 'Anton',Impact,'Arial Narrow',sans-serif;text-transform:uppercase;margin:0 0 6px}
+.ficha p{color:var(--soft);margin:0 0 18px}
+.dni{font:400 48px 'Anton',Impact,'Arial Narrow',sans-serif;letter-spacing:.12em;min-height:72px;background:var(--card);border:2px solid var(--line);border-radius:18px;display:grid;place-items:center;margin:0 auto 14px;max-width:420px}
+.dni:empty::before{content:"DNI";color:#4a525d;letter-spacing:.05em}
+.tec{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:420px;margin:0 auto}
+.tec button{font:800 30px 'Inter';padding:16px 0;border-radius:16px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;transition:transform .08s}
+.tec button:active{transform:scale(.95)}
+.tec .ok{background:var(--ac);color:#0d0f12;border-color:var(--ac);font-size:20px}
+.tec .bor{font-size:20px;color:var(--soft)}
+.qrb{margin-top:14px;background:transparent;color:var(--ink);border:1.5px solid var(--line);border-radius:999px;padding:12px 22px;font:700 15px 'Inter';cursor:pointer}
+.hint{font-size:13px;color:var(--soft);margin-top:12px}
+aside{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+aside h2{font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:var(--soft);margin:0 0 10px}
+aside ul{list-style:none;margin:0;padding:0}
+aside li{display:flex;justify-content:space-between;gap:8px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+aside li:last-child{border:0}
+aside li span{color:var(--soft);font-variant-numeric:tabular-nums}
+aside li.no b{color:var(--rojo)}
+.cuenta{display:flex;gap:10px;margin-bottom:14px}
+.cuenta div{flex:1;background:var(--bg);border-radius:12px;padding:10px;text-align:center}
+.cuenta b{display:block;font:400 30px 'Anton',Impact,'Arial Narrow',sans-serif;color:var(--ac)}.cuenta span{font-size:12px;color:var(--soft)}
+#res{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;z-index:5}
+#res.on{display:flex;animation:entra .25s ease}
+@keyframes entra{from{opacity:0;transform:scale(1.04)}}
+#res.ok{background:var(--ac);color:#0d0f12}#res.vencido{background:var(--rojo);color:#fff}#res.nadie{background:#2a3039;color:#fff}
+#res .ico{font:400 120px/1 'Anton',Impact,'Arial Narrow',sans-serif}
+#res h2{font:400 clamp(40px,7vw,72px)/1 'Anton',Impact,'Arial Narrow',sans-serif;text-transform:uppercase;margin:10px 0}
+#res p{font-size:22px;margin:0;font-weight:600}
+#res small{margin-top:24px;opacity:.75}
+video{width:100%;max-width:420px;border-radius:16px;margin-top:12px;display:none}
+</style></head>
+<body>
+<div class="muestra">Muestra · modo tablet de la entrada · datos de ejemplo · <a href="index.html">Volver a la web</a> · <a href="app.html">App del dueño</a></div>
+<div class="top"><div class="logo">Ribera<b>.</b>Training</div><div id="reloj"></div></div>
+<main>
+  <div class="ficha">
+    <h1>¡Hola! Fichá tu ingreso</h1>
+    <p>Escribí tu DNI o mostrá tu credencial QR</p>
+    <div class="dni" id="dni" aria-live="polite"></div>
+    <div class="tec" id="tec"></div>
+    <button class="qrb" id="qrb" type="button" hidden>Escanear credencial QR</button>
+    <video id="cam" playsinline muted></video>
+    <p class="hint">Para probar: DNI <b>12345678</b> (al día) o cualquiera de la lista de socios en la app.</p>
+  </div>
+  <aside>
+    <div class="cuenta"><div><b id="n-hoy">0</b><span>ingresos hoy</span></div><div><b id="n-ahora">0</b><span>en la última hora</span></div></div>
+    <h2>Últimos ingresos</h2>
+    <ul id="ult"></ul>
+  </aside>
+</main>
+<div id="res" role="alert"></div>
+<script src="datos.js"></script>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id);},dni='',tim=null;
+  function reloj(){var d=new Date();$('reloj').textContent=('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);}
+  reloj();setInterval(reloj,15000);
+  $('tec').innerHTML=[1,2,3,4,5,6,7,8,9,'⌫',0,'Entrar'].map(function(k){return '<button type="button" class="'+(k==='Entrar'?'ok':k==='⌫'?'bor':'')+'" data-k="'+k+'">'+k+'</button>';}).join('');
+  function pinta(){$('dni').textContent=dni;}
+  function lista(){
+    var db=GYM.db(),h0=GYM.hoy0().getTime(),hoy=db.asis.filter(function(a){return a.t>=h0;});
+    $('n-hoy').textContent=hoy.length;
+    $('n-ahora').textContent=hoy.filter(function(a){return a.t>Date.now()-36e5;}).length;
+    $('ult').innerHTML=hoy.slice(-6).reverse().map(function(a){var s=GYM.socio(a.dni),d=new Date(a.t);return '<li class="'+(a.ok?'':'no')+'"><b>'+(s?s.nom.split(' ')[0]+' '+s.nom.split(' ')[1][0]+'.':'—')+'</b><span>'+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)+(a.ok?'':' · vencida')+'</span></li>';}).join('')||'<li><span>Todavía no entró nadie hoy</span></li>';
+  }
+  function muestra(r){
+    var el=$('res');el.className='on '+r.estado;
+    if(r.estado==='ok'){el.innerHTML='<div class="ico">✓</div><h2>¡Bienvenido, '+r.socio.nom.split(' ')[0]+'!</h2><p>'+GYM.PLANES[r.socio.plan].nom+' · '+(r.dias===0?'tu cuota vence hoy':'te quedan '+r.dias+' días')+'</p>'+(r.dias<=3?'<small>Tu cuota vence pronto: renovala en recepción o por transferencia.</small>':'');}
+    else if(r.estado==='vencido'){el.innerHTML='<div class="ico">!</div><h2>Cuota vencida</h2><p>'+r.socio.nom.split(' ')[0]+', venció hace '+(-r.dias)+' día'+(r.dias===-1?'':'s')+'. Pasá por recepción.</p>';}
+    else{el.innerHTML='<div class="ico">?</div><h2>No te encontramos</h2><p>Revisá el DNI o consultá en recepción.</p>';}
+    try{navigator.vibrate&&navigator.vibrate(r.estado==='ok'?80:[80,60,80]);}catch(e){}
+    clearTimeout(tim);tim=setTimeout(function(){el.className='';},3800);
+    dni='';pinta();lista();
+  }
+  function entrar(v){if(!v)return;muestra(GYM.fichar(v));}
+  $('tec').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var k=b.dataset.k;
+    if(k==='⌫')dni=dni.slice(0,-1);else if(k==='Entrar')return entrar(dni);else if(dni.length<9)dni+=k;pinta();});
+  document.addEventListener('keydown',function(e){if(/^\d$/.test(e.key)&&dni.length<9){dni+=e.key;pinta();}else if(e.key==='Backspace'){dni=dni.slice(0,-1);pinta();}else if(e.key==='Enter')entrar(dni);});
+  $('res').addEventListener('click',function(){this.className='';});
+  /* lector de QR con la cámara (Chrome en Android y tablets) */
+  if('BarcodeDetector' in window){
+    $('qrb').hidden=false;
+    $('qrb').addEventListener('click',async function(){
+      var v=$('cam');
+      try{
+        var st=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'}});v.srcObject=st;v.style.display='block';await v.play();
+        var det=new BarcodeDetector({formats:['qr_code']}),fin=Date.now()+20000;
+        (async function mira(){
+          if(Date.now()>fin){st.getTracks().forEach(function(t){t.stop();});v.style.display='none';return;}
+          try{var c=await det.detect(v);if(c.length&&/^GYM:\d+$/.test(c[0].rawValue)){st.getTracks().forEach(function(t){t.stop();});v.style.display='none';return entrar(c[0].rawValue.slice(4));}}catch(e){}
+          requestAnimationFrame(mira);
+        })();
+      }catch(e){$('qrb').textContent='No se pudo abrir la cámara';}
+    });
+  }
+  lista();
+  try{navigator.wakeLock&&navigator.wakeLock.request('screen');}catch(e){}
+})();
+</script>
+</body></html>

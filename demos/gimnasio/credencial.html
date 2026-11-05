@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es-AR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>Mi credencial · Ribera Training</title><meta name="theme-color" content="#0d0f12">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d0f12;--card:#1b1f25;--ink:#f3f5f7;--soft:#a3abb6;--line:#2a3039;--ac:#c6ff3d;--rojo:#ff4d4d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 'Inter',sans-serif;min-height:100vh;display:flex;flex-direction:column}
+.muestra{background:#000;font-size:12px;text-align:center;padding:6px;color:var(--soft)}.muestra a{color:#fff}
+main{flex:1;display:grid;place-items:center;padding:24px}
+.box{width:100%;max-width:360px;text-align:center}
+.logo{font:400 26px 'Anton',Impact,'Arial Narrow',sans-serif;text-transform:uppercase;margin-bottom:18px}.logo b{color:var(--ac);font-weight:400}
+input{width:100%;font:600 20px 'Inter';padding:14px;border-radius:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);text-align:center;letter-spacing:.08em}
+button{margin-top:10px;width:100%;background:var(--ac);color:#0d0f12;border:0;border-radius:999px;padding:14px;font:800 16px 'Inter';cursor:pointer}
+button.sec{background:transparent;color:var(--soft);border:1px solid var(--line)}
+.err{color:var(--rojo);min-height:24px;margin:8px 0 0}
+.cred{background:linear-gradient(160deg,#1f242b,#111418);border:1px solid var(--line);border-radius:26px;padding:24px;box-shadow:0 30px 60px -24px rgba(198,255,61,.25)}
+.estado{display:inline-block;font-size:13px;font-weight:800;padding:4px 12px;border-radius:999px;background:var(--ac);color:#0d0f12}.estado.no{background:var(--rojo);color:#fff}
+.qr{background:#fff;border-radius:16px;padding:14px;margin:18px auto;width:220px}.qr svg{display:block;width:100%;height:auto}
+.cred h1{font:400 30px 'Anton',Impact,'Arial Narrow',sans-serif;text-transform:uppercase;margin:0}
+.cred p{color:var(--soft);margin:4px 0}
+.dato{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding:10px 0;font-size:14.5px;text-align:left}.dato span{color:var(--soft)}
+.tip{font-size:13px;color:var(--soft);margin-top:16px}
+</style></head>
+<body>
+<div class="muestra">Muestra · credencial del socio · datos de ejemplo · <a href="index.html">Volver a la web</a></div>
+<main><div class="box">
+  <div class="logo">Ribera<b>.</b>Training</div>
+  <div id="pedir">
+    <p style="color:var(--soft)">Ingresá tu DNI para ver tu credencial</p>
+    <input id="dni" inputmode="numeric" maxlength="9" placeholder="12345678" autocomplete="off">
+    <button id="ver" type="button">Ver mi credencial</button>
+    <p class="err" id="err"></p>
+  </div>
+  <div id="cred" hidden></div>
+</div></main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script src="datos.js"></script>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id);};
+  function muestra(d){
+    var s=GYM.socio(d);if(!s){$('err').textContent='No encontramos ese DNI. Probá con 12345678.';return;}
+    try{localStorage.setItem('gym_mi_dni',d);}catch(e){}
+    var dias=GYM.dias(s),ok=dias>=0,qr='';
+    try{var q=qrcode(0,'M');q.addData('GYM:'+s.dni);q.make();qr=q.createSvgTag({cellSize:6,margin:0,scalable:true});}catch(e){qr='<p style="color:#000">QR no disponible</p>';}
+    var ult=GYM.db().asis.filter(function(a){return a.dni===s.dni;}).slice(-1)[0];
+    $('pedir').hidden=true;$('cred').hidden=false;
+    $('cred').innerHTML='<div class="cred"><span class="estado'+(ok?'':' no')+'">'+(ok?'Cuota al día':'Cuota vencida')+'</span><div class="qr">'+qr+'</div><h1>'+s.nom+'</h1><p>'+GYM.PLANES[s.plan].nom+'</p>'+
+      '<div class="dato"><span>DNI</span><b>'+s.dni+'</b></div><div class="dato"><span>'+(ok?'Vence':'Venció')+'</span><b>'+GYM.fecha(s.vence)+(ok?' · quedan '+dias+' días':'')+'</b></div>'+
+      (ult?'<div class="dato"><span>Último ingreso</span><b>'+GYM.fecha(ult.t)+'</b></div>':'')+'</div>'+
+      '<p class="tip">Mostrá este QR en la tablet de la entrada. Guardala en tu pantalla de inicio para tenerla siempre a mano.</p><button class="sec" id="otro" type="button">Usar otro DNI</button>';
+    $('otro').onclick=function(){try{localStorage.removeItem('gym_mi_dni');}catch(e){}$('cred').hidden=true;$('pedir').hidden=false;$('dni').value='';};
+  }
+  $('ver').onclick=function(){$('err').textContent='';muestra($('dni').value.replace(/\D/g,''));};
+  $('dni').addEventListener('keydown',function(e){if(e.key==='Enter')$('ver').click();});
+  var g=null;try{g=localStorage.getItem('gym_mi_dni');}catch(e){}
+  if(g)muestra(g);
+})();
+</script>
+</body></html>

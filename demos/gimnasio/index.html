@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es-AR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>Ribera Training Club · Gimnasio en Victoria</title>
+<meta name="description" content="Gimnasio en Victoria: musculación, funcional y clases. Pase libre, credencial en el celular y clase de prueba gratis.">
+<meta name="theme-color" content="#0d0f12">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d0f12;--alt:#15181d;--card:#1b1f25;--ink:#f3f5f7;--soft:#a3abb6;--line:#2a3039;--ac:#c6ff3d;--acink:#0d0f12;--r:14px;--disp:'Anton',Impact,'Arial Narrow',sans-serif,sans-serif;--body:'Inter',sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--body)}
+.in{max-width:1100px;margin:0 auto;padding:0 18px}
+a{color:var(--ac)}
+.muestra{background:#000;color:#fff;font-size:12.5px;text-align:center;padding:7px 10px}.muestra a{color:#fff;font-weight:700}
+.prueba{background:var(--ac);color:var(--acink);font-size:13px;text-align:center;padding:8px 10px;font-weight:600}.prueba a{color:var(--acink);font-weight:800}
+nav{position:sticky;top:0;z-index:10;background:rgba(13,15,18,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .in{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:12px;flex-wrap:wrap}
+.logo{font-family:var(--disp);font-size:24px;letter-spacing:.02em;text-decoration:none;color:var(--ink);text-transform:uppercase}.logo b{color:var(--ac);font-weight:400}
+nav ul{list-style:none;display:flex;gap:18px;margin:0;padding:0;font-size:14px;flex-wrap:wrap}nav ul a{color:var(--soft);text-decoration:none}nav ul a:hover{color:var(--ink)}
+.hero{min-height:min(86vh,680px);display:flex;align-items:flex-end;background:#222 center/cover;position:relative}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,15,18,.25),rgba(13,15,18,.92))}
+.hero .in{position:relative;width:100%;padding-block:60px}
+.hero h1{font-family:var(--disp);font-weight:400;text-transform:uppercase;font-size:clamp(46px,10vw,104px);line-height:.92;margin:0 0 16px;letter-spacing:.01em}
+.hero h1 span{color:var(--ac)}
+.hero p{font-size:18px;max-width:46ch;margin:0 0 24px;color:#d6dbe1}
+.btn{display:inline-block;background:var(--ac);color:var(--acink);padding:13px 24px;border-radius:999px;font:800 15px var(--body);text-decoration:none;border:0;cursor:pointer;transition:transform .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn.sec{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.cifras{display:flex;gap:28px;flex-wrap:wrap;margin-top:34px}
+.cifras b{display:block;font-family:var(--disp);font-size:36px;font-weight:400;color:var(--ac);line-height:1}.cifras span{font-size:13px;color:var(--soft)}
+section{padding-block:64px}
+.alt{background:var(--alt)}
+h2{font-family:var(--disp);font-weight:400;text-transform:uppercase;font-size:clamp(34px,5.4vw,56px);line-height:1;margin:0 0 10px;letter-spacing:.01em}
+.lead{color:var(--soft);max-width:60ch;margin:0 0 28px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.card h3{margin:0 0 6px;font-size:19px}
+.card p{margin:0;color:var(--soft);font-size:14.5px}
+.ic{width:42px;height:42px;border-radius:12px;background:color-mix(in srgb,var(--ac) 16%,transparent);color:var(--ac);display:grid;place-items:center;font-weight:800;margin-bottom:12px}
+.plan{display:flex;flex-direction:column}
+.plan.dest{border:2px solid var(--ac);position:relative}
+.plan.dest::before{content:"El más elegido";position:absolute;top:-12px;left:20px;background:var(--ac);color:var(--acink);font-size:12px;font-weight:800;padding:2px 10px;border-radius:999px}
+.plan .precio{font-family:var(--disp);font-size:44px;line-height:1;margin:10px 0 2px}.plan .precio small{font:500 14px var(--body);color:var(--soft)}
+.plan ul{padding-left:18px;color:var(--soft);font-size:14.5px;margin:14px 0 20px;flex:1}
+.dias{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.dias button{background:var(--card);color:var(--soft);border:1px solid var(--line);padding:8px 14px;border-radius:999px;font:600 14px var(--body);cursor:pointer}
+.dias button[aria-pressed=true]{background:var(--ac);color:var(--acink);border-color:var(--ac)}
+.clases{display:grid;gap:8px}
+.clase{display:grid;grid-template-columns:76px 1fr auto;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.clase time{font-family:var(--disp);font-size:24px;color:var(--ac)}
+.clase b{display:block}.clase span{color:var(--soft);font-size:13.5px}
+.cupo{font-size:12.5px;color:var(--soft);white-space:nowrap}.cupo.poco{color:#ffb347}
+.galeria{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.galeria div{aspect-ratio:4/3;border-radius:var(--r);background:#2a3039 center/cover}
+.cred{display:grid;gap:28px;align-items:center;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.tel{justify-self:center;width:240px;aspect-ratio:9/17;border-radius:34px;background:#000;padding:10px;box-shadow:0 30px 60px -20px rgba(198,255,61,.25),inset 0 0 0 2px #2a3039}
+.tel div{height:100%;border-radius:26px;background:linear-gradient(160deg,#1b1f25,#0d0f12);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:18px}
+.tel .qr{width:130px;height:130px;background:#fff;border-radius:12px;display:grid;place-items:center;color:#000;font-weight:800}
+.tel b{font-size:16px}.tel .ok{background:var(--ac);color:var(--acink);font-size:12px;font-weight:800;padding:3px 10px;border-radius:999px}
+.faq details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-bottom:8px}
+.faq summary{cursor:pointer;font-weight:700}.faq p{color:var(--soft);margin:8px 0 0}
+.info{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.info dl{margin:0}.info dt{font-weight:700}.info dd{margin:0 0 10px;color:var(--soft)}
+footer{border-top:1px solid var(--line);padding:26px 0;color:var(--soft);font-size:14px}
+.wa{position:fixed;right:16px;bottom:16px;width:56px;height:56px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 10px 24px rgba(0,0,0,.4);z-index:20}
+.rv{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}.rv.vis{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}}
+</style></head>
+<body>
+<div class="muestra">Muestra de diseño · negocio ficticio · fotos de ejemplo (Unsplash) · <a href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20quiero%20una%20web%20as%C3%AD%20para%20mi%20gimnasio%3A%20">Quiero una web así →</a></div>
+<div class="prueba">Probá el sistema completo: <a href="app.html">App del dueño</a> · <a href="fichaje.html">Fichaje en tablet</a> · <a href="credencial.html">Credencial del socio</a></div>
+<nav><div class="in"><a class="logo" href="#">Ribera<b>.</b>Training</a>
+<ul><li><a href="#planes">Planes</a></li><li><a href="#clases">Clases</a></li><li><a href="#lugar">El lugar</a></li><li><a href="#credencial">Credencial</a></li><li><a href="#contacto">Contacto</a></li></ul></div></nav>
+
+<header class="hero" style="background-image:url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&q=70&auto=format&fit=crop')">
+  <div class="in">
+    <h1>Entrená<br><span>en serio.</span></h1>
+    <p>Musculación, funcional y clases en Victoria. Profes en sala todo el día, rutina armada para vos y tu credencial en el celular.</p>
+    <div class="btns"><a class="btn" href="https://wa.me/5491126339350?text=Hola%21%20Quiero%20reservar%20una%20clase%20de%20prueba%20gratis%20en%20Ribera%20Training." target="_blank" rel="noopener">Clase de prueba gratis</a><a class="btn sec" href="#planes">Ver planes</a></div>
+    <div class="cifras"><div><b>6 a 23</b><span>abierto de lunes a viernes</span></div><div><b>+20</b><span>clases por semana</span></div><div><b>600 m²</b><span>de sala</span></div></div>
+  </div>
+</header>
+
+<section><div class="in">
+  <h2>Por qué Ribera</h2>
+  <p class="lead">Un gimnasio de barrio con equipamiento de cadena. Sin contratos largos y sin pagar matrícula.</p>
+  <div class="grid">
+    <div class="card"><div class="ic">01</div><h3>Rutina a tu medida</h3><p>Te evaluamos el primer día y armamos el plan según tu objetivo, tus horarios y tus lesiones.</p></div>
+    <div class="card"><div class="ic">02</div><h3>Profes en sala</h3><p>Siempre hay alguien para corregirte la técnica o cambiarte un ejercicio.</p></div>
+    <div class="card"><div class="ic">03</div><h3>Entrás con el celular</h3><p>Ficás con tu DNI o tu credencial QR. Ves cuántos días te quedan de cuota.</p></div>
+    <div class="card"><div class="ic">04</div><h3>Sin matrícula</h3><p>Pagás el mes y listo. Te avisamos por WhatsApp antes de que venza.</p></div>
+  </div>
+</div></section>
+
+<section class="alt" id="planes"><div class="in">
+  <h2>Planes</h2>
+  <p class="lead">Precios por mes. 10% de descuento pagando por transferencia.</p>
+  <div class="grid" id="planes-g"></div>
+</div></section>
+
+<section id="clases"><div class="in">
+  <h2>Clases de la semana</h2>
+  <p class="lead">Funcional, spinning, cross y movilidad. Reservá tu lugar por WhatsApp.</p>
+  <div class="dias" id="dias" role="group" aria-label="Día"></div>
+  <div class="clases" id="lista-clases"></div>
+</div></section>
+
+<section class="alt" id="lugar"><div class="in">
+  <h2>El lugar</h2>
+  <p class="lead">Dos pisos, sala de musculación, salón de clases, vestuarios con duchas y estacionamiento para bicis.</p>
+  <div class="galeria">
+    <div style="background-image:url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=70&auto=format&fit=crop')"></div>
+    <div style="background-image:url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=70&auto=format&fit=crop')"></div>
+    <div style="background-image:url('https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=800&q=70&auto=format&fit=crop')"></div>
+  </div>
+</div></section>
+
+<section id="credencial"><div class="in cred">
+  <div>
+    <h2>Tu credencial, en el celular</h2>
+    <p class="lead">Al asociarte te mandamos un link: la guardás en la pantalla de inicio y entrás mostrando el QR en la tablet de la entrada. Ahí ves tu plan y cuántos días te quedan.</p>
+    <div class="btns"><a class="btn" href="credencial.html">Ver mi credencial</a><a class="btn sec" href="fichaje.html">Así se ve en la entrada</a></div>
+  </div>
+  <div class="tel" aria-hidden="true"><div><span class="ok">Cuota al día</span><div class="qr">QR</div><b>Lucía Gómez</b><span style="color:var(--soft);font-size:13px">Pase libre · quedan 18 días</span></div></div>
+</div></section>
+
+<section class="alt faq"><div class="in">
+  <h2>Preguntas</h2>
+  <details><summary>¿Tengo que firmar contrato?</summary><p>No. Pagás mes a mes y te das de baja cuando quieras.</p></details>
+  <details><summary>¿Necesito apto médico?</summary><p>Sí, te lo pedimos al empezar. Si no lo tenés, te decimos dónde hacerlo cerca.</p></details>
+  <details><summary>¿Cómo pago?</summary><p>Efectivo, débito o transferencia en recepción. Con transferencia tenés 10% de descuento.</p></details>
+  <details><summary>¿Puedo congelar la cuota?</summary><p>Sí, hasta 30 días por año por viaje o lesión. Avisanos por WhatsApp.</p></details>
+</div></section>
+
+<section id="contacto"><div class="in info">
+  <div><h2>Vení a conocernos</h2><p class="lead">Tu primera clase es gratis. Escribinos y te reservamos un horario.</p><a class="btn" href="https://wa.me/5491126339350?text=Hola%21%20Quiero%20reservar%20una%20clase%20de%20prueba%20gratis%20en%20Ribera%20Training." target="_blank" rel="noopener">Escribinos por WhatsApp</a></div>
+  <dl><dt>Dirección</dt><dd>Av. de ejemplo 1234, Victoria</dd><dt>Horarios</dt><dd>Lunes a viernes de 6 a 23 · Sábados de 9 a 18</dd><dt>Instagram</dt><dd>@riberatraining (ejemplo)</dd></dl>
+</div></section>
+
+<footer><div class="in">Ribera Training Club · Victoria · Muestra de diseño hecha por <a href="../../">StudioProAr</a></div></footer>
+<a class="wa" href="https://wa.me/5491126339350?text=Hola%21%20Quiero%20consultar%20por%20Ribera%20Training." target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="28" height="28" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.2z"/></svg></a>
+<script src="datos.js"></script>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id);};
+  var P=GYM.PLANES,inc={libre:['Sala de musculación todos los días','Todas las clases','Rutina personalizada','Credencial en el celular'],tres:['3 ingresos por semana','Sala y clases','Rutina personalizada','Credencial en el celular'],clases:['Clases ilimitadas','Sin sala de musculación','Reserva por WhatsApp','Credencial en el celular']};
+  $('planes-g').innerHTML=['libre','tres','clases'].map(function(k){return '<div class="card plan'+(k==='libre'?' dest':'')+'"><h3>'+P[k].nom+'</h3><div class="precio">'+GYM.pesos(P[k].precio)+' <small>/ mes</small></div><ul>'+inc[k].map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul><a class="btn'+(k==='libre'?'':' sec')+'" href="https://wa.me/5491126339350?text='+encodeURIComponent('Hola! Quiero asociarme al plan '+P[k].nom+' de Ribera Training.')+'" target="_blank" rel="noopener">Quiero este plan</a></div>';}).join('');
+  var D=['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  var C={0:[['07:00','Funcional','Mati',4],['09:00','Movilidad','Flor',10],['18:00','Spinning','Nico',2],['19:00','Cross','Mati',6],['20:00','Funcional','Lu',8]],1:[['08:00','Cross','Nico',5],['12:30','Funcional exprés','Lu',9],['19:00','Spinning','Flor',3],['20:00','Localizada','Lu',7]],2:[['07:00','Funcional','Mati',6],['18:00','Spinning','Nico',1],['19:00','Cross','Mati',4],['20:30','Movilidad','Flor',11]],3:[['08:00','Cross','Nico',7],['12:30','Funcional exprés','Lu',5],['19:00','Spinning','Flor',2],['20:00','Localizada','Lu',9]],4:[['07:00','Funcional','Mati',8],['18:00','Spinning','Nico',4],['19:00','Cross','Mati',3]],5:[['10:00','Funcional en grupo','Mati',12],['11:00','Movilidad','Flor',10]]};
+  var hoy=Math.min(5,Math.max(0,new Date().getDay()-1));
+  function pinta(d){
+    [].forEach.call($('dias').children,function(b,i){b.setAttribute('aria-pressed',i===d);});
+    $('lista-clases').innerHTML=C[d].map(function(c){return '<div class="clase"><time>'+c[0]+'</time><div><b>'+c[1]+'</b><span>con '+c[2]+'</span></div><a class="cupo'+(c[3]<=3?' poco':'')+'" href="https://wa.me/5491126339350?text='+encodeURIComponent('Hola! Quiero reservar '+c[1]+' del '+D[d].toLowerCase()+' a las '+c[0]+'.')+'" target="_blank" rel="noopener">'+(c[3]<=3?'Quedan '+c[3]:c[3]+' lugares')+' · Reservar</a></div>';}).join('');
+  }
+  $('dias').innerHTML=D.map(function(d){return '<button type="button">'+d+'</button>';}).join('');
+  $('dias').addEventListener('click',function(e){var b=e.target.closest('button');if(b)pinta([].indexOf.call($('dias').children,b));});
+  pinta(hoy);
+  if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('vis');io.unobserve(x.target);}});},{rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('section h2,.lead,.card,.clase,.galeria div,details').forEach(function(el){el.classList.add('rv');io.observe(el);});
+  }
+})();
+</script>
+</body></html>
