@@ -206,5 +206,6 @@ if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: red
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}});},{threshold:.05});
 [].forEach.call(document.querySelectorAll('.rubro'),function(r,i){r.style.transitionDelay=(i%3*90)+'ms';io.observe(r);});})();
 </script>
+<script>window.SPA_STATS={db:"https://studioproar-demos-default-rtdb.firebaseio.com",sitio:"ferreteria"};</script><script src="../../stats.js" defer></script>
 </body>
 </html>

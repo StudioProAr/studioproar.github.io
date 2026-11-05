@@ -45,15 +45,19 @@ a{color:var(--ac)}
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>window.SPA_SIEMPRE_REAL = true;</script>
 <script src="../comun/fb-demos.js"></script>
+<!-- En un cliente: reemplazar fb-demos.js por su firebase-config.js y agregar negocio.js -->
 <script>
 (function () {
-  var NEG = { salon: { n: 'Salón Quebracho', t: ['turnos', 'stats'] }, vet: { n: 'Patitas del Delta', t: ['turnos', 'stats'] }, panaderia: { n: 'El Horno de Victoria', t: ['encargos', 'stats'] } };
+  /* Para un cliente: definir window.NEGOCIO = { sitio:'mi-local', nombre:'Mi Local', secciones:['turnos','stats'] } en negocio.js */
+  var NEG = window.NEGOCIO ? {} : { salon: { n: 'Salón Quebracho', t: ['turnos', 'stats'] }, vet: { n: 'Patitas del Delta', t: ['turnos', 'stats'] }, panaderia: { n: 'El Horno de Victoria', t: ['encargos', 'stats'] }, cafe: { n: 'Café Muelle', t: ['stats'] }, ferreteria: { n: 'Ferretería La Llave', t: ['stats'] }, fogon: { n: 'Parrilla El Fogón', t: ['stats'] }, astillero: { n: 'Astillero Marea Alta', t: ['stats'] } };
+  if (window.NEGOCIO) NEG[window.NEGOCIO.sitio] = { n: window.NEGOCIO.nombre, t: window.NEGOCIO.secciones || ['stats'] };
   var NOM = { turnos: 'Turnos', encargos: 'Encargos', stats: 'Estadísticas' };
   var $ = function (id) { return document.getElementById(id); }, esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   var q = new URLSearchParams(location.search), s = NEG[q.get('s')] ? q.get('s') : 'salon', vista = NEG[s].t[0], datos = {}, refs = [], vistos = null;
   firebase.initializeApp(window.FIREBASE_CONFIG);
   var auth = firebase.auth(), db = firebase.database(), app = $('app');
   $('sitio').innerHTML = Object.keys(NEG).map(function (k) { return '<option value="' + k + '"' + (k === s ? ' selected' : '') + '>' + NEG[k].n + '</option>'; }).join('');
+  if (window.NEGOCIO) $('sitio').hidden = true;
   $('sitio').onchange = function () { location.search = '?s=' + this.value; };
   $('tit').textContent = NEG[s].n;
   var DIAS = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
@@ -93,7 +97,7 @@ a{color:var(--ac)}
     var cl = suma('clics');
     return '<div class="kpis"><div class="kpi"><b>' + tot + '</b><span>visitas en 30 días</span></div><div class="kpi"><b>' + (v[hoyIso()] || 0) + '</b><span>visitas hoy</span></div><div class="kpi"><b>' + (cl.whatsapp || 0) + '</b><span>clics a WhatsApp</span></div></div>' +
       '<h2>Visitas por día (30 días)</h2><div class="bar">' + d30.map(function (n) { return '<i style="height:' + (n / max * 100) + '%" title="' + n + '"></i>'; }).join('') + '</div>' +
-      '<h2>De dónde vienen</h2>' + lista(suma('origen')) + '<h2>Botones tocados</h2>' + lista(cl) + '<h2>Celular o compu</h2>' + lista(suma('disp'));
+      '<h2>De dónde vienen</h2>' + lista(suma('origen')) + '<h2>Botones tocados</h2>' + lista(cl) + '<h2>Páginas más vistas</h2>' + lista(suma('paginas')) + '<h2>Celular o compu</h2>' + lista(suma('disp'));
   }
   function pinta() {
     app.innerHTML = '<div class="tabs">' + NEG[s].t.map(function (t) { var n = t === 'turnos' ? (datos.turnos || []).filter(function (x) { return x.estado === 'nuevo' || (x.estado === 'confirmado' && x.fecha === hoyIso()); }).length : t === 'encargos' ? (datos.encargos || []).filter(function (x) { return x.estado === 'nuevo'; }).length : 0; return '<button data-v="' + t + '" aria-pressed="' + (t === vista) + '">' + NOM[t] + (n ? ' (' + n + ')' : '') + '</button>'; }).join('') + '</div>' +
