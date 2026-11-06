@@ -129,13 +129,35 @@
       var tit = o.servicio + ' · ' + o.negocio, det = 'Turno a nombre de ' + o.nombre + '.' + (o.baja ? ' Para cancelar: ' + o.baja : '');
       var g = R.calendario({ titulo: tit, fecha: o.fecha, ini: o.ini, min: o.min, lugar: o.lugar || o.negocio, detalle: det });
       var wa = 'https://wa.me/' + o.waNum + '?text=' + encodeURIComponent('Hola ' + o.negocio + '! Reservé *' + o.servicio + '* para el *' + cuando + '* a nombre de ' + o.nombre + '.' + (o.baja ? '\nSi no puedo ir, lo cancelo acá: ' + o.baja : ''));
-      R._ult = o; if (!R._img) { R._img = 1; document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('.conf-img')) { e.preventDefault(); R.guardarImagen(R._ult); } }); }
+      R._ult = o; if (!R._img) { R._img = 1; document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('.conf-img')) { e.preventDefault(); R.guardarImagen(R._ult); }
+        var av = e.target.closest && e.target.closest('.conf-aviso'); if (av) { e.preventDefault(); var msg = document.querySelector('.conf-aviso-msg'); msg.textContent = 'Activando…';
+          R.avisarme(R._ult).then(function () { av.textContent = '🔔 Aviso activado'; av.style.pointerEvents = 'none'; msg.textContent = 'Listo: el día anterior te llega una notificación al celular.'; }, function (er) {
+            msg.innerHTML = er.message === 'ios' ? 'En iPhone primero agregá esta web a tu pantalla de inicio: tocá <b>Compartir</b> (el cuadrado con la flecha) → <b>Agregar a inicio</b>. Después abrila desde ese ícono y activá el aviso.' : er.message === 'denegado' ? 'No diste permiso para avisos. Si cambiás de idea, habilitá las notificaciones de esta web en el navegador.' : er.message === 'nosoporta' ? 'Este navegador no permite avisos. Guardá la imagen del turno o agendalo en el calendario.' : 'No se pudo activar el aviso. Probá de nuevo.'; }); } }); }
       R.guardarMio({ id: o.id, fecha: o.fecha, ini: o.ini, servicio: o.servicio, baja: o.baja || '' });
       return '<div class="conf-t"><b>✓ Turno confirmado</b><p>' + esc(o.servicio) + ' · ' + cuando + ' · a nombre de ' + esc(o.nombre) + '</p><div class="conf-a">' +
         '<a class="wa" href="' + wa + '" target="_blank" rel="noopener">Guardar en WhatsApp</a>' +
         '<a href="#" class="conf-img">Guardar imagen del turno</a>' +
         '<a href="' + g + '" target="_blank" rel="noopener">Google Calendar</a></div>' +
+        (R.avisosPosible() ? '<div class="conf-a" style="margin-top:8px"><a href="#" class="conf-aviso">🔔 Avisame el día anterior</a></div><div class="conf-aviso-msg" role="status"></div>' : '') +
         '<small>Te queda guardado en esta web, en "Tus turnos".' + (o.mail ? ' También te lo mandamos a ' + esc(o.mail) + ' (si no lo ves, revisá Spam).' : '') + (o.baja ? ' ¿No podés ir? <a href="' + esc(o.baja) + '">Cancelá el turno</a> así lo libera para otra persona.' : '') + '</small></div>';
+    },
+    /* Aviso el día anterior (notificación push). Necesita window.AVISOS = { vapid: 'clave pública' } y sw-avisos.js en la carpeta de la página */
+    avisosPosible: function () { return !!(window.AVISOS && window.AVISOS.vapid && 'serviceWorker' in navigator && R.modo === 'real'); },
+    esIOSsinInstalar: function () { return /iphone|ipad|ipod/i.test(navigator.userAgent) && !(navigator.standalone || (window.matchMedia && matchMedia('(display-mode: standalone)').matches)); },
+    avisarme: function (o) {
+      var b64 = function (s) { s = s.replace(/-/g, '+').replace(/_/g, '/'); var r = atob(s + '==='.slice((s.length + 3) % 4)), a = new Uint8Array(r.length); for (var i = 0; i < r.length; i++) a[i] = r.charCodeAt(i); return a; };
+      if (R.esIOSsinInstalar()) return Promise.reject(new Error('ios'));
+      if (!('PushManager' in window) || !('Notification' in window)) return Promise.reject(new Error('nosoporta'));
+      var reg;
+      return navigator.serviceWorker.register('sw-avisos.js').then(function (r) { reg = r; return navigator.serviceWorker.ready; })
+        .then(function () { return Notification.requestPermission(); })
+        .then(function (p) { if (p !== 'granted') throw new Error('denegado'); return reg.pushManager.getSubscription(); })
+        .then(function (s) { return s || reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64(window.AVISOS.vapid) }); })
+        .then(function (s) {
+          var t = { id: o.id, fecha: o.fecha, ini: o.ini, servicio: o.servicio, negocio: o.negocio, baja: o.baja || '', url: location.href.split('#')[0], icono: window.AVISOS.icono || '' };
+          (reg.active || reg.waiting || reg.installing).postMessage({ turno: t });
+          return db.ref('r/' + cfg.sitio + '/turnos/avisos/' + o.id).set({ endpoint: s.endpoint, k: o.k || R.ultimaClave });
+        });
     },
     lista: function () { return R.modo === 'real' ? cache : local(); },
     alCambiar: function (f) { fns.push(f); },

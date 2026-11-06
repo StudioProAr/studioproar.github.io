@@ -1,0 +1,1 @@
+{"name": "Salón Quebracho", "short_name": "Quebracho", "start_url": "./?real=1#agenda", "scope": "./", "display": "standalone", "background_color": "#5b1a2c", "theme_color": "#5b1a2c", "icons": [{"src": "icono-192.png", "sizes": "192x192", "type": "image/png"}, {"src": "icono-512.png", "sizes": "512x512", "type": "image/png"}]}
