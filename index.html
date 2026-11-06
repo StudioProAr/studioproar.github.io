@@ -206,6 +206,30 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
 @media (max-width:560px){.calc-out{grid-template-columns:1fr}}
 .wa-fijo{position:fixed;right:16px;bottom:16px;z-index:30;width:56px;height:56px;border-radius:50%;background:#25d366;color:#fff;display:none;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.25)}
 @media (max-width:760px){.wa-fijo{display:grid}nav ul li:not(:last-child){display:none}}
+
+/* Probá tu rubro: muestrario interactivo dentro de la portada */
+.probar .grid2{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:38px;align-items:start}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.chips button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 14px;font:inherit;font-size:14px;cursor:pointer;transition:border-color .2s,background .2s}
+.chips button:hover{border-color:var(--blue)}
+.chips button[aria-pressed=true]{background:var(--blue);border-color:var(--blue);color:#fff}
+.chips.sm button{font-size:13px;padding:6px 12px}
+.pl-lista{display:grid;gap:10px;margin-top:6px}
+.pl-it{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:12px 14px;cursor:pointer;text-align:left;font:inherit;color:var(--ink);width:100%}
+.pl-it[aria-pressed=true]{border-color:var(--blue);box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 18%,transparent)}
+.pl-it .n{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--blue) 12%,transparent);color:var(--blue);font-weight:700;font-size:14px}
+.pl-it b{display:block}.pl-it small{color:var(--soft);display:block;line-height:1.35}
+.pl-it .ir{display:flex;gap:6px}
+.pl-it .ir a{font-size:13px;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:5px 10px;color:var(--ink);white-space:nowrap}
+.pl-it .ir a:hover{border-color:var(--blue);color:var(--blue)}
+.tel{position:sticky;top:84px;justify-self:center;width:300px;height:610px;border-radius:42px;background:#0b0e15;padding:12px;box-shadow:0 30px 60px -20px rgba(10,20,50,.45),inset 0 0 0 2px #2a3142}
+.tel .pant{width:100%;height:100%;border-radius:32px;overflow:hidden;background:#fff;position:relative}
+.tel iframe{border:0;width:390px;height:796px;transform:scale(.6923);transform-origin:0 0;background:#fff}
+.tel .vista{position:absolute;inset:auto 0 10px;display:flex;justify-content:center;gap:6px;pointer-events:none}
+.tel .vista span{pointer-events:auto;background:rgba(11,14,21,.82);color:#fff;font-size:12px;border-radius:999px;padding:5px 10px;backdrop-filter:blur(6px)}
+.tel .cargando{position:absolute;inset:0;display:grid;place-items:center;color:#8a93a6;font-size:14px;background:#f4f6fa}
+.probar .pie{margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+@media(max-width:900px){.probar .grid2{grid-template-columns:1fr}.tel{position:relative;top:0;width:270px;height:550px}.tel iframe{transform:scale(.6205)}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 /* ---------- movimiento ---------- */
 .prog{position:fixed;top:0;left:0;height:3px;width:100%;background:linear-gradient(90deg,var(--blue),#22c38e);transform-origin:0 50%;transform:scaleX(0);z-index:60;pointer-events:none}
@@ -276,6 +300,7 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
   <div class="in">
     <a class="brand" href="index.html" aria-label="StudioProAr, inicio"><svg viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><path d="M20 18L6 32l14 14M44 18l14 14-14 14" fill="none" stroke="var(--logo-a)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 14L28 50" stroke="var(--logo-b)" stroke-width="6" stroke-linecap="round"/></svg><span class="wm">Studio<b>Pro</b><i>Ar</i></span></a>
     <ul>
+      <li><a href="#probar">Muestras</a></li>
       <li><a href="#trabajos">Trabajos</a></li>
       <li><a href="#planes">Planes</a></li>
       <li><a href="#proceso">Cómo trabajamos</a></li>
@@ -289,19 +314,19 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
   <div class="fondo" aria-hidden="true"><i></i><i></i><i></i></div>
   <div class="in hero-in">
   <div class="hero-txt">
-    <p class="eyebrow">Diseño de páginas web para negocios</p>
-    <h1>Que cuando te busquen, te encuentren.</h1>
+    <p class="eyebrow">Diseño web para comercios · Zona norte y todo el país</p>
+    <h1>Tu web trabaja mientras vos atendés.</h1>
     <p class="rota" aria-live="polite">Tu <span id="rota">carta, con pedidos desde la mesa</span>.</p>
-    <p>Diseñamos la web de tu negocio y la conectamos con tu WhatsApp, tu Instagram y tu ficha de Google Maps. Te encuentran en Google, ven lo que ofrecés y te escriben. Vos lo ves todo desde un panel en tu celular.</p>
+    <p>Que cuando te busquen, te encuentren: armamos la web de tu negocio y la conectamos con tu WhatsApp, tu Instagram y Google Maps. Los pedidos y los turnos te llegan armados, y vos lo ves todo desde un panel en el celular.</p>
     <div class="btns">
       <a class="btn btn-a" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20quiero%20el%20diagn%C3%B3stico%20gratis%20de%20mi%20negocio.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Pedí tu diagnóstico gratis</a>
-      <a class="btn btn-b" href="#trabajos">Ver webs funcionando</a>
+      <a class="btn btn-b" href="#probar">Probá tu rubro en vivo</a>
     </div>
     <ul class="sellos">
       <li>Precio cerrado en pesos</li><li>Sin costo mensual de hosting</li><li>El dominio es tuyo</li>
     </ul>
     <div class="marcas" aria-label="Rubros">
-      <a href="https://bodegon-demo-prueba.pages.dev/" target="_blank" rel="noopener">Gastronomía</a><a href="demos/nautica/" target="_blank" rel="noopener">Náutica</a><a href="demos/peluqueria/" target="_blank" rel="noopener">Peluquería y estética</a><a href="https://tienda-ropa-prueba.pages.dev/" target="_blank" rel="noopener">Indumentaria</a><a href="demos/ferreteria/" target="_blank" rel="noopener">Comercios</a><a href="demos/cafe/" target="_blank" rel="noopener">Cafeterías</a><a href="demos/panaderia/" target="_blank" rel="noopener">Panaderías</a><a href="demos/veterinaria/" target="_blank" rel="noopener">Veterinarias</a><a href="demos/gimnasio/" target="_blank" rel="noopener">Gimnasios</a><a href="demos/cerveceria/" target="_blank" rel="noopener">Cervecerías</a><a href="https://luciernaga-prueba.pages.dev/" target="_blank" rel="noopener">Emprendedores</a><a href="https://netsur-prueba.pages.dev/" target="_blank" rel="noopener">Empresas</a>
+      <a href="#probar" data-r="resto">Gastronomía</a><a href="#probar" data-r="nautica">Náutica</a><a href="#probar" data-r="barberia">Peluquería y estética</a><a href="#probar" data-r="ropa">Indumentaria</a><a href="#probar" data-r="ferreteria">Comercios</a><a href="#probar" data-r="resto">Cafeterías</a><a href="#probar" data-r="panaderia">Panaderías</a><a href="#probar" data-r="vet">Veterinarias</a><a href="#probar" data-r="gimnasio">Gimnasios</a><a href="#probar" data-r="resto">Cervecerías</a><a href="https://luciernaga-prueba.pages.dev/" target="_blank" rel="noopener">Emprendedores</a><a href="https://netsur-prueba.pages.dev/" target="_blank" rel="noopener">Empresas</a>
     </div>
     </div>
   <div class="cel" aria-hidden="true">
@@ -346,6 +371,25 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
       <article><p class="q">"¿Tenés turno el sábado?"</p><p>Se te pierden turnos entre chats y audios.</p><p class="r"><b>Con tu web:</b> el cliente elige el horario libre, confirma y vos lo ves en tu agenda.</p><a href="demos/peluqueria/#agenda" target="_blank" rel="noopener">Ver el Salón →</a></article>
       <article><p class="q">"¿Precio? ¿Talles? ¿Colores?"</p><p>Respondés lo mismo una y otra vez.</p><p class="r"><b>Con tu web:</b> catálogo con precios, talles y colores, y el pedido te llega armado por WhatsApp.</p><a href="https://tienda-ropa-prueba.pages.dev/" target="_blank" rel="noopener">Ver Calle Norte →</a></article>
       <article><p class="q">"¿Dónde quedan? ¿A qué hora abren?"</p><p>Te buscan en Google y no aparecés, o aparece un dato viejo.</p><p class="r"><b>Con tu web:</b> ubicación, horarios y un botón de WhatsApp, siempre al día.</p><a href="demos/ferreteria/" target="_blank" rel="noopener">Ver la Ferretería →</a></article>
+    </div>
+  </div>
+</section>
+
+<section class="probar" id="probar">
+  <div class="in">
+    <div class="head">
+      <p class="eyebrow">Probalo en vivo</p>
+      <h2>Elegí tu rubro y mirá tu web funcionando</h2>
+      <p class="lead">12 rubros, 3 estilos y todos los planes. Tocá un plan y se abre acá al lado, como en el celular de tu cliente. Cada uno trae su panel para el dueño, con datos de ejemplo.</p>
+    </div>
+    <div class="grid2">
+      <div>
+        <div class="chips" id="pr-rubros" role="group" aria-label="Rubro"></div>
+        <div class="chips sm" id="pr-estilos" role="group" aria-label="Estilo"></div>
+        <div class="pl-lista" id="pr-planes"></div>
+        <div class="pie"><a class="btn btn-b" href="demos/vitrina/" target="_blank" rel="noopener">Ver el muestrario completo</a><span style="color:var(--soft);font-size:14px">Todas las muestras usan negocios y datos ficticios.</span></div>
+      </div>
+      <div class="tel" aria-label="Vista previa en un celular"><div class="pant"><div class="cargando" id="pr-carga">Cargando la muestra…</div><iframe id="pr-frame" title="Vista previa de la muestra" loading="lazy"></iframe><div class="vista"><span id="pr-ver"></span></div></div></div>
     </div>
   </div>
 </section>
@@ -857,5 +901,49 @@ document.querySelectorAll('.copiar').forEach(b=>{
 </script>
 
 <script>window.SPA_STATS={db:"https://studioproar-stats-default-rtdb.firebaseio.com",sitio:"studioproar"};</script><script src="stats.js" defer></script>
+
+<script src="demos/barberia/rubros.js"></script>
+<script src="demos/gastronomia/datos.js"></script>
+<script src="demos/gastronomia/rubros.js"></script>
+<script>
+/* Probá tu rubro: arma los rubros desde los mismos datos de las muestras */
+(function(){
+  var $=function(i){return document.getElementById(i);};if(!$('pr-rubros'))return;
+  var T=window.RUBROS_T||{},C=window.CATALOGO_R||{},G=window.GASTRO||{},R=[];
+  var PT=[['esencial','Esencial','Una página, turnos por WhatsApp.'],['completa','Completa','Más secciones y galería grande.'],['turnos','Turnos','El cliente reserva solo. Recordatorio y cancelación.'],['pro','Turnos Pro','Elige profesional. Fichas, editar web y resumen del mes.']];
+  var tur=function(id,n,ic,est){R.push({id:id,n:n,ic:ic,est:est,planes:PT.map(function(p,i){return{n:i+1,t:p[1],d:p[2],web:function(e){return 'demos/barberia/?'+(id==='barberia'?'':'rubro='+id+'&')+'estilo='+e[0]+'&plan='+p[0];},panel:function(e){return 'demos/mi-negocio/?s='+e[1]+'&muestra=1&plan='+(p[0]==='completa'?'esencial':p[0]);}};})});};
+  tur('barberia','Barberías y peluquerías','✂',[['urbano','navaja','Urbana'],['clasico','eltano','Clásica'],['mujer','alma','Salón de mujer']]);
+  var IC={vet:'🐾',estetica:'💅',salud:'🩺',nautica:'⚓',panaderia:'🥐',rotiseria:'🍗',ferreteria:'🔧',petshop:'🦴',ropa:'👕',gimnasio:'🏋'};
+  Object.keys(T).forEach(function(k){tur(k,T[k].nombre,IC[k],T[k].est.map(function(x){return [x[0],T[k].E[x[0]].sitio,x[1]];}));});
+  var DS={1:'Una página con lo esencial, WhatsApp y ubicación.',2:'Con fotos, categorías, galería y preguntas.',3:'Carrito que llega armado al WhatsApp del local.',4:'',5:'El dueño edita precios y productos. Resumen del mes.'};
+  var cat=function(id,n,ic,est,pl,d4,mesa){R.push({id:id,n:n,ic:ic,est:est,mesa:mesa,planes:Object.keys(pl).map(function(k){return{n:+k,t:pl[k],d:k==4?d4:DS[k],web:function(e){return 'demos/gastronomia/?'+(id==='resto'?'':'rubro='+id+'&')+'estilo='+e[0]+'&plan='+k;},panel:function(e){return 'demos/mi-negocio/?s='+e[1]+'&muestra=1&plan='+k;}};})});};
+  cat('resto','Restaurantes y bares','🍽',[['parrilla',(G.parrilla||{}).sitio,'Parrilla'],['cafe',(G.cafe||{}).sitio,'Café'],['urbano',(G.urbano||{}).sitio,'Cervecería']],{1:'Esencial',2:'Completa',3:'Pedidos',4:'Reservas',5:'Salón Pro'},'Reserva de mesa con cupo por horario.',1);
+  Object.keys(C).forEach(function(k){var pl={1:'Esencial',2:'Completa'};Object.keys(C[k].planes).forEach(function(n){pl[n]=C[k].planes[n];});cat(k,C[k].nombre,IC[k],C[k].est.map(function(x){return [x[0],C[k].E[x[0]].sitio,x[1]];}),pl,C[k].p4==='programado'?'El cliente elige día y hora de retiro o entrega.':'Reserva de lugar en cada clase, con cupo.');});
+  var ORD=['barberia','resto','vet','estetica','salud','panaderia','rotiseria','ferreteria','petshop','ropa','gimnasio','nautica'];R.sort(function(a,b){return ORD.indexOf(a.id)-ORD.indexOf(b.id);});
+  var st={r:0,e:0,p:2,vista:'web'},fr=$('pr-frame'),visto=false;
+  function cargar(){var r=R[st.r],e=r.est[st.e],p=r.planes[Math.min(st.p,r.planes.length-1)],u=st.vista==='web'?p.web(e):p.panel(e);if(!visto)return;$('pr-carga').style.display='grid';fr.src=u;$('pr-ver').textContent=(st.vista==='web'?'Web del cliente':'Panel del dueño')+' · '+p.t;}
+  fr.addEventListener('load',function(){$('pr-carga').style.display='none';});
+  function pintar(){
+    $('pr-rubros').innerHTML=R.map(function(r,i){return '<button type="button" data-r="'+i+'" aria-pressed="'+(i===st.r)+'">'+(r.ic?r.ic+' ':'')+r.n+'</button>';}).join('');
+    var r=R[st.r];$('pr-estilos').innerHTML='<span style="color:var(--soft);font-size:13px;align-self:center;margin-right:4px">Estilo:</span>'+r.est.map(function(e,i){return '<button type="button" data-e="'+i+'" aria-pressed="'+(i===st.e)+'">'+e[2]+'</button>';}).join('');
+    var pi=Math.min(st.p,r.planes.length-1),e=r.est[st.e];
+    $('pr-planes').innerHTML=r.planes.map(function(p,i){return '<div class="pl-it" role="button" tabindex="0" data-p="'+i+'" aria-pressed="'+(i===pi)+'"><span class="n">'+p.n+'</span><span><b>'+p.t+'</b><small>'+p.d+'</small></span><span class="ir"><a href="'+p.web(e)+'" data-v="web" data-p="'+i+'">Web</a><a href="'+p.panel(e)+'" data-v="panel" data-p="'+i+'">Panel</a></span></div>';}).join('')+(r.mesa?'<div class="pl-it" role="button" tabindex="0" data-mesa="1"><span class="n">QR</span><span><b>Pedido desde la mesa</b><small>El cliente escanea el QR, pide y le llega a la cocina.</small></span><span class="ir"><a href="'+r.planes[4].web(e)+'&mesa=4" data-mesa="1">Probar</a></span></div>':'');
+    cargar();
+  }
+  document.querySelector('.probar').addEventListener('click',function(ev){
+    var t=ev.target.closest('[data-r],[data-e],[data-p],[data-mesa]');if(!t)return;
+    var a=ev.target.closest('a');if(a&&!(ev.ctrlKey||ev.metaKey||ev.shiftKey))ev.preventDefault();else if(a)return;
+    if(t.dataset.r){st.r=+t.dataset.r;st.e=0;}else if(t.dataset.e)st.e=+t.dataset.e;
+    else if(t.dataset.mesa){var r=R[st.r];visto=true;$('pr-carga').style.display='grid';fr.src=r.planes[4].web(r.est[st.e])+'&mesa=4';$('pr-ver').textContent='Mesa 4 · pedido por QR';return;}
+    else{st.p=+t.dataset.p;if(a)st.vista=a.dataset.v;}
+    pintar();
+  });
+  document.querySelector('.probar').addEventListener('keydown',function(ev){if((ev.key==='Enter'||ev.key===' ')&&ev.target.classList.contains('pl-it')){ev.preventDefault();ev.target.click();}});
+  /* Los chips de rubros del encabezado abren su muestra acá */
+  document.querySelectorAll('.marcas a[data-r]').forEach(function(a){a.addEventListener('click',function(ev){ev.preventDefault();var i=R.map(function(r){return r.id;}).indexOf(a.dataset.r);if(i>=0){st.r=i;st.e=0;st.vista='web';pintar();}document.getElementById('probar').scrollIntoView({behavior:'smooth'});});});
+  if('IntersectionObserver' in window){new IntersectionObserver(function(es,o){if(es[0].isIntersecting){visto=true;cargar();o.disconnect();}},{rootMargin:'300px'}).observe(document.querySelector('.tel'));}else{visto=true;}
+  pintar();
+})();
+</script>
 </body>
 </html>
