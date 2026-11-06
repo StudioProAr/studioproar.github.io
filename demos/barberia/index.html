@@ -138,13 +138,13 @@ footer{padding:30px 20px 90px;text-align:center;color:var(--su);font-size:14px}
   $('reglas').textContent=e.reglas;
   if(plan==='esencial'){
     $('h-cta').textContent='Pedí tu turno por WhatsApp';$('h-cta').href='https://wa.me/'+NUM+'?text='+encodeURIComponent(waTxt+'sacar un turno para: ');$('h-cta').target='_blank';
-    $('agenda-caja').innerHTML='<div class="esencial-wa"><p class="eyebrow">Turnos</p><h2>Pedí tu turno por WhatsApp</h2><p>Escribinos qué servicio querés y qué día te queda bien. Te respondemos con los horarios libres.</p><a class="btn" target="_blank" rel="noopener" href="'+$('h-cta').href+'">Escribir por WhatsApp</a><p style="margin-top:18px;font-size:14px;opacity:.75">En el plan Turnos el cliente reserva solo, sin esperar respuesta, y vos lo ves en tu panel.</p></div>';
+    $('agenda-caja').innerHTML='<div class="esencial-wa"><p class="eyebrow">Turnos</p><h2>Pedí tu turno por WhatsApp</h2><p>Escribinos qué servicio querés y qué día te queda bien. Te respondemos con los horarios libres.</p><a class="btn" target="_blank" rel="noopener" href="'+$('h-cta').href+'">Escribir por WhatsApp</a></div>';
     $('turnos-info').innerHTML='<h3>Plan Esencial</h3><p>Tu negocio en Google con servicios, precios, horarios, ubicación y botón de WhatsApp. Ideal para empezar.</p><p><a href="'+link('plan','turnos')+'">Ver cómo queda con turnos online →</a></p>';
   }else{
-    Agenda.montar($('agenda'),{sitio:e.sitio,negocio:e.nombre,lugar:e.dir,num:NUM,horario:e.hor,paso:30,servicios:e.serv.map(function(s){return {nombre:s[0],dur:s[1],precio:s[2]};}),panelReal:'../mi-negocio/?s='+e.sitio,panelDemo:'../mi-negocio/?s='+e.sitio});
+    Agenda.montar($('agenda'),{sitio:e.sitio,negocio:e.nombre,lugar:e.dir,num:NUM,horario:e.hor,paso:30,servicios:e.serv.map(function(s){return {nombre:s[0],dur:s[1],precio:s[2]};})});
   }
 })();
 </script>
-<script>window.SPA_STATS={db:"https://studioproar-demos-default-rtdb.firebaseio.com",sitio:"barberia"};</script><script src="../../stats.js" defer></script>
+<script>window.SPA_STATS={db:"https://studioproar-demos-default-rtdb.firebaseio.com",sitio:({urbano:"navaja",clasico:"eltano",mujer:"alma"})[new URLSearchParams(location.search).get("estilo")]||"navaja"};</script><script src="../../stats.js" defer></script>
 </body>
 </html>

@@ -92,7 +92,7 @@ footer{border-top:1px solid var(--line);padding:24px 0 90px;font-size:13px;color
 <dialog id="dlg"><h3 style="margin-top:0;font:400 28px var(--disp)">Tu encargo</h3><div id="items"></div><p style="display:flex;justify-content:space-between;font-weight:800;margin:12px 0"><span>Total</span><span id="total"></span></p>
 <label for="nom">Tu nombre</label><input id="nom" maxlength="40" placeholder="Nombre"><label for="celp">Tu celular (opcional)</label><input id="celp" type="tel" inputmode="tel" maxlength="20" placeholder="1155554444" autocomplete="tel-national">
 <label for="ret">¿Cuándo pasás a retirar?</label><select id="ret"></select>
-<p class="aviso">Muestra: el encargo se guarda solo en tu navegador y lo ves en el <a href="../panel/?n=panaderia#pedidos">panel de ejemplo</a>.</p>
+
 <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap"><button class="btn" type="button" id="enviar">Enviar encargo</button><button class="btn sec" type="button" id="cerrar">Seguir eligiendo</button></div><div id="listo"></div></dialog>
 <footer><div class="in">El Horno de Victoria · Victoria · Muestra de diseño hecha por <a href="../../">StudioProAr</a></div></footer>
 <a class="wa" href="https://wa.me/5491126339350?text=Hola%20El%20Horno%20de%20Victoria%21%20Vi%20su%20web%20y%20quiero%20consultar%3A%20" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.6 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1a14 14 0 0 1-6.1-5.4c-.6-.9-1-1.9-1-2.9 0-1 .5-1.6.8-1.9.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.4z"/></svg></a>
@@ -116,10 +116,10 @@ $('ret').innerHTML=op.map(o=>'<option>'+o+'</option>').join('');
 Reservas.iniciar({sitio:'panaderia',col:'encargos',clave:'pan_pedidos'});
 $('enviar').onclick=()=>{const it=Object.keys(car).map(k=>[P[k].n,car[k],P[k].p]);if(!it.length)return;const nom=($('nom').value.trim()||'Cliente de prueba').slice(0,40);
  const ped={id:Date.now(),nom,it,ret:$('ret').value,fecha:Date.now(),estado:'nuevo'};const cel=Reservas.normCel($('celp').value);if($('celp').value&&!Reservas.celOk(cel)){$('listo').innerHTML='<div class="ok">Revisá el celular: con código de área, sin 0 ni 15 (ej. 1155554444).</div>';return;}
- if(Reservas.modo==='real'){$('listo').innerHTML='<div class="ok">Enviando…</div>';Reservas.guardar({nombre:nom,cel:cel,ret:ped.ret,total:it.reduce((a,x)=>a+x[1]*x[2],0),items:it.map(x=>({n:x[0],c:x[1],p:x[2]}))}).then(()=>{$('listo').innerHTML='<div class="ok">Encargo enviado ✓ Retiro: '+ped.ret+'. <a href="../mi-negocio/?s=panaderia">Ver cómo le llega a la panadería →</a></div>';Object.keys(car).forEach(k=>delete car[k]);prods();barra();}).catch(e=>{$('listo').innerHTML='<div class="ok">'+e.message+'</div>';});return;}
+ if(Reservas.modo==='real'){$('listo').innerHTML='<div class="ok">Enviando…</div>';Reservas.guardar({nombre:nom,cel:cel,ret:ped.ret,total:it.reduce((a,x)=>a+x[1]*x[2],0),items:it.map(x=>({n:x[0],c:x[1],p:x[2]}))}).then(()=>{$('listo').innerHTML='<div class="ok">Encargo enviado ✓ Retiro: '+ped.ret+'.</div>';Object.keys(car).forEach(k=>delete car[k]);prods();barra();}).catch(e=>{$('listo').innerHTML='<div class="ok">'+e.message+'</div>';});return;}
  Reservas.guardar(ped);
  const txt='Hola! Quiero hacer este encargo (muestra StudioProAr):\n'+it.map(x=>x[1]+' x '+x[0]+' = '+pes(x[1]*x[2])).join('\n')+'\nTotal: '+$('total').textContent+'\nRetiro: '+ped.ret+'\nNombre: '+nom;
- $('listo').innerHTML='<div class="ok">Encargo enviado ✓ Retiro: '+ped.ret+'. <a href="https://wa.me/5491126339350?text='+encodeURIComponent(txt)+'" target="_blank" rel="noopener">Abrir WhatsApp</a> · <a href="../panel/?n=panaderia#pedidos">Ver cómo lo recibe la panadería →</a></div>';
+ $('listo').innerHTML='<div class="ok">Encargo enviado ✓ Retiro: '+ped.ret+'. <a href="https://wa.me/5491126339350?text='+encodeURIComponent(txt)+'" target="_blank" rel="noopener">Abrir WhatsApp</a></div>';
  Object.keys(car).forEach(k=>delete car[k]);prods();barra();};
 tabs();prods();barra();
 /* firma: próxima horneada */
