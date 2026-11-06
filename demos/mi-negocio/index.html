@@ -34,10 +34,11 @@ a{color:var(--ac)}
 <body>
 <div class="in">
   <header><h1 id="tit">Mi negocio</h1><div><select id="sitio" aria-label="Negocio" style="width:auto"></select> <button class="sec" id="salir" hidden>Salir</button></div></header>
-  <form id="login" hidden><h1>Entrar al panel</h1><p>Usá el mail y la clave que te dio StudioProAr.</p>
+  <form id="login" hidden><h1 id="ltit">Entrar al panel</h1><p id="ltxt">Entrá con tu mail y tu clave.</p>
     <label>Mail<input id="em" type="email" autocomplete="username" required></label><br><br>
-    <label>Clave<input id="pw" type="password" autocomplete="current-password" required></label><br><br>
-    <button class="btn" type="submit">Entrar</button> <span class="err" id="lerr"></span>
+    <label>Clave<input id="pw" type="password" autocomplete="current-password" required minlength="6"></label><br><br>
+    <label id="pw2l" hidden>Repetí la clave<input id="pw2" type="password" autocomplete="new-password" minlength="6"></label><br id="pw2br" hidden>
+    <button class="btn" type="submit" id="lbtn">Entrar</button> <span class="err" id="lerr"></span>
     <p><a href="#" id="olv">Me olvidé la clave</a></p></form>
   <main id="app"></main>
 </div>
@@ -207,10 +208,25 @@ a{color:var(--ac)}
     document.querySelector('.in').insertAdjacentHTML('afterbegin', '<p style="background:#fff3cd;color:#5c4400;border-radius:10px;padding:8px 12px;font-size:14px;margin:0 0 12px">Panel de muestra con datos de ejemplo. En tu panel real ves tus turnos y visitas reales, con usuario y clave.</p>');
     datosMuestra(); pinta(); return;
   }
-  $('login').onsubmit = function (e) { e.preventDefault(); $('lerr').textContent = ''; auth.signInWithEmailAndPassword($('em').value.trim(), $('pw').value).catch(function () { $('lerr').textContent = 'Mail o clave incorrectos.'; }); };
+  auth.languageCode = 'es';
+  var ALTA = q.get('alta'), creando = false;
+  if (ALTA) { $('ltit').textContent = 'Creá tu cuenta'; $('ltxt').textContent = 'Es la primera vez que entrás: elegí tu mail y una clave (mínimo 6 caracteres). Solo vos la vas a saber.'; $('pw2l').hidden = $('pw2br').hidden = false; $('pw').autocomplete = 'new-password'; $('lbtn').textContent = 'Crear mi cuenta'; $('olv').hidden = true; }
+  function crearCuenta() {
+    var m = $('em').value.trim(), c = $('pw').value;
+    if (c.length < 6) { $('lerr').textContent = 'La clave tiene que tener al menos 6 caracteres.'; return; }
+    if (c !== $('pw2').value) { $('lerr').textContent = 'Las dos claves no coinciden.'; return; }
+    $('lbtn').disabled = true; $('lerr').textContent = 'Creando tu cuenta…'; creando = true;
+    auth.createUserWithEmailAndPassword(m, c).then(function (r) {
+      var up = {}; up['web/alta/intento'] = ALTA; up['web/alta/usadoPor'] = r.user.uid; up['web/roles/' + r.user.uid] = 'admin';
+      return db.ref().update(up).catch(function (er) { return r.user.delete().then(function () { throw er; }); });
+    }).then(function () { history.replaceState(null, '', location.pathname + (q.get('s') ? '?s=' + q.get('s') : '')); location.reload(); },
+      function (er) { creando = false; $('lbtn').disabled = false; $('lerr').textContent = /email-already/.test(er.code || '') ? 'Ese mail ya tiene cuenta: entrá con tu clave.' : /weak-password/.test(er.code || '') ? 'Elegí una clave más larga.' : /invalid-email/.test(er.code || '') ? 'Revisá el mail.' : 'El link de alta no es válido o ya se usó. Pedile uno nuevo a StudioProAr.'; });
+  }
+  $('login').onsubmit = function (e) { e.preventDefault(); $('lerr').textContent = ''; if (ALTA) return crearCuenta(); auth.signInWithEmailAndPassword($('em').value.trim(), $('pw').value).catch(function () { $('lerr').textContent = 'Mail o clave incorrectos.'; }); };
   $('olv').onclick = function (e) { e.preventDefault(); var m = $('em').value.trim(); if (!m) { $('lerr').textContent = 'Escribí tu mail arriba.'; return; } auth.sendPasswordResetEmail(m).then(function () { $('lerr').textContent = 'Te mandamos un mail para cambiar la clave.'; }, function () { $('lerr').textContent = 'No se pudo enviar.'; }); };
   $('salir').onclick = function () { auth.signOut(); };
   auth.onAuthStateChanged(function (u) {
+    if (creando) return;
     refs.forEach(function (r) { r.off(); }); refs = []; app.innerHTML = '';
     if (!u) { $('login').hidden = false; $('salir').hidden = true; return; }
     db.ref('web/roles/' + u.uid).once('value').then(function (r) {
