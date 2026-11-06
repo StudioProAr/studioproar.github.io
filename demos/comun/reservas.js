@@ -128,7 +128,9 @@
       try { localStorage.setItem('spa_mios_' + (cfg.mios || cfg.sitio), JSON.stringify(l)); } catch (e) {}
     },
     pintarMios: function (el) {
-      if (!el) return; var l = R.mios(), esc = function (x) { return String(x || '').replace(/[<>&"]/g, ''); };
+      /* 06-11: la lista "Tus turnos" ya no se muestra en la web (la confirmación va por WhatsApp, imagen y calendario) */
+      if (el) el.innerHTML = ''; return;
+      var l = R.mios(), esc = function (x) { return String(x || '').replace(/[<>&"]/g, ''); };
       el.innerHTML = l.length ? '<div class="mios"><b>Tus turnos</b>' + l.map(function (t) { return '<div>' + esc(t.servicio) + ' · ' + R.fechaTxt(t.fecha, t.ini) + (t.baja ? ' · <a href="' + esc(t.baja) + '">Cancelar</a>' : '') + '</div>'; }).join('') + '</div>' : '';
     },
     /* Tarjeta de confirmación: calendario, WhatsApp y "Tus turnos". o: {id,negocio,servicio,fecha,ini,min,nombre,lugar,waNum,baja,mail} */
