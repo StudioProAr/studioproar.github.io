@@ -1,0 +1,1 @@
+{"name": "Muestra gastronómica", "short_name": "Gastronomía", "start_url": "./?plan=4&real=1#reservas", "scope": "./", "display": "standalone", "background_color": "#0e0e0f", "theme_color": "#0e0e0f", "icons": [{"src": "icono-192.png", "sizes": "192x192", "type": "image/png"}, {"src": "icono-512.png", "sizes": "512x512", "type": "image/png"}]}

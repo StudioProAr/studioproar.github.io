@@ -143,7 +143,7 @@
           R.avisarme(R._ult).then(function () { av.textContent = '🔔 Aviso activado'; av.style.pointerEvents = 'none'; msg.textContent = 'Listo: el día anterior te llega una notificación al celular.'; }, function (er) {
             msg.innerHTML = er.message === 'ios' ? 'En iPhone primero agregá esta web a tu pantalla de inicio: tocá <b>Compartir</b> (el cuadrado con la flecha) → <b>Agregar a inicio</b>. Después abrila desde ese ícono y activá el aviso.' : er.message === 'denegado' ? 'No diste permiso para avisos. Si cambiás de idea, habilitá las notificaciones de esta web en el navegador.' : er.message === 'nosoporta' ? 'Este navegador no permite avisos. Guardá la imagen del turno o agendalo en el calendario.' : 'No se pudo activar el aviso. Probá de nuevo.'; }); } }); }
       R.guardarMio({ id: o.id, fecha: o.fecha, ini: o.ini, servicio: o.servicio, baja: o.baja || '' });
-      return '<div class="conf-t"><b>✓ Turno confirmado</b><p>' + esc(o.servicio) + ' · ' + cuando + ' · a nombre de ' + esc(o.nombre) + '</p><div class="conf-a">' +
+      return '<div class="conf-t"><b>' + esc(o.titulo || '✓ Turno confirmado') + '</b><p>' + esc(o.servicio) + ' · ' + cuando + ' · a nombre de ' + esc(o.nombre) + '</p><div class="conf-a">' +
         '<a class="conf-wa" href="' + wa + '" target="_blank" rel="noopener">Guardar en WhatsApp</a>' +
         '<a href="#" class="conf-img">Guardar imagen del turno</a>' +
         '<a href="' + g + '" target="_blank" rel="noopener">Google Calendar</a></div>' +
@@ -170,7 +170,7 @@
     },
     lista: function () { return R.modo === 'real' ? (caches[cfg.sitio] || []) : local(); },
     alCambiar: function (f) { fns.push(f); },
-    guardar: function (o) {
+    guardar: function (o, op) {
       if (R.modo !== 'real') {
         R.ultimaClave = 'demo'; var l = local(); l.push(o);
         try { localStorage.setItem(cfg.clave, JSON.stringify(l)); } catch (e) {}
@@ -181,7 +181,7 @@
       x.creado = firebase.database.ServerValue.TIMESTAMP; x.estado = x.estado || 'nuevo';
       up[base + '/lista/' + id] = x;
       var k = clave(); R.ultimaClave = k;
-      if (cfg.col === 'turnos') { for (var m = o.ini; m < o.ini + o.min; m += cfg.paso) up[base + '/ocupado/' + o.fecha + '/' + m] = id; up[base + '/claves/' + id] = k; }
+      if (cfg.col === 'turnos') { if (op && op.llave != null) up[base + '/ocupado/' + o.fecha + '/' + op.llave] = id; else for (var m = o.ini; m < o.ini + o.min; m += cfg.paso) up[base + '/ocupado/' + o.fecha + '/' + m] = id; up[base + '/claves/' + id] = k; }
       var t = new Promise(function (_, no) { setTimeout(function () { no(new Error('sin conexión')); }, 10000); });
       var ir = function (u) { return Promise.race([db.ref().update(u), t]); };
       return ir(up).catch(function (e) { /* reglas viejas sin "claves": reintenta sin el link de baja */
