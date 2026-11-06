@@ -124,7 +124,7 @@
     },
     /* Tarjeta de confirmación: calendario, WhatsApp y "Tus turnos". o: {id,negocio,servicio,fecha,ini,min,nombre,lugar,waNum,baja,mail} */
     tarjeta: function (o) {
-      if (!document.getElementById('spa-conf-css')) { var st = document.createElement('style'); st.id = 'spa-conf-css'; st.textContent = '.conf-t{border:1px solid currentColor;border-radius:14px;padding:14px 16px;margin-top:10px;text-align:left}.conf-t b{font-size:1.1em}.conf-t p{margin:6px 0 10px}.conf-a{display:flex;flex-wrap:wrap;gap:8px}.conf-a a{flex:1 1 150px;text-align:center;padding:10px 12px;border-radius:10px;border:1px solid currentColor;text-decoration:none;color:inherit;font-weight:600}.conf-a a.wa{background:#25d366;border-color:#25d366;color:#fff}.conf-t small{display:block;margin-top:10px;opacity:.8}.mios{border:1px dashed currentColor;border-radius:12px;padding:10px 14px;margin:0 0 14px}.mios div{margin-top:4px}'; document.head.appendChild(st); }
+      if (!document.getElementById('spa-conf-css')) { var st = document.createElement('style'); st.id = 'spa-conf-css'; st.textContent = '.conf-t{border:1px solid currentColor;border-radius:14px;padding:14px 16px;margin-top:10px;text-align:left}.conf-t b{font-size:1.1em}.conf-t p{margin:6px 0 10px}.conf-a{display:flex;flex-wrap:wrap;gap:8px}.conf-a a{flex:1 1 150px;text-align:center;padding:10px 12px;border-radius:10px;border:1px solid currentColor;text-decoration:none;color:inherit;font-weight:600}.conf-a a.conf-wa{background:#25d366;border-color:#25d366;color:#fff}.conf-t small{display:block;margin-top:10px;opacity:.8}.mios{border:1px dashed currentColor;border-radius:12px;padding:10px 14px;margin:0 0 14px}.mios div{margin-top:4px}'; document.head.appendChild(st); }
       var esc = function (x) { return String(x || '').replace(/[<>&"]/g, ''); }, cuando = R.fechaTxt(o.fecha, o.ini);
       var tit = o.servicio + ' · ' + o.negocio, det = 'Turno a nombre de ' + o.nombre + '.' + (o.baja ? ' Para cancelar: ' + o.baja : '');
       var g = R.calendario({ titulo: tit, fecha: o.fecha, ini: o.ini, min: o.min, lugar: o.lugar || o.negocio, detalle: det });
@@ -135,7 +135,7 @@
             msg.innerHTML = er.message === 'ios' ? 'En iPhone primero agregá esta web a tu pantalla de inicio: tocá <b>Compartir</b> (el cuadrado con la flecha) → <b>Agregar a inicio</b>. Después abrila desde ese ícono y activá el aviso.' : er.message === 'denegado' ? 'No diste permiso para avisos. Si cambiás de idea, habilitá las notificaciones de esta web en el navegador.' : er.message === 'nosoporta' ? 'Este navegador no permite avisos. Guardá la imagen del turno o agendalo en el calendario.' : 'No se pudo activar el aviso. Probá de nuevo.'; }); } }); }
       R.guardarMio({ id: o.id, fecha: o.fecha, ini: o.ini, servicio: o.servicio, baja: o.baja || '' });
       return '<div class="conf-t"><b>✓ Turno confirmado</b><p>' + esc(o.servicio) + ' · ' + cuando + ' · a nombre de ' + esc(o.nombre) + '</p><div class="conf-a">' +
-        '<a class="wa" href="' + wa + '" target="_blank" rel="noopener">Guardar en WhatsApp</a>' +
+        '<a class="conf-wa" href="' + wa + '" target="_blank" rel="noopener">Guardar en WhatsApp</a>' +
         '<a href="#" class="conf-img">Guardar imagen del turno</a>' +
         '<a href="' + g + '" target="_blank" rel="noopener">Google Calendar</a></div>' +
         (R.avisosPosible() ? '<div class="conf-a" style="margin-top:8px"><a href="#" class="conf-aviso">🔔 Avisame el día anterior</a></div><div class="conf-aviso-msg" role="status"></div>' : '') +

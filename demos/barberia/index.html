@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Barbería · Muestra StudioProAr</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Playfair+Display:wght@600;800&family=DM+Serif+Display&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icono-192.png">
+<style>
+:root{--bg:#0e0e0f;--bg2:#17171a;--tx:#f2efe9;--su:#a9a49b;--ac:#d4a24c;--sa:#111;--bo:#2b2b30;--tit:'Oswald',sans-serif;--tt:uppercase;--ls:.04em;--r:14px}
+body.clasico{--bg:#f4ecdc;--bg2:#ebe0ca;--tx:#2a1a12;--su:#6d5a4c;--ac:#7a1f1f;--sa:#fff;--bo:#d7c7a8;--tit:'Playfair Display',serif;--tt:none;--ls:0;--r:6px}
+body.mujer{--bg:#fbf6f3;--bg2:#f3e7e2;--tx:#2d2326;--su:#7d6b6f;--ac:#b5546c;--sa:#fff;--bo:#ead8d2;--tit:'DM Serif Display',serif;--tt:none;--ls:0;--r:22px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 Inter,system-ui,sans-serif;--ag-fondo:var(--bg);--ag-tinta:var(--tx);--ag-acento:var(--ac);--ag-sobre-acento:var(--sa);--ag-borde:var(--bo);overflow-x:clip}
+a{color:var(--ac)}
+h1,h2,h3{font-family:var(--tit);text-transform:var(--tt);letter-spacing:var(--ls);line-height:1.1;margin:0 0 .4em}
+.in{max-width:1080px;margin:0 auto;padding:0 20px}
+.muestra{background:#111;color:#eee;font-size:13px;padding:8px 12px;text-align:center}.muestra a{color:#ffd27a}
+.selector{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;padding:10px;background:var(--bg2);border-bottom:1px solid var(--bo);font-size:14px}
+.selector span{opacity:.7;align-self:center;margin:0 4px 0 10px}.selector a{padding:5px 12px;border-radius:999px;border:1px solid var(--bo);text-decoration:none;color:var(--tx)}.selector a[aria-current]{background:var(--ac);border-color:var(--ac);color:var(--sa)}
+header.top{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;max-width:1080px;margin:0 auto}
+.marca{font-family:var(--tit);font-size:22px;text-transform:var(--tt);letter-spacing:var(--ls);text-decoration:none;color:var(--tx)}
+nav a{color:var(--tx);text-decoration:none;margin-left:18px;font-size:15px;opacity:.85}
+.hero{padding:70px 0 80px;position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(60% 80% at 85% 20%,color-mix(in srgb,var(--ac) 28%,transparent),transparent 70%);pointer-events:none}
+body.urbano .hero:after{content:"";position:absolute;right:-60px;top:20px;width:340px;height:340px;background:repeating-linear-gradient(135deg,var(--ac) 0 18px,transparent 18px 36px,#c0392b 36px 54px,transparent 54px 72px);opacity:.12;border-radius:50%}
+.hero .in{position:relative}
+.hero h1{font-size:clamp(40px,8vw,84px);max-width:800px}
+.hero p{font-size:19px;color:var(--su);max-width:560px}
+.btn{display:inline-block;padding:15px 26px;border-radius:var(--r);background:var(--ac);color:var(--sa);text-decoration:none;font-weight:700;border:0;font:inherit;font-weight:700;cursor:pointer}
+.btn.sec{background:transparent;color:var(--tx);border:1px solid var(--bo);margin-left:8px}
+.datos{display:flex;flex-wrap:wrap;gap:22px;margin-top:28px;color:var(--su);font-size:15px}
+section{padding:64px 0}section.alt{background:var(--bg2)}
+.eyebrow{color:var(--ac);font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:13px;margin:0 0 6px}
+.serv{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:20px}
+.serv div{display:flex;justify-content:space-between;gap:12px;padding:16px 18px;border:1px solid var(--bo);border-radius:var(--r);background:var(--bg)}
+.serv b{display:block}.serv small{color:var(--su)}.serv .p{font-family:var(--tit);font-size:20px;white-space:nowrap;color:var(--ac)}
+.cols{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:start}.cols>*{min-width:0}
+.caja{border:1px solid var(--bo);border-radius:var(--r);padding:22px;background:var(--bg)}
+.equipo{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:20px}
+.equipo div{text-align:center;padding:20px;border:1px solid var(--bo);border-radius:var(--r)}
+.av{width:84px;height:84px;border-radius:50%;margin:0 auto 10px;display:grid;place-items:center;font-family:var(--tit);font-size:32px;background:color-mix(in srgb,var(--ac) 20%,var(--bg));color:var(--ac)}
+.faq details{border-bottom:1px solid var(--bo);padding:14px 0}.faq summary{cursor:pointer;font-weight:700}
+.mapa{width:100%;height:280px;border:0;border-radius:var(--r);filter:grayscale(.3)}
+.hor{width:100%;border-collapse:collapse}.hor td{padding:7px 0;border-bottom:1px solid var(--bo)}.hor td:last-child{text-align:right}
+footer{padding:30px 20px 90px;text-align:center;color:var(--su);font-size:14px}
+.wa{position:fixed;right:16px;bottom:16px;width:58px;height:58px;border-radius:50%;background:#25d366;display:grid;place-items:center;color:#fff;box-shadow:0 6px 18px rgba(0,0,0,.3);z-index:20}
+.esencial-wa{text-align:center;padding:30px}
+@media(max-width:820px){.cols{grid-template-columns:1fr}nav{display:none}.btn.sec{margin:10px 0 0}}
+</style>
+</head>
+<body class="urbano">
+<div class="muestra">Muestra de diseño · negocio ficticio · <a href="https://wa.me/5491126339350?text=Hola!%20Vi%20la%20muestra%20de%20barber%C3%ADa%20y%20quiero%20una%20web%20as%C3%AD%3A%20">Quiero una web así →</a></div>
+<div class="selector" id="selector"></div>
+<header class="top"><a class="marca" href="#" id="marca"></a><nav><a href="#servicios">Servicios</a><a href="#turnos">Turnos</a><a href="#equipo">Equipo</a><a href="#donde">Dónde</a></nav></header>
+
+<section class="hero"><div class="in">
+  <p class="eyebrow" id="h-zona"></p>
+  <h1 id="h-tit"></h1>
+  <p id="h-sub"></p>
+  <a class="btn" href="#turnos" id="h-cta">Reservá tu turno</a><a class="btn sec" href="#servicios">Ver servicios y precios</a>
+  <div class="datos" id="h-datos"></div>
+</div></section>
+
+<section class="alt" id="servicios"><div class="in">
+  <p class="eyebrow">Servicios</p><h2>Precios claros, sin sorpresas</h2>
+  <div class="serv" id="serv"></div>
+</div></section>
+
+<section id="turnos"><div class="in cols">
+  <div class="caja" id="agenda-caja"><p class="eyebrow">Turnos online</p><h2>Elegí tu turno</h2><div id="agenda"></div></div>
+  <div id="turnos-info">
+    <h3>Cómo funciona</h3>
+    <p>Elegís servicio, día y horario libre, y listo: el turno queda confirmado a tu nombre. Te lo guardás en WhatsApp, como imagen o en el calendario, y si querés te avisamos el día anterior.</p>
+    <p>¿No podés venir? Cancelalo desde el link de tu turno y el horario queda libre para otra persona.</p>
+    <p id="reglas"></p>
+  </div>
+</div></section>
+
+<section class="alt" id="equipo"><div class="in">
+  <p class="eyebrow">Equipo</p><h2 id="eq-tit">Quiénes te atienden</h2>
+  <div class="equipo" id="eq"></div>
+</div></section>
+
+<section id="donde"><div class="in cols">
+  <div><p class="eyebrow">Dónde estamos</p><h2 id="d-dir"></h2><iframe class="mapa" loading="lazy" title="Mapa" src="https://www.google.com/maps?q=San+Fernando,+Buenos+Aires&output=embed"></iframe></div>
+  <div><h3>Horarios</h3><table class="hor" id="hor"></table>
+    <div class="faq" style="margin-top:24px"><h3>Preguntas frecuentes</h3><div id="faq"></div></div></div>
+</div></section>
+
+<footer><span id="pie"></span> · Web hecha por <a href="https://studioproar.com.ar/?origen=muestra-barberia">StudioProAr</a></footer>
+<a class="wa" id="wa" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.6 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1a14 14 0 0 1-6.1-5.4c-.6-.9-1-1.9-1-2.9 0-1 .5-1.6.8-1.9.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.4z"/></svg></a>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="../comun/fb-demos.js"></script>
+<script src="../comun/qr.js"></script>
+<script src="../comun/reservas.js"></script>
+<script src="../comun/correo.js"></script>
+<script src="../comun/agenda.js"></script>
+<script>
+(function(){
+  var NUM='5491126339350';
+  var E={
+    urbano:{sitio:'navaja',nombre:'Navaja Norte',titulo:'Navaja Norte · Barber Club',zona:'Barbería · Virreyes',tit:'Fades, barba y buena música.',sub:'Cortes modernos y clásicos con turno, sin esperas. Reservá en 20 segundos desde el celu.',dir:'Av. Avellaneda 2900, Virreyes',
+      hor:{2:[10,20],3:[10,20],4:[10,20],5:[10,21],6:[10,18]},
+      serv:[['Corte','35 min',13000],['Fade / degradé','40 min',14000],['Corte y barba','50 min',18000],['Perfilado de barba','25 min',8000],['Corte de niño (hasta 12)','30 min',10000],['Platinado o color','1 h 30',35000]],
+      eq:[['L','Lucho','Fades y diseños'],['M','Maxi','Barba y navaja'],['T','Tomi','Cortes clásicos']],
+      reglas:'Llegá 5 minutos antes. Pasados 10 minutos el turno puede pasar al siguiente. Efectivo, transferencia y QR.',
+      faq:[['¿Atienden sin turno?','Si hay un hueco, sí. Pero con turno no esperás.'],['¿Puedo elegir barbero?','Sí, avisanos por WhatsApp al reservar y lo anotamos.'],['¿Cómo pago?','Efectivo, transferencia o QR de Mercado Pago en el local.']]},
+    clasico:{sitio:'eltano',nombre:'Barbería El Tano',titulo:'Barbería El Tano',zona:'Desde 1987 · San Fernando',tit:'La barbería de siempre, con turno online.',sub:'Corte clásico, afeitado con toalla caliente y la charla de toda la vida. Ahora reservás sin llamar.',dir:'Constitución 1300, San Fernando',
+      hor:{1:[9,19],2:[9,19],3:[9,19],4:[9,19],5:[9,19],6:[9,14]},
+      serv:[['Corte clásico','30 min',12000],['Afeitado con toalla caliente','35 min',11000],['Corte y afeitado','1 h',20000],['Arreglo de barba','20 min',8000],['Corte jubilados (lun a jue)','30 min',9000]],
+      eq:[['R','Don Ramón','Fundador'],['G','Gabriel','Navaja y afeitado']],
+      reglas:'Si no podés venir, cancelá desde el link así le das el lugar a otro vecino. Efectivo y transferencia.',
+      faq:[['¿Hacen afeitado tradicional?','Sí, con navaja, toalla caliente y bálsamo.'],['¿Hay descuento para jubilados?','Sí, de lunes a jueves.'],['¿Tienen estacionamiento?','Hay lugar en la cuadra.']]},
+    mujer:{sitio:'alma',nombre:'Salón Alma',titulo:'Salón Alma · Estudio de color',zona:'Peluquería · Victoria',tit:'Tu pelo, en las mejores manos.',sub:'Corte, color y tratamientos con diagnóstico personalizado. Reservá tu turno online cuando quieras.',dir:'Av. Pres. Perón 1500, Victoria',
+      hor:{2:[9,19],3:[9,19],4:[9,20],5:[9,20],6:[9,17]},
+      serv:[['Corte','50 min',18000],['Brushing','40 min',12000],['Color raíz','1 h 30',32000],['Mechas o balayage','3 h',65000],['Nutrición profunda','45 min',20000],['Peinado de evento','1 h',25000]],
+      eq:[['C','Caro','Colorista'],['V','Vale','Corte y peinado'],['S','Sofi','Tratamientos']],
+      reglas:'Para color y balayage pedimos seña por transferencia, que se descuenta del total. Avisando con 24 h la seña se traslada.',
+      faq:[['¿Necesito consulta antes del color?','Para cambios grandes sí: es sin cargo y en 20 minutos.'],['¿Qué productos usan?','Línea profesional sin amoníaco para color y tratamientos.'],['¿Cuánto dura un balayage?','Entre 2 h 30 y 3 h según el largo.']]}
+  };
+  var q=new URLSearchParams(location.search),est=E[q.get('estilo')]?q.get('estilo'):'urbano',plan=q.get('plan')==='esencial'?'esencial':'turnos',e=E[est],$=function(i){return document.getElementById(i);};
+  var DN=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],pesos=function(n){return '$'+Number(n).toLocaleString('es-AR');};
+  document.body.className=est;document.title=e.titulo+' · Muestra StudioProAr';
+  var link=function(k,v){var p=new URLSearchParams(location.search);p.set(k,v);return '?'+p.toString();};
+  $('selector').innerHTML='<span>Estilo:</span>'+[['urbano','Barbería urbana'],['clasico','Barbería clásica'],['mujer','Salón de mujer']].map(function(x){return '<a href="'+link('estilo',x[0])+'"'+(x[0]===est?' aria-current="true"':'')+'>'+x[1]+'</a>';}).join('')+'<span>Plan:</span>'+[['esencial','Esencial'],['turnos','Turnos']].map(function(x){return '<a href="'+link('plan',x[0])+'"'+(x[0]===plan?' aria-current="true"':'')+'>'+x[1]+'</a>';}).join('');
+  $('marca').textContent=e.titulo;$('h-zona').textContent=e.zona;$('h-tit').textContent=e.tit;$('h-sub').textContent=e.sub;$('d-dir').textContent=e.dir;$('pie').textContent=e.titulo+' · '+e.dir;
+  var waTxt='Hola '+e.nombre+'! Vi su web y quiero ',wa='https://wa.me/'+NUM+'?text='+encodeURIComponent(waTxt+'consultar: ');$('wa').href=wa;
+  var dias=Object.keys(e.hor);$('h-datos').innerHTML='<span>📍 '+e.dir+'</span><span>🕘 '+DN[dias[0]]+' a '+DN[dias[dias.length-1]]+'</span><span>⭐ Turnos online</span>';
+  $('serv').innerHTML=e.serv.map(function(s){return '<div><span><b>'+s[0]+'</b><small>'+s[1]+'</small></span><span class="p">'+pesos(s[2])+'</span></div>';}).join('');
+  $('eq').innerHTML=e.eq.map(function(p){return '<div><div class="av">'+p[0]+'</div><b>'+p[1]+'</b><br><small>'+p[2]+'</small></div>';}).join('');
+  $('hor').innerHTML=[1,2,3,4,5,6,0].map(function(d){var h=e.hor[d];return '<tr><td>'+DN[d]+'</td><td>'+(h?h[0]+' a '+h[1]+' h':'Cerrado')+'</td></tr>';}).join('');
+  $('faq').innerHTML=e.faq.map(function(f){return '<details><summary>'+f[0]+'</summary><p>'+f[1]+'</p></details>';}).join('');
+  $('reglas').textContent=e.reglas;
+  if(plan==='esencial'){
+    $('h-cta').textContent='Pedí tu turno por WhatsApp';$('h-cta').href='https://wa.me/'+NUM+'?text='+encodeURIComponent(waTxt+'sacar un turno para: ');$('h-cta').target='_blank';
+    $('agenda-caja').innerHTML='<div class="esencial-wa"><p class="eyebrow">Turnos</p><h2>Pedí tu turno por WhatsApp</h2><p>Escribinos qué servicio querés y qué día te queda bien. Te respondemos con los horarios libres.</p><a class="btn" target="_blank" rel="noopener" href="'+$('h-cta').href+'">Escribir por WhatsApp</a><p style="margin-top:18px;font-size:14px;opacity:.75">En el plan Turnos el cliente reserva solo, sin esperar respuesta, y vos lo ves en tu panel.</p></div>';
+    $('turnos-info').innerHTML='<h3>Plan Esencial</h3><p>Tu negocio en Google con servicios, precios, horarios, ubicación y botón de WhatsApp. Ideal para empezar.</p><p><a href="'+link('plan','turnos')+'">Ver cómo queda con turnos online →</a></p>';
+  }else{
+    Agenda.montar($('agenda'),{sitio:e.sitio,negocio:e.nombre,lugar:e.dir,num:NUM,horario:e.hor,paso:30,servicios:e.serv.map(function(s){return {nombre:s[0],dur:s[1],precio:s[2]};}),panelReal:'../mi-negocio/?s='+e.sitio,panelDemo:'../mi-negocio/?s='+e.sitio});
+  }
+})();
+</script>
+<script>window.SPA_STATS={db:"https://studioproar-demos-default-rtdb.firebaseio.com",sitio:"barberia"};</script><script src="../../stats.js" defer></script>
+</body>
+</html>
