@@ -18,7 +18,7 @@ h1{font-size:26px;margin:10px 0 4px}h2{font-size:20px;margin:30px 0 4px}.sub{col
 .card{background:var(--card);border:1px solid var(--bo);border-radius:16px;padding:16px}
 .card h3{margin:0 0 2px;font-size:18px}.card p{margin:0 0 12px;color:var(--su);font-size:14px}
 .sw{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:6px}
-.fila{display:grid;grid-template-columns:88px 1fr 1fr;gap:8px;align-items:center;margin-top:8px}
+.fila{display:grid;grid-template-columns:118px 1fr 1fr;gap:8px;align-items:center;margin-top:8px}
 .fila span{font-size:13px;font-weight:700;color:var(--su)}
 a.b{display:block;text-align:center;padding:10px 8px;border-radius:10px;border:1px solid var(--bo);text-decoration:none;color:var(--tx);font-weight:600;font-size:14px}
 a.b.web{background:var(--ac);border-color:var(--ac);color:#fff}
@@ -35,44 +35,39 @@ h3.pl{font-size:16px;margin:18px 0 8px;color:var(--su)}
 <h1>Muestrario</h1>
 <p class="sub">Cada negocio recibe dos cosas: <b>su web</b> (lo que ven sus clientes) y <b>su panel</b> (privado, se instala como app). Todo lo que ves acá es de ejemplo.</p>
 
-<nav class="ir"><a href="#barber-s">Barberías</a><a href="#gastro-s">Gastronomía</a><a href="#otros-s">Otros rubros</a></nav>
-<h2 id="barber-s">Barberías y peluquerías</h2>
-<div class="planes" id="barber-planes"></div>
-<div class="grid" id="barber"></div>
+<nav class="ir" id="ir"></nav>
+<div id="rubros"></div>
 
-<h2 id="gastro-s">Gastronomía</h2>
-<p class="sub">Una sola web de muestra con selector: 3 estilos (parrilla y bodegón, café y brunch, cervecería y burgers) × 5 planes.</p>
-<div class="planes" id="gastro-planes"></div>
-<div class="grid" id="gastro"></div>
-
-<h2 id="otros-s">Otros rubros, por plan</h2>
+<h2 id="otras">Otras muestras (una por rubro)</h2>
 <div id="otros"></div>
 
 <p class="nota">Las webs de muestra guardan los turnos y pedidos solo en este navegador. Los paneles muestran datos inventados y no piden clave; el panel real de cada cliente es privado, con su usuario y contraseña.</p>
 </div>
+<script src="../barberia/rubros.js"></script>
+<script src="../gastronomia/datos.js"></script>
+<script src="../gastronomia/rubros.js"></script>
 <script>
 var $=function(i){return document.getElementById(i);};
 var fila=function(n,w,p){return '<div class="fila"><span>'+n+'</span><a class="b web" href="'+w+'">Web</a>'+(p?'<a class="b" href="'+p+'">Panel</a>':'<span></span>')+'</div>';};
 var plan=function(t,d){return '<div class="plan"><b>'+t+'</b><small>'+d+'</small></div>';};
-$('barber-planes').innerHTML=plan('1 · Esencial','Una página, turnos por WhatsApp. Panel: estadísticas.')+plan('2 · Completa','Más secciones y galería grande (color, novias). Turnos por WhatsApp.')+plan('3 · Turnos','Reserva online con confirmación, recordatorio y cancelación. Panel: agenda.')+plan('4 · Turnos Pro','Elegir profesional. Panel: agenda por profesional, fichas, editar web y resumen del mes.');
-var B=[['urbano','navaja','Barbería urbana','Oscura y dorada, moderna.','#d4a24c'],['clasico','eltano','Barbería clásica','Crema y bordó, de barrio.','#7a1f1f'],['mujer','alma','Salón de mujer','Rosado, elegante.','#b5546c']];
-$('barber').innerHTML=B.map(function(x){
-  var w=function(p){return '../barberia/?estilo='+x[0]+'&plan='+p;},pa=function(p){return '../mi-negocio/?s='+x[1]+'&muestra=1&plan='+p;};
-  return '<div class="card"><h3><i class="sw" style="background:'+x[4]+'"></i>'+x[2]+'</h3><p>'+x[3]+'</p>'+fila('Esencial',w('esencial'),pa('esencial'))+fila('Completa',w('completa'),pa('esencial'))+fila('Turnos',w('turnos'),pa('turnos'))+fila('Turnos Pro',w('pro'),pa('pro'))+'</div>';
-}).join('');
-$('gastro-planes').innerHTML=plan('1 · Esencial','Carta simple, WhatsApp y links a PedidosYa/Rappi. Panel: estadísticas.')+plan('2 · Completa','Carta con fotos, galería, eventos y preguntas.')+plan('3 · Pedidos','Carrito con opciones, retiro o envío por zona: llega armado al WhatsApp. Panel: copia de los pedidos.')+plan('4 · Reservas','Reserva de mesa con cupo, grupos grandes a confirmar. Panel: reservas por día.')+plan('5 · Salón Pro','QR por mesa directo a la cocina, mozo y cuenta, carta editable, resumen del mes.');
-var GS=[['parrilla','tranquera','Parrilla y bodegón','La Tranquera · crema y bordó.','#8e2b1f'],['cafe','ribera','Café y brunch','Café Ribera · claro y verde.','#4f7a5a'],['urbano','lupulo','Cervecería y burgers','Lúpulo Norte · negro y amarillo.','#f2c230']];
-var GP=[['1','Esencial'],['2','Completa'],['3','Pedidos'],['4','Reservas'],['5','Salón Pro']];
-$('gastro').innerHTML=GS.map(function(x){
-  return '<div class="card"><h3><i class="sw" style="background:'+x[4]+'"></i>'+x[2]+'</h3><p>'+x[3]+'</p>'+GP.map(function(p){return fila(p[0]+' · '+p[1],'../gastronomia/?estilo='+x[0]+'&plan='+p[0],'../mi-negocio/?s='+x[1]+'&muestra=1&plan='+p[0]);}).join('')+fila('Mesa (QR)','../gastronomia/?estilo='+x[0]+'&plan=5&mesa=4','')+'</div>';
-}).join('');
-var O=[[1,'Esencial',[['Café · Café Muelle','../cafe/','../panel/?n=cafe'],['Ferretería · La Llave','../ferreteria/','../panel/?n=ferreteria']]],
-[2,'Completa',[['Astillero · Marea Alta','../nautica/','../panel/?n=nautica'],['Parrilla · El Fogón','../restaurante/','../panel/?n=bodegon']]],
-[3,'Catálogo y pedidos',[['Panadería · El Horno de Victoria','../panaderia/','../panel/?n=panaderia'],['Tienda de ropa · Calle Norte','https://tienda-ropa-prueba.pages.dev/','../panel/?n=tienda']]],
-[4,'Turnos',[['Peluquería · Salón Quebracho','../peluqueria/','../mi-negocio/?s=salon&muestra=1&plan=turnos'],['Veterinaria · Patitas del Delta','../veterinaria/','../mi-negocio/?s=vet&muestra=1&plan=turnos'],['Gimnasio','../gimnasio/','../gimnasio/app.html']]],
-[5,'Autogestionable',[['Cervecería · Remanso','../cerveceria/','../panel/?n=cerveceria'],['Bodegón con carta QR','https://bodegon-demo-prueba.pages.dev/','https://bodegon-demo-prueba.pages.dev/panel.html'],['Velas · Luciérnaga','https://luciernaga-prueba.pages.dev/','']]],
-['','Empresa (a medida)',[['ISP · NetSur Fibra','https://netsur-prueba.pages.dev/','']]]];
-$('otros').innerHTML=O.map(function(g){return '<h3 class="pl">'+(g[0]?'Plan '+g[0]+' · ':'')+g[1]+'</h3><div class="grid otros">'+g[2].map(function(x){return '<div class="card"><h3>'+x[0]+'</h3><div class="fila"><a class="b web" href="'+x[1]+'">Web</a>'+(x[2]?'<a class="b" href="'+x[2]+'">Panel</a>':'<span></span>')+'</div></div>';}).join('')+'</div>';}).join('');
+var COL={urbano:'#d4a24c',clasico:'#7a1f1f',mujer:'#b5546c',parrilla:'#8e2b1f',cafe:'#4f7a5a'};COL.urbano2='#f2c230';
+var PT=[['esencial','Esencial','Una página, turnos por WhatsApp. Panel: estadísticas.'],['completa','Completa','Más secciones y galería grande. Turnos por WhatsApp.'],['turnos','Turnos','Reserva online con confirmación, recordatorio y cancelación. Panel: agenda.'],['pro','Turnos Pro','Elegir profesional. Panel: agenda por profesional, fichas, editar web y resumen del mes.']];
+var T=[{id:'barberia',n:'Barberías y peluquerías',est:[['urbano','navaja','Barbería urbana','Navaja Norte'],['clasico','eltano','Barbería clásica','Barbería El Tano'],['mujer','alma','Salón de mujer','Salón Alma']]}];
+Object.keys(RUBROS_T).forEach(function(r){var R=RUBROS_T[r];T.push({id:r,n:R.nombre,est:R.est.map(function(x){var e=R.E[x[0]];return [x[0],e.sitio,x[1],e.nombre];})});});
+var C=[{id:'resto',n:'Restaurantes, cafés y cervecerías',planes:{1:'Esencial',2:'Completa',3:'Pedidos',4:'Reservas',5:'Salón Pro'},desc:{3:'Carrito → WhatsApp del local, retiro o envío por zona.',4:'Reserva de mesa con cupo.',5:'QR por mesa a la cocina, carta editable y resumen.'},est:[['parrilla','tranquera','Parrilla y bodegón','La Tranquera'],['cafe','ribera','Café y brunch','Café Ribera'],['urbano','lupulo','Cervecería y burgers','Lúpulo Norte']],mesa:1}];
+Object.keys(CATALOGO_R).forEach(function(r){var R=CATALOGO_R[r],pl={1:'Esencial',2:'Completa'};Object.keys(R.planes).forEach(function(k){pl[k]=R.planes[k];});C.push({id:r,n:R.nombre,planes:pl,p4:R.p4,est:R.est.map(function(x){var e=R.E[x[0]];return [x[0],e.sitio,x[1],e.nombre];})});});
+var h='',ir='';
+T.forEach(function(r){ir+='<a href="#r-'+r.id+'">'+r.n+'</a>';
+  h+='<h2 id="r-'+r.id+'">'+r.n+'</h2><div class="planes">'+PT.map(function(p,i){return plan((i+1)+' · '+p[1],p[2]);}).join('')+'</div><div class="grid">'+r.est.map(function(x){
+    var w=function(p){return '../barberia/?'+(r.id==='barberia'?'':'rubro='+r.id+'&')+'estilo='+x[0]+'&plan='+p;},pa=function(p){return '../mi-negocio/?s='+x[1]+'&muestra=1&plan='+(p==='completa'?'esencial':p);};
+    return '<div class="card"><h3><i class="sw" style="background:'+(COL[x[0]])+'"></i>'+x[2]+'</h3><p>'+x[3]+'</p>'+PT.map(function(p){return fila(p[1],w(p[0]),pa(p[0]));}).join('')+'</div>';}).join('')+'</div>';});
+C.forEach(function(r){ir+='<a href="#r-'+r.id+'">'+r.n+'</a>';var ks=Object.keys(r.planes);
+  h+='<h2 id="r-'+r.id+'">'+r.n+'</h2><div class="planes">'+ks.map(function(k){return plan(k+' · '+r.planes[k],(r.desc&&r.desc[k])||({1:'Una página con lo esencial, WhatsApp y ubicación.',2:'Con fotos, categorías, galería y preguntas frecuentes.',3:'Carrito que llega armado al WhatsApp del local.',4:r.p4==='programado'?'El cliente elige día y hora de retiro o entrega.':'Reserva de lugar con cupo.',5:'El dueño edita productos y precios, con resumen del mes.'})[k]);}).join('')+'</div><div class="grid">'+r.est.map(function(x){
+    var w=function(p){return '../gastronomia/?'+(r.id==='resto'?'':'rubro='+r.id+'&')+'estilo='+x[0]+'&plan='+p;},pa=function(p){return '../mi-negocio/?s='+x[1]+'&muestra=1&plan='+p;};
+    return '<div class="card"><h3><i class="sw" style="background:'+(x[0]==='urbano'?'#f2c230':COL[x[0]])+'"></i>'+x[2]+'</h3><p>'+x[3]+'</p>'+ks.map(function(k){return fila(k+' · '+r.planes[k],w(k),pa(k));}).join('')+(r.mesa?fila('Mesa (QR)',w(5)+'&mesa=4',''):'')+'</div>';}).join('')+'</div>';});
+$('ir').innerHTML=ir+'<a href="#otras">Otras muestras</a>';$('rubros').innerHTML=h;
+var O=[['Café · Café Muelle','Esencial','../cafe/','../panel/?n=cafe'],['Ferretería · La Llave','Esencial','../ferreteria/','../panel/?n=ferreteria'],['Astillero · Marea Alta (4 páginas)','Completa','../nautica/','../panel/?n=nautica'],['Parrilla · El Fogón','Completa','../restaurante/','../panel/?n=bodegon'],['Panadería · El Horno de Victoria','Pedidos','../panaderia/','../panel/?n=panaderia'],['Tienda de ropa · Calle Norte (completa)','Catálogo y pedidos','https://tienda-ropa-prueba.pages.dev/','https://tienda-ropa-prueba.pages.dev/app.html'],['Peluquería · Salón Quebracho','Turnos','../peluqueria/','../mi-negocio/?s=salon&muestra=1&plan=turnos'],['Veterinaria · Patitas','Turnos','../veterinaria/','../mi-negocio/?s=vet&muestra=1&plan=turnos'],['Gimnasio · Ribera Training (app de socios)','Autogestionable','../gimnasio/','../gimnasio/app.html'],['Cervecería · Remanso','Autogestionable','../cerveceria/','../panel/?n=cerveceria'],['Bodegón con carta QR','Autogestionable','https://bodegon-demo-prueba.pages.dev/','https://bodegon-demo-prueba.pages.dev/panel.html'],['Velas · Luciérnaga','Autogestionable','https://luciernaga-prueba.pages.dev/',''],['ISP · NetSur Fibra','Empresa','https://netsur-prueba.pages.dev/','']];
+$('otros').innerHTML='<div class="grid otros">'+O.map(function(x){return '<div class="card"><h3>'+x[0]+'<span class="tag">'+x[1]+'</span></h3><div class="fila"><a class="b web" href="'+x[2]+'">Web</a>'+(x[3]?'<a class="b" href="'+x[3]+'">Panel</a>':'<span></span>')+'</div></div>';}).join('')+'</div>';
 </script>
 </body>
 </html>

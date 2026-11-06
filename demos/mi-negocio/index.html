@@ -49,6 +49,8 @@ a{color:var(--ac)}
 <script src="../comun/fb-demos.js"></script>
 <script src="../comun/correo.js"></script>
 <script src="../barberia/rubros.js"></script>
+<script src="../gastronomia/datos.js"></script>
+<script src="../gastronomia/rubros.js"></script>
 <!-- En un cliente: reemplazar fb-demos.js por su firebase-config.js y agregar negocio.js -->
 <script>
 (function () {
@@ -57,9 +59,13 @@ a{color:var(--ac)}
   /* Rubros con turnos (veterinaria, estética, salud, náutica): salen de ../barberia/rubros.js */
   var RT = window.RUBROS_T || {};
   if (!window.NEGOCIO) Object.keys(RT).forEach(function (r) { Object.keys(RT[r].E).forEach(function (es) { var e = RT[r].E[es], b = '../barberia/?rubro=' + r + '&estilo=' + es; NEG[e.sitio] = { n: e.nombre, t: ['turnos', 'stats'], hor: e.hor, web: b + '&real=1#turnos', webPro: b + '&plan=pro', rub: r, pros: RT[r].PROS[es].map(function (p) { return [p[0], p[1]]; }) }; }); });
+  var CR = window.CATALOGO_R || {};
+  if (!window.NEGOCIO) Object.keys(CR).forEach(function (r) { Object.keys(CR[r].E).forEach(function (es) { var e = CR[r].E[es]; NEG[e.sitio] = { n: e.nombre, g: es, rub: r, t: ['stats'] }; }); });
   if (window.NEGOCIO) NEG[window.NEGOCIO.sitio] = { n: window.NEGOCIO.nombre, t: window.NEGOCIO.secciones || ['stats'], hor: window.NEGOCIO.horario, paso: window.NEGOCIO.paso, web: window.NEGOCIO.web, pros: window.NEGOCIO.pros, g: window.NEGOCIO.g };
   var NOM = { turnos: 'Turnos', encargos: 'Encargos', stats: 'Estadísticas', clientes: 'Clientes', resumen: 'Resumen del mes', editar: 'Editar web' };
   var $ = function (id) { return document.getElementById(id); }, esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  /* Instalado como app se abre en "./" sin parámetros: vuelve al último panel usado en este equipo */
+  try { if (!location.search && !window.NEGOCIO) { var ult = localStorage.getItem('mn_ultimo'); if (ult) { location.replace('?' + ult); return; } } else if (location.search && !/alta=/.test(location.search)) localStorage.setItem('mn_ultimo', location.search.slice(1)); } catch (er) {}
   var q = new URLSearchParams(location.search), s = NEG[q.get('s')] ? q.get('s') : 'salon', vista = NEG[s].t[0], datos = {}, refs = [], vistos = null;
   var MUESTRA = q.get('muestra') === '1', app = $('app'), auth, db;
   if (MUESTRA && q.get('plan') === 'esencial') { NEG[s].t = ['stats']; vista = 'stats'; }
@@ -274,12 +280,14 @@ a{color:var(--ac)}
   var G = NEG[s].g || null, gPlan = 5, gTimer = null;
   if (G) {
     gPlan = Math.min(5, Math.max(1, +(q.get('plan') || (window.NEGOCIO && window.NEGOCIO.plan) || 5)));
-    NEG[s].t = { 1: ['stats'], 2: ['stats'], 3: ['encargos', 'stats'], 4: ['reservas', 'stats'], 5: ['cocina', 'encargos', 'reservas', 'carta', 'resumen', 'stats'] }[gPlan];
-    vista = NEG[s].t[0]; NEG[s].web = '../gastronomia/?estilo=' + G + '&plan=' + gPlan;
-    NOM.encargos = 'Pedidos web'; NOM.reservas = 'Reservas'; NOM.cocina = 'Cocina'; NOM.carta = 'Editar carta';
-    var sc = document.createElement('script'); sc.src = '../gastronomia/datos.js'; sc.onload = function () { pinta(); }; document.head.appendChild(sc);
+    var RB0 = NEG[s].rub, RR0 = RB0 ? CR[RB0] : null;
+    var TT = !RR0 ? { 1: ['stats'], 2: ['stats'], 3: ['encargos', 'stats'], 4: ['reservas', 'stats'], 5: ['cocina', 'encargos', 'reservas', 'carta', 'resumen', 'stats'] } : RR0.p4 === 'reservas' ? { 1: ['stats'], 2: ['stats'], 3: ['encargos', 'stats'], 4: ['reservas', 'stats'], 5: ['reservas', 'encargos', 'carta', 'resumen', 'stats'] } : { 1: ['stats'], 2: ['stats'], 3: ['encargos', 'stats'], 4: ['encargos', 'stats'], 5: ['encargos', 'carta', 'resumen', 'stats'] };
+    if (RR0 && gPlan > 2 && !RR0.planes[gPlan]) gPlan = 3;
+    NEG[s].t = TT[gPlan]; vista = NEG[s].t[0]; NEG[s].web = '../gastronomia/?' + (RB0 ? 'rubro=' + RB0 + '&' : '') + 'estilo=' + G + '&plan=' + gPlan;
+    NOM.encargos = RB0 === 'gimnasio' ? 'Inscripciones' : 'Pedidos web'; NOM.reservas = RB0 === 'gimnasio' ? 'Clases' : 'Reservas'; NOM.cocina = 'Cocina'; NOM.carta = RR0 ? 'Editar productos' : 'Editar carta';
   }
-  var personas = function (t) { return +((t.servicio || '').match(/\d+/) || [0])[0]; };
+  function gData() { return NEG[s].rub ? CR[NEG[s].rub].E[G] : (window.GASTRO || {})[G]; }
+  var personas = function (t) { return +((t.servicio || '').match(/\d+/) || [1])[0]; };
   var slotDe = function (m) { return m - m % 30; };
   function reservasV() {
     var hoy = hoyIso(), l = (datos.reservas || []).filter(function (t) { return t.fecha >= hoy; }), dias = [];
@@ -293,7 +301,7 @@ a{color:var(--ac)}
     dl.forEach(function (t) { var k = slotDe(t.ini); (grupos[k] = grupos[k] || []).push(t); });
     h += '<h2>' + fechaTxt(diaSel) + '</h2>' + (dl.length ? Object.keys(grupos).sort(function (a, b) { return a - b; }).map(function (k) {
       var g = grupos[k], pp = g.reduce(function (a, t) { return a + personas(t); }, 0);
-      return '<h3 style="margin:16px 0 6px">' + hh(+k) + ' h · ' + g.length + ' mesas · ' + pp + ' personas</h3>' + g.map(function (t) {
+      return '<h3 style="margin:16px 0 6px">' + hh(+k) + ' h · ' + (NEG[s].rub === 'gimnasio' ? g.length + ' anotados de ' + (gData().cupo || 15) : g.length + ' mesas · ' + pp + ' personas') + '</h3>' + g.map(function (t) {
         return '<div class="it"><div class="h">' + personas(t) + ' 👤</div><div><b>' + esc(t.nombre) + '</b> ' + (t.estado === 'nuevo' ? '<span class="tag nuevo">a confirmar</span>' : '<span class="tag">confirmada</span>') + '<br><small>' + esc(t.cel || '') + '</small></div><div class="ac">' +
           (t.estado === 'nuevo' ? '<button class="sec" data-r="' + t._id + '" data-e="confirmado">Confirmar</button>' : '') + wa(t.cel, 'Hola ' + t.nombre + '! Te esperamos el ' + fechaTxt(t.fecha) + ' a las ' + hh(slotDe(t.ini)) + ' (' + t.servicio + ') en ' + NEG[s].n + '.') + '<button class="sec" data-r="' + t._id + '" data-e="cancelado">Cancelar</button></div></div>';
       }).join('');
@@ -312,7 +320,7 @@ a{color:var(--ac)}
   }
   var cartaEd = null;
   function cartaV() {
-    var GD = window.GASTRO && GASTRO[G]; if (!GD) return '<p class="vacio">Cargando la carta…</p>';
+    var GD = gData(); if (!GD) return '<p class="vacio">Cargando la carta…</p>';
     if (!cartaEd) { try { cartaEd = JSON.parse(localStorage.getItem('spa_carta_' + s)) || {}; } catch (e) { cartaEd = {}; } cartaEd.precios = cartaEd.precios || {}; cartaEd.agot = cartaEd.agot || {}; if (cartaEd.promo == null) cartaEd.promo = GD.promo; }
     var h = '<p style="color:var(--soft)">Cambiá precios, marcá lo que se terminó y elegí el plato del día. Se ve en la carta y en el QR de las mesas al guardar.' + (MUESTRA ? ' En esta muestra se guarda solo en este navegador.' : '') + '</p>';
     h += '<h2>Promo del momento</h2><input data-cpromo="1" value="' + esc(cartaEd.promo || '') + '" placeholder="Ej.: Happy hour de 18 a 21">';
@@ -326,8 +334,8 @@ a{color:var(--ac)}
     var A = datos.gres[mesSel], B = datos.gres[ms[ms.indexOf(mesSel) + 1]], lista = function (o, f) { return Object.keys(o).sort(function (a, b) { return o[b] - o[a]; }).slice(0, 8).map(function (k) { return '<div class="fila"><span>' + esc(f ? f(k) : k) + '</span><b>' + o[k] + '</b></div>'; }).join(''); };
     var h = '<p><select id="mes" style="width:auto">' + ms.map(function (x, i) { return '<option value="' + x + '"' + (x === mesSel ? ' selected' : '') + '>' + mesTxt(x) + (i === 0 ? ' (en curso)' : '') + '</option>'; }).join('') + '</select> <button class="sec" data-gdesc="1">Descargar Excel</button></p>';
     h += mesSel === ms[0] ? '<p style="color:var(--warn)">Mes en curso: se va completando día a día.</p>' : '<p style="color:var(--soft)">Este resumen te llega por mail el día 1 de cada mes.' + (A.viejo ? ' El detalle se borró al año; los totales quedan siempre.' : '') + '</p>';
-    h += '<div class="kpis"><div class="kpi"><b>' + pesos(A.ventas) + '</b><span>vendido por la web y el QR' + var_(A.ventas, B && B.ventas) + '</span></div><div class="kpi"><b>' + A.pedidos + '</b><span>pedidos web (WhatsApp)' + var_(A.pedidos, B && B.pedidos) + '</span></div><div class="kpi"><b>' + A.mesas + '</b><span>pedidos desde la mesa (QR)</span></div><div class="kpi"><b>' + pesos(A.ventas / Math.max(1, A.pedidos + A.mesas)) + '</b><span>ticket promedio</span></div><div class="kpi"><b>' + A.reservas + '</b><span>reservas · ' + A.personas + ' personas</span></div><div class="kpi"><b>' + A.visitas + '</b><span>visitas a la web</span></div></div>';
-    return h + '<h2>Platos más pedidos</h2>' + lista(A.platos) + '<h2>Horarios con más pedidos</h2>' + lista(A.horas, function (k) { return k + ' h'; }) + '<h2>Días con más movimiento</h2>' + lista(A.dias, function (k) { return DIAS[k]; });
+    h += '<div class="kpis"><div class="kpi"><b>' + pesos(A.ventas) + '</b><span>' + (NEG[s].rub ? 'vendido por la web' : 'vendido por la web y el QR') + var_(A.ventas, B && B.ventas) + '</span></div><div class="kpi"><b>' + A.pedidos + '</b><span>pedidos web (WhatsApp)' + var_(A.pedidos, B && B.pedidos) + '</span></div>' + (NEG[s].rub ? '' : '<div class="kpi"><b>' + A.mesas + '</b><span>pedidos desde la mesa (QR)</span></div>') + '<div class="kpi"><b>' + pesos(A.ventas / Math.max(1, A.pedidos + A.mesas)) + '</b><span>ticket promedio</span></div>' + (NEG[s].rub && CR[NEG[s].rub].p4 !== 'reservas' ? '' : '<div class="kpi"><b>' + A.reservas + '</b><span>' + (NEG[s].rub ? 'reservas de clases' : 'reservas · ' + A.personas + ' personas') + '</span></div>') + '<div class="kpi"><b>' + A.visitas + '</b><span>visitas a la web</span></div></div>';
+    return h + '<h2>' + (NEG[s].rub ? 'Lo más pedido' : 'Platos más pedidos') + '</h2>' + lista(A.platos) + '<h2>Horarios con más pedidos</h2>' + lista(A.horas, function (k) { return k + ' h'; }) + '<h2>Días con más movimiento</h2>' + lista(A.dias, function (k) { return DIAS[k]; });
   }
   function gClick(b) {
     if (b.dataset.r) {
@@ -354,23 +362,23 @@ a{color:var(--ac)}
     return false;
   }
   function datosMuestraG() {
-    datosMuestra(); var GD = { parrilla: ['Bife de chorizo', 'Vacío', 'Parrillada para 2', 'Ravioles de verdura', 'Provoleta a la parrilla', 'Flan casero', 'Vino de la casa (botella)'], cafe: ['Café con leche', 'Medialunas', 'Flat white', 'Tostón de palta', 'Brunch completo', 'Cheesecake de frutos rojos'], urbano: ['Smash clásica', 'Bacon BBQ', 'Pinta IPA', 'Papas Lúpulo', 'Muzzarella', 'Pinta Golden'] }[G];
+    datosMuestra(); var GD = NEG[s].rub ? [].concat.apply([], gData().carta.map(function (c) { return c.items.filter(function (x) { return x.p; }).map(function (x) { return x.n; }); })).slice(0, 7) : { parrilla: ['Bife de chorizo', 'Vacío', 'Parrillada para 2', 'Ravioles de verdura', 'Provoleta a la parrilla', 'Flan casero', 'Vino de la casa (botella)'], cafe: ['Café con leche', 'Medialunas', 'Flat white', 'Tostón de palta', 'Brunch completo', 'Cheesecake de frutos rojos'], urbano: ['Smash clásica', 'Bacon BBQ', 'Pinta IPA', 'Papas Lúpulo', 'Muzzarella', 'Pinta Golden'] }[G];
     var rnd = (function (x) { return function () { x = (x * 9301 + 49297) % 233280; return x / 233280; }; })(5), NB = ['Martín G.', 'Lucía P.', 'Joaquín R.', 'Sofía M.', 'Nicolás F.', 'Camila T.', 'Facundo L.', 'Valentina S.', 'Tomás A.', 'Agustina B.'];
     var cel = function () { return '11' + String(40000000 + Math.floor(rnd() * 59999999)); }, it = function () { var a = [], n = 1 + Math.floor(rnd() * 3); for (var i = 0; i < n; i++) a.push({ n: GD[Math.floor(rnd() * GD.length)], c: 1 + Math.floor(rnd() * 2), p: 5000 + Math.floor(rnd() * 15) * 1000 }); return a; };
     var tot = function (a) { return a.reduce(function (s0, x) { return s0 + x.c * x.p; }, 0); }, n = 0;
     var enc = []; for (var i = 0; i < 9; i++) { var a = it(); enc.push({ _id: 'e' + i, nombre: NB[i], cel: cel(), ret: rnd() < .5 ? 'Retiro en el local' : 'Envío · ' + ['San Fernando', 'Victoria', 'Tigre centro'][i % 3], total: tot(a), items: a, estado: i < 3 ? 'nuevo' : i < 5 ? 'listo' : 'entregado', creado: Date.now() - (9 - i) * 2400000 }); }
     try { (JSON.parse(localStorage.getItem('spa_p_' + s)) || []).forEach(function (x) { x._id = String(x.id); enc.push(x); }); } catch (e) {}
     datos.encargos = enc;
-    var res = [], cupo = { parrilla: 8, cafe: 5, urbano: 6 }[G];
-    for (var dd = 0; dd < 7; dd++) { var d = new Date(); d.setDate(d.getDate() + dd); var f = hoyIso(d), SL = G === 'urbano' ? [1200, 1230, 1260, 1290, 1320] : G === 'cafe' ? [600, 630, 660, 960, 990] : [750, 780, 810, 1230, 1260, 1290];
-      SL.forEach(function (m) { var c = Math.floor(rnd() * (dd === 0 ? cupo : cupo / 1.5)); for (var k = 0; k < c; k++) { var p = 2 + Math.floor(rnd() * 5); if (rnd() < .06) p = 10 + Math.floor(rnd() * 4); res.push({ _id: 'r' + (n++), fecha: f, ini: m + k, servicio: 'Mesa para ' + p, nombre: NB[Math.floor(rnd() * NB.length)], cel: cel(), estado: p > 8 ? 'nuevo' : 'confirmado' }); } }); }
+    var res = [], cupo = NEG[s].rub ? gData().cupo || 6 : { parrilla: 8, cafe: 5, urbano: 6 }[G];
+    for (var dd = 0; dd < 7; dd++) { var d = new Date(); d.setDate(d.getDate() + dd); var f = hoyIso(d), HH = NEG[s].rub && gData().hor[d.getDay()], SL = NEG[s].rub ? (HH ? [HH[0][0] * 60 + 60, HH[0][0] * 60 + 120, HH[0][0] * 60 + 180, HH[0][1] * 60 - 180, HH[0][1] * 60 - 120] : []) : G === 'urbano' ? [1200, 1230, 1260, 1290, 1320] : G === 'cafe' ? [600, 630, 660, 960, 990] : [750, 780, 810, 1230, 1260, 1290];
+      SL.forEach(function (m) { var c = Math.floor(rnd() * (dd === 0 ? cupo : cupo / 1.5)); for (var k = 0; k < c; k++) { var p = 2 + Math.floor(rnd() * 5); if (NEG[s].rub) p = 1; else if (rnd() < .06) p = 10 + Math.floor(rnd() * 4); res.push({ _id: 'r' + (n++), fecha: f, ini: m + k, servicio: NEG[s].rub ? 'Clase' : 'Mesa para ' + p, nombre: NB[Math.floor(rnd() * NB.length)], cel: cel(), estado: p > 8 ? 'nuevo' : 'confirmado' }); } }); }
     try { (JSON.parse(localStorage.getItem('spa_r_' + s)) || []).forEach(function (x) { x._id = String(x.id); res.push(x); }); } catch (e) {}
     datos.reservas = res;
     datos.cocina = [{ id: 'c1', tipo: 'pedido', mesa: 2, items: it(), estado: 'nuevo', t: Date.now() - 4 * 60000 }, { id: 'c2', tipo: 'pedido', mesa: 7, items: it(), estado: 'prep', t: Date.now() - 12 * 60000 }, { id: 'c3', tipo: 'pedido', mesa: 5, items: it(), estado: 'prep', t: Date.now() - 23 * 60000 }, { id: 'c4', tipo: 'pedido', mesa: 1, items: it(), estado: 'listo', t: Date.now() - 18 * 60000 }, { id: 'c5', tipo: 'cuenta', mesa: 3, estado: 'nuevo', t: Date.now() - 2 * 60000 }];
     var gres = {}, dm = new Date(); dm.setDate(1);
-    for (var mi = 0; mi < 16; mi++) { var key = mesDe(dm), f0 = 1 + .3 * Math.sin(mi / 2) - mi * .02, ped = Math.round((60 + rnd() * 30) * f0), mes = Math.round((140 + rnd() * 60) * f0), pl = {}, hs = {}, ds = {};
+    for (var mi = 0; mi < 16; mi++) { var key = mesDe(dm), f0 = 1 + .3 * Math.sin(mi / 2) - mi * .02, ped = Math.round((60 + rnd() * 30) * f0), mes = NEG[s].rub ? 0 : Math.round((140 + rnd() * 60) * f0), pl = {}, hs = {}, ds = {};
       if (mi === 0) { ped = Math.round(ped * new Date().getDate() / 30); mes = Math.round(mes * new Date().getDate() / 30); }
-      GD.forEach(function (x) { pl[x] = Math.round((ped + mes) * (.2 + rnd() * .6)); }); (G === 'cafe' ? [9, 10, 11, 12, 16, 17, 18] : G === 'urbano' ? [19, 20, 21, 22, 23] : [13, 14, 21, 22]).forEach(function (h0) { hs[h0] = Math.round((ped + mes) * (.1 + rnd() * .3)); }); [2, 3, 4, 5, 6, 0].forEach(function (d0) { ds[d0] = Math.round((ped + mes) * (.08 + (d0 === 5 || d0 === 6 ? .12 : 0) + rnd() * .08)); });
+      GD.forEach(function (x) { pl[x] = Math.round((ped + mes) * (.2 + rnd() * .6)); }); (NEG[s].rub ? [10, 11, 12, 17, 18, 19] : G === 'cafe' ? [9, 10, 11, 12, 16, 17, 18] : G === 'urbano' ? [19, 20, 21, 22, 23] : [13, 14, 21, 22]).forEach(function (h0) { hs[h0] = Math.round((ped + mes) * (.1 + rnd() * .3)); }); [2, 3, 4, 5, 6, 0].forEach(function (d0) { ds[d0] = Math.round((ped + mes) * (.08 + (d0 === 5 || d0 === 6 ? .12 : 0) + rnd() * .08)); });
       var rs = Math.round((90 + rnd() * 40) * f0 * (mi === 0 ? new Date().getDate() / 30 : 1));
       gres[key] = { pedidos: ped, mesas: mes, ventas: (ped + mes) * (14000 + Math.round(rnd() * 6000)), reservas: rs, personas: rs * 4, visitas: Math.round((900 + rnd() * 500) * f0 * (mi === 0 ? new Date().getDate() / 30 : 1)), platos: pl, horas: hs, dias: ds, viejo: mi > 12 };
       dm.setMonth(dm.getMonth() - 1); }

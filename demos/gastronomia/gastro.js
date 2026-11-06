@@ -1,8 +1,12 @@
 /* Muestra gastronómica: 3 estilos × 5 planes. Usa datos.js (window.GASTRO) y ../comun/reservas.js */
 (function () {
   var NUM = '5491126339350', U = 'https://images.unsplash.com/photo-';
-  var q = new URLSearchParams(location.search), est = GASTRO[q.get('estilo')] ? q.get('estilo') : 'parrilla', plan = Math.min(5, Math.max(1, +q.get('plan') || 3)), e = GASTRO[est];
-  var mesa = plan === 5 && /^\d{1,3}$/.test(q.get('mesa') || '') ? +q.get('mesa') : 0;
+  var q = new URLSearchParams(location.search), RB = window.CATALOGO_R && CATALOGO_R[q.get('rubro')] ? q.get('rubro') : null, RR = RB ? CATALOGO_R[RB] : null, GD = RR ? RR.E : GASTRO;
+  var est = GD[q.get('estilo')] ? q.get('estilo') : 'parrilla', e = GD[est];
+  var PL = RR ? [1, 2].concat(Object.keys(RR.planes).map(Number)) : [1, 2, 3, 4, 5], plan = +q.get('plan') || 3; if (PL.indexOf(plan) < 0) plan = PL.indexOf(3) >= 0 ? 3 : PL[PL.length - 1];
+  var P4 = RR ? RR.p4 : 'reservas', PAL = (RR && RR.palabra) || {}, ENVIO = !RR || RR.envio !== false, MESAS = !RR;
+  if (window.SPA_STATS) SPA_STATS.sitio = e.sitio;
+  var mesa = MESAS && plan === 5 && /^\d{1,3}$/.test(q.get('mesa') || '') ? +q.get('mesa') : 0;
   var $ = function (i) { return document.getElementById(i); }, esc = function (x) { return String(x == null ? '' : x).replace(/[<>&"]/g, ''); };
   var pesos = function (n) { return '$' + Math.round(n).toLocaleString('es-AR'); }, hh = function (m) { return String(Math.floor(m / 60) % 24).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'); };
   var iso = function (d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
@@ -10,11 +14,12 @@
   var link = function (k, v) { var p = new URLSearchParams(location.search); p.set(k, v); if (k !== 'mesa') p.delete('mesa'); return '?' + p.toString(); };
   var real = !!(window.FIREBASE_CONFIG && window.FIREBASE_CONFIG.apiKey);
   document.body.className = est; document.title = e.titulo + ' · Muestra StudioProAr';
-  var PLANES = [['1', 'Esencial'], ['2', 'Completa'], ['3', 'Pedidos'], ['4', 'Reservas'], ['5', 'Salón Pro']];
+  var PLANES = PL.map(function (n) { return [String(n), RR ? ({ 1: 'Esencial', 2: 'Completa' })[n] || RR.planes[n] : ['', 'Esencial', 'Completa', 'Pedidos', 'Reservas', 'Salón Pro'][n]]; });
   var TXT = { 1: 'Plan Esencial: carta simple, horarios, ubicación, WhatsApp y links a las apps de delivery.', 2: 'Plan Completa: carta con fotos y categorías, galería, eventos y preguntas frecuentes.', 3: 'Plan Pedidos: el cliente arma el pedido en la web y llega armado al WhatsApp del local. Retiro o envío por zona.', 4: 'Plan Reservas: reserva de mesa con cupo por horario, confirmación, recordatorio y cancelación.', 5: 'Plan Salón Pro: todo lo anterior + pedido desde la mesa con QR directo a la cocina, carta editable y resumen del mes.' };
-  $('selector').innerHTML = '<span>Estilo:</span>' + [['parrilla', 'Parrilla y bodegón'], ['cafe', 'Café y brunch'], ['urbano', 'Cervecería y burgers']].map(function (x) { return '<a href="' + link('estilo', x[0]) + '"' + (x[0] === est ? ' aria-current="true"' : '') + '>' + x[1] + '</a>'; }).join('') +
+  $('selector').innerHTML = '<span>Estilo:</span>' + ((RR && RR.est) || [['parrilla', 'Parrilla y bodegón'], ['cafe', 'Café y brunch'], ['urbano', 'Cervecería y burgers']]).map(function (x) { return '<a href="' + link('estilo', x[0]) + '"' + (x[0] === est ? ' aria-current="true"' : '') + '>' + x[1] + '</a>'; }).join('') +
     '<span>Plan:</span>' + PLANES.map(function (x) { return '<a href="' + link('plan', x[0]) + '"' + (+x[0] === plan ? ' aria-current="true"' : '') + '>' + x[0] + ' · ' + x[1] + '</a>'; }).join('');
-  $('plan-txt').textContent = TXT[plan];
+  if (RR) { var nm = PLANES.filter(function (x) { return +x[0] === plan; })[0][1]; TXT = { 1: 'Plan Esencial: una página con ' + (PAL.carta || 'productos').toLowerCase() + ', horarios, ubicación y WhatsApp.', 2: 'Plan Completa: ' + (PAL.carta || 'productos').toLowerCase() + ' con fotos y categorías, galería y preguntas frecuentes.', 3: 'Plan ' + nm + ': el cliente arma el pedido en la web y llega armado al WhatsApp del local.', 4: P4 === 'programado' ? 'Plan ' + nm + ': además elige el día y la hora de retiro o entrega.' : 'Plan ' + nm + ': reserva de lugar en cada clase, con cupo y recordatorio.', 5: 'Plan ' + nm + ': el dueño edita productos, precios y "agotado" desde su panel, con resumen del mes.' }; }
+  $('plan-txt').innerHTML = esc(TXT[plan]) + (RR && RR.app && plan === 5 ? ' <a href="' + RR.app + '">Ver la app de socios →</a>' : '') + (RR && RR.completa && plan >= 3 ? ' <a href="' + RR.completa + '">Ver la tienda completa (fotos por color) →</a>' : '');
   var waBase = 'https://wa.me/' + NUM + '?text=', waTxt = 'Hola ' + e.nombre + '! Vi su web y quiero ';
   $('wa').href = waBase + encodeURIComponent(waTxt + 'consultar: ');
 
@@ -25,35 +30,37 @@
 
   $('marca').textContent = e.titulo; $('h-zona').textContent = e.zona; $('h-tit').textContent = e.tit; $('h-sub').textContent = e.sub; $('d-dir').textContent = e.dir; $('pie').textContent = e.titulo + ' · ' + e.dir;
   $('hero').style.backgroundImage = 'url(' + U + e.hero + '?w=1600&q=70&auto=format&fit=crop)';
-  var nav = [['#carta', 'Carta']]; if (plan >= 4) nav.push(['#reservas', 'Reservas']); if (plan >= 2) nav.push(['#galeria', 'El lugar'], ['#eventos', 'Eventos']); nav.push(['#donde', 'Dónde']);
+  var RES = plan >= 4 && P4 === 'reservas', nav = [['#carta', PAL.carta || 'Carta']]; if (RES) nav.push(['#reservas', 'Reservas']); if (plan >= 2) { nav.push(['#galeria', 'Galería']); if (e.eventos) nav.push(['#eventos', 'Eventos']); } nav.push(['#donde', 'Dónde']);
   $('nav').innerHTML = nav.map(function (n) { return '<a href="' + n[0] + '">' + n[1] + '</a>'; }).join('');
   var hb = [];
-  if (plan === 3 || plan === 5) hb.push('<a class="btn" href="#carta">Hacé tu pedido</a>'); else hb.push('<a class="btn" href="#carta">Ver la carta</a>');
-  if (plan >= 4) hb.push('<a class="btn sec" href="#reservas">Reservá tu mesa</a>'); else hb.push('<a class="btn sec" target="_blank" rel="noopener" href="' + waBase + encodeURIComponent(waTxt + 'hacer una consulta: ') + '">Escribinos por WhatsApp</a>');
+  var pide = plan === 3 || plan === 5 || (plan === 4 && P4 === 'programado');
+  if (pide) hb.push('<a class="btn" href="#carta">' + (PAL.pedir || 'Hacé tu pedido') + '</a>'); else hb.push('<a class="btn" href="#carta">' + (PAL.ver || 'Ver la carta') + '</a>');
+  if (RES) hb.push('<a class="btn sec" href="#reservas">' + (PAL.reservas || 'Reservá tu mesa') + '</a>'); else hb.push('<a class="btn sec" target="_blank" rel="noopener" href="' + waBase + encodeURIComponent(waTxt + 'hacer una consulta: ') + '">Escribinos por WhatsApp</a>');
   $('h-btns').innerHTML = hb.join('');
-  if (plan <= 2) $('apps').innerHTML = '<a href="#" onclick="return false" title="En la web real va el link a su local en PedidosYa">Pedí por PedidosYa</a><a href="#" onclick="return false" title="En la web real va el link a su local en Rappi">Pedí por Rappi</a>';
+  if (plan <= 2 && (!RR || RR.apps)) $('apps').innerHTML = '<a href="#" onclick="return false" title="En la web real va el link a su local en PedidosYa">Pedí por PedidosYa</a><a href="#" onclick="return false" title="En la web real va el link a su local en Rappi">Pedí por Rappi</a>';
   var hf = function (h) { return h % 24 + ' h'; };
   $('hor').innerHTML = [1, 2, 3, 4, 5, 6, 0].map(function (d) { var h = e.hor[d]; return '<tr><td>' + DN[d] + '</td><td>' + (h ? h.map(function (x) { return hf(x[0]) + ' a ' + hf(x[1]); }).join(' y ') : 'Cerrado') + '</td></tr>'; }).join('');
   if (plan >= 2) {
     $('galeria').hidden = false; $('gal').innerHTML = e.gal.map(function (g) { return '<div role="img" aria-label="Foto del lugar" style="background-image:url(' + U + g + '?w=700&q=70&auto=format&fit=crop)"></div>'; }).join('');
-    $('eventos').hidden = false; $('ev-tit').textContent = e.eventos.tit; $('ev-txt').textContent = e.eventos.txt; $('ev-btn').href = waBase + encodeURIComponent(waTxt + 'consultar por un evento para el día: ');
+    if (e.eventos) { $('eventos').hidden = false; } else e.eventos = { tit: '', txt: '', fotos: [] }; $('ev-tit').textContent = e.eventos.tit; $('ev-txt').textContent = e.eventos.txt; $('ev-btn').href = waBase + encodeURIComponent(waTxt + 'consultar por un evento para el día: ');
     $('ev-gal').innerHTML = e.eventos.fotos.map(function (g) { return '<div style="background-image:url(' + U + g + '?w=600&q=70&auto=format&fit=crop)"></div>'; }).join('');
     $('faq-c').hidden = false; $('faq').innerHTML = e.faq.map(function (f) { return '<details><summary>' + f[0] + '</summary><p>' + f[1] + '</p></details>'; }).join('');
   }
 
   /* ---------- Carta ---------- */
-  var pide = plan === 3 || plan === 5, catSel = 0, todos = [];
+  var catSel = 0, todos = [];
+  if (RR) { document.querySelector('#carta .eyebrow').textContent = PAL.carta || 'Catálogo'; $('c-tit').textContent = PAL.carta || 'Catálogo'; }
   carta.forEach(function (c) { c.items.forEach(function (x) { x.cat = c.cat; todos.push(x); }); });
   function platoH(x) {
     var i = todos.indexOf(x);
     return '<div class="plato' + (x.f ? ' f' : '') + (x.agot ? ' agot' : '') + '">' + (x.f ? '<div class="ft" style="background-image:url(' + U + x.f + '?w=300&q=70&auto=format&fit=crop)"></div>' : '') +
-      '<div><b>' + esc(x.n) + (x.dia ? '<span class="tag">Plato del día</span>' : '') + (x.agot ? '<span class="tag">Agotado</span>' : '') + '</b><small>' + esc(x.d) + '</small></div><span class="p">' + pesos(x.p) + '</span>' +
-      (pide && !x.agot ? '<button class="add" data-add="' + i + '">Agregar</button>' : '') + '</div>';
+      '<div><b>' + esc(x.n) + (x.dia ? '<span class="tag">Plato del día</span>' : '') + (x.agot ? '<span class="tag">Agotado</span>' : '') + '</b><small>' + esc(x.d) + '</small></div><span class="p">' + (x.p ? pesos(x.p) : 'Incluida') + '</span>' +
+      (pide && !x.agot && x.p ? '<button class="add" data-add="' + i + '">Agregar</button>' : '') + '</div>';
   }
   function pintarCarta() {
     if (plan === 1) {
-      $('c-sub').textContent = 'Precios actualizados. Para pedir, escribinos por WhatsApp o usá las apps de delivery.';
-      $('platos').innerHTML = '<div class="simple">' + carta.map(function (c) { return '<h3 style="margin-top:22px">' + esc(c.cat) + '</h3>' + c.items.map(function (x) { return '<div class="fila"><span>' + esc(x.n) + '</span><b>' + pesos(x.p) + '</b></div>'; }).join(''); }).join('') + '</div>';
+      $('c-sub').textContent = 'Precios actualizados. Para pedir, escribinos por WhatsApp' + (!RR || RR.apps ? ' o usá las apps de delivery.' : '.');
+      $('platos').innerHTML = '<div class="simple">' + carta.map(function (c) { return '<h3 style="margin-top:22px">' + esc(c.cat) + '</h3>' + c.items.map(function (x) { return '<div class="fila"><span>' + esc(x.n) + '</span><b>' + (x.p ? pesos(x.p) : 'Incluida') + '</b></div>'; }).join(''); }).join('') + '</div>';
       return;
     }
     $('c-sub').textContent = pide ? (mesa ? 'Elegí lo que quieras y mandalo directo a la cocina.' : 'Armá tu pedido y te llega armado por WhatsApp para coordinar la entrega.') : '';
@@ -100,21 +107,26 @@
     if (car.length && mesa) {
       h += '<div class="tot"><span>Total</span><span>' + pesos(st) + '</span></div><div class="f"><input id="c-nom" maxlength="30" placeholder="Tu nombre (opcional)"></div><button class="btn" style="width:100%" data-enviar="mesa">Enviar a la cocina</button><p style="color:var(--su);font-size:14px">El pedido llega a la pantalla de la cocina. La cuenta se paga al final, en la mesa.</p>';
     } else if (car.length) {
-      h += '<div class="seg"><button type="button" data-modo="retiro" aria-pressed="' + (ent.modo === 'retiro') + '">Retiro en el local</button><button type="button" data-modo="envio" aria-pressed="' + (ent.modo === 'envio') + '">Envío a domicilio</button></div>';
+      if (!ENVIO) ent.modo = 'retiro'; else h += '<div class="seg"><button type="button" data-modo="retiro" aria-pressed="' + (ent.modo === 'retiro') + '">Retiro en el local</button><button type="button" data-modo="envio" aria-pressed="' + (ent.modo === 'envio') + '">Envío a domicilio</button></div>';
       h += '<div class="f">';
       if (ent.modo === 'envio') h += '<label>Zona<select id="c-zona">' + e.zonas.map(function (z, i) { return '<option value="' + i + '"' + (i === ent.zona ? ' selected' : '') + '>' + z[0] + (z[1] == null ? ' (a coordinar)' : ' · ' + pesos(z[1])) + '</option>'; }).join('') + '</select></label><input id="c-dir" maxlength="80" placeholder="Dirección y entre calles" value="' + esc(ent.dir || '') + '">';
+      if (PROG) { var DS = diasProg(); if (!ent.dia || DS.indexOf(ent.dia) < 0) ent.dia = DS[0]; var HS = horasProg(ent.dia); if (HS.indexOf(+ent.hora) < 0) ent.hora = HS[0]; h += '<label>¿Para cuándo?<select id="c-dia">' + DS.map(function (f) { return '<option value="' + f + '"' + (f === ent.dia ? ' selected' : '') + '>' + diaTxt(f) + '</option>'; }).join('') + '</select></label><label>Hora<select id="c-hora">' + HS.map(function (m) { return '<option value="' + m + '"' + (m === +ent.hora ? ' selected' : '') + '>' + hh(m) + ' h</option>'; }).join('') + '</select></label>'; }
       h += '<input id="c-nom" maxlength="40" placeholder="Tu nombre" autocomplete="given-name" value="' + esc(ent.nom || '') + '"><input id="c-cel" type="tel" inputmode="tel" maxlength="20" placeholder="Celular (ej. 1155554444)" value="' + esc(ent.cel || '') + '"><label>¿Cómo pagás?<select id="c-pago">' + ['Efectivo', 'Transferencia'].map(function (p) { return '<option' + (p === ent.pago ? ' selected' : '') + '>' + p + '</option>'; }).join('') + '</select></label><textarea id="c-nota" rows="2" maxlength="120" placeholder="Nota (opcional)">' + esc(ent.nota || '') + '</textarea></div>';
       h += '<div class="lin"><span>Subtotal</span><span>' + pesos(st) + '</span></div>' + (ent.modo === 'envio' ? '<div class="lin"><span>Envío</span><span>' + (env == null ? 'a coordinar' : env === 0 ? 'gratis' : pesos(env)) + '</span></div>' : '');
       h += '<div class="tot"><span>Total</span><span>' + pesos(tot) + (env == null ? ' + envío' : '') + '</span></div>';
       if (ent.modo === 'envio') h += '<p style="color:var(--su);font-size:14px">Envío gratis desde ' + pesos(e.gratis) + '. Pedido mínimo para envío ' + pesos(e.minimo) + '.</p>';
-      h += '<button class="btn" style="width:100%" data-enviar="wa">Enviar pedido por WhatsApp</button><p style="color:var(--su);font-size:14px">Se abre WhatsApp con el pedido armado. Ahí el local te confirma la demora y coordinan el pago.</p>';
+      h += '<button class="btn" style="width:100%" data-enviar="wa">' + (PAL.boton || 'Enviar pedido por WhatsApp') + '</button><p style="color:var(--su);font-size:14px">Se abre WhatsApp con el pedido armado. Ahí el local te confirma la demora y coordinan el pago.</p>';
     }
     h += '<p id="c-msg" class="err" role="status">' + (msg || '') + '</p>';
     $('car').innerHTML = h;
   }
-  function leerForm() { ['dir', 'nom', 'cel', 'nota'].forEach(function (k) { var i = $('c-' + k); if (i) ent[k] = i.value; }); var p = $('c-pago'); if (p) ent.pago = p.value; }
+  var PROG = plan >= 4 && P4 === 'programado';
+  var diaTxt = function (f) { var p = f.split('-'), d = new Date(+p[0], p[1] - 1, +p[2]); return (f === iso(new Date()) ? 'Hoy' : DN[d.getDay()]) + ' ' + d.getDate() + '/' + (d.getMonth() + 1); };
+  function diasProg() { var r = []; for (var i = 0; i < 14 && r.length < 7; i++) { var d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() + i); if (e.hor[d.getDay()] && horasProg(iso(d)).length) r.push(iso(d)); } return r; }
+  function horasProg(f) { var p = f.split('-'), d = new Date(+p[0], p[1] - 1, +p[2]), r = [], ah = new Date().getHours() * 60 + new Date().getMinutes() + 120, hoy = f === iso(new Date()); (e.hor[d.getDay()] || []).forEach(function (x) { for (var m = x[0] * 60 + 30; m <= Math.min(x[1] * 60 - 30, 23 * 60 + 30); m += 30) if (!hoy || m >= ah) r.push(m); }); return r; }
+  function leerForm() { ['dir', 'nom', 'cel', 'nota'].forEach(function (k) { var i = $('c-' + k); if (i) ent[k] = i.value; }); var p = $('c-pago'); if (p) ent.pago = p.value; var cd = $('c-dia'); if (cd) ent.dia = cd.value; var ch = $('c-hora'); if (ch) ent.hora = ch.value; }
   $('carrito-b').onclick = function () { pintarCarrito(); $('dlg-car').showModal(); };
-  $('dlg-car').onchange = function (ev) { if (ev.target.id === 'c-zona') { leerForm(); ent.zona = +ev.target.value; pintarCarrito(); } };
+  $('dlg-car').onchange = function (ev) { if (ev.target.id === 'c-dia') { leerForm(); pintarCarrito(); return; } if (ev.target.id === 'c-zona') { leerForm(); ent.zona = +ev.target.value; pintarCarrito(); } };
   $('dlg-car').onclick = function (ev) {
     var d = $('dlg-car'), b = ev.target.closest('button');
     if (ev.target === d || (b && b.hasAttribute('data-cerrar'))) return d.close();
@@ -132,10 +144,10 @@
     if (!Reservas.celOk(cel)) return pintarCarrito('Escribí tu celular con código de área, sin 0 ni 15 (ej. 1155554444).');
     if (envio && (ent.dir || '').trim().length < 5) return pintarCarrito('Escribí la dirección de entrega.');
     if (envio && st < e.minimo) return pintarCarrito('El pedido mínimo para envío es ' + pesos(e.minimo) + '.');
-    var ret = envio ? 'Envío · ' + z[0] : 'Retiro en el local';
+    var cuando = PROG ? diaTxt(ent.dia) + ' ' + hh(+ent.hora) + ' h' : '', ret = (envio ? 'Envío · ' + z[0] : (ENVIO ? 'Retiro en el local' : (RB === 'gimnasio' ? 'Inscripción' : 'Retiro en el local'))) + (cuando ? ' · ' + cuando : '');
     var t = '*Pedido desde la web* 🛒\n' + car.map(function (x) { return '• ' + x.c + ' × ' + x.n + (x.det ? ' (' + x.det + ')' : '') + ' — ' + pesos(x.p * x.c); }).join('\n') +
       '\n\nSubtotal: ' + pesos(st) + (envio ? '\nEnvío (' + z[0] + '): ' + (env == null ? 'a coordinar' : env === 0 ? 'gratis' : pesos(env)) : '') + '\n*Total: ' + pesos(tot) + (env == null ? ' + envío' : '') + '*' +
-      '\n\n' + (envio ? '🛵 Envío a: ' + ent.dir.trim() : '🏠 Retiro en el local') + '\n💵 Pago: ' + ent.pago + '\n👤 ' + nom + ' · ' + cel + (ent.nota && ent.nota.trim() ? '\n📝 ' + ent.nota.trim() : '');
+      '\n\n' + (cuando ? '📅 Para: ' + cuando + '\n' : '') + (envio ? '🛵 Envío a: ' + ent.dir.trim() : (RB === 'gimnasio' ? '🏋️ Inscripción' : '🏠 Retiro en el local')) + '\n💵 Pago: ' + ent.pago + '\n👤 ' + nom + ' · ' + cel + (ent.nota && ent.nota.trim() ? '\n📝 ' + ent.nota.trim() : '');
     /* Se abre WhatsApp al toque (si no, el navegador lo bloquea) y en paralelo queda la copia en el panel del dueño */
     var url = waBase.replace(NUM, NUM) + encodeURIComponent(t);
     window.open(url, '_blank');
@@ -168,29 +180,31 @@
     pintarMesa(); setInterval(function () { pintarMesa(); }, 3000);
     $('hero').style.display = 'none';
     ['reservas', 'galeria', 'eventos'].forEach(function (k) { $(k).style.display = 'none'; });
-  } else if (plan === 5) {
+  } else if (plan === 5 && MESAS) {
     $('c-sub').insertAdjacentHTML('afterend', '<p class="caja" style="margin:10px 0">📱 <b>En el local, cada mesa tiene su QR.</b> El cliente lo escanea, pide y el pedido aparece en la pantalla de la cocina (sin WhatsApp). <a href="' + link('mesa', '4') + '">Probá cómo pide la mesa 4 →</a></p>');
   }
 
   /* ---------- Reservas de mesa (plan 4 y 5): cupo de reservas por horario ---------- */
-  if (plan >= 4 && !mesa) {
+  if (RES && !mesa) {
+    if (RR) { document.querySelector('#reservas h2').textContent = PAL.reservas || 'Reservá tu lugar'; document.querySelector('#reservas .cols > div:last-child p').textContent = PAL.resTxt || 'Elegí día y horario.'; }
     $('reservas').hidden = false; $('rs-reglas').textContent = e.reglas;
     var RK = 'spa_r_' + e.sitio, dias = [];
     for (var i = 0; i < 30 && dias.length < 14; i++) { var d0 = new Date(); d0.setHours(0, 0, 0, 0); d0.setDate(d0.getDate() + i); if (e.hor[d0.getDay()]) dias.push(d0); }
-    var sel = { d: dias[0], h: null, p: 2 };
-    var slots = function (d) { var r = []; e.hor[d.getDay()].forEach(function (x) { for (var m = x[0] * 60; m <= Math.min(x[1] * 60 - 90, 23 * 60 + 30); m += 30) r.push(m); }); return r; };
-    var usados = function (d, m) { return Reservas.listaDe(e.sitio, RK).filter(function (t) { return t.fecha === iso(d) && t.ini >= m && t.ini < m + 30; }); };
+    var sel = { d: dias[0], h: null, p: e.solo1 ? 1 : 2 };
+    var PS = e.paso || 30, slots = function (d) { var r = []; e.hor[d.getDay()].forEach(function (x) { for (var m = x[0] * 60; m <= Math.min(x[1] * 60 - (PS === 60 ? 60 : 90), 23 * 60 + 30); m += PS) r.push(m); }); return r; };
+    var usados = function (d, m) { return Reservas.listaDe(e.sitio, RK).filter(function (t) { return t.fecha === iso(d) && t.ini >= m && t.ini < m + PS; }); };
     var libre = function (d, m) { var hoy = iso(d) === iso(new Date()), ah = new Date().getHours() * 60 + new Date().getMinutes(); return !(hoy && m <= ah + 30) && usados(d, m).length < e.cupo; };
     Reservas.iniciar({ sitio: e.sitio, col: 'turnos', clave: RK, paso: 1, mios: e.sitio });
-    $('rs').innerHTML = '<div class="ag-mios"></div><span class="et">1. ¿Cuántos son?</span><select id="rs-p" style="width:100%;padding:11px;border-radius:10px;border:1px solid var(--bo);background:var(--bg)">' + Array.apply(null, Array(e.grupoMax + 4)).map(function (_, i) { var n = i + 1; return '<option value="' + n + '"' + (n === 2 ? ' selected' : '') + '>' + n + (n === 1 ? ' persona' : ' personas') + (n > e.grupoMax ? ' (a confirmar)' : '') + '</option>'; }).join('') + '</select>' +
-      '<span class="et">2. Día</span><div class="fila dias" id="rs-d"></div><span class="et">3. Horario</span><div class="fila" id="rs-h"></div><p id="rs-res" role="status"></p>' +
+    var N0 = e.solo1 ? 0 : 1;
+    $('rs').innerHTML = '<div class="ag-mios"></div><span class="et"' + (e.solo1 ? ' hidden' : '') + '>1. ¿Cuántos son?</span><select id="rs-p"' + (e.solo1 ? ' hidden' : '') + ' style="width:100%;padding:11px;border-radius:10px;border:1px solid var(--bo);background:var(--bg)">' + Array.apply(null, Array(e.grupoMax + 4)).map(function (_, i) { var n = i + 1; return '<option value="' + n + '"' + (n === 2 ? ' selected' : '') + '>' + n + (n === 1 ? ' persona' : ' personas') + (n > e.grupoMax ? ' (a confirmar)' : '') + '</option>'; }).join('') + '</select>' +
+      '<span class="et">' + (N0 + 1) + '. Día</span><div class="fila dias" id="rs-d"></div><span class="et">' + (N0 + 2) + '. Horario</span><div class="fila" id="rs-h"></div><p id="rs-res" role="status"></p>' +
       '<div class="f"><input id="rs-nom" maxlength="40" placeholder="Nombre" autocomplete="given-name"><input id="rs-cel" type="tel" inputmode="tel" maxlength="20" placeholder="Celular (ej. 1155554444)"><input id="rs-mail" type="email" maxlength="80" placeholder="Mail (opcional)"></div><button class="btn" style="width:100%" id="rs-ok" disabled>Confirmar reserva</button><div id="rs-msg" role="status" style="margin-top:10px"></div>';
     var pintarR = function () {
       $('rs-d').innerHTML = dias.map(function (d) { return '<button type="button" class="ag-b" data-d="' + iso(d) + '" aria-pressed="' + (iso(d) === iso(sel.d)) + '">' + D3[d.getDay()] + '<small>' + d.getDate() + '/' + (d.getMonth() + 1) + '</small></button>'; }).join('');
       var ss = slots(sel.d); if (sel.h != null && !libre(sel.d, sel.h)) sel.h = null;
       $('rs-h').innerHTML = ss.map(function (m) { var ok = libre(sel.d, m); return '<button type="button" class="ag-b" data-h="' + m + '"' + (ok ? '' : ' disabled') + ' aria-pressed="' + (m === sel.h) + '">' + hh(m) + '</button>'; }).join('');
       var big = sel.p > e.grupoMax;
-      $('rs-res').innerHTML = sel.h == null ? 'Elegí un horario libre.' : '<b>Mesa para ' + sel.p + '</b> · ' + D3[sel.d.getDay()] + ' ' + sel.d.getDate() + '/' + (sel.d.getMonth() + 1) + ' · ' + hh(sel.h) + ' h' + (big ? '<br><small>Por ser un grupo grande, la reserva queda <b>a confirmar</b>: te escribimos por WhatsApp.</small>' : '');
+      $('rs-res').innerHTML = sel.h == null ? 'Elegí un horario libre.' : '<b>' + (e.solo1 ? 'Tu lugar' : 'Mesa para ' + sel.p) + '</b> · ' + D3[sel.d.getDay()] + ' ' + sel.d.getDate() + '/' + (sel.d.getMonth() + 1) + ' · ' + hh(sel.h) + ' h' + (big ? '<br><small>Por ser un grupo grande, la reserva queda <b>a confirmar</b>: te escribimos por WhatsApp.</small>' : '');
       $('rs-ok').disabled = sel.h == null; $('rs-ok').textContent = big ? 'Pedir reserva' : 'Confirmar reserva';
     };
     $('rs-p').onchange = function () { sel.p = +this.value; pintarR(); };
@@ -203,7 +217,7 @@
       if (!Reservas.mailOk(mail)) { msg.textContent = 'Revisá el mail (o dejalo vacío).'; return; }
       var u = usados(sel.d, sel.h).map(function (t) { return t.ini; }), k = 0; while (u.indexOf(sel.h + k) >= 0 && k < e.cupo) k++;
       if (k >= e.cupo) { msg.textContent = 'Ese horario se acaba de llenar. Elegí otro.'; pintarR(); return; }
-      var big = sel.p > e.grupoMax, h0 = sel.h, f = iso(sel.d), sv = 'Mesa para ' + sel.p, bt = $('rs-ok');
+      var big = sel.p > e.grupoMax, h0 = sel.h, f = iso(sel.d), sv = e.solo1 ? 'Clase' : 'Mesa para ' + sel.p, bt = $('rs-ok');
       var t = { id: Date.now(), fecha: f, ini: real ? h0 : h0 + k, min: 1, servicio: sv, dur: big ? 'a confirmar' : '', nombre: nom, cel: cel, email: mail || undefined, estado: big ? 'nuevo' : 'confirmado' };
       bt.disabled = true; msg.textContent = 'Guardando…';
       Reservas.guardar(t, { llave: h0 + k }).then(function (id) {
