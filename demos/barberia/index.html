@@ -25,7 +25,7 @@ header.top{display:flex;justify-content:space-between;align-items:center;padding
 nav a{color:var(--tx);text-decoration:none;margin-left:18px;font-size:15px;opacity:.85}
 .hero{padding:70px 0 80px;position:relative;overflow:hidden}
 .hero:before{content:"";position:absolute;inset:0;background:radial-gradient(60% 80% at 85% 20%,color-mix(in srgb,var(--ac) 28%,transparent),transparent 70%);pointer-events:none}
-body.urbano .hero:after{content:"";position:absolute;right:-60px;top:20px;width:340px;height:340px;background:repeating-linear-gradient(135deg,var(--ac) 0 18px,transparent 18px 36px,#c0392b 36px 54px,transparent 54px 72px);opacity:.12;border-radius:50%}
+body.urbano.r-barberia .hero:after{content:"";position:absolute;right:-60px;top:20px;width:340px;height:340px;background:repeating-linear-gradient(135deg,var(--ac) 0 18px,transparent 18px 36px,#c0392b 36px 54px,transparent 54px 72px);opacity:.12;border-radius:50%}
 .hero .in{position:relative}
 .hero h1{font-size:clamp(40px,8vw,84px);max-width:800px}
 .hero p{font-size:19px;color:var(--su);max-width:560px}
@@ -114,6 +114,7 @@ dialog.zoom{border:0;padding:0;background:transparent;max-width:92vw}dialog.zoom
 <script src="../comun/reservas.js"></script>
 <script src="../comun/correo.js"></script>
 <script src="../comun/agenda.js"></script>
+<script src="rubros.js"></script>
 <script>
 (function(){
   var NUM='5491126339350';
@@ -139,11 +140,13 @@ dialog.zoom{border:0;padding:0;background:transparent;max-width:92vw}dialog.zoom
   };
   var PROS={urbano:[['lucho','Lucho','Fades y diseños',[2,3,4,5,6]],['maxi','Maxi','Barba y navaja',[2,3,4,5]],['tomi','Tomi','Cortes clásicos',[3,4,5,6]]],clasico:[['ramon','Don Ramón','Fundador',[1,2,3,4,5]],['gabriel','Gabriel','Navaja y afeitado',[1,2,3,4,5,6]]],mujer:[['caro','Caro','Colorista',[2,3,4,5,6]],['vale','Vale','Corte y peinado',[2,3,4,5,6]],['sofi','Sofi','Tratamientos',[4,5,6]]]};
   var GAL=[['1781455793310-8427c96454c7','El espacio'],['1781450090585-1a511b7066d9','Estaciones de trabajo'],['1637777277337-f114350fb088','Ambiente del salón'],['1776105609708-3d8908ab4dc2','Productos profesionales'],['1770925758916-44e22e159542','Línea de cuidado'],['1786737554096-4b22c03ad991','Shampoo y acondicionador']];
+  var RT=window.RUBROS_T||{},rub=RT[new URLSearchParams(location.search).get('rubro')]?new URLSearchParams(location.search).get('rubro'):'barberia',RD=RT[rub]||{};
+  if(rub!=='barberia'){E=RD.E;PROS=RD.PROS;GAL=RD.GAL;}
   var q=new URLSearchParams(location.search),est=E[q.get('estilo')]?q.get('estilo'):'urbano',PL=['esencial','completa','turnos','pro'],plan=PL.indexOf(q.get('plan'))>=0?q.get('plan'):'turnos',e=E[est],$=function(i){return document.getElementById(i);};
   var DN=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],pesos=function(n){return '$'+Number(n).toLocaleString('es-AR');},esc=function(x){return String(x==null?'':x).replace(/[<>&"]/g,'');};
-  document.body.className=est;document.title=e.titulo+' · Muestra StudioProAr';
+  document.body.className=est+' r-'+rub;if(RD.ac&&RD.ac[est])document.body.style.setProperty('--ac',RD.ac[est]);if(RD.txt){$('eq-tit').textContent=RD.txt.eq;$('gal-tit').textContent=RD.txt.gal;}document.title=e.titulo+' · Muestra StudioProAr';
   var link=function(k,v){var p=new URLSearchParams(location.search);p.set(k,v);return '?'+p.toString();};
-  $('selector').innerHTML='<span>Estilo:</span>'+[['urbano','Barbería urbana'],['clasico','Barbería clásica'],['mujer','Salón de mujer']].map(function(x){return '<a href="'+link('estilo',x[0])+'"'+(x[0]===est?' aria-current="true"':'')+'>'+x[1]+'</a>';}).join('')+'<span>Plan:</span>'+[['esencial','Esencial'],['completa','Completa'],['turnos','Turnos'],['pro','Turnos Pro']].map(function(x){return '<a href="'+link('plan',x[0])+'"'+(x[0]===plan?' aria-current="true"':'')+'>'+x[1]+'</a>';}).join('');
+  $('selector').innerHTML='<span>Estilo:</span>'+(RD.est||[['urbano','Barbería urbana'],['clasico','Barbería clásica'],['mujer','Salón de mujer']]).map(function(x){return '<a href="'+link('estilo',x[0])+'"'+(x[0]===est?' aria-current="true"':'')+'>'+x[1]+'</a>';}).join('')+'<span>Plan:</span>'+[['esencial','Esencial'],['completa','Completa'],['turnos','Turnos'],['pro','Turnos Pro']].map(function(x){return '<a href="'+link('plan',x[0])+'"'+(x[0]===plan?' aria-current="true"':'')+'>'+x[1]+'</a>';}).join('');
   var waTxt='Hola '+e.nombre+'! Vi su web y quiero ',wa='https://wa.me/'+NUM+'?text='+encodeURIComponent(waTxt+'consultar: ');
   /* Turnos Pro: el dueño edita servicios, precios, horarios, promo y vacaciones desde su panel */
   function cargarWeb(cb){
@@ -160,7 +163,7 @@ dialog.zoom{border:0;padding:0;background:transparent;max-width:92vw}dialog.zoom
     $('marca').textContent=e.titulo;$('h-zona').textContent=e.zona;$('h-tit').textContent=e.tit;$('h-sub').textContent=e.sub;$('d-dir').textContent=e.dir;$('pie').textContent=e.titulo+' · '+e.dir;
     $('wa').href=wa;
     var dias=Object.keys(e.hor);$('h-datos').innerHTML='<span>📍 '+e.dir+'</span><span>🕘 '+DN[dias[0]]+' a '+DN[dias[dias.length-1]]+'</span><span>⭐ '+(plan==='esencial'||plan==='completa'?'Turnos por WhatsApp':plan==='pro'?'Elegí con quién atenderte':'Turnos online')+'</span>';
-    $('serv').innerHTML=e.serv.map(function(s){return '<div><span><b>'+esc(s[0])+'</b><small>'+esc(s[1])+'</small></span><span class="p">'+pesos(s[2])+'</span></div>';}).join('');
+    $('serv').innerHTML=e.serv.map(function(s){return '<div><span><b>'+esc(s[0])+'</b><small>'+esc(s[1])+'</small></span><span class="p">'+(s[2]?pesos(s[2]):'A cotizar')+'</span></div>';}).join('');
     var pros=PROS[est].map(function(p){return {id:e.sitio+'-'+p[0],nombre:p[1],rol:p[2],dias:p[3]};});
     $('eq').innerHTML=(plan==='pro'?pros.map(function(p,i){return '<div><div class="av">'+p.nombre.replace('Don ','').charAt(0)+'</div><b>'+p.nombre+'</b><br><small>'+p.rol+'</small><br><small>Atiende: '+p.dias.map(function(d){return DN[d].slice(0,3).toLowerCase();}).join(', ')+'</small><br><a class="btn rsv" href="#turnos" data-pro="'+(i+1)+'">Reservar con '+p.nombre+'</a></div>';}):e.eq.map(function(p){return '<div><div class="av">'+p[0]+'</div><b>'+p[1]+'</b><br><small>'+p[2]+'</small></div>';})).join('');
     $('hor').innerHTML=[1,2,3,4,5,6,0].map(function(d){var h=e.hor[d];return '<tr><td>'+DN[d]+'</td><td>'+(h?h[0]+' a '+h[1]+' h':'Cerrado')+'</td></tr>';}).join('');
@@ -169,7 +172,8 @@ dialog.zoom{border:0;padding:0;background:transparent;max-width:92vw}dialog.zoom
     if(plan==='completa'||plan==='pro'){
       $('galeria').hidden=false;$('nav').insertAdjacentHTML('beforeend','<a href="#galeria">Galería</a>');
       $('gal-sub').textContent=plan==='completa'?'Galería grande con los trabajos del local: el dueño suma fotos cuando quiera (pedido incluido en el mantenimiento).':'El dueño sube y saca fotos desde su panel.';
-      $('gal').innerHTML=GAL.map(function(g){return '<button type="button" data-z="'+g[0]+'" aria-label="'+g[1]+'" style="background-image:url(\''+'https://images.unsplash.com/photo-'+g[0]+'?w=600&q=70&auto=format&fit=crop\')"><span>'+g[1]+'</span></button>';}).join('');
+      if(!GAL.length)GAL=[[0,'Foto real del lugar'],[0,'Foto real del equipo'],[0,'Foto real de un trabajo']];
+      $('gal').innerHTML=GAL.map(function(g){return '<button type="button" data-z="'+g[0]+'" aria-label="'+g[1]+'"'+(g[0]?' style="background-image:url(\''+'https://images.unsplash.com/photo-'+g[0]+'?w=600&q=70&auto=format&fit=crop\')"':' disabled style="cursor:default;display:grid;place-items:center;color:var(--su)"')+'><span>'+g[1]+'</span></button>';}).join('');
       $('gal').onclick=function(ev){var b=ev.target.closest('[data-z]');if(!b)return;$('zimg').src='https://images.unsplash.com/photo-'+b.dataset.z+'?w=1400&q=75&auto=format';$('zimg').alt=b.getAttribute('aria-label');$('zoom').showModal();};
       $('zoom').onclick=function(){this.close();};
     }

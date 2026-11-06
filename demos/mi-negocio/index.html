@@ -48,11 +48,15 @@ a{color:var(--ac)}
 <script>window.SPA_SIEMPRE_REAL = true;</script>
 <script src="../comun/fb-demos.js"></script>
 <script src="../comun/correo.js"></script>
+<script src="../barberia/rubros.js"></script>
 <!-- En un cliente: reemplazar fb-demos.js por su firebase-config.js y agregar negocio.js -->
 <script>
 (function () {
   /* Para un cliente: definir window.NEGOCIO = { sitio:'mi-local', nombre:'Mi Local', secciones:['turnos','stats'] } en negocio.js */
   var NEG = window.NEGOCIO ? {} : { navaja: { n: 'Navaja Norte', t: ['turnos', 'stats'], hor: { 2: [10, 20], 3: [10, 20], 4: [10, 20], 5: [10, 21], 6: [10, 18] }, web: '../barberia/?estilo=urbano&real=1#turnos', pros: [['lucho', 'Lucho'], ['maxi', 'Maxi'], ['tomi', 'Tomi']], webPro: '../barberia/?estilo=urbano&plan=pro' }, eltano: { n: 'Barbería El Tano', t: ['turnos', 'stats'], hor: { 1: [9, 19], 2: [9, 19], 3: [9, 19], 4: [9, 19], 5: [9, 19], 6: [9, 14] }, web: '../barberia/?estilo=clasico&real=1#turnos', pros: [['ramon', 'Don Ramón'], ['gabriel', 'Gabriel']], webPro: '../barberia/?estilo=clasico&plan=pro' }, alma: { n: 'Salón Alma', t: ['turnos', 'stats'], hor: { 2: [9, 19], 3: [9, 19], 4: [9, 20], 5: [9, 20], 6: [9, 17] }, web: '../barberia/?estilo=mujer&real=1#turnos', pros: [['caro', 'Caro'], ['vale', 'Vale'], ['sofi', 'Sofi']], webPro: '../barberia/?estilo=mujer&plan=pro' }, salon: { n: 'Salón Quebracho', t: ['turnos', 'stats'], hor: { 2: [9, 19], 3: [9, 19], 4: [9, 19], 5: [9, 19], 6: [9, 16] }, web: '../peluqueria/?real=1#agenda' }, vet: { n: 'Patitas del Delta', t: ['turnos', 'stats'], hor: { 1: [9, 20], 2: [9, 20], 3: [9, 20], 4: [9, 20], 5: [9, 20], 6: [9, 13] }, web: '../veterinaria/?real=1#turnos' }, panaderia: { n: 'El Horno de Victoria', t: ['encargos', 'stats'] }, cafe: { n: 'Café Muelle', t: ['stats'] }, ferreteria: { n: 'Ferretería La Llave', t: ['stats'] }, fogon: { n: 'Parrilla El Fogón', t: ['stats'] }, tranquera: { n: 'La Tranquera', g: 'parrilla', t: ['stats'] }, ribera: { n: 'Café Ribera', g: 'cafe', t: ['stats'] }, lupulo: { n: 'Lúpulo Norte', g: 'urbano', t: ['stats'] }, astillero: { n: 'Astillero Marea Alta', t: ['stats'] } };
+  /* Rubros con turnos (veterinaria, estética, salud, náutica): salen de ../barberia/rubros.js */
+  var RT = window.RUBROS_T || {};
+  if (!window.NEGOCIO) Object.keys(RT).forEach(function (r) { Object.keys(RT[r].E).forEach(function (es) { var e = RT[r].E[es], b = '../barberia/?rubro=' + r + '&estilo=' + es; NEG[e.sitio] = { n: e.nombre, t: ['turnos', 'stats'], hor: e.hor, web: b + '&real=1#turnos', webPro: b + '&plan=pro', rub: r, pros: RT[r].PROS[es].map(function (p) { return [p[0], p[1]]; }) }; }); });
   if (window.NEGOCIO) NEG[window.NEGOCIO.sitio] = { n: window.NEGOCIO.nombre, t: window.NEGOCIO.secciones || ['stats'], hor: window.NEGOCIO.horario, paso: window.NEGOCIO.paso, web: window.NEGOCIO.web, pros: window.NEGOCIO.pros, g: window.NEGOCIO.g };
   var NOM = { turnos: 'Turnos', encargos: 'Encargos', stats: 'Estadísticas', clientes: 'Clientes', resumen: 'Resumen del mes', editar: 'Editar web' };
   var $ = function (id) { return document.getElementById(id); }, esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -182,7 +186,7 @@ a{color:var(--ac)}
       var p = top(x.pros), sv = top(x.serv), dorm = x.ult && !x.prox && x.ult < hoyIso(new Date(Date.now() - 60 * 864e5));
       return '<details class="it" style="display:block"><summary style="cursor:pointer;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><span><b>' + esc(x.nombre) + '</b> <small>' + esc(x.cel) + '</small>' + (x.nota ? ' 📝' : '') + (dorm ? ' <span class="tag nuevo">hace mucho que no viene</span>' : '') + '</span><small>' + x.vis + ' visitas · ' + pesos(x.gasto) + '</small></summary>' +
         '<p style="margin:10px 0 6px"><small>Última visita: ' + (x.ult ? fechaTxt(x.ult) : '—') + ' · Próximo turno: ' + (x.prox ? fechaTxt(x.prox) : '—') + '<br>Lo atiende: ' + (p != null && PRO ? esc(PRO[p].n) : '—') + ' · Servicio habitual: ' + esc(sv || '—') + (x.canc ? ' · Canceló ' + x.canc + ' vez/veces' : '') + '</small></p>' +
-        '<label><small>Notas (fórmula de color, cómo le gusta el corte, alergias a productos…)</small><textarea data-nota="' + esc(x.cel) + '" rows="3" style="width:100%;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit">' + esc(x.nota) + '</textarea></label>' +
+        '<label><small>' + esc(NEG[s].rub && RT[NEG[s].rub].txt ? RT[NEG[s].rub].txt.notas : 'Notas (fórmula de color, cómo le gusta el corte, alergias a productos…)') + '</small><textarea data-nota="' + esc(x.cel) + '" rows="3" style="width:100%;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit">' + esc(x.nota) + '</textarea></label>' +
         '<p class="ac" style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn" data-gnota="' + esc(x.cel) + '">Guardar nota</button>' + wa(x.cel, 'Hola ' + x.nombre + '! ¿Cómo estás? Hace un tiempo que no te vemos por ' + NEG[s].n + '. Si querés, reservá tu turno en la web.') + '</p></details>';
     }).join('') + (f.length > 60 ? '<p class="vacio">Mostrando 60 de ' + f.length + '. Buscá para encontrar al resto.</p>' : '') + (l.length ? '' : '<p class="vacio">Las fichas se arman solas con cada turno.</p>');
     return h;
@@ -441,7 +445,7 @@ a{color:var(--ac)}
     });
   }
   function datosMuestra() {
-    var SV = { navaja: ['Corte', 'Fade / degradé', 'Corte y barba', 'Perfilado de barba'], eltano: ['Corte clásico', 'Afeitado con toalla caliente', 'Corte y afeitado', 'Arreglo de barba'], alma: ['Corte', 'Brushing', 'Color raíz', 'Nutrición profunda'], vet: ['Consulta', 'Vacunación', 'Baño y corte'] }[s] || ['Corte', 'Brushing', 'Color', 'Peinado'];
+    var SV = { navaja: ['Corte', 'Fade / degradé', 'Corte y barba', 'Perfilado de barba'], eltano: ['Corte clásico', 'Afeitado con toalla caliente', 'Corte y afeitado', 'Arreglo de barba'], alma: ['Corte', 'Brushing', 'Color raíz', 'Nutrición profunda'], vet: ['Consulta', 'Vacunación', 'Baño y corte'] }[s] || (window.BASE_WEB && BASE_WEB[s] ? BASE_WEB[s].serv.slice(0, 4).map(function (x) { return x[0]; }) : ['Corte', 'Brushing', 'Color', 'Peinado']);
     var NOMS = ['Martín G.', 'Lucía P.', 'Joaquín R.', 'Sofía M.', 'Nicolás F.', 'Camila T.', 'Facundo L.', 'Valentina S.', 'Tomás A.', 'Agustina B.', 'Franco D.', 'Micaela V.'];
     var rnd = (function (x) { return function () { x = (x * 9301 + 49297) % 233280; return x / 233280; }; })(7), P = NEG[s].paso || 30, tl = [], oc = {}, av = {}, rc = {}, n = 0, ahora = new Date().getHours() * 60;
     diasAbiertos().slice(0, 7).forEach(function (d, di) {
@@ -467,6 +471,7 @@ a{color:var(--ac)}
     eltano: { serv: [['Corte clásico', '30 min', 12000], ['Afeitado con toalla caliente', '35 min', 11000], ['Corte y afeitado', '1 h', 20000], ['Arreglo de barba', '20 min', 8000], ['Corte jubilados (lun a jue)', '30 min', 9000]] },
     alma: { serv: [['Corte', '50 min', 18000], ['Brushing', '40 min', 12000], ['Color raíz', '1 h 30', 32000], ['Mechas o balayage', '3 h', 65000], ['Nutrición profunda', '45 min', 20000], ['Peinado de evento', '1 h', 25000]] }
   };
+  Object.keys(RT).forEach(function (r) { Object.keys(RT[r].E).forEach(function (es) { var e = RT[r].E[es]; window.BASE_WEB[e.sitio] = { serv: e.serv }; }); });
   function datosMuestraPro() {
     datosMuestra(); var st = datos.stats, SV = (window.BASE_WEB[s] || window.BASE_WEB.navaja).serv, P = 30;
     var rnd = (function (x) { return function () { x = (x * 9301 + 49297) % 233280; return x / 233280; }; })(11);
