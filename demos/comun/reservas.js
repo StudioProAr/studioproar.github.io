@@ -8,7 +8,7 @@
         Reservas.guardar(obj) -> Promise   (obj con fecha 'AAAA-MM-DD', ini y min en minutos si es turno)
         Reservas.alCambiar(fn) */
 (function () {
-  var cfg = {}, cache = [], fns = [], db = null;
+  var cfg = {}, caches = {}, subs = {}, fns = [], db = null;
   function local() { try { return JSON.parse(localStorage.getItem(cfg.clave)) || []; } catch (e) { return []; } }
   function avisar() { fns.forEach(function (f) { try { f(); } catch (e) {} }); }
   function clave() { var a = new Uint8Array(12), c = 'abcdefghijkmnpqrstuvwxyz23456789', r = ''; (window.crypto || window.msCrypto).getRandomValues(a); for (var i = 0; i < a.length; i++) r += c[a[i] % c.length]; return r; }
@@ -20,12 +20,21 @@
       if (!C || !C.apiKey || !window.firebase) return R;
       if (!firebase.apps.length) firebase.initializeApp(C);
       db = firebase.database(); R.modo = 'real';
-      if (cfg.col === 'turnos') db.ref('r/' + cfg.sitio + '/turnos/ocupado').on('value', function (s) {
-        var a = [];
-        s.forEach(function (d) { d.forEach(function (m) { a.push({ fecha: d.key, ini: +m.key, min: cfg.paso }); }); });
-        cache = a; avisar();
-      });
+      if (cfg.col === 'turnos') R.observar(cfg.sitio, cfg.paso);
       return R;
+    },
+    /* Varios calendarios a la vez (un profesional o una mesa por sitio): observar(sitio, paso) y listaDe(sitio, clave) */
+    observar: function (sitio, paso) {
+      if (!db || subs[sitio]) return; subs[sitio] = 1;
+      db.ref('r/' + sitio + '/turnos/ocupado').on('value', function (s) {
+        var a = [];
+        s.forEach(function (d) { d.forEach(function (m) { a.push({ fecha: d.key, ini: +m.key, min: paso || 30 }); }); });
+        caches[sitio] = a; avisar();
+      });
+    },
+    listaDe: function (sitio, clave) {
+      if (R.modo === 'real') { R.observar(sitio, cfg.paso); return caches[sitio] || []; }
+      try { return JSON.parse(localStorage.getItem(clave || 'spa_t_' + sitio)) || []; } catch (e) { return []; }
     },
     /* Link para agregar el turno a Google Calendar (fecha 'AAAA-MM-DD', ini y min en minutos) */
     calendario: function (o) {
@@ -46,7 +55,7 @@
     /* Link "Cancelar mi turno" que va en el mail de confirmación */
     linkBaja: function (id, o) {
       if (!R.ultimaClave) return '';
-      var u = new URL('../comun/baja.html', location.href), q = { s: cfg.sitio, id: id, k: R.ultimaClave, f: o.fecha, i: o.ini, n: o.negocio || '', c: R.modo === 'demo' ? cfg.clave : '' };
+      var u = new URL('../comun/baja.html', location.href), q = { s: cfg.sitio, m: cfg.mios || '', id: id, k: R.ultimaClave, f: o.fecha, i: o.ini, n: o.negocio || '', c: R.modo === 'demo' ? cfg.clave : '' };
       Object.keys(q).forEach(function (x) { if (q[x] !== '' && q[x] != null) u.searchParams.set(x, q[x]); });
       if (R.modo === 'real') u.searchParams.set('real', '1');
       return u.href;
@@ -110,13 +119,13 @@
     /* "Tus turnos": quedan guardados en el navegador del cliente */
     mios: function () {
       var hoy = new Date().toISOString().slice(0, 10), l = [];
-      try { l = JSON.parse(localStorage.getItem('spa_mios_' + cfg.sitio)) || []; } catch (e) {}
+      try { l = JSON.parse(localStorage.getItem('spa_mios_' + (cfg.mios || cfg.sitio))) || []; } catch (e) {}
       return l.filter(function (t) { return t.fecha >= hoy; });
     },
     guardarMio: function (t) {
       var l = R.mios().filter(function (x) { return String(x.id) !== String(t.id); }); l.push(t);
       l.sort(function (a, b) { return (a.fecha + a.ini) < (b.fecha + b.ini) ? -1 : 1; });
-      try { localStorage.setItem('spa_mios_' + cfg.sitio, JSON.stringify(l)); } catch (e) {}
+      try { localStorage.setItem('spa_mios_' + (cfg.mios || cfg.sitio), JSON.stringify(l)); } catch (e) {}
     },
     pintarMios: function (el) {
       if (!el) return; var l = R.mios(), esc = function (x) { return String(x || '').replace(/[<>&"]/g, ''); };
@@ -159,7 +168,7 @@
           return db.ref('r/' + cfg.sitio + '/turnos/avisos/' + o.id).set({ endpoint: s.endpoint, k: o.k || R.ultimaClave });
         });
     },
-    lista: function () { return R.modo === 'real' ? cache : local(); },
+    lista: function () { return R.modo === 'real' ? (caches[cfg.sitio] || []) : local(); },
     alCambiar: function (f) { fns.push(f); },
     guardar: function (o) {
       if (R.modo !== 'real') {

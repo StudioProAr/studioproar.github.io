@@ -48,13 +48,21 @@ section{padding:64px 0}section.alt{background:var(--bg2)}
 footer{padding:30px 20px 90px;text-align:center;color:var(--su);font-size:14px}
 .wa{position:fixed;right:16px;bottom:16px;width:58px;height:58px;border-radius:50%;background:#25d366;display:grid;place-items:center;color:#fff;box-shadow:0 6px 18px rgba(0,0,0,.3);z-index:20}
 .esencial-wa{text-align:center;padding:30px}
+.promo{background:var(--ac);color:var(--sa);text-align:center;padding:10px 16px;font-weight:700}
+.vac{background:#c0392b;color:#fff;text-align:center;padding:10px 16px}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-top:20px}
+.gal button{aspect-ratio:4/5;border:0;border-radius:var(--r);background:center/cover no-repeat var(--bg2);cursor:zoom-in;position:relative;overflow:hidden;padding:0}
+.gal button span{position:absolute;left:0;right:0;bottom:0;padding:10px;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;text-align:left;font-size:14px}
+dialog.zoom{border:0;padding:0;background:transparent;max-width:92vw}dialog.zoom::backdrop{background:rgba(0,0,0,.85)}dialog.zoom img{max-width:92vw;max-height:86vh;border-radius:12px;display:block}
+.equipo .rsv{margin-top:10px;font-size:14px;padding:8px 14px}
 @media(max-width:820px){.cols{grid-template-columns:1fr}nav{display:none}.btn.sec{margin:10px 0 0}}
 </style>
 </head>
 <body class="urbano">
 <div class="muestra">Muestra de diseño · negocio ficticio · <a href="https://wa.me/5491126339350?text=Hola!%20Vi%20la%20muestra%20de%20barber%C3%ADa%20y%20quiero%20una%20web%20as%C3%AD%3A%20">Quiero una web así →</a></div>
 <div class="selector" id="selector"></div>
-<header class="top"><a class="marca" href="#" id="marca"></a><nav><a href="#servicios">Servicios</a><a href="#turnos">Turnos</a><a href="#equipo">Equipo</a><a href="#donde">Dónde</a></nav></header>
+<div class="promo" id="promo" hidden></div><div class="vac" id="vac" hidden></div>
+<header class="top"><a class="marca" href="#" id="marca"></a><nav id="nav"><a href="#servicios">Servicios</a><a href="#turnos">Turnos</a><a href="#equipo">Equipo</a><a href="#donde">Dónde</a></nav></header>
 
 <section class="hero"><div class="in">
   <p class="eyebrow" id="h-zona"></p>
@@ -83,6 +91,12 @@ footer{padding:30px 20px 90px;text-align:center;color:var(--su);font-size:14px}
   <p class="eyebrow">Equipo</p><h2 id="eq-tit">Quiénes te atienden</h2>
   <div class="equipo" id="eq"></div>
 </div></section>
+
+<section id="galeria" hidden><div class="in">
+  <p class="eyebrow">Galería</p><h2 id="gal-tit">Nuestros trabajos</h2><p id="gal-sub" style="color:var(--su)"></p>
+  <div class="gal" id="gal"></div>
+</div></section>
+<dialog class="zoom" id="zoom"><img alt="" id="zimg"></dialog>
 
 <section id="donde"><div class="in cols">
   <div><p class="eyebrow">Dónde estamos</p><h2 id="d-dir"></h2><iframe class="mapa" loading="lazy" title="Mapa" src="https://www.google.com/maps?q=San+Fernando,+Buenos+Aires&output=embed"></iframe></div>
@@ -123,26 +137,54 @@ footer{padding:30px 20px 90px;text-align:center;color:var(--su);font-size:14px}
       reglas:'Para color y balayage pedimos seña por transferencia, que se descuenta del total. Avisando con 24 h la seña se traslada.',
       faq:[['¿Necesito consulta antes del color?','Para cambios grandes sí: es sin cargo y en 20 minutos.'],['¿Qué productos usan?','Línea profesional sin amoníaco para color y tratamientos.'],['¿Cuánto dura un balayage?','Entre 2 h 30 y 3 h según el largo.']]}
   };
-  var q=new URLSearchParams(location.search),est=E[q.get('estilo')]?q.get('estilo'):'urbano',plan=q.get('plan')==='esencial'?'esencial':'turnos',e=E[est],$=function(i){return document.getElementById(i);};
-  var DN=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],pesos=function(n){return '$'+Number(n).toLocaleString('es-AR');};
+  var PROS={urbano:[['lucho','Lucho','Fades y diseños',[2,3,4,5,6]],['maxi','Maxi','Barba y navaja',[2,3,4,5]],['tomi','Tomi','Cortes clásicos',[3,4,5,6]]],clasico:[['ramon','Don Ramón','Fundador',[1,2,3,4,5]],['gabriel','Gabriel','Navaja y afeitado',[1,2,3,4,5,6]]],mujer:[['caro','Caro','Colorista',[2,3,4,5,6]],['vale','Vale','Corte y peinado',[2,3,4,5,6]],['sofi','Sofi','Tratamientos',[4,5,6]]]};
+  var GAL=[['1781455793310-8427c96454c7','El espacio'],['1781450090585-1a511b7066d9','Estaciones de trabajo'],['1637777277337-f114350fb088','Ambiente del salón'],['1776105609708-3d8908ab4dc2','Productos profesionales'],['1770925758916-44e22e159542','Línea de cuidado'],['1786737554096-4b22c03ad991','Shampoo y acondicionador']];
+  var q=new URLSearchParams(location.search),est=E[q.get('estilo')]?q.get('estilo'):'urbano',PL=['esencial','completa','turnos','pro'],plan=PL.indexOf(q.get('plan'))>=0?q.get('plan'):'turnos',e=E[est],$=function(i){return document.getElementById(i);};
+  var DN=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],pesos=function(n){return '$'+Number(n).toLocaleString('es-AR');},esc=function(x){return String(x==null?'':x).replace(/[<>&"]/g,'');};
   document.body.className=est;document.title=e.titulo+' · Muestra StudioProAr';
   var link=function(k,v){var p=new URLSearchParams(location.search);p.set(k,v);return '?'+p.toString();};
-  $('selector').innerHTML='<span>Estilo:</span>'+[['urbano','Barbería urbana'],['clasico','Barbería clásica'],['mujer','Salón de mujer']].map(function(x){return '<a href="'+link('estilo',x[0])+'"'+(x[0]===est?' aria-current="true"':'')+'>'+x[1]+'</a>';}).join('')+'<span>Plan:</span>'+[['esencial','Esencial'],['turnos','Turnos']].map(function(x){return '<a href="'+link('plan',x[0])+'"'+(x[0]===plan?' aria-current="true"':'')+'>'+x[1]+'</a>';}).join('');
-  $('marca').textContent=e.titulo;$('h-zona').textContent=e.zona;$('h-tit').textContent=e.tit;$('h-sub').textContent=e.sub;$('d-dir').textContent=e.dir;$('pie').textContent=e.titulo+' · '+e.dir;
-  var waTxt='Hola '+e.nombre+'! Vi su web y quiero ',wa='https://wa.me/'+NUM+'?text='+encodeURIComponent(waTxt+'consultar: ');$('wa').href=wa;
-  var dias=Object.keys(e.hor);$('h-datos').innerHTML='<span>📍 '+e.dir+'</span><span>🕘 '+DN[dias[0]]+' a '+DN[dias[dias.length-1]]+'</span><span>⭐ Turnos online</span>';
-  $('serv').innerHTML=e.serv.map(function(s){return '<div><span><b>'+s[0]+'</b><small>'+s[1]+'</small></span><span class="p">'+pesos(s[2])+'</span></div>';}).join('');
-  $('eq').innerHTML=e.eq.map(function(p){return '<div><div class="av">'+p[0]+'</div><b>'+p[1]+'</b><br><small>'+p[2]+'</small></div>';}).join('');
-  $('hor').innerHTML=[1,2,3,4,5,6,0].map(function(d){var h=e.hor[d];return '<tr><td>'+DN[d]+'</td><td>'+(h?h[0]+' a '+h[1]+' h':'Cerrado')+'</td></tr>';}).join('');
-  $('faq').innerHTML=e.faq.map(function(f){return '<details><summary>'+f[0]+'</summary><p>'+f[1]+'</p></details>';}).join('');
-  $('reglas').textContent=e.reglas;
-  if(plan==='esencial'){
-    $('h-cta').textContent='Pedí tu turno por WhatsApp';$('h-cta').href='https://wa.me/'+NUM+'?text='+encodeURIComponent(waTxt+'sacar un turno para: ');$('h-cta').target='_blank';
-    $('agenda-caja').innerHTML='<div class="esencial-wa"><p class="eyebrow">Turnos</p><h2>Pedí tu turno por WhatsApp</h2><p>Escribinos qué servicio querés y qué día te queda bien. Te respondemos con los horarios libres.</p><a class="btn" target="_blank" rel="noopener" href="'+$('h-cta').href+'">Escribir por WhatsApp</a></div>';
-    $('turnos-info').innerHTML='<h3>Plan Esencial</h3><p>Tu negocio en Google con servicios, precios, horarios, ubicación y botón de WhatsApp. Ideal para empezar.</p><p><a href="'+link('plan','turnos')+'">Ver cómo queda con turnos online →</a></p>';
-  }else{
-    Agenda.montar($('agenda'),{sitio:e.sitio,negocio:e.nombre,lugar:e.dir,num:NUM,horario:e.hor,paso:30,servicios:e.serv.map(function(s){return {nombre:s[0],dur:s[1],precio:s[2]};})});
+  $('selector').innerHTML='<span>Estilo:</span>'+[['urbano','Barbería urbana'],['clasico','Barbería clásica'],['mujer','Salón de mujer']].map(function(x){return '<a href="'+link('estilo',x[0])+'"'+(x[0]===est?' aria-current="true"':'')+'>'+x[1]+'</a>';}).join('')+'<span>Plan:</span>'+[['esencial','Esencial'],['completa','Completa'],['turnos','Turnos'],['pro','Turnos Pro']].map(function(x){return '<a href="'+link('plan',x[0])+'"'+(x[0]===plan?' aria-current="true"':'')+'>'+x[1]+'</a>';}).join('');
+  var waTxt='Hola '+e.nombre+'! Vi su web y quiero ',wa='https://wa.me/'+NUM+'?text='+encodeURIComponent(waTxt+'consultar: ');
+  /* Turnos Pro: el dueño edita servicios, precios, horarios, promo y vacaciones desde su panel */
+  function cargarWeb(cb){
+    if(plan!=='pro')return cb({});
+    var C=window.FIREBASE_CONFIG;
+    if(C&&C.apiKey&&window.firebase){if(!firebase.apps.length)firebase.initializeApp(C);var to=setTimeout(function(){cb({});cb=function(){};},2500);firebase.database().ref('r/'+e.sitio+'/web').once('value').then(function(x){clearTimeout(to);cb(x.val()||{});},function(){clearTimeout(to);cb({});});return;}
+    try{cb(JSON.parse(localStorage.getItem('spa_web_'+e.sitio))||{});}catch(er){cb({});}
   }
+  cargarWeb(function(W){
+    if(W.serv&&W.serv.length)e.serv=W.serv;if(W.hor)e.hor=W.hor;
+    var hoy=new Date().toISOString().slice(0,10);
+    if(W.promo){$('promo').hidden=false;$('promo').textContent=W.promo;}
+    if(W.vac&&W.vac.hasta>=hoy){$('vac').hidden=false;$('vac').textContent='🏖️ '+(W.vac.txt||'Vacaciones')+': cerrado del '+W.vac.desde.split('-').reverse().slice(0,2).join('/')+' al '+W.vac.hasta.split('-').reverse().slice(0,2).join('/')+'. Podés reservar para después.';}
+    $('marca').textContent=e.titulo;$('h-zona').textContent=e.zona;$('h-tit').textContent=e.tit;$('h-sub').textContent=e.sub;$('d-dir').textContent=e.dir;$('pie').textContent=e.titulo+' · '+e.dir;
+    $('wa').href=wa;
+    var dias=Object.keys(e.hor);$('h-datos').innerHTML='<span>📍 '+e.dir+'</span><span>🕘 '+DN[dias[0]]+' a '+DN[dias[dias.length-1]]+'</span><span>⭐ '+(plan==='esencial'||plan==='completa'?'Turnos por WhatsApp':plan==='pro'?'Elegí con quién atenderte':'Turnos online')+'</span>';
+    $('serv').innerHTML=e.serv.map(function(s){return '<div><span><b>'+esc(s[0])+'</b><small>'+esc(s[1])+'</small></span><span class="p">'+pesos(s[2])+'</span></div>';}).join('');
+    var pros=PROS[est].map(function(p){return {id:e.sitio+'-'+p[0],nombre:p[1],rol:p[2],dias:p[3]};});
+    $('eq').innerHTML=(plan==='pro'?pros.map(function(p,i){return '<div><div class="av">'+p.nombre.replace('Don ','').charAt(0)+'</div><b>'+p.nombre+'</b><br><small>'+p.rol+'</small><br><small>Atiende: '+p.dias.map(function(d){return DN[d].slice(0,3).toLowerCase();}).join(', ')+'</small><br><a class="btn rsv" href="#turnos" data-pro="'+(i+1)+'">Reservar con '+p.nombre+'</a></div>';}):e.eq.map(function(p){return '<div><div class="av">'+p[0]+'</div><b>'+p[1]+'</b><br><small>'+p[2]+'</small></div>';})).join('');
+    $('hor').innerHTML=[1,2,3,4,5,6,0].map(function(d){var h=e.hor[d];return '<tr><td>'+DN[d]+'</td><td>'+(h?h[0]+' a '+h[1]+' h':'Cerrado')+'</td></tr>';}).join('');
+    $('faq').innerHTML=e.faq.map(function(f){return '<details><summary>'+f[0]+'</summary><p>'+f[1]+'</p></details>';}).join('');
+    $('reglas').textContent=e.reglas;
+    if(plan==='completa'||plan==='pro'){
+      $('galeria').hidden=false;$('nav').insertAdjacentHTML('beforeend','<a href="#galeria">Galería</a>');
+      $('gal-sub').textContent=plan==='completa'?'Galería grande con los trabajos del local: el dueño suma fotos cuando quiera (pedido incluido en el mantenimiento).':'El dueño sube y saca fotos desde su panel.';
+      $('gal').innerHTML=GAL.map(function(g){return '<button type="button" data-z="'+g[0]+'" aria-label="'+g[1]+'" style="background-image:url(\''+'https://images.unsplash.com/photo-'+g[0]+'?w=600&q=70&auto=format&fit=crop\')"><span>'+g[1]+'</span></button>';}).join('');
+      $('gal').onclick=function(ev){var b=ev.target.closest('[data-z]');if(!b)return;$('zimg').src='https://images.unsplash.com/photo-'+b.dataset.z+'?w=1400&q=75&auto=format';$('zimg').alt=b.getAttribute('aria-label');$('zoom').showModal();};
+      $('zoom').onclick=function(){this.close();};
+    }
+    if(plan==='esencial'||plan==='completa'){
+      $('h-cta').textContent='Pedí tu turno por WhatsApp';$('h-cta').href='https://wa.me/'+NUM+'?text='+encodeURIComponent(waTxt+'sacar un turno para: ');$('h-cta').target='_blank';
+      $('agenda-caja').innerHTML='<div class="esencial-wa"><p class="eyebrow">Turnos</p><h2>Pedí tu turno por WhatsApp</h2><p>Escribinos qué servicio querés y qué día te queda bien. Te respondemos con los horarios libres.</p><a class="btn" target="_blank" rel="noopener" href="'+$('h-cta').href+'">Escribir por WhatsApp</a></div>';
+      $('turnos-info').innerHTML=plan==='esencial'?'<h3>Plan Esencial</h3><p>Tu negocio en Google con servicios, precios, horarios, ubicación y botón de WhatsApp. Ideal para empezar.</p><p><a href="'+link('plan','turnos')+'">Ver cómo queda con turnos online →</a></p>':'<h3>Plan Completa</h3><p>Web con más secciones y galería grande, ideal para lucir color, novias y trabajos especiales. Los turnos siguen por WhatsApp.</p><p><a href="'+link('plan','turnos')+'">Ver cómo queda con turnos online →</a></p>';
+    }else{
+      Agenda.montar($('agenda'),{sitio:e.sitio,negocio:e.nombre,lugar:e.dir,num:NUM,horario:e.hor,paso:30,pros:plan==='pro'?pros:null,servicios:e.serv.map(function(s){return {nombre:s[0],dur:s[1],precio:s[2]};})});
+      if(plan==='pro'){
+        $('turnos-info').insertAdjacentHTML('afterbegin','<h3>Turnos Pro</h3><p>Elegís con quién atenderte (o el primero libre). Cada profesional tiene su propia agenda y el dueño ve todo en su panel, con la ficha de cada cliente.</p>');
+        $('eq').onclick=function(ev){var a=ev.target.closest('[data-pro]');if(!a)return;var b=document.querySelector('.ag-pros [data-p="'+(a.dataset.pro-1)+'"]');if(b)b.click();};
+      }
+    }
+  });
 })();
 </script>
 <script>window.SPA_STATS={db:"https://studioproar-demos-default-rtdb.firebaseio.com",sitio:({urbano:"navaja",clasico:"eltano",mujer:"alma"})[new URLSearchParams(location.search).get("estilo")]||"navaja"};</script><script src="../../stats.js" defer></script>

@@ -52,13 +52,19 @@ a{color:var(--ac)}
 <script>
 (function () {
   /* Para un cliente: definir window.NEGOCIO = { sitio:'mi-local', nombre:'Mi Local', secciones:['turnos','stats'] } en negocio.js */
-  var NEG = window.NEGOCIO ? {} : { navaja: { n: 'Navaja Norte', t: ['turnos', 'stats'], hor: { 2: [10, 20], 3: [10, 20], 4: [10, 20], 5: [10, 21], 6: [10, 18] }, web: '../barberia/?estilo=urbano&real=1#turnos' }, eltano: { n: 'Barbería El Tano', t: ['turnos', 'stats'], hor: { 1: [9, 19], 2: [9, 19], 3: [9, 19], 4: [9, 19], 5: [9, 19], 6: [9, 14] }, web: '../barberia/?estilo=clasico&real=1#turnos' }, alma: { n: 'Salón Alma', t: ['turnos', 'stats'], hor: { 2: [9, 19], 3: [9, 19], 4: [9, 20], 5: [9, 20], 6: [9, 17] }, web: '../barberia/?estilo=mujer&real=1#turnos' }, salon: { n: 'Salón Quebracho', t: ['turnos', 'stats'], hor: { 2: [9, 19], 3: [9, 19], 4: [9, 19], 5: [9, 19], 6: [9, 16] }, web: '../peluqueria/?real=1#agenda' }, vet: { n: 'Patitas del Delta', t: ['turnos', 'stats'], hor: { 1: [9, 20], 2: [9, 20], 3: [9, 20], 4: [9, 20], 5: [9, 20], 6: [9, 13] }, web: '../veterinaria/?real=1#turnos' }, panaderia: { n: 'El Horno de Victoria', t: ['encargos', 'stats'] }, cafe: { n: 'Café Muelle', t: ['stats'] }, ferreteria: { n: 'Ferretería La Llave', t: ['stats'] }, fogon: { n: 'Parrilla El Fogón', t: ['stats'] }, astillero: { n: 'Astillero Marea Alta', t: ['stats'] } };
-  if (window.NEGOCIO) NEG[window.NEGOCIO.sitio] = { n: window.NEGOCIO.nombre, t: window.NEGOCIO.secciones || ['stats'], hor: window.NEGOCIO.horario, paso: window.NEGOCIO.paso, web: window.NEGOCIO.web };
-  var NOM = { turnos: 'Turnos', encargos: 'Encargos', stats: 'Estadísticas' };
+  var NEG = window.NEGOCIO ? {} : { navaja: { n: 'Navaja Norte', t: ['turnos', 'stats'], hor: { 2: [10, 20], 3: [10, 20], 4: [10, 20], 5: [10, 21], 6: [10, 18] }, web: '../barberia/?estilo=urbano&real=1#turnos', pros: [['lucho', 'Lucho'], ['maxi', 'Maxi'], ['tomi', 'Tomi']], webPro: '../barberia/?estilo=urbano&plan=pro' }, eltano: { n: 'Barbería El Tano', t: ['turnos', 'stats'], hor: { 1: [9, 19], 2: [9, 19], 3: [9, 19], 4: [9, 19], 5: [9, 19], 6: [9, 14] }, web: '../barberia/?estilo=clasico&real=1#turnos', pros: [['ramon', 'Don Ramón'], ['gabriel', 'Gabriel']], webPro: '../barberia/?estilo=clasico&plan=pro' }, alma: { n: 'Salón Alma', t: ['turnos', 'stats'], hor: { 2: [9, 19], 3: [9, 19], 4: [9, 20], 5: [9, 20], 6: [9, 17] }, web: '../barberia/?estilo=mujer&real=1#turnos', pros: [['caro', 'Caro'], ['vale', 'Vale'], ['sofi', 'Sofi']], webPro: '../barberia/?estilo=mujer&plan=pro' }, salon: { n: 'Salón Quebracho', t: ['turnos', 'stats'], hor: { 2: [9, 19], 3: [9, 19], 4: [9, 19], 5: [9, 19], 6: [9, 16] }, web: '../peluqueria/?real=1#agenda' }, vet: { n: 'Patitas del Delta', t: ['turnos', 'stats'], hor: { 1: [9, 20], 2: [9, 20], 3: [9, 20], 4: [9, 20], 5: [9, 20], 6: [9, 13] }, web: '../veterinaria/?real=1#turnos' }, panaderia: { n: 'El Horno de Victoria', t: ['encargos', 'stats'] }, cafe: { n: 'Café Muelle', t: ['stats'] }, ferreteria: { n: 'Ferretería La Llave', t: ['stats'] }, fogon: { n: 'Parrilla El Fogón', t: ['stats'] }, astillero: { n: 'Astillero Marea Alta', t: ['stats'] } };
+  if (window.NEGOCIO) NEG[window.NEGOCIO.sitio] = { n: window.NEGOCIO.nombre, t: window.NEGOCIO.secciones || ['stats'], hor: window.NEGOCIO.horario, paso: window.NEGOCIO.paso, web: window.NEGOCIO.web, pros: window.NEGOCIO.pros };
+  var NOM = { turnos: 'Turnos', encargos: 'Encargos', stats: 'Estadísticas', clientes: 'Clientes', resumen: 'Resumen del mes', editar: 'Editar web' };
   var $ = function (id) { return document.getElementById(id); }, esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   var q = new URLSearchParams(location.search), s = NEG[q.get('s')] ? q.get('s') : 'salon', vista = NEG[s].t[0], datos = {}, refs = [], vistos = null;
   var MUESTRA = q.get('muestra') === '1', app = $('app'), auth, db;
   if (MUESTRA && q.get('plan') === 'esencial') { NEG[s].t = ['stats']; vista = 'stats'; }
+  /* Turnos Pro: una agenda por profesional (cada una es un "sitio" propio: <sitio>-<profesional>), fichas, editar web y resumen del mes */
+  var PRO = NEG[s].pros && (q.get('plan') === 'pro' || !!window.NEGOCIO) ? NEG[s].pros.map(function (p) { return { id: s + '-' + p[0], n: p[1] }; }) : null, proSel = -1, datosP = {}, webEd = null, mesSel = null, buscar = '';
+  if (PRO) { NEG[s].t = ['turnos', 'clientes', 'resumen', 'editar', 'stats']; vista = 'turnos'; if (NEG[s].webPro) NEG[s].web = NEG[s].webPro + (MUESTRA ? '' : '&real=1') + '#turnos'; }
+  var cur = function () { return PRO && proSel >= 0 ? PRO[proSel].id : s; };
+  function usar(id) { var d = datosP[id] = datosP[id] || { turnos: [], ocup: {}, av: {}, rec: {} }; datos.turnos = d.turnos; datos.ocup = d.ocup; datos.av = d.av; datos.rec = d.rec; return d; }
+  function todos() { var a = []; (PRO || []).forEach(function (p, i) { ((datosP[p.id] || {}).turnos || []).forEach(function (t) { t.pro = i; a.push(t); }); }); return a.concat(datos.hist || []).sort(function (x, y) { return (x.fecha + String(x.ini).padStart(4, '0')) < (y.fecha + String(y.ini).padStart(4, '0')) ? -1 : 1; }); }
   if (!MUESTRA) { firebase.initializeApp(window.FIREBASE_CONFIG); auth = firebase.auth(); db = firebase.database(); }
   $('sitio').innerHTML = Object.keys(NEG).map(function (k) { return '<option value="' + k + '"' + (k === s ? ' selected' : '') + '>' + NEG[k].n + '</option>'; }).join('');
   $('sitio').hidden = true;
@@ -76,7 +82,22 @@ a{color:var(--ac)}
 
   var diaSel = null;
   function diasAbiertos() { var r = [], h = NEG[s].hor || {}; for (var i = 0; i < 21 && r.length < 14; i++) { var d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() + i); if (h[d.getDay()]) r.push(d); } return r; }
+  function proTabs() { return '<div class="tabs">' + ['Todos'].concat(PRO.map(function (p) { return p.n; })).map(function (n, i) { return '<button data-prosel="' + (i - 1) + '" aria-pressed="' + (proSel === i - 1) + '">' + esc(n) + '</button>'; }).join('') + '</div>'; }
+  function todosV() {
+    var dias = diasAbiertos(), hoy = hoyIso(), all = todos().filter(function (t) { return t.fecha >= hoy && t.pro != null; });
+    if (!diaSel || !dias.some(function (d) { return hoyIso(d) === diaSel; })) diaSel = hoyIso(dias[0]);
+    var act = function (t) { return t.estado !== 'cancelado'; }, cuenta = function (f) { return all.filter(function (t) { return t.fecha === f && act(t); }).length; };
+    var h = '<div class="kpis">' + PRO.map(function (p, i) { return '<div class="kpi"><b>' + all.filter(function (t) { return t.pro === i && t.fecha === hoy && act(t); }).length + '</b><span>turnos hoy · ' + esc(p.n) + '</span></div>'; }).join('') + '</div>';
+    h += '<div class="tabs dias">' + dias.map(function (d) { var f = hoyIso(d), n = cuenta(f); return '<button data-dia="' + f + '" aria-pressed="' + (f === diaSel) + '">' + (f === hoy ? 'Hoy' : DIAS[d.getDay()].slice(0, 3)) + ' ' + d.getDate() + '/' + (d.getMonth() + 1) + (n ? ' · ' + n : '') + '</button>'; }).join('') + '</div>';
+    var dl = all.filter(function (t) { return t.fecha === diaSel && act(t); });
+    h += '<h2>' + fechaTxt(diaSel) + ' · todos</h2>' + (dl.length ? dl.map(function (t) { return '<div class="it"><div class="h">' + hh(t.ini) + '</div><div><b>' + esc(t.nombre) + '</b> <span class="tag">' + esc(PRO[t.pro].n) + '</span><br><small>' + esc((t.servicio || '').replace(/ · con .*/, '')) + ' · ' + hh(t.ini) + ' a ' + hh(t.ini + t.min) + '</small></div><div class="ac">' + wa(t.cel, 'Hola ' + t.nombre + '! Te esperamos el ' + fechaTxt(t.fecha) + ' a las ' + hh(t.ini) + ' con ' + PRO[t.pro].n + ' en ' + NEG[s].n + '.') + '<button class="sec" data-prosel="' + t.pro + '">Ver agenda</button></div></div>'; }).join('') : '<p class="vacio">No hay turnos este día.</p>');
+    return h + '<p style="color:var(--soft)">Para bloquear horarios o marcar atendidos, entrá a la agenda de cada profesional.</p>';
+  }
   function turnosV() {
+    if (PRO) { if (proSel < 0) return proTabs() + todosV(); usar(cur()); return proTabs() + turnosV1(); }
+    return turnosV1();
+  }
+  function turnosV1() {
     var l = datos.turnos || [], oc = datos.ocup || {}, P = NEG[s].paso || 30, hoy = hoyIso(), dias = diasAbiertos();
     if (!dias.length) return '<p class="vacio">Falta cargar el horario del negocio.</p>';
     if (!diaSel || !dias.some(function (d) { return hoyIso(d) === diaSel; })) diaSel = hoyIso(dias[0]);
@@ -134,21 +155,134 @@ a{color:var(--ac)}
       '<h2>Visitas por día (30 días)</h2><div class="bar">' + d30.map(function (n) { return '<i style="height:' + (n / max * 100) + '%" title="' + n + '"></i>'; }).join('') + '</div>' +
       '<h2>De dónde vienen</h2>' + lista(suma('origen')) + '<h2>Botones tocados</h2>' + lista(cl) + '<h2>Páginas más vistas</h2>' + lista(suma('paginas')) + '<h2>Celular o compu</h2>' + lista(suma('disp'));
   }
+  /* ===== Turnos Pro: clientes, resumen del mes y editar web ===== */
+  var MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+  var pesos = function (n) { return '$' + Math.round(n || 0).toLocaleString('es-AR'); };
+  var mesTxt = function (m) { var p = m.split('-'); return MESES[+p[1] - 1] + ' ' + p[0]; };
+  var mesDe = function (d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'); };
+  function fichas() {
+    var r = {}, hoy = hoyIso(), notas = datos.fichas || {};
+    todos().forEach(function (t) {
+      if (!t.cel) return; var f = r[t.cel] = r[t.cel] || { cel: t.cel, nombre: t.nombre, vis: 0, gasto: 0, ult: '', prox: '', pros: {}, serv: {}, canc: 0 };
+      if (t.estado === 'cancelado') { f.canc++; return; }
+      if (t.fecha < hoy || t.estado === 'atendido') { f.vis++; f.gasto += +t.precio || 0; if (t.fecha > f.ult) f.ult = t.fecha; }
+      else if (!f.prox || t.fecha < f.prox) f.prox = t.fecha;
+      if (t.pro != null) f.pros[t.pro] = (f.pros[t.pro] || 0) + 1; var sv = (t.servicio || '').replace(/ · con .*/, ''); f.serv[sv] = (f.serv[sv] || 0) + 1; f.nombre = t.nombre;
+    });
+    Object.keys(r).forEach(function (k) { r[k].nota = (notas[k] || {}).nota || ''; });
+    return Object.keys(r).map(function (k) { return r[k]; }).sort(function (a, b) { return (b.ult || '') < (a.ult || '') ? -1 : 1; });
+  }
+  var top = function (o) { var k = Object.keys(o).sort(function (a, b) { return o[b] - o[a]; }); return k[0]; };
+  function clientesV() {
+    var l = fichas(), b = buscar.toLowerCase(), f = l.filter(function (x) { return !b || x.nombre.toLowerCase().indexOf(b) >= 0 || x.cel.indexOf(b) >= 0; });
+    var h = '<div class="kpis"><div class="kpi"><b>' + l.length + '</b><span>clientes con ficha</span></div><div class="kpi"><b>' + l.filter(function (x) { return x.vis >= 3; }).length + '</b><span>vienen seguido (3 o más visitas)</span></div><div class="kpi"><b>' + l.filter(function (x) { var d = new Date(); d.setDate(d.getDate() - 60); return x.ult && x.ult < hoyIso(d) && !x.prox; }).length + '</b><span>no vuelven hace 2 meses</span></div></div>';
+    h += '<p><input id="buscar" placeholder="Buscar por nombre o celular" value="' + esc(buscar) + '"></p>';
+    h += f.slice(0, 60).map(function (x) {
+      var p = top(x.pros), sv = top(x.serv), dorm = x.ult && !x.prox && x.ult < hoyIso(new Date(Date.now() - 60 * 864e5));
+      return '<details class="it" style="display:block"><summary style="cursor:pointer;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><span><b>' + esc(x.nombre) + '</b> <small>' + esc(x.cel) + '</small>' + (x.nota ? ' 📝' : '') + (dorm ? ' <span class="tag nuevo">hace mucho que no viene</span>' : '') + '</span><small>' + x.vis + ' visitas · ' + pesos(x.gasto) + '</small></summary>' +
+        '<p style="margin:10px 0 6px"><small>Última visita: ' + (x.ult ? fechaTxt(x.ult) : '—') + ' · Próximo turno: ' + (x.prox ? fechaTxt(x.prox) : '—') + '<br>Lo atiende: ' + (p != null && PRO ? esc(PRO[p].n) : '—') + ' · Servicio habitual: ' + esc(sv || '—') + (x.canc ? ' · Canceló ' + x.canc + ' vez/veces' : '') + '</small></p>' +
+        '<label><small>Notas (fórmula de color, cómo le gusta el corte, alergias a productos…)</small><textarea data-nota="' + esc(x.cel) + '" rows="3" style="width:100%;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit">' + esc(x.nota) + '</textarea></label>' +
+        '<p class="ac" style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn" data-gnota="' + esc(x.cel) + '">Guardar nota</button>' + wa(x.cel, 'Hola ' + x.nombre + '! ¿Cómo estás? Hace un tiempo que no te vemos por ' + NEG[s].n + '. Si querés, reservá tu turno en la web.') + '</p></details>';
+    }).join('') + (f.length > 60 ? '<p class="vacio">Mostrando 60 de ' + f.length + '. Buscá para encontrar al resto.</p>' : '') + (l.length ? '' : '<p class="vacio">Las fichas se arman solas con cada turno.</p>');
+    return h;
+  }
+  function calcMes(m) {
+    var R0 = (datos.resumenes || {})[m]; var l = todos().filter(function (t) { return t.fecha.slice(0, 7) === m; });
+    if (!l.length && R0) return R0;
+    var hoy = hoyIso(), ok = l.filter(function (t) { return t.estado !== 'cancelado'; }), at = ok.filter(function (t) { return t.fecha < hoy || t.estado === 'atendido'; });
+    var prim = {}; todos().forEach(function (t) { if (t.cel && t.estado !== 'cancelado' && (!prim[t.cel] || t.fecha < prim[t.cel])) prim[t.cel] = t.fecha; });
+    var cl = {}, pro = {}, sv = {}, dia = {}, hora = {};
+    at.forEach(function (t) { cl[t.cel] = 1; var k = t.pro != null && PRO ? PRO[t.pro].n : 'Local'; pro[k] = pro[k] || [0, 0]; pro[k][0]++; pro[k][1] += +t.precio || 0; var x = (t.servicio || '').replace(/ · con .*/, ''); sv[x] = (sv[x] || 0) + 1; var p = t.fecha.split('-'); var dw = new Date(+p[0], p[1] - 1, +p[2]).getDay(); dia[dw] = (dia[dw] || 0) + 1; var hr = Math.floor(t.ini / 60); hora[hr] = (hora[hr] || 0) + 1; });
+    return { turnos: at.length, futuros: ok.length - at.length, canc: l.length - ok.length, ing: at.reduce(function (a, t) { return a + (+t.precio || 0); }, 0), clientes: Object.keys(cl).length, nuevos: Object.keys(cl).filter(function (c) { return prim[c] && prim[c].slice(0, 7) === m; }).length, pro: pro, sv: sv, dia: dia, hora: hora, detalle: true };
+  }
+  function var_(a, b) { if (!b) return ''; var d = Math.round((a - b) / b * 100); return ' <small style="color:' + (d >= 0 ? 'var(--ok)' : 'var(--ro)') + '">' + (d >= 0 ? '▲ ' : '▼ ') + Math.abs(d) + '% vs. mes anterior</small>'; }
+  function meses() { var r = [], d = new Date(); d.setDate(1); for (var i = 0; i < 18; i++) { r.push(mesDe(d)); d.setMonth(d.getMonth() - 1); } return r.filter(function (m, i) { return i < 13 || (datos.resumenes || {})[m]; }); }
+  function resumenV() {
+    var ms = meses(); if (!mesSel) mesSel = ms[1] || ms[0];
+    var m = mesSel, i = ms.indexOf(m), A = calcMes(m), B = ms[i + 1] ? calcMes(ms[i + 1]) : null, actual = m === ms[0];
+    var lista = function (o, fmt) { var ks = Object.keys(o || {}).sort(function (a, b) { return (o[b][0] || o[b]) - (o[a][0] || o[a]); }); return ks.map(function (k) { return '<div class="fila"><span>' + esc(fmt ? fmt(k) : k) + '</span><b>' + (Array.isArray(o[k]) ? o[k][0] + ' turnos · ' + pesos(o[k][1]) : o[k]) + '</b></div>'; }).join('') || '<p class="vacio">Sin datos.</p>'; };
+    var h = '<p><select id="mes" style="width:auto">' + ms.map(function (x) { return '<option value="' + x + '"' + (x === m ? ' selected' : '') + '>' + mesTxt(x) + (x === ms[0] ? ' (en curso)' : '') + '</option>'; }).join('') + '</select> <button class="sec" data-desc="csv">Descargar Excel</button> <button class="sec" data-desc="img">Descargar imagen</button></p>';
+    h += actual ? '<p style="color:var(--warn)">Mes en curso: los números se van completando día a día.</p>' : '<p style="color:var(--soft)">Este resumen te llega por mail el día 1 de cada mes.</p>';
+    if (!A.detalle) h += '<p style="color:var(--soft)">Resumen guardado. El detalle de cada turno se borra al año; los totales del mes quedan siempre.</p>';
+    h += '<div class="kpis"><div class="kpi"><b>' + A.turnos + '</b><span>turnos atendidos' + var_(A.turnos, B && B.turnos) + '</span></div><div class="kpi"><b>' + pesos(A.ing) + '</b><span>facturado (estimado por precio de lista)' + var_(A.ing, B && B.ing) + '</span></div><div class="kpi"><b>' + A.clientes + '</b><span>clientes · ' + A.nuevos + ' nuevos</span></div><div class="kpi"><b>' + A.canc + '</b><span>cancelados' + (A.turnos ? ' (' + Math.round(A.canc / (A.turnos + A.canc) * 100) + '%)' : '') + '</span></div></div>';
+    if (actual && A.futuros) h += '<p style="color:var(--soft)">Además hay ' + A.futuros + ' turnos reservados para lo que queda del mes.</p>';
+    if (A.pro && PRO) h += '<h2>Por profesional</h2>' + lista(A.pro);
+    h += '<h2>Servicios más pedidos</h2>' + lista(A.sv) + '<h2>Días con más turnos</h2>' + lista(A.dia, function (k) { return DIAS[k]; }) + '<h2>Horarios con más turnos</h2>' + lista(A.hora, function (k) { return k + ' h'; });
+    return h;
+  }
+  function descargar(tipo) {
+    var A = calcMes(mesSel), nom = NEG[s].n.replace(/\W+/g, '-').toLowerCase() + '-resumen-' + mesSel;
+    var bajar = function (blob, n) { var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = n; document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500); };
+    if (tipo === 'csv') {
+      var f = [['Resumen', NEG[s].n, mesTxt(mesSel)], [], ['Turnos atendidos', A.turnos], ['Facturado estimado', A.ing], ['Clientes', A.clientes], ['Nuevos', A.nuevos], ['Cancelados', A.canc], [], ['Profesional', 'Turnos', 'Facturado']];
+      Object.keys(A.pro || {}).forEach(function (k) { f.push([k, A.pro[k][0], A.pro[k][1]]); });
+      var det = todos().filter(function (t) { return t.fecha.slice(0, 7) === mesSel; });
+      if (det.length) { f.push([], ['Fecha', 'Hora', 'Cliente', 'Celular', 'Servicio', 'Profesional', 'Precio', 'Estado']); det.forEach(function (t) { f.push([t.fecha, hh(t.ini), t.nombre, t.cel || '', (t.servicio || '').replace(/ · con .*/, ''), t.pro != null && PRO ? PRO[t.pro].n : '', t.precio || '', t.estado]); }); }
+      return bajar(new Blob(['﻿' + f.map(function (r) { return r.map(function (c) { c = String(c == null ? '' : c); return /[;"\n]/.test(c) ? '"' + c.replace(/"/g, '""') + '"' : c; }).join(';'); }).join('\n')], { type: 'text/csv' }), nom + '.csv');
+    }
+    var c = document.createElement('canvas'); c.width = 1080; c.height = 1350; var x = c.getContext('2d');
+    x.fillStyle = '#0f1115'; x.fillRect(0, 0, 1080, 1350); x.fillStyle = '#7aa2ff'; x.font = '800 44px Figtree, sans-serif'; x.fillText(NEG[s].n, 70, 120); x.fillStyle = '#eef0f4'; x.font = '600 64px Figtree, sans-serif'; x.fillText('Resumen de ' + mesTxt(mesSel), 70, 210);
+    [['Turnos atendidos', A.turnos], ['Facturado (estimado)', pesos(A.ing)], ['Clientes', A.clientes + ' (' + A.nuevos + ' nuevos)'], ['Cancelados', A.canc]].forEach(function (k, i) { var y = 300 + i * 150; x.fillStyle = '#181b22'; x.fillRect(70, y, 940, 120); x.fillStyle = '#9aa3b2'; x.font = '400 32px Figtree, sans-serif'; x.fillText(k[0], 100, y + 48); x.fillStyle = '#eef0f4'; x.font = '800 48px Figtree, sans-serif'; x.fillText(String(k[1]), 100, y + 100); });
+    var y = 940; x.fillStyle = '#9aa3b2'; x.font = '600 30px Figtree, sans-serif'; x.fillText('POR PROFESIONAL', 70, y); Object.keys(A.pro || {}).slice(0, 5).forEach(function (k, i) { x.fillStyle = '#eef0f4'; x.font = '400 34px Figtree, sans-serif'; x.fillText(k + ': ' + A.pro[k][0] + ' turnos · ' + pesos(A.pro[k][1]), 70, y + 55 + i * 50); });
+    x.fillStyle = '#9aa3b2'; x.font = '400 26px Figtree, sans-serif'; x.fillText('Panel hecho por StudioProAr', 70, 1300);
+    c.toBlob(function (b) { bajar(b, nom + '.png'); });
+  }
+  var DSEM = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+  function webBase() { var W = datos.web || {}, E0 = (window.BASE_WEB || {})[s] || {}; return { serv: (W.serv || E0.serv || []).map(function (x) { return x.slice(); }), hor: JSON.parse(JSON.stringify(W.hor || NEG[s].hor || {})), promo: W.promo || '', vac: W.vac || { desde: '', hasta: '', txt: 'Vacaciones' } }; }
+  function editarV() {
+    if (!webEd) webEd = webBase(); var W = webEd, inp = function (f, v, extra) { return '<input data-f="' + f + '" value="' + esc(v) + '"' + (extra || '') + '>'; };
+    var h = '<p style="color:var(--soft)">Lo que cambies acá se ve en tu web al guardar.' + (MUESTRA ? ' En esta muestra se guarda solo en este navegador: abrí la web de muestra en Turnos Pro para ver el cambio.' : '') + '</p>';
+    h += '<h2>Servicios y precios</h2>' + W.serv.map(function (x, i) { return '<div class="it" style="grid-template-columns:2fr 1fr 1fr auto">' + inp('serv.' + i + '.0', x[0], ' aria-label="Servicio"') + inp('serv.' + i + '.1', x[1], ' aria-label="Duración (ej. 40 min o 1 h 30)"') + inp('serv.' + i + '.2', x[2], ' inputmode="numeric" aria-label="Precio"') + '<button class="sec" data-delserv="' + i + '" aria-label="Quitar">✕</button></div>'; }).join('') + '<p><button class="sec" data-addserv="1">+ Agregar servicio</button></p>';
+    h += '<h2>Horarios</h2>' + [1, 2, 3, 4, 5, 6, 0].map(function (d) { var x = W.hor[d]; return '<div class="it" style="grid-template-columns:60px auto 1fr 1fr"><b>' + DSEM[d] + '</b><label><input type="checkbox" data-abre="' + d + '"' + (x ? ' checked' : '') + ' style="width:auto"> abierto</label>' + (x ? inp('hor.' + d + '.0', x[0], ' inputmode="numeric" aria-label="Abre (hora)"') + inp('hor.' + d + '.1', x[1], ' inputmode="numeric" aria-label="Cierra (hora)"') : '<span></span><span></span>') + '</div>'; }).join('');
+    h += '<h2>Promo del momento</h2>' + inp('promo', W.promo, ' placeholder="Ej.: Martes y miércoles, corte + barba $15.000"') + '<p style="color:var(--soft);font-size:13px">Aparece como franja arriba de la web. Dejalo vacío para sacarla.</p>';
+    h += '<h2>Vacaciones o feriado</h2><div class="it" style="grid-template-columns:1fr 1fr 2fr">' + '<input type="date" data-f="vac.desde" value="' + esc(W.vac.desde) + '" aria-label="Desde"><input type="date" data-f="vac.hasta" value="' + esc(W.vac.hasta) + '" aria-label="Hasta">' + inp('vac.txt', W.vac.txt, ' aria-label="Texto"') + '</div><p style="color:var(--soft);font-size:13px">Esos días la web avisa que está cerrado y no deja reservar.</p>';
+    h += '<h2>Fotos</h2><p style="color:var(--soft)">' + (MUESTRA ? 'En tu panel real subís fotos desde el celu con el botón "Subir foto" (se achican solas).' : '<button class="sec" disabled>Subir foto</button> (próximamente)') + '</p>';
+    h += '<p><button class="btn" data-gweb="1">Guardar cambios</button> <button class="sec" data-rweb="1">Deshacer</button> <a class="sec" style="text-decoration:none" target="_blank" rel="noopener" href="' + esc(NEG[s].webPro || NEG[s].web || '#') + '">Ver mi web</a> <span id="gmsg"></span></p>';
+    return h;
+  }
+  function setF(path, v) { var k = path.split('.'), o = webEd; for (var i = 0; i < k.length - 1; i++) o = o[k[i]]; var L = k[k.length - 1]; o[L] = /^(serv\.\d+\.2|hor\.)/.test(path) ? (+String(v).replace(/\D/g, '') || 0) : v; }
+  app.addEventListener('input', function (e) { var t = e.target; if (t.id === 'buscar') { buscar = t.value; var p = t.selectionStart; vista = 'clientes'; t.blur(); pinta(); var n = $('buscar'); if (n) { n.focus(); n.setSelectionRange(p, p); } } else if (t.dataset.f) setF(t.dataset.f, t.value); });
+  app.addEventListener('change', function (e) { var t = e.target; if (t.id === 'mes') { mesSel = t.value; pinta(); } else if (t.dataset.abre) { var d = t.dataset.abre; if (t.checked) webEd.hor[d] = [9, 19]; else delete webEd.hor[d]; t.blur(); pinta(); } });
+  function proClick(b) {
+    if (b.dataset.desc) { descargar(b.dataset.desc); return true; }
+    if (b.dataset.addserv) { webEd.serv.push(['Nuevo servicio', '30 min', 0]); pinta(); return true; }
+    if (b.dataset.delserv) { webEd.serv.splice(+b.dataset.delserv, 1); pinta(); return true; }
+    if (b.dataset.rweb) { webEd = webBase(); pinta(); return true; }
+    if (b.dataset.gweb) {
+      var W = { serv: webEd.serv.filter(function (x) { return x[0]; }).map(function (x) { return [String(x[0]).slice(0, 60), String(x[1]).slice(0, 20), +x[2] || 0]; }), hor: webEd.hor, promo: String(webEd.promo || '').slice(0, 140) };
+      if (webEd.vac.desde && webEd.vac.hasta) W.vac = { desde: webEd.vac.desde, hasta: webEd.vac.hasta, txt: String(webEd.vac.txt || 'Vacaciones').slice(0, 40) };
+      var ok = function () { datos.web = W; var g = $('gmsg'); if (g) g.textContent = '✓ Guardado. Ya se ve en tu web.'; };
+      if (MUESTRA) { try { localStorage.setItem('spa_web_' + s, JSON.stringify(W)); } catch (er) {} ok(); }
+      else { b.disabled = true; db.ref('r/' + s + '/web').set(W).then(function () { b.disabled = false; ok(); }, function () { b.disabled = false; alert('No se pudo guardar.'); }); }
+      return true;
+    }
+    if (b.dataset.gnota) {
+      var cel = b.dataset.gnota, ta = app.querySelector('[data-nota="' + cel + '"]'), v = ta ? ta.value.slice(0, 500) : '';
+      datos.fichas = datos.fichas || {}; datos.fichas[cel] = { nota: v };
+      var fin = function () { b.textContent = '✓ Guardada'; setTimeout(function () { b.textContent = 'Guardar nota'; }, 1500); };
+      if (MUESTRA) fin(); else db.ref('r/' + s + '/pro/fichas/' + cel).set({ nota: v }).then(fin, function () { alert('No se pudo guardar.'); });
+      return true;
+    }
+    return false;
+  }
   function pinta() {
-    app.innerHTML = '<div class="tabs">' + NEG[s].t.map(function (t) { var n = t === 'turnos' ? (datos.turnos || []).filter(function (x) { return x.estado === 'nuevo' || (x.estado === 'confirmado' && x.fecha === hoyIso()); }).length : t === 'encargos' ? (datos.encargos || []).filter(function (x) { return x.estado === 'nuevo'; }).length : 0; return '<button data-v="' + t + '" aria-pressed="' + (t === vista) + '">' + NOM[t] + (n ? ' (' + n + ')' : '') + '</button>'; }).join('') + '</div>' +
-      (vista === 'turnos' ? turnosV() : vista === 'encargos' ? encargosV() : statsV());
+    var ae = document.activeElement; if ((vista === 'editar' || vista === 'clientes') && ae && app.contains(ae) && /INPUT|TEXTAREA|SELECT/.test(ae.tagName)) return;
+    app.innerHTML = '<div class="tabs">' + NEG[s].t.map(function (t) { var n = t === 'turnos' ? (PRO ? todos() : datos.turnos || []).filter(function (x) { return x.estado === 'nuevo' || (x.estado === 'confirmado' && x.fecha === hoyIso()); }).length : t === 'encargos' ? (datos.encargos || []).filter(function (x) { return x.estado === 'nuevo'; }).length : 0; return '<button data-v="' + t + '" aria-pressed="' + (t === vista) + '">' + NOM[t] + (n ? ' (' + n + ')' : '') + '</button>'; }).join('') + '</div>' +
+      (vista === 'turnos' ? turnosV() : vista === 'encargos' ? encargosV() : vista === 'clientes' ? clientesV() : vista === 'resumen' ? resumenV() : vista === 'editar' ? editarV() : statsV());
   }
   app.addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;
     if (b.dataset.v) { vista = b.dataset.v; pinta(); return; }
     if (b.dataset.dia) { diaSel = b.dataset.dia; pinta(); return; }
+    if (b.dataset.prosel) { proSel = +b.dataset.prosel; vista = 'turnos'; pinta(); return; }
+    if (PRO && proClick(b)) return;
     if (MUESTRA) { /* en la muestra los cambios quedan solo en pantalla */
       var oc = datos.ocup[diaSel] = datos.ocup[diaSel] || {};
       if (b.dataset.blq) oc[b.dataset.blq] = 'bloqueo'; else if (b.dataset.desb) delete oc[b.dataset.desb];
       else if (b.dataset.blqdia) [].forEach.call(app.querySelectorAll('[data-blq]'), function (x) { oc[x.dataset.blq] = 'bloqueo'; });
       else if (b.dataset.t) { var tm = datos.turnos.filter(function (x) { return x._id === b.dataset.t; })[0]; if (tm) { tm.estado = b.dataset.e; if (b.dataset.e === 'cancelado') { var o2 = datos.ocup[tm.fecha] || {}; Object.keys(o2).forEach(function (k) { if (o2[k] === tm._id) delete o2[k]; }); } } }
       pinta(); return; }
-    var base = 'r/' + s, OC = base + '/turnos/ocupado/' + diaSel + '/';
+    var base = 'r/' + cur(), OC = base + '/turnos/ocupado/' + diaSel + '/';
     if (b.dataset.blq || b.dataset.desb) { var u = {}; u[OC + (b.dataset.blq || b.dataset.desb)] = b.dataset.blq ? 'bloqueo' : null; b.disabled = true; db.ref().update(u).catch(function () { b.disabled = false; alert('No se pudo guardar. Puede que alguien haya reservado ese horario recién.'); }); return; }
     if (b.dataset.blqdia) { if (!confirm('¿Bloquear todos los horarios libres de este día? Los turnos ya tomados se mantienen.')) return; var u2 = {}; [].forEach.call(app.querySelectorAll('[data-blq]'), function (x) { u2[OC + x.dataset.blq] = 'bloqueo'; }); if (Object.keys(u2).length) db.ref().update(u2).catch(function () { alert('No se pudo guardar.'); }); return; }
     if (b.dataset.t) {
@@ -163,8 +297,23 @@ a{color:var(--ac)}
     }
     if (b.dataset.p) { b.disabled = true; db.ref(base + '/encargos/lista/' + b.dataset.p + '/estado').set(b.dataset.e).catch(function () { b.disabled = false; alert('No se pudo guardar.'); }); }
   });
+  function escucharPro() {
+    var on = function (ruta, fn) { var r = db.ref(ruta); refs.push(r); r.on('value', function (sn) { fn(sn); pinta(); }, function () {}); };
+    PRO.forEach(function (p) {
+      usar(p.id); var d = datosP[p.id];
+      on('r/' + p.id + '/turnos/lista', function (sn) { var a = []; sn.forEach(function (c) { var v = c.val(); v._id = c.key; a.push(v); }); a.sort(function (x, y) { return (x.fecha + String(x.ini).padStart(4, '0')) < (y.fecha + String(y.ini).padStart(4, '0')) ? -1 : 1; }); if (vistos && a.some(function (x) { return !vistos[x._id]; })) beep(); vistos = vistos || {}; a.forEach(function (x) { vistos[x._id] = 1; }); d.turnos.length = 0; [].push.apply(d.turnos, a); });
+      on('r/' + p.id + '/turnos/ocupado', function (sn) { var o = sn.val() || {}; Object.keys(d.ocup).forEach(function (k) { delete d.ocup[k]; }); Object.keys(o).forEach(function (k) { d.ocup[k] = o[k]; }); });
+      on('r/' + p.id + '/turnos/avisos', function (sn) { d.av = sn.val() || {}; });
+      on('r/' + p.id + '/turnos/recordados', function (sn) { d.rec = sn.val() || {}; });
+    });
+    on('sitios/' + s + '/stats', function (sn) { datos.stats = sn.val() || {}; });
+    on('r/' + s + '/web', function (sn) { datos.web = sn.val() || {}; });
+    on('r/' + s + '/pro/fichas', function (sn) { datos.fichas = sn.val() || {}; });
+    on('r/' + s + '/pro/resumen', function (sn) { datos.resumenes = sn.val() || {}; });
+  }
   function escuchar() {
     refs.forEach(function (r) { r.off(); }); refs = [];
+    if (PRO) return escucharPro();
     NEG[s].t.forEach(function (t) {
       if (t === 'turnos') { var ro = db.ref('r/' + s + '/turnos/ocupado'); refs.push(ro); ro.on('value', function (sn) { datos.ocup = sn.val() || {}; pinta(); });
         var rav = db.ref('r/' + s + '/turnos/avisos'); refs.push(rav); rav.on('value', function (sn) { datos.av = sn.val() || {}; pinta(); }, function () {});
@@ -203,10 +352,45 @@ a{color:var(--ac)}
       st.clics[k] = { whatsapp: Math.round(v * .18), 'como-llegar': Math.round(v * .08), turnos: Math.round(v * .22) }; st.disp[k] = { celular: Math.round(v * .82), compu: Math.round(v * .18) }; st.paginas[k] = { inicio: v, servicios: Math.round(v * .5) }; }
     datos = { turnos: tl, ocup: oc, av: av, rec: rc, stats: st };
   }
+  window.BASE_WEB = {
+    navaja: { serv: [['Corte', '35 min', 13000], ['Fade / degradé', '40 min', 14000], ['Corte y barba', '50 min', 18000], ['Perfilado de barba', '25 min', 8000], ['Corte de niño (hasta 12)', '30 min', 10000], ['Platinado o color', '1 h 30', 35000]] },
+    eltano: { serv: [['Corte clásico', '30 min', 12000], ['Afeitado con toalla caliente', '35 min', 11000], ['Corte y afeitado', '1 h', 20000], ['Arreglo de barba', '20 min', 8000], ['Corte jubilados (lun a jue)', '30 min', 9000]] },
+    alma: { serv: [['Corte', '50 min', 18000], ['Brushing', '40 min', 12000], ['Color raíz', '1 h 30', 32000], ['Mechas o balayage', '3 h', 65000], ['Nutrición profunda', '45 min', 20000], ['Peinado de evento', '1 h', 25000]] }
+  };
+  function datosMuestraPro() {
+    datosMuestra(); var st = datos.stats, SV = (window.BASE_WEB[s] || window.BASE_WEB.navaja).serv, P = 30;
+    var rnd = (function (x) { return function () { x = (x * 9301 + 49297) % 233280; return x / 233280; }; })(11);
+    var NB = ['Martín', 'Lucía', 'Joaquín', 'Sofía', 'Nicolás', 'Camila', 'Facundo', 'Valentina', 'Tomás', 'Agustina', 'Franco', 'Micaela', 'Santiago', 'Julieta', 'Matías', 'Florencia', 'Lautaro', 'Rocío', 'Bruno', 'Milagros', 'Ezequiel', 'Brenda', 'Gonzalo', 'Paula', 'Ignacio', 'Carla', 'Diego', 'Abril', 'Leandro', 'Daiana'], AP = 'ABCDFGLMPRSTV';
+    var CL = []; for (var i = 0; i < 70; i++) CL.push({ n: NB[i % NB.length] + ' ' + AP[Math.floor(rnd() * AP.length)] + '.', c: '11' + String(40000000 + Math.floor(rnd() * 59999999)), p: Math.floor(rnd() * PRO.length), f: .3 + rnd() });
+    var lim0 = CL.length, pick = function () { var c; do { c = CL[Math.floor(rnd() * lim0)]; } while (rnd() > c.f); return c; };
+    var mk = function (f, slot, pi, est, n) { var sv = SV[Math.floor(rnd() * Math.min(SV.length, 4))], c = pick(); if (rnd() < .7) pi = c.p; return { _id: 'p' + n, fecha: f, ini: slot, min: 2 * P, servicio: sv[0] + ' · con ' + PRO[pi].n, precio: String(sv[2]), nombre: c.n, cel: c.c, estado: est, pro: pi }; };
+    var hor = NEG[s].hor, n = 0, hist = [], hoy = hoyIso(), ahora = new Date().getHours() * 60;
+    for (var k = 400; k >= 1; k--) { var d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - k); var h = hor[d.getDay()]; if (!h) continue; lim0 = Math.min(CL.length, 20 + Math.floor((400 - k) / 400 * 50)); var mult = 1 + .25 * Math.sin((400 - k) / 60) + (400 - k) / 900;
+      PRO.forEach(function (_, pi) { var cant = Math.round((2 + rnd() * 4) * mult), us = {}; for (var j = 0; j < cant; j++) { var slot = h[0] * 60 + Math.floor(rnd() * ((h[1] - h[0]) * 2 - 2)) * P; if (us[slot]) continue; us[slot] = 1; hist.push(mk(hoyIso(d), slot, pi, rnd() < .08 ? 'cancelado' : 'atendido', n++)); } }); }
+    lim0 = CL.length; PRO.forEach(function (p, pi) {
+      var dd = usar(p.id); diasAbiertos().slice(0, 7).forEach(function (d, di) {
+        var f = hoyIso(d), h = hor[d.getDay()], cant = di === 0 ? 5 : 2 + Math.floor(rnd() * 4), us = {};
+        for (var j = 0; j < cant; j++) { var slot = h[0] * 60 + Math.floor(rnd() * ((h[1] - h[0]) * 2 - 2)) * P; if (us[slot] || us[slot + P] || us[slot - P]) continue; us[slot] = 1;
+          var t = mk(f, slot, pi, di === 0 && slot + 2 * P < ahora ? 'atendido' : 'confirmado', n++); t.pro = pi; t.servicio = t.servicio.replace(/con .*/, 'con ' + p.n); if (rnd() < .5) dd.av[t._id] = { endpoint: 'x' }; if (di <= 1 && dd.av[t._id]) dd.rec[t._id] = { push: 201 };
+          dd.turnos.push(t); dd.ocup[f] = dd.ocup[f] || {}; dd.ocup[f][slot] = dd.ocup[f][slot + P] = t._id; }
+        dd.turnos.sort(function (a, b) { return a.fecha + String(a.ini).padStart(4, '0') < b.fecha + String(b.ini).padStart(4, '0') ? -1 : 1; });
+      });
+    });
+    /* más de 12 meses: se guarda solo el resumen (el detalle se borra) */
+    var lim = new Date(); lim.setDate(1); lim.setMonth(lim.getMonth() - 12); var limM = mesDe(lim);
+    datos.hist = hist; datos.resumenes = {};
+    var viejos = {}; hist.forEach(function (t) { if (t.fecha.slice(0, 7) < limM) viejos[t.fecha.slice(0, 7)] = 1; });
+    Object.keys(viejos).forEach(function (m) { var r = calcMes(m); r.detalle = false; datos.resumenes[m] = r; });
+    datos.hist = hist.filter(function (t) { return t.fecha.slice(0, 7) >= limM; });
+    var NOTAS = { alma: ['Raíz 6.0 + 20 vol, 35 min. Le gusta el flequillo largo.', 'Balayage 9.1, matizar con violeta. Piel sensible.', 'Corte en capas, no tocar el largo.'], eltano: ['Navaja solo en la nuca. Charla de fútbol (de Tigre).', 'Afeitado con bálsamo sin alcohol.', 'Corte a tijera, nada de máquina.'], navaja: ['Fade bajo con 0,5. Raya marcada a la izquierda.', 'Barba perfilada, no tocar el bigote.', 'Mid fade con diseño, trae foto de referencia.'] }[s] || [];
+    datos.fichas = {}; NOTAS.forEach(function (x, i) { datos.fichas[CL[i * 3].c] = { nota: x }; });
+    datos.stats = st; proSel = -1;
+    try { datos.web = JSON.parse(localStorage.getItem('spa_web_' + s)) || {}; } catch (e) { datos.web = {}; }
+  }
   if (MUESTRA) {
     $('login').hidden = true; $('salir').hidden = true;
     document.querySelector('.in').insertAdjacentHTML('afterbegin', '<p style="background:#fff3cd;color:#5c4400;border-radius:10px;padding:8px 12px;font-size:14px;margin:0 0 12px">Panel de muestra con datos de ejemplo. En tu panel real ves tus turnos y visitas reales, con usuario y clave.</p>');
-    datosMuestra(); pinta(); return;
+    if (PRO) datosMuestraPro(); else datosMuestra(); pinta(); return;
   }
   auth.languageCode = 'es';
   var ALTA = q.get('alta'), creando = false;
