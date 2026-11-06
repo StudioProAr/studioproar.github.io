@@ -79,6 +79,11 @@ a{color:var(--ac)}
     if (!dias.length) return '<p class="vacio">Falta cargar el horario del negocio.</p>';
     if (!diaSel || !dias.some(function (d) { return hoyIso(d) === diaSel; })) diaSel = hoyIso(dias[0]);
     var act = function (t) { return t.estado !== 'cancelado'; };
+    var recIco = function (t) { var av = (datos.av || {})[t._id], rc = (datos.rec || {})[t._id], ok = function (x) { return x >= 200 && x < 300 || x === 200; }, o = '';
+      if (av) o += ' <span title="El cliente activó el aviso del día anterior">🔔</span>';
+      if (rc) { var bien = (rc.push && ok(rc.push)) || rc.mail === 200, mal = (rc.push && !ok(rc.push)) || (rc.mail && rc.mail !== 200); o += bien ? ' <span title="Recordatorio enviado" style="color:var(--ok)">✓ recordado</span>' : mal ? ' <span title="El recordatorio falló: avisale por WhatsApp" style="color:var(--ro)">✗ no se pudo recordar</span>' : ''; }
+      else if (!av && !t.email && t.estado !== 'cancelado') o += ' <span title="Sin aviso ni mail: conviene recordarle por WhatsApp" style="opacity:.6">sin recordatorio</span>';
+      return o; };
     var cuenta = function (f) { return l.filter(function (t) { return t.fecha === f && act(t); }).length; };
     var sem = 0; dias.slice(0, 7).forEach(function (d) { sem += cuenta(hoyIso(d)); });
     var h = '<div class="kpis"><div class="kpi"><b>' + cuenta(hoy) + '</b><span>turnos hoy</span></div><div class="kpi"><b>' + sem + '</b><span>turnos en los próximos 7 días abiertos</span></div><div class="kpi"><b>' + l.filter(function (t) { return t.fecha >= hoy && t.estado === 'cancelado'; }).length + '</b><span>cancelados próximos</span></div></div>';
@@ -90,7 +95,7 @@ a{color:var(--ac)}
       var t = delDia.filter(function (x) { return act(x) && m >= x.ini && m < x.ini + x.min; })[0], pasado = esHoy && m + P <= ahora;
       if (t && t.ini !== m) continue;
       if (t) {
-        h += '<div class="it' + (pasado ? ' pas' : '') + '"><div class="h">' + hh(m) + '</div><div><b>' + esc(t.nombre) + '</b> <span class="tag ' + esc(t.estado) + '">' + esc(t.estado) + '</span><br><small>' + esc(t.servicio || '') + ' · ' + hh(t.ini) + ' a ' + hh(t.ini + t.min) + (t.cel ? ' · ' + esc(t.cel) : '') + (t.email ? ' · ' + esc(t.email) : '') + '</small></div><div class="ac">' +
+        h += '<div class="it' + (pasado ? ' pas' : '') + '"><div class="h">' + hh(m) + '</div><div><b>' + esc(t.nombre) + '</b> <span class="tag ' + esc(t.estado) + '">' + esc(t.estado) + '</span>' + recIco(t) + '<br><small>' + esc(t.servicio || '') + ' · ' + hh(t.ini) + ' a ' + hh(t.ini + t.min) + (t.cel ? ' · ' + esc(t.cel) : '') + (t.email ? ' · ' + esc(t.email) : '') + '</small></div><div class="ac">' +
           wa(t.cel, 'Hola ' + t.nombre + '! Te confirmamos tu turno de ' + (t.servicio || '') + ' el ' + fechaTxt(t.fecha) + ' a las ' + hh(t.ini) + ' en ' + NEG[s].n + '. Si no podés venir, avisanos por acá. ¡Te esperamos!') +
           (t.estado !== 'atendido' ? '<button class="sec" data-t="' + t._id + '" data-e="atendido">Atendido</button>' : '') + '<button class="sec" data-t="' + t._id + '" data-e="cancelado">Cancelar</button></div></div>';
       } else if (del[m] === 'bloqueo') {
@@ -153,7 +158,9 @@ a{color:var(--ac)}
   function escuchar() {
     refs.forEach(function (r) { r.off(); }); refs = [];
     NEG[s].t.forEach(function (t) {
-      if (t === 'turnos') { var ro = db.ref('r/' + s + '/turnos/ocupado'); refs.push(ro); ro.on('value', function (sn) { datos.ocup = sn.val() || {}; pinta(); }); }
+      if (t === 'turnos') { var ro = db.ref('r/' + s + '/turnos/ocupado'); refs.push(ro); ro.on('value', function (sn) { datos.ocup = sn.val() || {}; pinta(); });
+        var rav = db.ref('r/' + s + '/turnos/avisos'); refs.push(rav); rav.on('value', function (sn) { datos.av = sn.val() || {}; pinta(); }, function () {});
+        var rrc = db.ref('r/' + s + '/turnos/recordados'); refs.push(rrc); rrc.on('value', function (sn) { datos.rec = sn.val() || {}; pinta(); }, function () {}); }
       var r = t === 'stats' ? db.ref('sitios/' + s + '/stats') : db.ref('r/' + s + '/' + t + '/lista');
       refs.push(r);
       r.on('value', function (sn) {
