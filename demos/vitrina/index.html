@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Muestrario · StudioProAr</title>
+<style>
+:root{--bg:#f4f5f7;--card:#fff;--tx:#0b1220;--su:#5b6472;--ac:#1452e6;--bo:#e2e5ea}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.in{max-width:980px;margin:0 auto;padding:20px}
+header{display:flex;align-items:center;gap:10px;margin-bottom:6px}header b{font-size:20px}header b span{color:var(--ac)}
+h1{font-size:26px;margin:10px 0 4px}h2{font-size:20px;margin:30px 0 4px}.sub{color:var(--su);margin:0 0 14px}
+.planes{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.plan{background:var(--card);border:1px solid var(--bo);border-radius:14px;padding:12px 14px}.plan b{display:block}.plan small{color:var(--su)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--bo);border-radius:16px;padding:16px}
+.card h3{margin:0 0 2px;font-size:18px}.card p{margin:0 0 12px;color:var(--su);font-size:14px}
+.sw{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:6px}
+.fila{display:grid;grid-template-columns:88px 1fr 1fr;gap:8px;align-items:center;margin-top:8px}
+.fila span{font-size:13px;font-weight:700;color:var(--su)}
+a.b{display:block;text-align:center;padding:10px 8px;border-radius:10px;border:1px solid var(--bo);text-decoration:none;color:var(--tx);font-weight:600;font-size:14px}
+a.b.web{background:var(--ac);border-color:var(--ac);color:#fff}
+.otros .card{display:flex;flex-direction:column}.otros .fila{grid-template-columns:1fr 1fr}
+.tag{font-size:12px;border:1px solid var(--bo);border-radius:999px;padding:1px 8px;color:var(--su);margin-left:6px;font-weight:600}
+.nota{font-size:13px;color:var(--su);margin-top:26px;border-top:1px solid var(--bo);padding-top:12px}
+</style>
+</head>
+<body><div class="in">
+<header><svg width="28" height="28" viewBox="0 0 64 64" aria-hidden="true"><path d="M20 18L6 32l14 14M44 18l14 14-14 14" fill="none" stroke="#1452E6" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 14L28 50" stroke="#0B1220" stroke-width="6" stroke-linecap="round"/></svg><b>Studio<span>Pro</span>Ar</b></header>
+<h1>Muestrario</h1>
+<p class="sub">Cada negocio recibe dos cosas: <b>su web</b> (lo que ven sus clientes) y <b>su panel</b> (privado, se instala como app). Todo lo que ves acá es de ejemplo.</p>
+
+<h2>Barberías y peluquerías</h2>
+<div class="planes">
+  <div class="plan"><b>Plan Esencial</b><small>Web con servicios, precios, horarios y "Pedí turno por WhatsApp". Panel con estadísticas.</small></div>
+  <div class="plan"><b>Plan Turnos</b><small>Todo lo del Esencial + el cliente reserva solo en la web. Panel con agenda, recordatorios y estadísticas.</small></div>
+</div>
+<div class="grid" id="barber"></div>
+
+<h2>Otros rubros</h2>
+<div class="grid otros" id="otros"></div>
+
+<p class="nota">Las webs de muestra guardan los turnos y pedidos solo en este navegador. Los paneles muestran datos inventados y no piden clave; el panel real de cada cliente es privado, con su usuario y contraseña.</p>
+</div>
+<script>
+var B=[['urbano','navaja','Barbería urbana','Oscura y dorada, moderna.','#d4a24c'],['clasico','eltano','Barbería clásica','Crema y bordó, de barrio.','#7a1f1f'],['mujer','alma','Salón de mujer','Rosado, elegante.','#b5546c']];
+document.getElementById('barber').innerHTML=B.map(function(x){
+  var w=function(p){return '../barberia/?estilo='+x[0]+'&plan='+p;},pa=function(p){return '../mi-negocio/?s='+x[1]+'&muestra=1&plan='+p;};
+  return '<div class="card"><h3><i class="sw" style="background:'+x[4]+'"></i>'+x[2]+'</h3><p>'+x[3]+'</p>'+
+    '<div class="fila"><span>Esencial</span><a class="b web" href="'+w('esencial')+'">Web</a><a class="b" href="'+pa('esencial')+'">Panel</a></div>'+
+    '<div class="fila"><span>Turnos</span><a class="b web" href="'+w('turnos')+'">Web</a><a class="b" href="'+pa('turnos')+'">Panel</a></div></div>';
+}).join('');
+var O=[['Peluquería · Salón Quebracho','Turnos','../peluqueria/','../mi-negocio/?s=salon&muestra=1&plan=turnos'],
+['Veterinaria · Patitas del Delta','Turnos','../veterinaria/','../mi-negocio/?s=vet&muestra=1&plan=turnos'],
+['Café · Café Muelle','Esencial','../cafe/','../panel/?n=cafe'],
+['Ferretería · La Llave','Esencial','../ferreteria/','../panel/?n=ferreteria'],
+['Astillero · Marea Alta','Completa','../nautica/','../panel/?n=nautica'],
+['Panadería · El Horno de Victoria','Catálogo y pedidos','../panaderia/','../panel/?n=panaderia'],
+['Tienda de ropa · Calle Norte','Catálogo y pedidos','https://tienda-ropa-prueba.pages.dev/','../panel/?n=tienda'],
+['Gimnasio','Turnos','../gimnasio/','../gimnasio/app.html'],
+['Cervecería · Remanso','Autogestionable','../cerveceria/','../panel/?n=cerveceria'],
+['Parrilla · El Fogón','Completa','../restaurante/','../panel/?n=bodegon'],
+['Bodegón con carta QR','Autogestionable','https://bodegon-demo-prueba.pages.dev/','https://bodegon-demo-prueba.pages.dev/panel.html'],
+['Velas · Luciérnaga','Autogestionable','https://luciernaga-prueba.pages.dev/',''],
+['Empresa · NetSur Fibra','Empresa','https://netsur-prueba.pages.dev/','']];
+document.getElementById('otros').innerHTML=O.map(function(x){return '<div class="card"><h3>'+x[0]+'<span class="tag">'+x[1]+'</span></h3><div class="fila"><a class="b web" href="'+x[2]+'">Web</a>'+(x[3]?'<a class="b" href="'+x[3]+'">Panel</a>':'<span></span>')+'</div></div>';}).join('');
+</script>
+</body>
+</html>
