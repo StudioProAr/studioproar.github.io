@@ -46,7 +46,7 @@
     /* Link "Cancelar mi turno" que va en el mail de confirmación */
     linkBaja: function (id, o) {
       if (!R.ultimaClave) return '';
-      var u = new URL('../comun/baja.html', location.href), q = { s: cfg.sitio, id: id, k: R.ultimaClave, f: o.fecha, i: o.ini, n: o.negocio || '', sv: o.servicio || '', c: R.modo === 'demo' ? cfg.clave : '' };
+      var u = new URL('../comun/baja.html', location.href), q = { s: cfg.sitio, id: id, k: R.ultimaClave, f: o.fecha, i: o.ini, n: o.negocio || '', c: R.modo === 'demo' ? cfg.clave : '' };
       Object.keys(q).forEach(function (x) { if (q[x] !== '' && q[x] != null) u.searchParams.set(x, q[x]); });
       if (R.modo === 'real') u.searchParams.set('real', '1');
       return u.href;
@@ -67,6 +67,41 @@
         'DTSTART:' + t(o.ini), 'DTEND:' + t(o.ini + o.min), 'SUMMARY:' + e(o.titulo), 'LOCATION:' + e(o.lugar), 'DESCRIPTION:' + e(o.detalle),
         'BEGIN:VALARM', 'TRIGGER:-PT3H', 'ACTION:DISPLAY', 'DESCRIPTION:' + e(o.titulo), 'END:VALARM', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
       return URL.createObjectURL(new Blob([s], { type: 'text/calendar' }));
+    },
+    /* Imagen del turno (PNG) para guardar en la galería o mandar por WhatsApp. Incluye QR para cancelar si está qr.js */
+    imagen: function (o) {
+      var W = 1080, H = 1350, c = document.createElement('canvas'); c.width = W; c.height = H; var x = c.getContext('2d');
+      var ac = o.color || '#16171b', F = 'system-ui,-apple-system,Segoe UI,Roboto,sans-serif';
+      x.fillStyle = '#f6f3ee'; x.fillRect(0, 0, W, H);
+      x.fillStyle = '#fff'; x.beginPath(); x.roundRect ? x.roundRect(60, 60, W - 120, H - 120, 40) : x.rect(60, 60, W - 120, H - 120); x.fill();
+      x.fillStyle = ac; x.fillRect(60, 60, W - 120, 16);
+      x.textAlign = 'left'; x.fillStyle = '#6b6b6b'; x.font = '600 38px ' + F; x.fillText(o.negocio.toUpperCase(), 120, 170);
+      x.fillStyle = ac; x.font = '800 76px ' + F; x.fillText('Turno confirmado ✓', 120, 270);
+      var y = 410, linea = function (t, f, col, max) { x.font = f; x.fillStyle = col; var ws = String(t).split(' '), l = ''; ws.forEach(function (w) { var p = l ? l + ' ' + w : w; if (x.measureText(p).width > (max || W - 240) && l) { x.fillText(l, 120, y); y += parseInt(f.match(/(\d+)px/)[1]) * 1.25; l = w; } else l = p; }); if (l) { x.fillText(l, 120, y); y += parseInt(f.match(/(\d+)px/)[1]) * 1.25; } };
+      var d = new Date(o.fecha + 'T12:00:00'), D = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'], hh = String(Math.floor(o.ini / 60)).padStart(2, '0') + ':' + String(o.ini % 60).padStart(2, '0');
+      linea(D[d.getDay()] + ' ' + d.getDate() + '/' + (d.getMonth() + 1), '800 96px ' + F, '#16171b');
+      linea(hh + ' h', '800 96px ' + F, '#16171b'); y += 30;
+      linea(o.servicio, '500 48px ' + F, '#333');
+      linea('A nombre de ' + o.nombre, '400 40px ' + F, '#555');
+      if (o.lugar) linea(o.lugar, '400 40px ' + F, '#555');
+      if (o.baja && window.crearQR) {
+        try { var q = crearQR(o.baja, 'L'), n = q.getModuleCount(), tam = 250, u = tam / n, qx = W - 120 - tam, qy = H - 120 - tam - 40;
+          x.fillStyle = '#16171b'; for (var r = 0; r < n; r++) for (var k = 0; k < n; k++) if (q.isDark(r, k)) x.fillRect(qx + k * u, qy + r * u, u + .5, u + .5);
+          x.fillStyle = '#6b6b6b'; x.font = '400 30px ' + F; x.fillText('¿No podés ir? Escaneá el QR', 120, H - 230); x.fillText('para cancelar el turno.', 120, H - 188);
+        } catch (e) {}
+      }
+      x.fillStyle = '#9a9a9a'; x.font = '400 26px ' + F; x.fillText('Turnos online · StudioProAr', 120, H - 110);
+      return new Promise(function (ok) { c.toBlob(ok, 'image/png'); });
+    },
+    guardarImagen: function (o) {
+      return R.imagen(o).then(function (b) {
+        var f = new File([b], 'turno-' + o.fecha + '.png', { type: 'image/png' });
+        if (navigator.canShare && navigator.canShare({ files: [f] })) return navigator.share({ files: [f], title: 'Mi turno', text: o.servicio + ' · ' + R.fechaTxt(o.fecha, o.ini) }).catch(function () {});
+        var u = URL.createObjectURL(b), v = document.createElement('div');
+        v.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;gap:12px;color:#fff;font:16px system-ui,sans-serif;text-align:center';
+        v.innerHTML = '<img src="' + u + '" alt="Imagen del turno" style="max-width:100%;max-height:75vh;border-radius:12px"><div>Mantené apretada la imagen para guardarla, o <a href="' + u + '" download="turno-' + o.fecha + '.png" style="color:#fff">descargala acá</a>.</div><button type="button" style="padding:10px 18px;border-radius:10px;border:0;font:inherit">Cerrar</button>';
+        v.querySelector('button').onclick = function () { v.remove(); }; document.body.appendChild(v);
+      });
     },
     fechaTxt: function (f, ini) {
       var d = new Date(f + 'T12:00:00'), D = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
@@ -94,10 +129,11 @@
       var tit = o.servicio + ' · ' + o.negocio, det = 'Turno a nombre de ' + o.nombre + '.' + (o.baja ? ' Para cancelar: ' + o.baja : '');
       var g = R.calendario({ titulo: tit, fecha: o.fecha, ini: o.ini, min: o.min, lugar: o.lugar || o.negocio, detalle: det });
       var wa = 'https://wa.me/' + o.waNum + '?text=' + encodeURIComponent('Hola ' + o.negocio + '! Reservé *' + o.servicio + '* para el *' + cuando + '* a nombre de ' + o.nombre + '.' + (o.baja ? '\nSi no puedo ir, lo cancelo acá: ' + o.baja : ''));
+      R._ult = o; if (!R._img) { R._img = 1; document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('.conf-img')) { e.preventDefault(); R.guardarImagen(R._ult); } }); }
       R.guardarMio({ id: o.id, fecha: o.fecha, ini: o.ini, servicio: o.servicio, baja: o.baja || '' });
       return '<div class="conf-t"><b>✓ Turno confirmado</b><p>' + esc(o.servicio) + ' · ' + cuando + ' · a nombre de ' + esc(o.nombre) + '</p><div class="conf-a">' +
         '<a class="wa" href="' + wa + '" target="_blank" rel="noopener">Guardar en WhatsApp</a>' +
-        '<a href="' + R.ics({ titulo: tit, fecha: o.fecha, ini: o.ini, min: o.min, lugar: o.lugar || o.negocio, detalle: det }) + '" download="turno.ics">Agendar en el celular</a>' +
+        '<a href="#" class="conf-img">Guardar imagen del turno</a>' +
         '<a href="' + g + '" target="_blank" rel="noopener">Google Calendar</a></div>' +
         '<small>Te queda guardado en esta web, en "Tus turnos".' + (o.mail ? ' También te lo mandamos a ' + esc(o.mail) + ' (si no lo ves, revisá Spam).' : '') + (o.baja ? ' ¿No podés ir? <a href="' + esc(o.baja) + '">Cancelá el turno</a> así lo libera para otra persona.' : '') + '</small></div>';
     },
