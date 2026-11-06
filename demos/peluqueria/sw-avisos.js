@@ -25,7 +25,7 @@ self.addEventListener('push', function (e) {
     var t = (dato && dato.id && l.filter(function (x) { return x.id === dato.id; })[0]) || l.filter(function (x) { return x.fecha === man; })[0] || l.filter(function (x) { return x.fecha === hoy; })[0] || l.filter(function (x) { return x.fecha >= hoy; }).sort(function (a, b) { return a.fecha < b.fecha ? -1 : 1; })[0];
     var titulo, cuerpo, url = './', tag = 'turno';
     if (dato && dato.titulo) { titulo = dato.titulo; cuerpo = dato.cuerpo; url = dato.url || url; tag = 'turno-' + (dato.id || ''); }
-    else if (t) { var D = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'], fd = new Date(t.fecha + 'T12:00:00'); titulo = (t.fecha === hoy ? 'Hoy' : t.fecha === man ? 'Mañana' : D[fd.getDay()] + ' ' + fd.getDate() + '/' + (fd.getMonth() + 1)) + ' ' + hh(t.ini) + ' h · ' + t.negocio; cuerpo = t.servicio + '. Te esperamos. Tocá para ver tu turno o cancelarlo.'; url = t.baja || t.url || url; tag = 'turno-' + t.id; }
+    else if (t) { var D = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'], fd = new Date(t.fecha + 'T12:00:00'); titulo = (t.fecha === hoy ? 'Hoy' : t.fecha === man ? 'Mañana' : D[fd.getDay()] + ' ' + fd.getDate() + '/' + (fd.getMonth() + 1)) + ' ' + hh(t.ini) + ' h · ' + t.negocio; cuerpo = t.servicio + '. Te esperamos. Tocá para ver tu turno o cancelarlo.'; url = (t.url || url).split('#')[0] + '#agenda'; tag = 'turno-' + t.id; }
     else { titulo = 'Recordatorio de tu turno'; cuerpo = 'Mañana tenés un turno reservado. Tocá para verlo.'; }
     return self.registration.showNotification(titulo, { body: cuerpo, tag: tag, data: { url: url }, icon: (t && t.icono) || undefined, badge: (t && t.icono) || undefined });
   }));
