@@ -140,6 +140,7 @@ footer .in{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;pa
 <section id="turnos">
   <div class="in">
     <div class="agenda" id="agenda">
+      <div id="ag-mios"></div>
       <p class="eyebrow">Agenda</p>
       <h2>Elegí tu turno</h2>
       <p class="lead">Seleccioná el servicio, el día y un horario libre. Después lo confirmás por WhatsApp.</p>
@@ -149,7 +150,7 @@ footer .in{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;pa
         <div><span class="ag-et" id="ag-et-hora">3. Horario</span><div class="ag-horas" id="ag-horas" role="group" aria-labelledby="ag-et-hora"></div></div>
       </div>
       <p class="ag-res" id="ag-res" role="status"></p>
-      <div class="ag-conf"><input id="ag-nom" type="text" maxlength="40" placeholder="Tu nombre" autocomplete="given-name" aria-label="Tu nombre"><input id="ag-cel" type="tel" inputmode="tel" maxlength="20" placeholder="Celular (ej. 1155554444)" autocomplete="tel-national" aria-label="Tu celular" required><input id="ag-mail" type="email" maxlength="80" placeholder="Mail (te llega la confirmación)" autocomplete="email" aria-label="Tu mail" required><button class="btn btn-a" id="ag-ok" type="button" disabled>Confirmar turno</button></div>
+      <div class="ag-conf"><input id="ag-nom" type="text" maxlength="40" placeholder="Tu nombre" autocomplete="given-name" aria-label="Tu nombre"><input id="ag-cel" type="tel" inputmode="tel" maxlength="20" placeholder="Celular (ej. 1155554444)" autocomplete="tel-national" aria-label="Tu celular" required><input id="ag-mail" type="email" maxlength="80" placeholder="Mail (opcional)" autocomplete="email" aria-label="Tu mail (opcional)"><button class="btn btn-a" id="ag-ok" type="button" disabled>Confirmar turno</button></div>
       <p class="ag-listo" id="ag-listo" role="status" hidden></p>
       <p class="aviso">Muestra de diseño: los turnos que confirmes se guardan solo en tu navegador y los ves en el <a href="../panel/?n=salon">panel de ejemplo del salón</a>. En la web real quedan en la agenda del salón.</p>
     </div>
@@ -347,19 +348,21 @@ ver(0);
     const s=servicios[sel.s],nom=$('ag-nom').value.trim().slice(0,40),ok0=$('ag-listo');
     const cel=Reservas.normCel($('ag-cel').value),mail=$('ag-mail').value.trim();
     if(nom.length<2){ok0.hidden=false;ok0.textContent='Escribí tu nombre.';$('ag-nom').focus();return;}
-    if(!Reservas.celOk(cel)){ok0.hidden=false;ok0.textContent='Escribí tu celular con código de área, sin 0 ni 15 (ej. 1155554444). Ahí te llega la confirmación.';$('ag-cel').focus();return;}
-    if(!mail||!Reservas.mailOk(mail)){ok0.hidden=false;ok0.textContent='Escribí tu mail: ahí te llega la confirmación y el link para cancelar.';$('ag-mail').focus();return;}
+    if(!Reservas.celOk(cel)){ok0.hidden=false;ok0.textContent='Escribí tu celular con código de área, sin 0 ni 15 (ej. 1155554444). ';$('ag-cel').focus();return;}
+    if(!Reservas.mailOk(mail)){ok0.hidden=false;ok0.textContent='Revisá el mail (o dejalo vacío).';$('ag-mail').focus();return;}
     const t={id:Date.now(),fecha:iso(sel.d),ini:sel.h,min:s.min,servicio:s.nombre,dur:s.dur,precio:String(s.precio),nombre:nom,cel:cel,email:mail||undefined,estado:'confirmado'};
     const fecha=DIAS[sel.d.getDay()]+' '+sel.d.getDate()+'/'+(sel.d.getMonth()+1),h0=sel.h,ok=$('ag-listo'),bt=$('ag-ok');
     bt.disabled=true;ok.hidden=false;ok.textContent='Guardando…';
     Reservas.guardar(t).then(id=>{
-      Correo.confirmacion({email:mail,nombre:nom,negocio:'Salón Quebracho',servicio:s.nombre,fecha:t.fecha,ini:h0,linkBaja:Reservas.linkBaja(id,{fecha:t.fecha,ini:h0,negocio:'Salón Quebracho',servicio:s.nombre}),web:location.href.split('#')[0]+'#agenda'});
-      const cal=Reservas.calendario({titulo:s.nombre+' · Salón Quebracho',fecha:t.fecha,ini:h0,min:s.min,lugar:'Salón Quebracho',detalle:'Turno reservado desde la web.'});
-      ok.innerHTML='Turno confirmado ✓ '+s.nombre+' · '+fecha+' a las '+hhmm(h0)+', a nombre de '+nom.replace(/[<>&"]/g,'')+'. '+(Correo.activo()?'Te mandamos la confirmación a '+mail.replace(/[<>&"]/g,'')+' (si no la ves, revisá Spam). ':'')+'<a href="'+cal+'" target="_blank" rel="noopener">Agregar a mi calendario</a> · <a href="https://wa.me/'+NUM+'?text='+encodeURIComponent('Hola! Reservé '+s.nombre+' para el '+fecha+' a las '+hhmm(h0)+' a nombre de '+nom+'.')+'" target="_blank" rel="noopener">Avisar por WhatsApp</a> · '+(Reservas.modo==='real'?'<a href="../mi-negocio/?s=salon">Ver cómo le llega al salón →</a>':'<a href="../panel/?n=salon#turnos">Ver cómo lo ve el salón en su panel →</a>');
+      if(mail)Correo.confirmacion({email:mail,nombre:nom,negocio:'Salón Quebracho',servicio:s.nombre,fecha:t.fecha,ini:h0,linkBaja:Reservas.linkBaja(id,{fecha:t.fecha,ini:h0,negocio:'Salón Quebracho',servicio:s.nombre}),web:location.href.split('#')[0]+'#agenda'});
+      const baja=Reservas.linkBaja(id,{fecha:t.fecha,ini:h0,negocio:'Salón Quebracho',servicio:s.nombre});
+      ok.innerHTML=Reservas.tarjeta({id:id,negocio:'Salón Quebracho',servicio:s.nombre,fecha:t.fecha,ini:h0,min:s.min,nombre:nom,lugar:'Salón Quebracho',waNum:NUM,baja:baja,mail:Correo.activo()?mail:''})+'<p style="margin-top:10px">'+(Reservas.modo==='real'?'<a href="../mi-negocio/?s=salon">Ver cómo le llega al salón →</a>':'<a href="../panel/?n=salon#turnos">Ver cómo lo ve el salón en su panel →</a>')+'</p>';
+      Reservas.pintarMios(document.getElementById('ag-mios'));
       sel.h=null;pintar();
     }).catch(e=>{ok.textContent=e.message;bt.disabled=false;pintar();});
   });
   Reservas.alCambiar(pintar);
+  Reservas.pintarMios(document.getElementById('ag-mios'));
   $('ag-serv').addEventListener('change',e=>{sel.s=+e.target.value;pintar();});
   $('ag-dias').addEventListener('click',e=>{const b=e.target.closest('[data-d]');if(!b)return;sel.d=dias.find(d=>iso(d)===b.dataset.d);sel.h=null;pintar();});
   $('ag-horas').addEventListener('click',e=>{const b=e.target.closest('[data-h]');if(!b||b.disabled)return;sel.h=+b.dataset.h;pintar();});

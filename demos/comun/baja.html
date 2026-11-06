@@ -31,7 +31,7 @@ button{width:100%;padding:14px;border:0;border-radius:12px;background:#b3261e;co
     var p;
     if(Reservas.modo==='real') p=Reservas.cancelar(s,id,k,f);
     else p=new Promise(function(ok,no){try{var l=JSON.parse(localStorage.getItem(c))||[],r=l.filter(function(x){return String(x.id)!==id;});if(r.length===l.length)return no(new Error('x'));localStorage.setItem(c,JSON.stringify(r));ok();}catch(e){no(e);}});
-    p.then(function(){info.innerHTML='';msg.innerHTML='<p class="ok">Listo, tu turno quedó cancelado.</p><p>El negocio ya lo ve en su agenda. Si querés, reservá otro horario en la web.</p>';},
+    p.then(function(){try{var mk='spa_mios_'+s,ml=JSON.parse(localStorage.getItem(mk))||[];localStorage.setItem(mk,JSON.stringify(ml.filter(function(x){return String(x.id)!==id;})));}catch(e){}info.innerHTML='';msg.innerHTML='<p class="ok">Listo, tu turno quedó cancelado.</p><p>El negocio ya lo ve en su agenda. Si querés, reservá otro horario en la web.</p>';},
       function(){b.disabled=false;msg.innerHTML='<p class="er">No se pudo cancelar. Puede que ya esté cancelado o que el link no sea válido. Escribile al negocio.</p>';});
   };
 })();
