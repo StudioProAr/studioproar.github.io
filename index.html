@@ -444,7 +444,7 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
           <p class="rubro">Muestra · Indumentaria</p>
           <p class="et">Plan 3 · Catálogo y pedidos</p>
           <p>Catálogo con colores y talles, filtros y carrito que manda el pedido por WhatsApp.</p>
-          <div class="links"><a href="https://tienda-ropa-prueba.pages.dev/" target="_blank" rel="noopener">Ver la muestra →</a><a href="demos/panel/?n=tienda#pedidos" target="_blank" rel="noopener">Ver el panel →</a></div>
+          <div class="links"><a href="demos/ropa/?estilo=urbano&plan=3" target="_blank" rel="noopener">Ver la muestra →</a><a href="demos/mi-negocio/?s=callenorte&muestra=1&plan=3" target="_blank" rel="noopener">Ver el panel →</a></div>
         </div>
       </article>
       <article class="obra">
@@ -916,7 +916,7 @@ document.querySelectorAll('.copiar').forEach(b=>{
   var IC={vet:'🐾',estetica:'💅',salud:'🩺',nautica:'⚓',panaderia:'🥐',rotiseria:'🍗',ferreteria:'🔧',petshop:'🦴',ropa:'👕',gimnasio:'🏋'};
   Object.keys(T).forEach(function(k){tur(k,T[k].nombre,IC[k],T[k].est.map(function(x){return [x[0],T[k].E[x[0]].sitio,x[1]];}));});
   var DS={1:'Una página con lo esencial, WhatsApp y ubicación.',2:'Con fotos, categorías, galería y preguntas.',3:'Carrito que llega armado al WhatsApp del local.',4:'',5:'El dueño edita precios y productos. Resumen del mes.'};
-  var cat=function(id,n,ic,est,pl,d4,mesa){R.push({id:id,n:n,ic:ic,est:est,mesa:mesa,planes:Object.keys(pl).map(function(k){return{n:+k,t:pl[k],d:k==4?d4:DS[k],web:function(e){return 'demos/gastronomia/?'+(id==='resto'?'':'rubro='+id+'&')+'estilo='+e[0]+'&plan='+k;},panel:function(e){return 'demos/mi-negocio/?s='+e[1]+'&muestra=1&plan='+k;}};})});};
+  var cat=function(id,n,ic,est,pl,d4,mesa){R.push({id:id,n:n,ic:ic,est:est,mesa:mesa,planes:Object.keys(pl).map(function(k){return{n:+k,t:pl[k],d:k==4?d4:DS[k],web:function(e){return id==='ropa'?'demos/ropa/?estilo='+({parrilla:'femenina',cafe:'minimal',urbano:'urbano'}[e[0]]||'urbano')+'&plan='+k:'demos/gastronomia/?'+(id==='resto'?'':'rubro='+id+'&')+'estilo='+e[0]+'&plan='+k;},panel:function(e){return 'demos/mi-negocio/?s='+e[1]+'&muestra=1&plan='+k;}};})});};
   cat('resto','Restaurantes y bares','🍽',[['parrilla',(G.parrilla||{}).sitio,'Parrilla'],['cafe',(G.cafe||{}).sitio,'Café'],['urbano',(G.urbano||{}).sitio,'Cervecería']],{1:'Esencial',2:'Completa',3:'Pedidos',4:'Reservas',5:'Salón Pro'},'Reserva de mesa con cupo por horario.',1);
   Object.keys(C).forEach(function(k){var pl={1:'Esencial',2:'Completa'};Object.keys(C[k].planes).forEach(function(n){pl[n]=C[k].planes[n];});cat(k,C[k].nombre,IC[k],C[k].est.map(function(x){return [x[0],C[k].E[x[0]].sitio,x[1]];}),pl,C[k].p4==='programado'?'El cliente elige día y hora de retiro o entrega.':'Reserva de lugar en cada clase, con cupo.');});
   var ORD=['barberia','resto','vet','estetica','salud','panaderia','rotiseria','ferreteria','petshop','ropa','gimnasio','nautica'];R.sort(function(a,b){return ORD.indexOf(a.id)-ORD.indexOf(b.id);});
