@@ -512,6 +512,7 @@ a{color:var(--ac)}
   }
   if (MUESTRA) {
     $('login').hidden = true; $('salir').hidden = true;
+    if (q.get('vista') === 'seg') { NEG[s].t = NEG[s].t.filter(function (t) { return t !== 'editar' && t !== 'carta'; }); if (NEG[s].t.indexOf(vista) < 0) vista = NEG[s].t[0]; } /* vista de seguimiento: sin edición */
     document.querySelector('.in').insertAdjacentHTML('afterbegin', '<p style="background:#fff3cd;color:#5c4400;border-radius:10px;padding:8px 12px;font-size:14px;margin:0 0 12px">Panel de muestra con datos de ejemplo. En tu panel real ves tus turnos y visitas reales, con usuario y clave.</p>');
     if (PRO) datosMuestraPro(); else if (G) datosMuestraG(); else datosMuestra(); pinta(); if (G && gPlan === 5) setInterval(function () { if (vista === 'cocina') pinta(); }, 3000); return;
   }

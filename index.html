@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Diseño de páginas web para negocios: tu web conectada a tu WhatsApp, tu Instagram y Google Maps, para que te encuentren en Google y te escriban. Con panel propio, precio cerrado y sin costo mensual de hosting.">
+<meta name="description" content="Diseño de páginas web para negocios: tu web conectada a tu WhatsApp, tu Instagram y Google Maps, para que te encuentren en Google y te escriban. Con panel propio y precio cerrado en pesos.">
 <link rel="canonical" href="https://studioproar.github.io/">
 <meta name="theme-color" content="#0c1424">
 <meta property="og:type" content="website">
@@ -56,7 +56,7 @@ a{color:var(--blue)}
 nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:21;background:var(--bg)}
 nav .in{display:flex;align-items:center;justify-content:space-between;gap:14px;padding-block:13px;flex-wrap:wrap}
-.brand{display:inline-flex;align-items:center;gap:9px;text-decoration:none;color:var(--ink)}.brand .wm{font-family:"Plus Jakarta Sans",var(--disp);font-weight:500;font-size:20px;letter-spacing:-.02em}.brand b{font-weight:800;color:var(--logo-a)}.brand i{font-style:normal;font-weight:800}
+.brand{display:inline-flex;align-items:center;gap:9px;text-decoration:none;color:var(--ink)}.brand .wm{font-family:"Plus Jakarta Sans",var(--disp);font-weight:800;font-size:20px;letter-spacing:-.02em}.brand b{font-weight:800;color:var(--logo-a)}.brand i{font-style:normal;font-weight:800}
 nav ul{list-style:none;display:flex;gap:18px;margin:0;padding:0;font-size:13.5px;flex-wrap:wrap}
 nav ul a{color:var(--soft);text-decoration:none}
 nav ul a:hover{color:var(--ink)}
@@ -291,6 +291,23 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
   .rv{opacity:1;transform:none;transition:none}
   .prog{display:none}
 }
+
+.obra .links button.ver{background:none;border:1.5px solid var(--line);color:var(--ink);border-radius:999px;padding:7px 14px;font:600 14px var(--body);cursor:pointer}
+.obra .links button.ver:hover{border-color:var(--blue);color:var(--blue)}
+#visor{border:0;padding:0;background:transparent;max-width:none;max-height:none;width:100vw;height:100vh}
+#visor::backdrop{background:rgba(6,10,22,.82)}
+#visor .vz{display:flex;flex-direction:column;align-items:center;gap:12px;height:100%;padding:14px}
+#visor .vz-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center;color:#fff;width:100%;max-width:1200px}
+#visor .vz-bar b{font-family:var(--disp);font-size:18px;margin-right:auto}
+#visor .vz-bar button{background:#fff;color:#0b1220;border:0;border-radius:999px;padding:8px 14px;font:600 14px var(--body);cursor:pointer}
+#visor .vz-bar button[aria-pressed=true]{background:var(--blue);color:#fff}
+#visor .vz-marco{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;width:100%}
+#visor iframe{border:0;background:#fff;box-shadow:0 20px 60px rgba(0,0,0,.45)}
+#visor.m-cel iframe{width:min(400px,94vw);height:min(820px,100%);border-radius:28px;border:10px solid #0b1220}
+#visor.m-pc iframe{width:min(1200px,100%);height:100%;border-radius:10px}
+@media (max-width:700px){#visor .vz-bar .modo{display:none}}
+.hero-in{grid-template-columns:minmax(0,1fr)!important}.hero-txt{max-width:760px}
+@media(min-width:1000px){.planes{grid-template-columns:repeat(4,1fr)}.obras{grid-template-columns:repeat(5,1fr)}}
 </style>
 </head>
 <body>
@@ -311,7 +328,6 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
 </nav>
 
 <header class="hero">
-  <div class="fondo" aria-hidden="true"><i></i><i></i><i></i></div>
   <div class="in hero-in">
   <div class="hero-txt">
     <p class="eyebrow">Diseño web para comercios · Zona norte y todo el país</p>
@@ -323,23 +339,9 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
       <a class="btn btn-b" href="#probar">Probá tu rubro en vivo</a>
     </div>
     <ul class="sellos">
-      <li>Precio cerrado en pesos</li><li>Sin costo mensual de hosting</li><li>El dominio es tuyo</li>
+      <li>Precio cerrado en pesos</li><li>Tu panel en el celular</li><li>El dominio es tuyo</li>
     </ul>
-    <div class="marcas" aria-label="Rubros">
-      <a href="#probar" data-r="resto">Gastronomía</a><a href="#probar" data-r="nautica">Náutica</a><a href="#probar" data-r="barberia">Peluquería y estética</a><a href="#probar" data-r="ropa">Indumentaria</a><a href="#probar" data-r="ferreteria">Comercios</a><a href="#probar" data-r="resto">Cafeterías</a><a href="#probar" data-r="panaderia">Panaderías</a><a href="#probar" data-r="vet">Veterinarias</a><a href="#probar" data-r="gimnasio">Gimnasios</a><a href="#probar" data-r="resto">Cervecerías</a><a href="https://luciernaga-prueba.pages.dev/" target="_blank" rel="noopener">Emprendedores</a><a href="https://netsur-prueba.pages.dev/" target="_blank" rel="noopener">Empresas</a>
     </div>
-    </div>
-  <div class="cel" aria-hidden="true">
-    <div class="cel-pant">
-      <div class="cel-top"><b>Tu panel</b><span>Hoy</span></div>
-      <div class="cel-kpi"><div><b id="cel-v">38</b><span>visitas</span></div><div><b id="cel-w">6</b><span>WhatsApp</span></div></div>
-      <div class="cel-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-      <div class="cel-src"><span style="--w:42%">Instagram</span><span style="--w:28%">Google</span><span style="--w:18%">WhatsApp</span></div>
-      <ul class="cel-ped"><li><b>#1042</b> Sofía · Buzo negro M<em class="ok">Pagado</em></li><li><b>#1041</b> Martín · 2 remeras<em>Confirmado</em></li><li><b>#1040</b> Julieta · Turno 17:00<em>Nuevo</em></li></ul>
-      <div class="cel-notis" id="cel-notis"></div>
-      <p class="cel-ej">Ejemplo</p>
-    </div>
-  </div>
   </div>
 </header>
 
@@ -367,10 +369,10 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
       <h2>El WhatsApp no da abasto y el Instagram no vende solo</h2>
     </div>
     <div class="dolores">
-      <article><p class="q">"¿Me pasás la carta?"</p><p>La mandás en PDF veinte veces por día.</p><p class="r"><b>Con tu web:</b> la carta está en un QR en cada mesa y el pedido llega directo a la cocina.</p><a href="demos/gastronomia/?estilo=parrilla&plan=5&mesa=4" target="_blank" rel="noopener">Ver la carta por QR →</a></article>
-      <article><p class="q">"¿Tenés turno el sábado?"</p><p>Se te pierden turnos entre chats y audios.</p><p class="r"><b>Con tu web:</b> el cliente elige el horario libre, confirma y vos lo ves en tu agenda.</p><a href="demos/barberia/?estilo=mujer&plan=turnos" target="_blank" rel="noopener">Ver el Salón →</a></article>
-      <article><p class="q">"¿Precio? ¿Talles? ¿Colores?"</p><p>Respondés lo mismo una y otra vez.</p><p class="r"><b>Con tu web:</b> catálogo con precios, talles y colores, y el pedido te llega armado por WhatsApp.</p><a href="demos/ropa/?estilo=urbano&plan=3" target="_blank" rel="noopener">Ver Calle Norte →</a></article>
-      <article><p class="q">"¿Dónde quedan? ¿A qué hora abren?"</p><p>Te buscan en Google y no aparecés, o aparece un dato viejo.</p><p class="r"><b>Con tu web:</b> ubicación, horarios y un botón de WhatsApp, siempre al día.</p><a href="demos/gastronomia/?rubro=ferreteria&estilo=parrilla&plan=1" target="_blank" rel="noopener">Ver la Ferretería →</a></article>
+      <article><p class="q">"¿Me pasás la carta?"</p><p>La mandás en PDF veinte veces por día.</p><p class="r"><b>Con tu web:</b> la carta está en un QR en cada mesa y el pedido llega directo a la cocina.</p></article>
+      <article><p class="q">"¿Tenés turno el sábado?"</p><p>Se te pierden turnos entre chats y audios.</p><p class="r"><b>Con tu web:</b> el cliente elige el horario libre, confirma y vos lo ves en tu agenda.</p></article>
+      <article><p class="q">"¿Precio? ¿Talles? ¿Colores?"</p><p>Respondés lo mismo una y otra vez.</p><p class="r"><b>Con tu web:</b> catálogo con precios, talles y colores, y el pedido te llega armado por WhatsApp.</p></article>
+      <article><p class="q">"¿Dónde quedan? ¿A qué hora abren?"</p><p>Te buscan en Google y no aparecés, o aparece un dato viejo.</p><p class="r"><b>Con tu web:</b> ubicación, horarios y un botón de WhatsApp, siempre al día.</p></article>
     </div>
   </div>
 </section>
@@ -380,16 +382,16 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
     <div class="head">
       <p class="eyebrow">Probalo en vivo</p>
       <h2>Elegí tu rubro y mirá tu web funcionando</h2>
-      <p class="lead">12 rubros, 3 estilos y todos los planes. Tocá un plan y se abre acá al lado, como en el celular de tu cliente. Cada uno trae su panel para el dueño, con datos de ejemplo.</p>
+      <p class="lead">12 rubros, 3 estilos y los 4 planes. Tocá un plan y miralo acá al lado, como en el celular de tu cliente. Desde el plan 2, también ves el panel del dueño, con datos de ejemplo.</p>
     </div>
     <div class="grid2">
       <div>
         <div class="chips" id="pr-rubros" role="group" aria-label="Rubro"></div>
         <div class="chips sm" id="pr-estilos" role="group" aria-label="Estilo"></div>
         <div class="pl-lista" id="pr-planes"></div>
-        <div class="pie"><a class="btn btn-b" href="demos/vitrina/" target="_blank" rel="noopener">Ver el muestrario completo</a><span style="color:var(--soft);font-size:14px">Todas las muestras usan negocios y datos ficticios.</span></div>
+        <div class="pie"><span style="color:var(--soft);font-size:14px">Todas las muestras usan negocios y datos ficticios. ¿Te gustó? <a href="https://wa.me/5491126339350?text=Hola%21%20Vi%20las%20muestras%20de%20StudioProAr%20y%20quiero%20una%20web%20as%C3%AD.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Escribinos</a>.</span></div>
       </div>
-      <div class="tel" aria-label="Vista previa en un celular"><div class="pant"><div class="cargando" id="pr-carga">Cargando la muestra…</div><iframe id="pr-frame" title="Vista previa de la muestra" loading="lazy"></iframe><div class="vista"><span id="pr-ver"></span></div></div></div>
+      <div class="tel" aria-label="Vista previa en un celular"><div class="pant"><div class="cargando" id="pr-carga">Cargando la muestra…</div><iframe id="pr-frame" title="Vista previa de la muestra" loading="lazy" sandbox="allow-scripts allow-same-origin allow-forms allow-modals"></iframe><div class="vista"><span id="pr-ver"></span></div></div></div>
     </div>
   </div>
 </section>
@@ -399,88 +401,16 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
     <div class="head">
       <p class="eyebrow">Trabajos</p>
       <h2>Cómo queda una web hecha para tu rubro</h2>
-      <p class="lead">Son webs funcionando, no capturas. Entrá, probá el carrito, reservá un turno o hacé un pedido desde la mesa. Y mirá el panel que recibe cada negocio, con datos de ejemplo.</p>
+      <p class="lead">Un trabajo por plan, funcionando de verdad: tocá y se abre acá mismo. Probá reservar un turno, mirá la carta o recorré el showroom.</p>
     </div>
     <div class="obras">
-      <article class="obra real">
-        <div class="cab logo" style="background-image:url('https://studioproar.github.io/reina-dabi/img/logo-completo.png')"><b>Reina Dabi</b></div>
-        <div class="cu">
-          <p class="rubro">Cliente · Rosas eternas</p>
-          <p class="et">Plan 5 · Autogestionable</p>
-          <p>Armador de ramos, galería editable y panel con estadísticas.</p>
-          <div class="links"><a href="https://studioproar.github.io/reina-dabi/" target="_blank" rel="noopener">Ver el sitio →</a><a href="demos/panel/?n=reina" target="_blank" rel="noopener">Ver el panel →</a></div>
-        </div>
-      </article>
       <article class="obra">
         <div class="cab" style="background-image:linear-gradient(180deg,rgba(8,14,30,0) 35%,rgba(8,14,30,.85)),url('https://res.cloudinary.com/f7ugfcbs/image/upload/f_auto,q_auto,w_900/portadas-hd/ferreteria')"><b>Ferretería La Llave</b></div>
         <div class="cu">
           <p class="rubro">Muestra · Ferretería</p>
           <p class="et">Plan 1 · Esencial</p>
-          <p>Una página con rubros, horarios, ubicación y consulta por WhatsApp.</p>
-          <div class="links"><a href="demos/gastronomia/?rubro=ferreteria&estilo=parrilla&plan=1" target="_blank" rel="noopener">Ver la muestra →</a><a href="demos/mi-negocio/?s=lallave&muestra=1&plan=1" target="_blank" rel="noopener">Ver el panel →</a></div>
-        </div>
-      </article>
-      <article class="obra">
-        <div class="cab" style="background-image:linear-gradient(180deg,rgba(8,14,30,0) 35%,rgba(8,14,30,.85)),url('https://res.cloudinary.com/f7ugfcbs/image/upload/f_auto,q_auto,w_900/portadas-hd/cafe')"><b>Café Ribera</b></div>
-        <div class="cu">
-          <p class="rubro">Muestra · Cafetería</p>
-          <p class="et">Plan 1 · Esencial</p>
-          <p>Una página con la carta, horarios y cómo llegar, lista para compartir en Instagram.</p>
-          <div class="links"><a href="demos/gastronomia/?estilo=cafe&plan=1" target="_blank" rel="noopener">Ver la muestra →</a><a href="demos/mi-negocio/?s=ribera&muestra=1&plan=1" target="_blank" rel="noopener">Ver el panel →</a></div>
-        </div>
-      </article>
-      <article class="obra">
-        <div class="cab" style="background-image:linear-gradient(180deg,rgba(8,14,30,0) 35%,rgba(8,14,30,.85)),url('https://res.cloudinary.com/f7ugfcbs/image/upload/f_auto,q_auto,w_900/portadas-hd/nautica')"><b>Astillero Marea Alta</b></div>
-        <div class="cu">
-          <p class="rubro">Muestra · Náutica</p>
-          <p class="et">Plan 2 · Completa</p>
-          <p>Varias páginas: servicios, galería de trabajos, preguntas y contacto.</p>
-          <div class="links"><a href="demos/barberia/?rubro=nautica&estilo=clasico&plan=completa" target="_blank" rel="noopener">Ver la muestra →</a><a href="demos/mi-negocio/?s=mareaalta&muestra=1&plan=esencial" target="_blank" rel="noopener">Ver el panel →</a></div>
-        </div>
-      </article>
-      <article class="obra">
-        <div class="cab" style="background-image:linear-gradient(180deg,rgba(8,14,30,0) 35%,rgba(8,14,30,.85)),url('https://res.cloudinary.com/f7ugfcbs/image/upload/f_auto,q_auto,w_900/portadas-hd/ropa')"><b>Calle Norte</b></div>
-        <div class="cu">
-          <p class="rubro">Muestra · Indumentaria</p>
-          <p class="et">Plan 3 · Catálogo y pedidos</p>
-          <p>Catálogo con colores y talles, filtros y carrito que manda el pedido por WhatsApp.</p>
-          <div class="links"><a href="demos/ropa/?estilo=urbano&plan=3" target="_blank" rel="noopener">Ver la muestra →</a><a href="demos/mi-negocio/?s=callenorte&muestra=1&plan=3" target="_blank" rel="noopener">Ver el panel →</a></div>
-        </div>
-      </article>
-      <article class="obra">
-        <div class="cab" style="background-image:linear-gradient(180deg,rgba(8,14,30,0) 35%,rgba(8,14,30,.85)),url('https://res.cloudinary.com/f7ugfcbs/image/upload/f_auto,q_auto,w_900/portadas-hd/panaderia')"><b>El Horno de Victoria</b></div>
-        <div class="cu">
-          <p class="rubro">Muestra · Panadería</p>
-          <p class="et">Plan 3 · Pedidos</p>
-          <p>Tortas, facturas y salados con carrito: el pedido llega armado por WhatsApp y queda en el panel.</p>
-          <div class="links"><a href="demos/gastronomia/?rubro=panaderia&estilo=parrilla&plan=3" target="_blank" rel="noopener">Ver la muestra →</a><a href="demos/mi-negocio/?s=horno&muestra=1&plan=3" target="_blank" rel="noopener">Ver el panel →</a></div>
-        </div>
-      </article>
-      <article class="obra">
-        <div class="cab" style="background-image:linear-gradient(180deg,rgba(8,14,30,0) 35%,rgba(8,14,30,.85)),url('https://res.cloudinary.com/f7ugfcbs/image/upload/f_auto,q_auto,w_900/portadas-hd/peluqueria')"><b>Salón Alma</b></div>
-        <div class="cu">
-          <p class="rubro">Muestra · Peluquería</p>
-          <p class="et">Plan 3 · Turnos</p>
-          <p>El cliente elige servicio, día y horario libre. Confirmación, recordatorio y cancelación.</p>
-          <div class="links"><a href="demos/barberia/?estilo=mujer&plan=turnos" target="_blank" rel="noopener">Ver la muestra →</a><a href="demos/mi-negocio/?s=alma&muestra=1&plan=turnos" target="_blank" rel="noopener">Ver el panel →</a></div>
-        </div>
-      </article>
-      <article class="obra">
-        <div class="cab" style="background-image:linear-gradient(180deg,rgba(8,14,30,0) 35%,rgba(8,14,30,.85)),url('https://res.cloudinary.com/f7ugfcbs/image/upload/f_auto,q_auto,w_900/portadas-hd/veterinaria')"><b>Patitas del Delta</b></div>
-        <div class="cu">
-          <p class="rubro">Muestra · Veterinaria</p>
-          <p class="et">Plan 3 · Turnos</p>
-          <p>Turnos de consulta, vacunas y peluquería canina, con la agenda en el panel.</p>
-          <div class="links"><a href="demos/barberia/?rubro=vet&estilo=clasico&plan=turnos" target="_blank" rel="noopener">Ver la muestra →</a><a href="demos/mi-negocio/?s=patitas&muestra=1&plan=turnos" target="_blank" rel="noopener">Ver el panel →</a></div>
-        </div>
-      </article>
-      <article class="obra">
-        <div class="cab" style="background-image:linear-gradient(180deg,rgba(8,14,30,0) 35%,rgba(8,14,30,.85)),url('https://res.cloudinary.com/f7ugfcbs/image/upload/f_auto,q_auto,w_900/portadas-hd/gimnasio')"><b>Hierro Gym</b></div>
-        <div class="cu">
-          <p class="rubro">Muestra · Gimnasio</p>
-          <p class="et">Plan 5 · Autogestionable</p>
-          <p>Planes y horarios, inscripción online, clases con cupo y panel del dueño.</p>
-          <div class="links"><a href="demos/gastronomia/?rubro=gimnasio&estilo=urbano&plan=5" target="_blank" rel="noopener">Ver la muestra →</a><a href="demos/mi-negocio/?s=hierro&muestra=1&plan=5" target="_blank" rel="noopener">Ver el panel →</a></div>
+          <p>Una página con rubros destacados, horarios, ubicación y consulta por WhatsApp.</p>
+          <div class="links"><button type="button" class="ver" data-ver="demos/gastronomia/?rubro=ferreteria&estilo=parrilla&plan=1" data-t="Ferretería La Llave">Ver la web</button></div>
         </div>
       </article>
       <article class="obra">
@@ -488,35 +418,26 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
         <div class="cu">
           <p class="rubro">Muestra · Parrilla</p>
           <p class="et">Plan 2 · Completa</p>
-          <p>Carta completa, galería, reservas por WhatsApp y cómo llegar.</p>
-          <div class="links"><a href="demos/gastronomia/?estilo=parrilla&plan=2" target="_blank" rel="noopener">Ver la muestra →</a><a href="demos/mi-negocio/?s=tranquera&muestra=1&plan=2" target="_blank" rel="noopener">Ver el panel →</a></div>
+          <p>Carta completa con fotos y precios, galería, preguntas frecuentes y panel de visitas.</p>
+          <div class="links"><button type="button" class="ver" data-ver="demos/gastronomia/?estilo=parrilla&plan=2" data-t="La Tranquera">Ver la web</button><button type="button" class="ver" data-ver="demos/mi-negocio/?s=tranquera&muestra=1&plan=2&vista=seg" data-t="La Tranquera · panel" data-cel="1">Ver el panel</button></div>
         </div>
       </article>
       <article class="obra">
-        <div class="cab" style="background-image:linear-gradient(180deg,rgba(8,14,30,0) 35%,rgba(8,14,30,.85)),url('https://res.cloudinary.com/f7ugfcbs/image/upload/f_auto,q_auto,w_900/portadas-hd/bodegon')"><b>La Tranquera · en la mesa</b></div>
+        <div class="cab" style="background-image:linear-gradient(180deg,rgba(8,14,30,0) 35%,rgba(8,14,30,.85)),url('https://res.cloudinary.com/f7ugfcbs/image/upload/f_auto,q_auto,w_900/portadas-hd/peluqueria')"><b>Salón Alma</b></div>
         <div class="cu">
-          <p class="rubro">Muestra · Gastronomía</p>
-          <p class="et">Plan 5 · Autogestionable</p>
-          <p>Carta por QR en cada mesa: el pedido llega directo a la cocina y el dueño edita la carta.</p>
-          <div class="links"><a href="demos/gastronomia/?estilo=parrilla&plan=5&mesa=4" target="_blank" rel="noopener">Ver la muestra →</a><a href="demos/mi-negocio/?s=tranquera&muestra=1&plan=5" target="_blank" rel="noopener">Ver el panel →</a></div>
+          <p class="rubro">Muestra · Peluquería</p>
+          <p class="et">Plan 3 · Agenda</p>
+          <p>El cliente elige servicio, día y hora, confirma y recibe el recordatorio. El salón ve sus turnos en el panel.</p>
+          <div class="links"><button type="button" class="ver" data-ver="demos/barberia/?estilo=mujer&plan=turnos" data-t="Salón Alma">Ver la web</button><button type="button" class="ver" data-ver="demos/mi-negocio/?s=alma&muestra=1&plan=turnos&vista=seg" data-t="Salón Alma · panel" data-cel="1">Ver el panel</button></div>
         </div>
       </article>
-      <article class="obra">
-        <div class="cab" style="background-image:linear-gradient(180deg,rgba(8,14,30,0) 35%,rgba(8,14,30,.85)),url('https://res.cloudinary.com/f7ugfcbs/image/upload/f_auto,q_auto,w_900/portadas-hd/cerveceria')"><b>Lúpulo Norte</b></div>
+      <article class="obra real">
+        <div class="cab" style="background-image:linear-gradient(180deg,rgba(8,14,30,0) 35%,rgba(8,14,30,.85)),url('https://eveyceci.pages.dev/img/og.jpg')"><b>Eve &amp; Ceci Importados</b></div>
         <div class="cu">
-          <p class="rubro">Muestra · Cervecería y burgers</p>
-          <p class="et">Plan 3 · Pedidos</p>
-          <p>Delivery y take away con envío por zona: el pedido llega armado por WhatsApp.</p>
-          <div class="links"><a href="demos/gastronomia/?estilo=urbano&plan=3" target="_blank" rel="noopener">Ver la muestra →</a><a href="demos/mi-negocio/?s=lupulo&muestra=1&plan=3" target="_blank" rel="noopener">Ver el panel →</a></div>
-        </div>
-      </article>
-      <article class="obra">
-        <div class="cab" style="background-image:linear-gradient(180deg,rgba(8,14,30,0) 35%,rgba(8,14,30,.85)),url('https://res.cloudinary.com/f7ugfcbs/image/upload/f_auto,q_auto,w_900/portadas-hd/velas')"><b>Luciérnaga Velas</b></div>
-        <div class="cu">
-          <p class="rubro">Muestra · Emprendimiento</p>
-          <p class="et">Plan 5 · Autogestionable</p>
-          <p>La web y el panel del emprendedor: pedidos, catálogo editable y estadísticas.</p>
-          <div class="links"><a href="https://luciernaga-prueba.pages.dev/" target="_blank" rel="noopener">Ver la muestra →</a><a href="https://luciernaga-prueba.pages.dev/#panel" target="_blank" rel="noopener">Ver el panel →</a></div>
+          <p class="rubro">Cliente · Ropa importada</p>
+          <p class="et">Plan 4 · Autogestionable</p>
+          <p>Showroom con fotos por sección y precios de referencia. Ellas suben las prendas y anotan las ventas desde su panel.</p>
+          <div class="links"><button type="button" class="ver" data-ver="https://eveyceci.pages.dev/" data-t="Eve &amp; Ceci Importados">Ver la web</button></div>
         </div>
       </article>
       <article class="obra">
@@ -524,28 +445,35 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
         <div class="cu">
           <p class="rubro">Muestra · Empresa</p>
           <p class="et">A medida · Empresa</p>
-          <p>Proveedor de internet: hogar y empresas, verificador de cobertura, estado de la red en vivo, ayuda para clientes, botones de arrepentimiento y baja, analítica y SEO.</p>
-          <div class="links"><a href="https://netsur-prueba.pages.dev/" target="_blank" rel="noopener">Ver la muestra →</a></div>
+          <p>Proveedor de internet: hogar y empresas, verificador de cobertura, estado de la red, ayuda para clientes, analítica y SEO.</p>
+          <div class="links"><button type="button" class="ver" data-ver="https://netsur-prueba.pages.dev/" data-t="NetSur Fibra">Ver la web</button></div>
         </div>
       </article>
     </div>
   </div>
 </section>
+<dialog id="visor" class="m-cel" aria-label="Vista de la muestra">
+  <div class="vz">
+    <div class="vz-bar"><b id="vz-t">Muestra</b><button type="button" class="modo" data-m="cel" aria-pressed="true">Celular</button><button type="button" class="modo" data-m="pc" aria-pressed="false">Computadora</button><button type="button" id="vz-x">Cerrar ✕</button></div>
+    <div class="vz-marco"><iframe id="vz-f" title="Muestra" sandbox="allow-scripts allow-same-origin allow-forms allow-modals"></iframe></div>
+  </div>
+</dialog>
+
 
 <section id="planes">
   <div class="in">
     <div class="head">
       <p class="eyebrow">Planes</p>
       <h2>Precios claros</h2>
-      <p class="lead">Un pago único por el desarrollo, precio cerrado en pesos. Cada plan incluye lo del anterior. <b>Lanzamiento: 30% de descuento para los primeros 5 clientes.</b></p>
-      <p class="cupos"><span>Quedan 5 de 5 lugares</span> con precio de lanzamiento</p>
+      <p class="lead">Un pago único por el armado, precio cerrado en pesos. Cada plan incluye lo del anterior. <b>Lanzamiento: precio especial para los primeros 10 clientes.</b></p>
+      <p class="cupos"><span>Quedan 10 de 10 lugares</span> con precio de lanzamiento</p>
     </div>
     <div class="quiz" id="quiz">
       <p class="quiz-t">¿No sabés cuál te conviene? Respondé 3 preguntas</p>
       <div class="quiz-p" data-q="0"><b>¿Qué querés que haga tu web?</b>
         <button type="button" data-v="info">Que me encuentren y me consulten</button>
         <button type="button" data-v="vender">Mostrar productos y recibir pedidos</button>
-        <button type="button" data-v="turnos">Dar turnos</button>
+        <button type="button" data-v="turnos">Dar turnos o tomar reservas</button>
         <button type="button" data-v="mesa">Recibir pedidos desde la mesa</button></div>
       <div class="quiz-p" data-q="1" hidden><b>¿Cuánto tenés para mostrar?</b>
         <button type="button" data-v="poco">Lo justo: quiénes somos, horarios y contacto</button>
@@ -559,150 +487,107 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
       <article class="plan">
         <p class="tag">Plan 1</p>
         <h3>Esencial</h3>
-        <p class="precio">$99.000</p>
-        <p class="unidad">Lanzamiento · lista <s>$142.000</s> · pago único</p>
+        <p class="precio">$100.000</p>
+        <p class="unidad">Lanzamiento · lista <s>$120.000</s> · pago único</p>
         <p class="desc">Una página con todo lo importante. Para existir en internet y que te encuentren.</p>
         <ul>
-          <li>Una página, hasta 5 secciones</li>
-          <li>Hasta 10 fotos</li>
-          <li>Conectada a tu WhatsApp, Instagram y Google Maps</li>
+          <li>Una página con tus datos, servicios y ubicación</li>
+          <li>Hasta 8 productos o servicios destacados, con foto</li>
+          <li>Botones de WhatsApp e Instagram</li>
+          <li>Mapa con "Cómo llegar" y horarios a la vista</li>
           <li>Alta en Google para que te encuentren</li>
-          <li>Ubicación y horarios siempre al día</li>
           <li>Adaptada al celular</li>
-          <li>Panel con tus visitas y de dónde llegan</li>
+          <li>La carga inicial la hacemos nosotros</li>
         </ul>
         <a class="btn btn-b" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20me%20interesa%20el%20plan%20Esencial.%20Mi%20duda%3A%20" target="_blank" rel="noopener">Consultar</a>
       </article>
       <article class="plan dest">
         <p class="tag">Recomendado</p>
         <h3>Completa</h3>
-        <p class="precio">$154.000</p>
-        <p class="unidad">Lanzamiento · lista <s>$220.000</s> · pago único</p>
+        <p class="precio">$155.000</p>
+        <p class="unidad">Lanzamiento · lista <s>$180.000</s> · pago único</p>
         <p class="desc">Varias páginas para negocios con mucho para mostrar.</p>
         <ul>
-          <li>Hasta 5 páginas y 40 fotos</li>
-          <li>Carta o lista de servicios con precios</li>
-          <li>Galería y preguntas frecuentes</li>
+          <li>Hasta 5 páginas</li>
+          <li>Hasta 30 productos o servicios con foto y precio</li>
+          <li>Galería de hasta 40 fotos</li>
+          <li>Preguntas frecuentes</li>
+          <li>Panel de visitas: cuántos entran y de dónde llegan</li>
           <li>Todo lo del plan Esencial</li>
         </ul>
         <a class="btn btn-a" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20me%20interesa%20el%20plan%20Completa.%20Mi%20duda%3A%20" target="_blank" rel="noopener">Consultar</a>
       </article>
       <article class="plan">
         <p class="tag">Plan 3</p>
-        <h3>Catálogo y pedidos</h3>
-        <p class="precio">$192.500</p>
-        <p class="unidad">Lanzamiento · lista <s>$275.000</s> · pago único</p>
-        <p class="desc">Tu catálogo online y los pedidos llegan armados a tu WhatsApp.</p>
+        <h3>Agenda o Catálogo</h3>
+        <p class="precio">$210.000</p>
+        <p class="unidad">Lanzamiento · lista <s>$240.000</s> · pago único</p>
+        <p class="desc">Tu web trabaja sola: toma turnos o pedidos, según tu rubro.</p>
         <ul>
-          <li>Hasta 100 productos</li>
-          <li>Colores, talles y fotos por variante</li>
-          <li>Filtros por categoría, talle y precio</li>
-          <li>Carrito que manda el pedido por WhatsApp</li>
-          <li>Los pedidos quedan guardados en tu panel</li>
+          <li><b>Agenda:</b> el cliente elige día y hora, confirma y recibe un recordatorio (turnos, reservas, encargos o clases)</li>
+          <li><b>O catálogo:</b> hasta 50 productos con carrito que te llega armado por WhatsApp</li>
+          <li>Los turnos o pedidos, en tu panel</li>
+          <li>Tu panel como app en el celular</li>
           <li>Todo lo del plan Completa</li>
-          <li class="app">Tu panel como app en el celular</li>
         </ul>
-        <a class="btn btn-b" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20me%20interesa%20el%20plan%20Cat%C3%A1logo%20y%20pedidos.%20Mi%20duda%3A%20" target="_blank" rel="noopener">Consultar</a>
+        <a class="btn btn-b" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20me%20interesa%20el%20plan%20Agenda%20o%20Catálogo.%20Mi%20duda%3A%20" target="_blank" rel="noopener">Consultar</a>
       </article>
       <article class="plan">
         <p class="tag">Plan 4</p>
-        <h3>Turnos</h3>
-        <p class="precio">$217.000</p>
-        <p class="unidad">Lanzamiento · lista <s>$310.000</s> · pago único</p>
-        <p class="desc">Tus clientes eligen un horario libre y confirman el turno.</p>
-        <ul>
-          <li>Agenda con servicios, días y horarios</li>
-          <li>El cliente confirma el turno en la web</li>
-          <li>Agenda de turnos en tu panel</li>
-          <li>Todo lo del plan Completa</li>
-          <li class="app">Tu panel como app en el celular</li>
-        </ul>
-        <a class="btn btn-b" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20me%20interesa%20el%20plan%20Turnos.%20Mi%20duda%3A%20" target="_blank" rel="noopener">Consultar</a>
-      </article>
-      <article class="plan">
-        <p class="tag">Plan 5</p>
         <h3>Autogestionable</h3>
         <p class="precio">$266.000</p>
-        <p class="unidad">Lanzamiento · lista <s>$380.000</s> · pago único</p>
-        <p class="desc">Con panel propio: cambiás precios, fotos y textos vos mismo.</p>
+        <p class="unidad">Lanzamiento · lista <s>$300.000</s> · pago único</p>
+        <p class="desc">Manejás tu web vos: fotos, precios y textos desde el celular.</p>
         <ul>
-          <li>Panel privado con usuario y contraseña</li>
-          <li>Pedidos o turnos, según tu rubro</li>
+          <li><b>Agenda Pro:</b> por profesional, con fichas de clientes. <b>O catálogo</b> que cargás vos</li>
           <li>Editás precios, fotos, textos y avisos</li>
-          <li>Estadísticas y resumen del mes</li>
+          <li>Resumen del mes, con descarga</li>
+          <li>La función estrella de tu rubro: pedidos desde la mesa, app de socios y más</li>
           <li>Capacitación para usarlo</li>
-          <li class="app">Tu panel como app en el celular</li>
+          <li>Todo lo del plan 3</li>
         </ul>
         <a class="btn btn-b" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20me%20interesa%20el%20plan%20Autogestionable.%20Mi%20duda%3A%20" target="_blank" rel="noopener">Consultar</a>
       </article>
     </div>
-
     <div class="mants">
       <div class="mant">
         <div>
           <h3 style="margin-bottom:3px">Mantenimiento Básico</h3>
-          <p class="m-precio">$22.000 <span style="font-family:var(--body);font-size:13px;font-weight:400;color:var(--soft)">por mes</span></p>
+          <p class="m-precio">$25.000 <span style="font-family:var(--body);font-size:13px;font-weight:400;color:var(--soft)">por mes</span></p>
         </div>
-        <p>La web siempre en línea, certificado y dominio controlados, copias de seguridad, arreglo de fallas y hasta 2 cambios por mes, con respuesta en 48 horas hábiles.</p>
+        <p>Tu web y tu panel siempre funcionando: copias de seguridad, cuidado de tus datos, arreglo de fallas y hasta 2 cambios por mes, con respuesta en 48 horas hábiles. <b>Incluido y obligatorio en los planes 3 y 4</b>, porque guardan datos de tus clientes.</p>
       </div>
       <div class="mant">
         <div>
           <h3 style="margin-bottom:3px">Mantenimiento Plus</h3>
-          <p class="m-precio">$45.000 <span style="font-family:var(--body);font-size:13px;font-weight:400;color:var(--soft)">por mes</span></p>
+          <p class="m-precio">$40.000 <span style="font-family:var(--body);font-size:13px;font-weight:400;color:var(--soft)">por mes</span></p>
         </div>
-        <p>Todo lo del Básico, hasta 5 cambios por mes con respuesta en 24 horas hábiles, un informe mensual con qué mejorar, 2 publicaciones por mes en tu ficha de Google y revisión de velocidad y SEO cada 3 meses.</p>
+        <p>Todo lo del Básico, hasta 5 cambios por mes con respuesta en 24 horas hábiles, un informe mensual con qué mejorar, 2 publicaciones por mes en tu ficha de Google y respuesta a reseñas.</p>
       </div>
     </div>
-    <p class="incluido"><b>¿Empresa o institucional?</b> Webs de 5 a 8 páginas con formulario, analítica y SEO completo se cotizan a medida. Mirá la muestra de NetSur en Trabajos.</p>
-    <p class="incluido">Opcional en todos los planes. El primer mes es gratis y se da de baja avisando con 30 días. El alojamiento y el certificado de seguridad están incluidos, sin costo mensual. El dominio propio (alrededor de $8.500 al año) se registra a nombre del cliente y lo paga el cliente. Precios actualizados: noviembre 2026.</p>
+    <p class="incluido"><b>Planes 1 y 2:</b> el mantenimiento es opcional. Tu web queda online igual, y si querés un cambio chico (un precio, un horario, una foto) sale $10.000 cada uno. El primer mes de mantenimiento es gratis y se da de baja avisando con 30 días.</p>
+    <p class="incluido"><b>Extras:</b> productos adicionales $20.000 cada 10 · ficha de Google Maps $60.000 (optimizar una existente, $40.000) · página extra $35.000 · hoja de QR para imprimir $40.000 · gestión del dominio $15.000 · mail con tu dominio $25.000. El dominio propio (alrededor de $8.500 al año) se registra a nombre del cliente y lo paga el cliente.</p>
+    <p class="incluido"><b>¿Empresa o institucional?</b> Webs de 5 a 8 páginas con formulario, analítica y SEO completo, a medida. Mirá NetSur en Trabajos. Precios actualizados: noviembre 2026.</p>
   </div>
 </section>
 
-<section class="cuenta">
-  <div class="in">
-    <div class="head">
-      <p class="eyebrow">Hacé la cuenta</p>
-      <h2>Pago único contra pagar todos los meses</h2>
-      <p class="lead">Las plataformas parecen baratas porque se pagan de a poco. Elegí qué necesitás y mirá cuánto sale con los años.</p>
-    </div>
-    <div class="calc">
-      <div class="calc-in">
-        <label for="calc-que">Necesito</label>
-        <select id="calc-que">
-          <option value="20000|154000|Carta QR por abono|Plan Completa, con tu carta">Carta digital por QR</option>
-          <option value="27999|192500|Tienda online por abono|Plan Catálogo y pedidos">Catálogo y tienda online</option>
-          <option value="33900|217000|Sistema de turnos por abono|Plan Turnos">Turnos online</option>
-          <option value="50000|154000|Web alquilada por abono|Plan Completa">Una web completa</option>
-        </select>
-        <label for="calc-anios">Durante <b id="calc-n">2 años</b></label>
-        <input id="calc-anios" type="range" min="1" max="5" value="2">
-      </div>
-      <div class="calc-out">
-        <div><span id="calc-l1">Carta QR por abono</span><b id="calc-a">$480.000</b><small id="calc-m">$20.000 por mes, para siempre</small></div>
-        <div class="tuya"><span>Tu web con StudioProAr</span><b id="calc-b">$154.000</b><small id="calc-p">Plan Completa, con tu carta. Pago único: la web y el dominio son tuyos.</small></div>
-      </div>
-    </div>
-    <p class="incluido">Abonos de referencia en Argentina, noviembre 2026: carta QR (SoyMenu), tienda (Tiendanube Esencial), turnos (AgendaPro Básico) y web alquilada (abono típico de mercado). Nuestro precio es el de lanzamiento; el mantenimiento es opcional.</p>
-  </div>
-</section>
 
-<section class="appsec">
+<section class="appsec" id="panel">
   <div class="in">
     <div class="app-txt">
       <p class="eyebrow">Tu panel, en el bolsillo</p>
-      <h2>Pedidos, turnos y visitas en tu celular, como una app</h2>
-      <p class="lead">Tu panel se instala en la pantalla de inicio de tu Android o iPhone, con el logo de tu negocio. Sin tiendas de apps y sin pagar nada extra.</p>
-      <ul class="sellos" style="margin-top:16px"><li>Android y iPhone</li><li>Con el logo de tu negocio</li><li>Planes 3, 4 y 5</li></ul>
-      <div class="btns" style="margin-top:20px"><a class="btn btn-a" href="demos/mi-negocio/?s=alma&muestra=1&plan=turnos" target="_blank" rel="noopener">Probar un panel de ejemplo</a></div>
+      <h2>Tu panel de seguimiento, como app en tu celular</h2>
+      <p class="lead">Turnos, pedidos y visitas de tu negocio, a un toque. Se instala en la pantalla de inicio de tu Android o iPhone, con el logo de tu negocio, sin tiendas de apps y sin pagar nada extra. Probalo acá, con datos de ejemplo:</p>
+      <div class="chips" id="ap-sel" role="group" aria-label="Panel de ejemplo">
+        <button type="button" data-u="demos/mi-negocio/?s=alma&amp;muestra=1&amp;plan=turnos&amp;vista=seg" aria-pressed="true">Agenda</button>
+        <button type="button" data-u="demos/mi-negocio/?s=alma&amp;muestra=1&amp;plan=pro&amp;vista=seg" aria-pressed="false">Agenda Pro</button>
+        <button type="button" data-u="demos/mi-negocio/?s=tranquera&amp;muestra=1&amp;plan=5&amp;vista=seg" aria-pressed="false">Restaurante</button>
+        <button type="button" data-u="demos/mi-negocio/?s=horno&amp;muestra=1&amp;plan=4&amp;vista=seg" aria-pressed="false">Encargos</button>
+        <button type="button" data-u="demos/mi-negocio/?s=tranquera&amp;muestra=1&amp;plan=2&amp;vista=seg" aria-pressed="false">Visitas</button>
+      </div>
+      <ul class="sellos" style="margin-top:16px"><li>Android y iPhone</li><li>Con el logo de tu negocio</li><li>Planes 3 y 4 (visitas desde el 2)</li></ul>
     </div>
-    <div class="phone" aria-hidden="true">
-      <div class="ph-top"><b>Salón Quebracho</b><small>Turnos de hoy</small></div>
-      <div class="ph-row"><span>09:30</span><p>Lucía · Corte de dama</p></div>
-      <div class="ph-row"><span>11:00</span><p>Martín · Corte y barba</p></div>
-      <div class="ph-row nuevo"><span>15:30</span><p>Sofía · Color raíz <i>nuevo</i></p></div>
-      <div class="ph-row"><span>17:00</span><p>Libre</p></div>
-      <div class="ph-bar"><span>Turnos</span><span>Estadísticas</span></div>
-    </div>
+    <div class="tel" aria-label="Panel de ejemplo en un celular"><div class="pant"><iframe id="ap-frame" title="Panel de ejemplo" loading="lazy" sandbox="allow-scripts allow-same-origin allow-forms allow-modals" src="demos/mi-negocio/?s=alma&amp;muestra=1&amp;plan=turnos&amp;vista=seg"></iframe></div></div>
   </div>
 </section>
 
@@ -730,8 +615,8 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
       <h2>Lo que te garantizamos por escrito</h2>
     </div>
     <div class="dif">
-      <div><h3>El dominio es tuyo</h3><p>Se registra a nombre de tu negocio, con tu CUIT. Si un día te vas, te llevás la web, los archivos y el dominio, sin permanencia ni multa.</p></div>
-      <div><h3>Sin costo mensual de alojamiento</h3><p>El alojamiento y el certificado de seguridad no tienen costo mensual. El mantenimiento lo contratás solo si lo querés.</p></div>
+      <div><h3>Lo tuyo es tuyo</h3><p>El dominio se registra a nombre de tu negocio. Tus textos, fotos y datos son tuyos: si un día te vas, te llevás el dominio, tus datos y una copia de tu web, sin permanencia ni multa.</p></div>
+      <div><h3>Tus datos, cuidados</h3><p>Copias de seguridad, base de datos protegida y panel con usuario y clave. Solo vos ves los turnos, pedidos y ventas de tu negocio.</p></div>
       <div><h3>Precio cerrado en pesos</h3><p>Lo que dice la propuesta es lo que pagás: sin dólares, sin sorpresas. Y cada web se arma a medida de tu rubro, sin plantillas de terceros, por eso carga rápido.</p></div>
     </div>
   </div>
@@ -749,10 +634,10 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
     <details><summary>¿Cómo se paga?</summary><p>50% al empezar y 50% al entregar, por transferencia. Si lo necesitás, el saldo se puede dividir en más pagos: lo charlamos en la propuesta.</p></details>
     <details><summary>¿Qué pasa si no tengo fotos?</summary><p>Lo charlamos. Podemos ir a sacarlas al local o usar imágenes con licencia libre mientras conseguís las propias. Nunca usamos fotos bajadas de internet sin derecho de uso: es un riesgo legal que no vale la pena.</p></details>
     <details><summary>¿Necesito el dominio propio?</summary><p>No es obligatorio, pero conviene. Te da una dirección corta y profesional, te habilita correos con el nombre del negocio y ayuda a que Google te encuentre. Sin dominio propio la web funciona igual, con una dirección más larga.</p></details>
-    <details><summary>¿Y si quiero cambiar algo después?</summary><p>Con mantenimiento entran hasta 2 cambios por mes en el Básico y hasta 5 en el Plus, sin costo adicional. Sin mantenimiento, se cotiza cada pedido. Y en el plan Autogestionable, los cambios de precios, fotos y textos los hacés vos desde el panel.</p></details>
-    <details><summary>¿Si dejo de trabajar con ustedes, pierdo la web?</summary><p>No. La web es tuya desde que la pagás. Si decidís terminar, te entregamos todos los archivos y el control del dominio sin cargo, dentro de los 15 días. No hay permanencia mínima ni multa.</p></details>
-    <details><summary>¿El panel se puede usar desde el celular?</summary><p>Sí. Se abre desde cualquier navegador y en los planes 3, 4 y 5 se instala como una app en tu Android o iPhone, con el logo de tu negocio.</p></details>
-    <details><summary>¿Hacen tiendas online?</summary><p>Sí, con el plan Catálogo y pedidos: catálogo con carrito que te manda el pedido armado por WhatsApp y queda guardado en tu panel. El cobro lo hacés por transferencia o alias; el pago con tarjeta dentro de la web todavía no lo ofrecemos. Si necesitás eso, te orientamos sobre qué plataforma te conviene.</p></details>
+    <details><summary>¿Y si quiero cambiar algo después?</summary><p>Con mantenimiento entran hasta 2 cambios por mes en el Básico y hasta 5 en el Plus. En los planes 1 y 2 sin mantenimiento, cada cambio chico sale $10.000. Y en el plan Autogestionable, precios, fotos y textos los cambiás vos desde el panel.</p></details>
+    <details><summary>¿Si dejo de trabajar con ustedes, pierdo la web?</summary><p>No perdés lo tuyo. Si decidís terminar, dentro de los 15 días te entregamos el control del dominio, tus datos exportados y una copia de tu web pública. El panel es una herramienta de StudioProAr: se usa mientras el mantenimiento esté al día. No hay permanencia mínima ni multa.</p></details>
+    <details><summary>¿El panel se puede usar desde el celular?</summary><p>Sí. Se abre desde cualquier navegador y en los planes 3 y 4 se instala como una app en tu Android o iPhone, con el logo de tu negocio. El plan 2 trae el panel de visitas.</p></details>
+    <details><summary>¿Hacen tiendas online?</summary><p>Sí, con el plan Agenda o Catálogo: catálogo con carrito que te manda el pedido armado por WhatsApp y queda guardado en tu panel. El cobro lo hacés por transferencia o alias; el pago con tarjeta dentro de la web todavía no lo ofrecemos.</p></details>
   </div>
 </section>
 
@@ -803,8 +688,8 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
     p.hidden=true;
     if(sig<3){pasos[sig].hidden=false;return;}
     let n;
-    if(r[2]==='si'||r[0]==='mesa')n=5;else if(r[0]==='turnos')n=4;else if(r[0]==='vender')n=3;else n=r[1]==='mucho'?2:1;
-    const card=planes[n-1],nom=card.querySelector('h3').textContent,pre=card.querySelector('.precio').textContent;
+    if(r[2]==='si'||r[0]==='mesa')n=4;else if(r[0]==='turnos'||r[0]==='vender')n=3;else n=r[1]==='mucho'?2:1;
+    const card=planes[n-1],nom=card.querySelector('h3').textContent,pe=card.querySelector('.precio'),pre=pe.dataset.fin||pe.textContent;
     res.hidden=false;res.innerHTML='Te conviene el <b>plan '+n+' · '+nom+'</b>, desde '+pre+' de lanzamiento. <button type="button" id="quiz-otra">Volver a empezar</button>';
     planes.forEach(p=>p.classList.toggle('marcado',p===card));
     card.scrollIntoView({behavior:'smooth',block:'center'});
@@ -890,7 +775,7 @@ document.querySelectorAll('.copiar').forEach(b=>{
   if(!quieto){
     const io2=new IntersectionObserver(es=>es.forEach(x=>{
       if(!x.isIntersecting)return;io2.unobserve(x.target);
-      const el=x.target,fin=el.textContent,num=+fin.replace(/\D/g,'');if(!num)return;
+      const el=x.target,fin=el.dataset.fin=el.textContent,num=+fin.replace(/\D/g,'');if(!num)return;
       const t0=performance.now(),dur=900;
       const paso=t=>{const p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);el.textContent='$'+(Math.round(num*e/500)*500).toLocaleString('es-AR');if(p<1)requestAnimationFrame(paso);else el.textContent=fin;};
       requestAnimationFrame(paso);
@@ -910,40 +795,53 @@ document.querySelectorAll('.copiar').forEach(b=>{
 (function(){
   var $=function(i){return document.getElementById(i);};if(!$('pr-rubros'))return;
   var T=window.RUBROS_T||{},C=window.CATALOGO_R||{},G=window.GASTRO||{},R=[];
-  var PT=[['esencial','Esencial','Una página, turnos por WhatsApp.'],['completa','Completa','Más secciones y galería grande.'],['turnos','Turnos','El cliente reserva solo. Recordatorio y cancelación.'],['pro','Turnos Pro','Elige profesional. Fichas, editar web y resumen del mes.']];
-  var tur=function(id,n,ic,est){R.push({id:id,n:n,ic:ic,est:est,planes:PT.map(function(p,i){return{n:i+1,t:p[1],d:p[2],web:function(e){return 'demos/barberia/?'+(id==='barberia'?'':'rubro='+id+'&')+'estilo='+e[0]+'&plan='+p[0];},panel:function(e){return 'demos/mi-negocio/?s='+e[1]+'&muestra=1&plan='+(p[0]==='completa'?'esencial':p[0]);}};})});};
+  var PT=[['esencial','Esencial','Una página con lo importante y turnos por WhatsApp.'],['completa','Completa','Varias páginas, galería grande y panel de visitas.'],['turnos','Agenda','El cliente reserva solo. Confirmación, recordatorio y cancelación.'],['pro','Autogestionable','Agenda Pro por profesional, fichas de clientes y editás todo vos.']];
+  var tur=function(id,n,ic,est){R.push({id:id,n:n,ic:ic,est:est,planes:PT.map(function(p,i){return{n:i+1,t:p[1],d:p[2],web:function(e){return 'demos/barberia/?'+(id==='barberia'?'':'rubro='+id+'&')+'estilo='+e[0]+'&plan='+p[0];},panel:i===0?null:function(e){return 'demos/mi-negocio/?s='+e[1]+'&muestra=1&vista=seg&plan='+(p[0]==='completa'?'esencial':p[0]);}};})});};
   tur('barberia','Barberías y peluquerías','✂',[['urbano','navaja','Urbana'],['clasico','eltano','Clásica'],['mujer','alma','Salón de mujer']]);
   var IC={vet:'🐾',estetica:'💅',salud:'🩺',nautica:'⚓',panaderia:'🥐',rotiseria:'🍗',ferreteria:'🔧',petshop:'🦴',ropa:'👕',gimnasio:'🏋'};
   Object.keys(T).forEach(function(k){tur(k,T[k].nombre,IC[k],T[k].est.map(function(x){return [x[0],T[k].E[x[0]].sitio,x[1]];}));});
-  var DS={1:'Una página con lo esencial, WhatsApp y ubicación.',2:'Con fotos, categorías, galería y preguntas.',3:'Carrito que llega armado al WhatsApp del local.',4:'',5:'El dueño edita precios y productos. Resumen del mes.'};
-  var cat=function(id,n,ic,est,pl,d4,mesa){R.push({id:id,n:n,ic:ic,est:est,mesa:mesa,planes:Object.keys(pl).map(function(k){return{n:+k,t:pl[k],d:k==4?d4:DS[k],web:function(e){return id==='ropa'?'demos/ropa/?estilo='+({parrilla:'femenina',cafe:'minimal',urbano:'urbano'}[e[0]]||'urbano')+'&plan='+k:'demos/gastronomia/?'+(id==='resto'?'':'rubro='+id+'&')+'estilo='+e[0]+'&plan='+k;},panel:function(e){return 'demos/mi-negocio/?s='+e[1]+'&muestra=1&plan='+k;}};})});};
-  cat('resto','Restaurantes y bares','🍽',[['parrilla',(G.parrilla||{}).sitio,'Parrilla'],['cafe',(G.cafe||{}).sitio,'Café'],['urbano',(G.urbano||{}).sitio,'Cervecería']],{1:'Esencial',2:'Completa',3:'Pedidos',4:'Reservas',5:'Salón Pro'},'Reserva de mesa con cupo por horario.',1);
-  Object.keys(C).forEach(function(k){var pl={1:'Esencial',2:'Completa'};Object.keys(C[k].planes).forEach(function(n){pl[n]=C[k].planes[n];});cat(k,C[k].nombre,IC[k],C[k].est.map(function(x){return [x[0],C[k].E[x[0]].sitio,x[1]];}),pl,C[k].p4==='programado'?'El cliente elige día y hora de retiro o entrega.':'Reserva de lugar en cada clase, con cupo.');});
+  var DS={1:'Una página con lo destacado, WhatsApp y ubicación.',2:'Más páginas, productos con foto, galería y panel de visitas.',3:'Carrito que llega armado al WhatsApp del local.',4:'El dueño edita precios y productos. Resumen del mes.'};
+  var cat=function(id,n,ic,est,pl,d4,mesa,t3){var M=[[1,1,'Esencial'],[2,2,'Completa'],[3,pl[4]?4:3,t3||'Catálogo'],[4,5,'Autogestionable']].filter(function(m){return pl[m[1]];});R.push({id:id,n:n,ic:ic,est:est,mesa:mesa,planes:M.map(function(m){var k=m[1];return{n:m[0],t:m[2],d:m[0]===3&&pl[4]?d4:DS[m[0]],web:function(e){return id==='ropa'?'demos/ropa/?estilo='+({parrilla:'femenina',cafe:'minimal',urbano:'urbano'}[e[0]]||'urbano')+'&plan='+k:'demos/gastronomia/?'+(id==='resto'?'':'rubro='+id+'&')+'estilo='+e[0]+'&plan='+k;},panel:m[0]===1?null:function(e){return 'demos/mi-negocio/?s='+e[1]+'&muestra=1&vista=seg&plan='+k;}};})});};
+  cat('resto','Restaurantes y bares','🍽',[['parrilla',(G.parrilla||{}).sitio,'Parrilla'],['cafe',(G.cafe||{}).sitio,'Café'],['urbano',(G.urbano||{}).sitio,'Cervecería']],{1:'Esencial',2:'Completa',3:'Pedidos',4:'Reservas',5:'Salón Pro'},'Reservas de mesa con cupo y pedidos por WhatsApp.',1,'Pedidos y reservas');
+  Object.keys(C).forEach(function(k){var pl={1:'Esencial',2:'Completa'};Object.keys(C[k].planes).forEach(function(n){pl[n]=C[k].planes[n];});cat(k,C[k].nombre,IC[k],C[k].est.map(function(x){return [x[0],C[k].E[x[0]].sitio,x[1]];}),pl,C[k].p4==='programado'?'Encargos: el cliente elige día y hora de retiro o entrega.':'Reserva de lugar en cada clase, con cupo.',0,C[k].p4==='programado'?'Encargos':C[k].p4?'Clases':'Catálogo');});
   var ORD=['barberia','resto','vet','estetica','salud','panaderia','rotiseria','ferreteria','petshop','ropa','gimnasio','nautica'];R.sort(function(a,b){return ORD.indexOf(a.id)-ORD.indexOf(b.id);});
   var st={r:0,e:0,p:2,vista:'web'},fr=$('pr-frame'),visto=false;
-  function cargar(){var r=R[st.r],e=r.est[st.e],p=r.planes[Math.min(st.p,r.planes.length-1)],u=st.vista==='web'?p.web(e):p.panel(e);if(!visto)return;$('pr-carga').style.display='grid';fr.src=u;$('pr-ver').textContent=(st.vista==='web'?'Web del cliente':'Panel del dueño')+' · '+p.t;}
+  function cargar(){var r=R[st.r],e=r.est[st.e],p=r.planes[Math.min(st.p,r.planes.length-1)],u=st.vista==='web'||!p.panel?p.web(e):p.panel(e);if(!visto)return;$('pr-carga').style.display='grid';fr.src=u;$('pr-ver').textContent=(st.vista==='web'||!p.panel?'Web del cliente':'Panel del dueño')+' · Plan '+p.n+' · '+p.t;}
   fr.addEventListener('load',function(){$('pr-carga').style.display='none';});
   function pintar(){
     $('pr-rubros').innerHTML=R.map(function(r,i){return '<button type="button" data-r="'+i+'" aria-pressed="'+(i===st.r)+'">'+(r.ic?r.ic+' ':'')+r.n+'</button>';}).join('');
     var r=R[st.r];$('pr-estilos').innerHTML='<span style="color:var(--soft);font-size:13px;align-self:center;margin-right:4px">Estilo:</span>'+r.est.map(function(e,i){return '<button type="button" data-e="'+i+'" aria-pressed="'+(i===st.e)+'">'+e[2]+'</button>';}).join('');
     var pi=Math.min(st.p,r.planes.length-1),e=r.est[st.e];
-    $('pr-planes').innerHTML=r.planes.map(function(p,i){return '<div class="pl-it" role="button" tabindex="0" data-p="'+i+'" aria-pressed="'+(i===pi)+'"><span class="n">'+p.n+'</span><span><b>'+p.t+'</b><small>'+p.d+'</small></span><span class="ir"><a href="'+p.web(e)+'" data-v="web" data-p="'+i+'">Web</a><a href="'+p.panel(e)+'" data-v="panel" data-p="'+i+'">Panel</a></span></div>';}).join('')+(r.mesa?'<div class="pl-it" role="button" tabindex="0" data-mesa="1"><span class="n">QR</span><span><b>Pedido desde la mesa</b><small>El cliente escanea el QR, pide y le llega a la cocina.</small></span><span class="ir"><a href="'+r.planes[4].web(e)+'&mesa=4" data-mesa="1">Probar</a></span></div>':'');
+    $('pr-planes').innerHTML=r.planes.map(function(p,i){return '<div class="pl-it" role="button" tabindex="0" data-p="'+i+'" aria-pressed="'+(i===pi)+'"><span class="n">'+p.n+'</span><span><b>'+p.t+'</b><small>'+p.d+'</small></span><span class="ir"><a href="#" data-v="web" data-p="'+i+'">Web</a>'+(p.panel?'<a href="#" data-v="panel" data-p="'+i+'">Panel</a>':'')+'</span></div>';}).join('')+(r.mesa?'<div class="pl-it" role="button" tabindex="0" data-mesa="1"><span class="n">QR</span><span><b>Pedido desde la mesa</b><small>El cliente escanea el QR, pide y le llega a la cocina.</small></span><span class="ir"><a href="#" data-mesa="1">Probar</a></span></div>':'');
     cargar();
   }
   document.querySelector('.probar').addEventListener('click',function(ev){
     var t=ev.target.closest('[data-r],[data-e],[data-p],[data-mesa]');if(!t)return;
-    var a=ev.target.closest('a');if(a&&!(ev.ctrlKey||ev.metaKey||ev.shiftKey))ev.preventDefault();else if(a)return;
+    var a=ev.target.closest('a');if(a)ev.preventDefault();
     if(t.dataset.r){st.r=+t.dataset.r;st.e=0;}else if(t.dataset.e)st.e=+t.dataset.e;
-    else if(t.dataset.mesa){var r=R[st.r];visto=true;$('pr-carga').style.display='grid';fr.src=r.planes[4].web(r.est[st.e])+'&mesa=4';$('pr-ver').textContent='Mesa 4 · pedido por QR';return;}
+    else if(t.dataset.mesa){var r=R[st.r];visto=true;$('pr-carga').style.display='grid';fr.src=r.planes[r.planes.length-1].web(r.est[st.e])+'&mesa=4';$('pr-ver').textContent='Mesa 4 · pedido por QR';return;}
     else{st.p=+t.dataset.p;if(a)st.vista=a.dataset.v;}
     pintar();
   });
   document.querySelector('.probar').addEventListener('keydown',function(ev){if((ev.key==='Enter'||ev.key===' ')&&ev.target.classList.contains('pl-it')){ev.preventDefault();ev.target.click();}});
   /* Los chips de rubros del encabezado abren su muestra acá */
-  document.querySelectorAll('.marcas a[data-r]').forEach(function(a){a.addEventListener('click',function(ev){ev.preventDefault();var i=R.map(function(r){return r.id;}).indexOf(a.dataset.r);if(i>=0){st.r=i;st.e=0;st.vista='web';pintar();}document.getElementById('probar').scrollIntoView({behavior:'smooth'});});});
+  if(0)document.querySelectorAll('.marcas a[data-r]').forEach(function(a){a.addEventListener('click',function(ev){ev.preventDefault();var i=R.map(function(r){return r.id;}).indexOf(a.dataset.r);if(i>=0){st.r=i;st.e=0;st.vista='web';pintar();}document.getElementById('probar').scrollIntoView({behavior:'smooth'});});});
   if('IntersectionObserver' in window){new IntersectionObserver(function(es,o){if(es[0].isIntersecting){visto=true;cargar();o.disconnect();}},{rootMargin:'300px'}).observe(document.querySelector('.tel'));}else{visto=true;}
   pintar();
 })();
+</script>
+<script>
+/* Trabajos: se abren acá mismo, en grande */
+(function(){
+  var d=document.getElementById('visor'),f=document.getElementById('vz-f');if(!d)return;
+  function modo(m){d.className='m-'+m;d.querySelectorAll('.modo').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.m===m);});}
+  document.querySelector('#trabajos').addEventListener('click',function(e){var b=e.target.closest('.ver');if(!b)return;document.getElementById('vz-t').textContent=b.dataset.t;modo(b.dataset.cel||innerWidth<700?'cel':'pc');f.src=b.dataset.ver;if(d.showModal)d.showModal();else d.setAttribute('open','');});
+  d.addEventListener('click',function(e){var m=e.target.closest('.modo');if(m)modo(m.dataset.m);if(e.target.id==='vz-x'||e.target===d||e.target.classList.contains('vz')||e.target.classList.contains('vz-marco'))d.close();});
+  d.addEventListener('close',function(){f.src='about:blank';});
+})();
+</script>
+<script>
+(function(){var c=document.getElementById('ap-sel'),f=document.getElementById('ap-frame');if(!c)return;c.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;c.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b);});f.src=b.dataset.u;});})();
 </script>
 <script>if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}</script>
 </body>
