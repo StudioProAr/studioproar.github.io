@@ -382,7 +382,7 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
     <div class="head">
       <p class="eyebrow">Probalo en vivo</p>
       <h2>Elegí tu rubro y mirá tu web funcionando</h2>
-      <p class="lead">12 rubros, 3 estilos y los 4 planes. Tocá un plan y miralo acá al lado, como en el celular de tu cliente. Desde el plan 2, también ves el panel del dueño, con datos de ejemplo.</p>
+      <p class="lead">12 rubros, 3 estilos y los 4 planes. Tocá un plan y miralo acá al lado, como en el celular de tu cliente. El panel del dueño lo ves más abajo, en "Tu panel en el bolsillo".</p>
     </div>
     <div class="grid2">
       <div>
@@ -806,13 +806,13 @@ document.querySelectorAll('.copiar').forEach(b=>{
   Object.keys(C).forEach(function(k){var pl={1:'Esencial',2:'Completa'};Object.keys(C[k].planes).forEach(function(n){pl[n]=C[k].planes[n];});cat(k,C[k].nombre,IC[k],C[k].est.map(function(x){return [x[0],C[k].E[x[0]].sitio,x[1]];}),pl,C[k].p4==='programado'?'Encargos: el cliente elige día y hora de retiro o entrega.':'Reserva de lugar en cada clase, con cupo.',0,C[k].p4==='programado'?'Encargos':C[k].p4?'Clases':'Catálogo');});
   var ORD=['barberia','resto','vet','estetica','salud','panaderia','rotiseria','ferreteria','petshop','ropa','gimnasio','nautica'];R.sort(function(a,b){return ORD.indexOf(a.id)-ORD.indexOf(b.id);});
   var st={r:0,e:0,p:2,vista:'web'},fr=$('pr-frame'),visto=false;
-  function cargar(){var r=R[st.r],e=r.est[st.e],p=r.planes[Math.min(st.p,r.planes.length-1)],u=st.vista==='web'||!p.panel?p.web(e):p.panel(e);if(!visto)return;$('pr-carga').style.display='grid';fr.src=u;$('pr-ver').textContent=(st.vista==='web'||!p.panel?'Web del cliente':'Panel del dueño')+' · Plan '+p.n+' · '+p.t;}
+  function cargar(){var r=R[st.r],e=r.est[st.e],p=r.planes[Math.min(st.p,r.planes.length-1)],u=p.web(e);if(!visto)return;$('pr-carga').style.display='grid';fr.src=u;$('pr-ver').textContent='Plan '+p.n+' · '+p.t;}
   fr.addEventListener('load',function(){$('pr-carga').style.display='none';});
   function pintar(){
     $('pr-rubros').innerHTML=R.map(function(r,i){return '<button type="button" data-r="'+i+'" aria-pressed="'+(i===st.r)+'">'+(r.ic?r.ic+' ':'')+r.n+'</button>';}).join('');
     var r=R[st.r];$('pr-estilos').innerHTML='<span style="color:var(--soft);font-size:13px;align-self:center;margin-right:4px">Estilo:</span>'+r.est.map(function(e,i){return '<button type="button" data-e="'+i+'" aria-pressed="'+(i===st.e)+'">'+e[2]+'</button>';}).join('');
     var pi=Math.min(st.p,r.planes.length-1),e=r.est[st.e];
-    $('pr-planes').innerHTML=r.planes.map(function(p,i){return '<div class="pl-it" role="button" tabindex="0" data-p="'+i+'" aria-pressed="'+(i===pi)+'"><span class="n">'+p.n+'</span><span><b>'+p.t+'</b><small>'+p.d+'</small></span><span class="ir"><a href="#" data-v="web" data-p="'+i+'">Web</a>'+(p.panel?'<a href="#" data-v="panel" data-p="'+i+'">Panel</a>':'')+'</span></div>';}).join('')+(r.mesa?'<div class="pl-it" role="button" tabindex="0" data-mesa="1"><span class="n">QR</span><span><b>Pedido desde la mesa</b><small>El cliente escanea el QR, pide y le llega a la cocina.</small></span><span class="ir"><a href="#" data-mesa="1">Probar</a></span></div>':'');
+    $('pr-planes').innerHTML=r.planes.map(function(p,i){return '<div class="pl-it" role="button" tabindex="0" data-p="'+i+'" aria-pressed="'+(i===pi)+'"><span class="n">'+p.n+'</span><span><b>'+p.t+'</b><small>'+p.d+'</small></span><span class="ir"><a href="#" data-v="web" data-p="'+i+'">Web</a></span></div>';}).join('')+(r.mesa?'<div class="pl-it" role="button" tabindex="0" data-mesa="1"><span class="n">QR</span><span><b>Pedido desde la mesa</b><small>El cliente escanea el QR, pide y le llega a la cocina.</small></span><span class="ir"><a href="#" data-mesa="1">Probar</a></span></div>':'');
     cargar();
   }
   document.querySelector('.probar').addEventListener('click',function(ev){
