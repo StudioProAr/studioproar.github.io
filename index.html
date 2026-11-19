@@ -3,369 +3,65 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Diseño de páginas web para negocios: tu web conectada a tu WhatsApp, tu Instagram y Google Maps, para que te encuentren en Google y te escriban. Con panel propio y precio cerrado en pesos.">
+<title>StudioProAr · Webs que trabajan para tu negocio</title>
+<meta name="description" content="Webs y sistemas para comercios: que te encuentren en Google y te reserven, te pidan o te escriban solos. Precio cerrado en pesos y dominio a tu nombre.">
 <link rel="canonical" href="https://studioproar.github.io/">
 <meta name="theme-color" content="#0c1424">
-<meta property="og:type" content="website">
-<meta property="og:locale" content="es_AR">
-<meta property="og:site_name" content="StudioProAr">
-<meta property="og:url" content="https://studioproar.github.io/">
-<meta property="og:title" content="StudioProAr · Que cuando te busquen, te encuentren">
+<meta property="og:type" content="website"><meta property="og:locale" content="es_AR"><meta property="og:site_name" content="StudioProAr">
+<meta property="og:url" content="https://studioproar.github.io/"><meta property="og:title" content="StudioProAr · Webs que trabajan para tu negocio"><meta property="og:description" content="Webs y sistemas para comercios: que te encuentren en Google y te reserven, te pidan o te escriban solos. Precio cerrado en pesos y dominio a tu nombre.">
 <meta property="og:image" content="https://studioproar.github.io/img/icono-512.png">
-<meta property="og:description" content="Tu negocio con web propia, rápida y pensada para el celular. Pedí tu presupuesto por WhatsApp.">
-<link rel="icon" href="img/icono.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="img/icono-180.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="StudioProAr">
-<title>StudioProAr · Diseño de páginas web para negocios</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="icon" href="img/icono.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="img/icono-180.png"><link rel="manifest" href="manifest.webmanifest">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Plus+Jakarta+Sans:wght@500;800&family=Figtree:wght@400;500;600&display=swap">
-<style>
-/* Layout: estudio — hero directo, tabla de planes comparada, trabajos con enlace a las demos, proceso y contacto */
-:root{--logo-a:#1452E6;--logo-b:#0B1220;
-  --bg:#fbfbfc;
-  --card:#ffffff;
-  --ink:#0c1424;
-  --soft:#58637a;
-  --line:#e0e3ea;
-  --blue:#1452e6;
-  --green:#0f7a5a;
-  --dark:#0c1424;
-  --dark-ink:#eef1f6;
-  --disp:"Archivo","Helvetica Neue",Arial,sans-serif;
-  --body:"Figtree","Helvetica Neue",Arial,sans-serif;
-}
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --bg:#0b0e15;--card:#131824;--ink:#e9edf4;--soft:#929cb2;--line:#242b3a;
-    --blue:#7ea0ff;--logo-a:#8FB0FF;--logo-b:#FFFFFF;--green:#4cc29c;--dark:#05070c;--dark-ink:#e9edf4;color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#0b0e15;--card:#131824;--ink:#e9edf4;--soft:#929cb2;--line:#242b3a;
-  --blue:#7ea0ff;--logo-a:#8FB0FF;--logo-b:#FFFFFF;--green:#4cc29c;--dark:#05070c;--dark-ink:#e9edf4;color-scheme:dark;
-}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.62}
-.in{max-width:1060px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-h2{font-family:var(--disp);font-weight:800;font-size:clamp(25px,4.2vw,37px);line-height:1.04;margin:0 0 7px;letter-spacing:-.025em;text-wrap:balance}
-h3{font-family:var(--disp);font-weight:700;font-size:19px;margin:0 0 5px;letter-spacing:-.015em}
-.eyebrow{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);font-weight:600;margin:0 0 9px}
-.lead{color:var(--soft);max-width:60ch;margin:0}
-section{padding-block:52px}
-.head{margin-bottom:26px}
-a{color:var(--blue)}
-
-nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:21;background:var(--bg)}
-nav .in{display:flex;align-items:center;justify-content:space-between;gap:14px;padding-block:13px;flex-wrap:wrap}
-.brand{display:inline-flex;align-items:center;gap:9px;text-decoration:none;color:var(--ink)}.brand .wm{font-family:"Plus Jakarta Sans",var(--disp);font-weight:800;font-size:20px;letter-spacing:-.02em}.brand b{font-weight:800;color:var(--logo-a)}.brand i{font-style:normal;font-weight:800}
-nav ul{list-style:none;display:flex;gap:18px;margin:0;padding:0;font-size:13.5px;flex-wrap:wrap}
-nav ul a{color:var(--soft);text-decoration:none}
-nav ul a:hover{color:var(--ink)}
-
-.hero .in{padding-block:52px 44px;max-width:860px}
-.hero h1{font-family:var(--disp);font-weight:800;font-size:clamp(33px,6.4vw,56px);line-height:1.02;margin:0 0 16px;letter-spacing:-.035em;text-wrap:balance}
-.hero p{font-size:17px;color:var(--soft);max-width:56ch;margin:0 0 24px}
-.btns{display:flex;gap:10px;flex-wrap:wrap}
-.btn{display:inline-block;padding:12px 22px;border-radius:3px;font-weight:600;font-size:14.5px;text-decoration:none;border:1.5px solid transparent}
-.btn-a{background:var(--blue);color:#fff}
-.btn-b{border-color:var(--line);color:var(--ink)}
-.marcas{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px;border-top:1px solid var(--line);padding-top:20px}
-.marcas span{font-size:12.5px;color:var(--soft);background:var(--card);border:1px solid var(--line);padding:5px 11px;border-radius:999px}
-
-/* planes */
-.planes{display:grid;grid-template-columns:repeat(auto-fit,minmax(252px,1fr));gap:14px}
-.plan{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;display:flex;flex-direction:column;min-width:0}
-.plan.dest{border-color:var(--blue);border-width:2px}
-.plan .tag{font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--blue);margin:0 0 8px;min-height:15px}
-.plan .precio{font-family:var(--disp);font-weight:800;font-size:31px;letter-spacing:-.03em;margin:8px 0 2px;font-variant-numeric:tabular-nums}
-.plan .unidad{font-size:12.5px;color:var(--soft);margin:0 0 15px}
-.plan .desc{font-size:14px;color:var(--soft);margin:0 0 15px}
-.plan ul{list-style:none;margin:0 0 18px;padding:0;display:flex;flex-direction:column;gap:7px;font-size:14px}
-.plan li{padding-left:19px;position:relative}
-.plan li::before{content:"";position:absolute;left:0;top:8px;width:9px;height:2px;background:var(--green);border-radius:2px}
-.plan .btn{margin-top:auto;text-align:center}
-.mant{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--green);border-radius:3px;padding:19px;margin-top:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:16px;align-items:center}
-.mant .m-precio{font-family:var(--disp);font-weight:800;font-size:25px;letter-spacing:-.025em;font-variant-numeric:tabular-nums}
-.mant p{margin:0;font-size:14px;color:var(--soft)}
-.incluido{font-size:12.5px;color:var(--soft);margin:16px 0 0}
-
-/* trabajos */
-.obras{display:grid;grid-template-columns:repeat(auto-fit,minmax(238px,1fr));gap:14px}
-.obra{background:var(--card);border:1px solid var(--line);border-radius:4px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
-.obra .cab{aspect-ratio:16/10;background:linear-gradient(150deg,var(--blue),#0a1c42);display:flex;align-items:flex-end;padding:13px;color:#fff}
-.obra .cab b{font-family:var(--disp);font-size:18px;font-weight:800;letter-spacing:-.02em}
-.obra .cu{padding:16px;display:flex;flex-direction:column;flex:1}
-.obra .rubro{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);font-weight:600;margin:0 0 5px}
-.obra p{font-size:14px;color:var(--soft);margin:0 0 14px}
-.obra a{margin-top:auto;font-size:14px;font-weight:600;text-decoration:none}
-.obra a:hover{text-decoration:underline}
-.obra .cab{background-size:cover;background-position:center}
-.obra .links{margin-top:auto;display:flex;gap:6px 18px;flex-wrap:wrap}.obra .links a{margin-top:0}
-.obra .cab.logo{background-color:#fff8f4;background-position:center;background-size:auto 86%;background-repeat:no-repeat}
-.obra .cab.logo b{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-.obra .et{display:inline-block;align-self:flex-start;font-size:11px;font-weight:700;color:var(--blue);background:color-mix(in srgb,var(--blue) 10%,transparent);border-radius:20px;padding:3px 9px;margin:0 0 10px}
-.mants{display:grid;gap:12px;margin-top:16px}.mants .mant{margin-top:0}
-.plan .unidad s{opacity:.8}
-
-.real .cab{background:linear-gradient(150deg,#8e1f4e,#2b0a19)}
-
-/* proceso */
-.pasos{counter-reset:p;display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:20px;list-style:none;margin:0;padding:0}
-.pasos li{counter-increment:p;padding-top:34px;position:relative;min-width:0}
-.pasos li::before{content:counter(p,decimal-leading-zero);position:absolute;top:0;left:0;font-family:var(--disp);font-weight:800;font-size:26px;color:var(--blue);line-height:1;letter-spacing:-.03em}
-.pasos b{display:block;font-family:var(--disp);font-size:17px;margin-bottom:3px}
-.pasos span{font-size:14px;color:var(--soft)}
-
-/* diferencia */
-.dif{display:grid;grid-template-columns:repeat(auto-fit,minmax(238px,1fr));gap:14px}
-.dif div{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--green);border-radius:3px;padding:18px;min-width:0}
-.dif p{margin:0;font-size:14px;color:var(--soft)}
-
-details{border-bottom:1px solid var(--line);padding:13px 0}
-summary{cursor:pointer;font-weight:600;font-size:15px;list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:center}
-summary::-webkit-details-marker{display:none}
-summary::after{content:"+";font-family:var(--disp);font-size:20px;color:var(--blue);line-height:1}
-details[open] summary::after{content:"–"}
-details p{margin:8px 0 0;color:var(--soft);font-size:14px;max-width:66ch}
-summary:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
-
-.cierre{background:var(--dark);color:var(--dark-ink)}
-.cierre .in{padding-block:50px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:26px}
-.cierre h2{color:var(--dark-ink)}
-.cierre .lead{color:rgba(238,241,246,.78)}
-.dato{font-size:14.5px;margin:0;opacity:.88}
-.dato b{display:block;font-size:10.5px;letter-spacing:.17em;text-transform:uppercase;opacity:.55;margin-bottom:3px;font-weight:600}
-.dato a{color:var(--dark-ink)}
-.copiar{background:none;border:1px solid rgba(255,255,255,.28);color:inherit;font-family:var(--body);font-size:11.5px;padding:3px 9px;border-radius:999px;cursor:pointer;margin-left:7px}
-.copiar:hover{border-color:rgba(255,255,255,.6)}
-
-footer{background:var(--dark);color:var(--dark-ink);border-top:1px solid rgba(255,255,255,.12)}
-footer .in{padding-block:17px;font-size:12.5px;opacity:.6;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-footer a{color:inherit}
-footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .brand .wm{font-size:15px}
-
-/* --- marketing --- */
-.flujo{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;counter-reset:f}
-.flujo li{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:16px;position:relative;min-width:0}
-.flujo li.centro{border:2px solid var(--blue)}
-.flujo .ic{display:inline-grid;place-items:center;min-width:34px;height:34px;padding:0 6px;border-radius:999px;background:color-mix(in srgb,var(--blue) 14%,transparent);color:var(--blue);font:800 13px var(--disp);margin-bottom:10px}
-.flujo li.centro .ic{background:var(--blue);color:#fff}
-.flujo b{display:block;font-family:var(--disp);font-size:16px;margin-bottom:4px}
-.flujo p{margin:0;font-size:13.5px;color:var(--soft)}
-@media (min-width:900px){.flujo li:not(:last-child)::after{content:"→";position:absolute;right:-12px;top:50%;transform:translateY(-50%);color:var(--blue);font-weight:800;z-index:1}}
-
-.nav-cta{color:#fff!important;background:var(--blue);padding:6px 12px;border-radius:3px;font-weight:600}
-.hero .in{padding-block:58px 44px}
-.hero .rota{font-family:var(--disp);font-weight:700;font-size:clamp(19px,2.6vw,24px);color:var(--ink);margin:0 0 14px;min-height:1.4em;letter-spacing:-.015em}
-.hero .eyebrow{font-size:10.5px;color:var(--blue);margin:0 0 12px;max-width:none}
-.hero .rota span{color:var(--blue);transition:opacity .35s}
-.hero .rota span.fuera{opacity:0}
-.sellos{list-style:none;display:flex;flex-wrap:wrap;gap:8px 18px;margin:22px 0 0;padding:0;font-size:13.5px;color:var(--soft)}
-.sellos li{padding-left:20px;position:relative}
-.sellos li::before{content:"";position:absolute;left:0;top:5px;width:11px;height:6px;border-left:2px solid var(--green);border-bottom:2px solid var(--green);transform:rotate(-45deg)}
-.marcas a{font-size:12.5px;color:var(--soft);background:var(--card);border:1px solid var(--line);padding:5px 11px;border-radius:999px;text-decoration:none}
-.marcas a:hover{color:var(--ink);border-color:var(--blue)}
-.dolores{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
-.dolores article{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:18px;display:flex;flex-direction:column;min-width:0}
-.dolores .q{font-family:var(--disp);font-weight:800;font-size:19px;letter-spacing:-.02em;margin:0 0 6px;color:var(--ink)}
-.dolores p{margin:0 0 10px;font-size:14px;color:var(--soft)}
-.dolores .r{border-top:1px solid var(--line);padding-top:10px}
-.dolores .r b{color:var(--green)}
-.dolores a{margin-top:auto;font-size:14px;font-weight:600;text-decoration:none}
-.cupos{margin:12px 0 0;font-size:13.5px;color:var(--soft)}
-.cupos span{display:inline-block;background:color-mix(in srgb,var(--green) 16%,transparent);color:var(--green);font-weight:700;padding:3px 10px;border-radius:999px;margin-right:4px}
-.quiz{background:var(--card);border:1px dashed var(--blue);border-radius:4px;padding:18px;margin:0 0 18px}
-.quiz-t{margin:0 0 12px;font-weight:700;font-size:15px}
-.quiz-p b{display:block;margin-bottom:10px;font-family:var(--disp);font-size:17px}
-.quiz-p button{display:inline-block;margin:0 8px 8px 0;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:8px 14px;font:500 14px var(--body);cursor:pointer}
-.quiz-p button:hover{border-color:var(--blue)}
-.quiz-r{font-size:15px}.quiz-r b{color:var(--blue)}.quiz-r button{background:none;border:0;color:var(--soft);text-decoration:underline;cursor:pointer;font:inherit;font-size:13px;padding:0;margin-left:8px}
-.plan.marcado{outline:3px solid var(--green);outline-offset:3px}
-.plan li.app::before{background:var(--blue)}
-.calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;align-items:stretch}
-.calc-in{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:18px;display:flex;flex-direction:column;gap:8px}
-.calc-in label{font-size:13px;color:var(--soft);font-weight:600}
-.calc-in select{font:500 15px var(--body);padding:10px;border:1.5px solid var(--line);border-radius:3px;background:var(--bg);color:var(--ink);margin-bottom:8px}
-.calc-in input{width:100%;accent-color:var(--blue)}
-.calc-out{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.calc-out>div{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:16px;display:flex;flex-direction:column;gap:4px;min-width:0}
-.calc-out span{font-size:13px;color:var(--soft)}
-.calc-out b{font-family:var(--disp);font-weight:800;font-size:clamp(24px,3.4vw,32px);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-.calc-out small{font-size:12.5px;color:var(--soft)}
-.calc-out .tuya{border:2px solid var(--green)}.calc-out .tuya b{color:var(--green)}
-.appsec .in{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;align-items:center}
-.phone{justify-self:center;width:250px;background:var(--card);border:10px solid #111827;border-radius:34px;padding:16px 12px 12px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
-@media (prefers-color-scheme:dark){.phone{border-color:#2a3242}}
-.ph-top{padding:4px 6px 12px}.ph-top b{display:block;font-family:var(--disp);font-size:17px}.ph-top small{color:var(--soft);font-size:12px}
-.ph-row{display:grid;grid-template-columns:48px 1fr;gap:8px;align-items:center;padding:10px 6px;border-top:1px solid var(--line);font-size:13px}
-.ph-row span{font-weight:700;font-variant-numeric:tabular-nums}.ph-row p{margin:0}
-.ph-row.nuevo{background:color-mix(in srgb,var(--blue) 10%,transparent);border-radius:6px}
-.ph-row i{font-style:normal;font-size:10.5px;font-weight:700;color:#fff;background:var(--blue);border-radius:999px;padding:1px 7px;margin-left:4px}
-.ph-bar{display:flex;justify-content:space-around;border-top:1px solid var(--line);margin-top:8px;padding-top:9px;font-size:11.5px;font-weight:600;color:var(--soft)}
-.ph-bar span:first-child{color:var(--blue)}
-.avatar{width:96px;height:96px;border-radius:50%;background:linear-gradient(150deg,var(--blue),#0a1c42);color:#fff;font-family:var(--disp);font-weight:800;font-size:42px;display:grid;place-items:center}
-@media (max-width:560px){.calc-out{grid-template-columns:1fr}}
-.wa-fijo{position:fixed;right:16px;bottom:16px;z-index:30;width:56px;height:56px;border-radius:50%;background:#25d366;color:#fff;display:none;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.25)}
-@media (max-width:760px){.wa-fijo{display:grid}nav ul li:not(:last-child){display:none}}
-
-/* Probá tu rubro: muestrario interactivo dentro de la portada */
-.probar .grid2{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:38px;align-items:start}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
-.chips button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 14px;font:inherit;font-size:14px;cursor:pointer;transition:border-color .2s,background .2s}
-.chips button:hover{border-color:var(--blue)}
-.chips button[aria-pressed=true]{background:var(--blue);border-color:var(--blue);color:#fff}
-.chips.sm button{font-size:13px;padding:6px 12px}
-.pl-lista{display:grid;gap:10px;margin-top:6px}
-.pl-it{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:12px 14px;cursor:pointer;text-align:left;font:inherit;color:var(--ink);width:100%}
-.pl-it[aria-pressed=true]{border-color:var(--blue);box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 18%,transparent)}
-.pl-it .n{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--blue) 12%,transparent);color:var(--blue);font-weight:700;font-size:14px}
-.pl-it b{display:block}.pl-it small{color:var(--soft);display:block;line-height:1.35}
-.pl-it .ir{display:flex;gap:6px}
-.pl-it .ir a{font-size:13px;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:5px 10px;color:var(--ink);white-space:nowrap}
-.pl-it .ir a:hover{border-color:var(--blue);color:var(--blue)}
-.tel{position:sticky;top:84px;justify-self:center;width:300px;height:610px;border-radius:42px;background:#0b0e15;padding:12px;box-shadow:0 30px 60px -20px rgba(10,20,50,.45),inset 0 0 0 2px #2a3142}
-.tel .pant{width:100%;height:100%;border-radius:32px;overflow:hidden;background:#fff;position:relative}
-.tel iframe{border:0;width:390px;height:796px;transform:scale(.6923);transform-origin:0 0;background:#fff}
-.tel .vista{position:absolute;inset:auto 0 10px;display:flex;justify-content:center;gap:6px;pointer-events:none}
-.tel .vista span{pointer-events:auto;background:rgba(11,14,21,.82);color:#fff;font-size:12px;border-radius:999px;padding:5px 10px;backdrop-filter:blur(6px)}
-.tel .cargando{position:absolute;inset:0;display:grid;place-items:center;color:#8a93a6;font-size:14px;background:#f4f6fa}
-.probar .pie{margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-@media(max-width:900px){.probar .grid2{grid-template-columns:1fr}.tel{position:relative;top:0;width:270px;height:550px}.tel iframe{transform:scale(.6205)}}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
-/* ---------- movimiento ---------- */
-.prog{position:fixed;top:0;left:0;height:3px;width:100%;background:linear-gradient(90deg,var(--blue),#22c38e);transform-origin:0 50%;transform:scaleX(0);z-index:60;pointer-events:none}
-.hero{position:relative;overflow:hidden;isolation:isolate}
-.hero .fondo{position:absolute;inset:0;z-index:-1;pointer-events:none}
-.hero .fondo i{position:absolute;border-radius:50%;filter:blur(60px);opacity:.38;animation:flota 18s ease-in-out infinite alternate}
-.hero .fondo i:nth-child(1){width:420px;height:420px;background:#7aa2ff;top:-140px;right:-80px}
-.hero .fondo i:nth-child(2){width:320px;height:320px;background:#7fe3c0;bottom:-140px;left:-60px;animation-duration:22s}
-.hero .fondo i:nth-child(3){width:240px;height:240px;background:#ffc58a;top:40%;left:45%;opacity:.22;animation-duration:26s}
-@keyframes flota{to{transform:translate(60px,40px) scale(1.15)}}
-.hero .in.hero-in{max-width:1120px;display:grid;grid-template-columns:minmax(0,1fr);gap:34px;align-items:center}
-@media (min-width:960px){.hero .in.hero-in{grid-template-columns:minmax(0,1fr) 300px}}
-.cel{justify-self:center;width:min(280px,82vw);aspect-ratio:9/18.5;border-radius:38px;background:#0c1424;padding:11px;box-shadow:0 30px 60px -20px rgba(12,20,36,.45),inset 0 0 0 2px #26324a;animation:levita 6s ease-in-out infinite}
-@keyframes levita{50%{transform:translateY(-10px) rotate(-1deg)}}
-.cel-pant{position:relative;height:100%;border-radius:28px;background:#f4f6fb;overflow:hidden;padding:20px 14px 14px;display:flex;flex-direction:column;gap:12px;font-size:12px;color:#0c1424}
-.cel-top{display:flex;justify-content:space-between;align-items:center}
-.cel-top b{font-family:var(--disp);font-size:16px}
-.cel-top span{font-size:11px;color:#58637a;background:#fff;border:1px solid #e0e3ea;padding:2px 9px;border-radius:999px}
-.cel-kpi{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.cel-kpi div{background:#fff;border-radius:14px;padding:10px;border:1px solid #e0e3ea}
-.cel-kpi b{display:block;font:800 24px var(--disp);color:var(--blue);font-variant-numeric:tabular-nums}
-.cel-kpi div+div b{color:#0f7a5a}
-.cel-kpi span{color:#58637a;font-size:11px}
-.cel-bars{display:flex;align-items:flex-end;gap:6px;height:70px;background:#fff;border:1px solid #e0e3ea;border-radius:14px;padding:10px}
-.cel-bars i{flex:1;background:color-mix(in srgb,var(--blue) 30%,#fff);border-radius:4px 4px 2px 2px;height:20%;transition:height .9s cubic-bezier(.2,.8,.2,1)}
-.cel-bars i:last-child{background:var(--blue)}
-.cel-src{display:grid;gap:6px;background:#fff;border:1px solid #e0e3ea;border-radius:14px;padding:10px}
-.cel-src span{position:relative;font-size:11px;padding-left:2px;z-index:0}
-.cel-src span::before{content:"";position:absolute;inset:0 auto 0 0;width:0;background:color-mix(in srgb,var(--blue) 16%,transparent);border-radius:4px;z-index:-1;transition:width 1.2s ease}
-.cel.on .cel-src span::before{width:calc(var(--w)*2)}
-.cel-notis{position:absolute;left:10px;right:10px;top:10px;display:grid;gap:6px;pointer-events:none}
-.noti{background:#fff;border-radius:14px;padding:9px 11px;box-shadow:0 10px 24px -8px rgba(12,20,36,.35);display:grid;grid-template-columns:28px 1fr;gap:9px;align-items:center;animation:noti 4.2s ease forwards}
-.noti .ico{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;color:#fff;font:800 11px var(--disp)}
-.noti b{display:block;font-size:12px}.noti small{color:#58637a;font-size:11px}
-@keyframes noti{0%{opacity:0;transform:translateY(-120%)}10%,82%{opacity:1;transform:none}100%{opacity:0;transform:translateY(-30%)}}
-.cel-ped{list-style:none;margin:0;padding:6px 10px;background:#fff;border:1px solid #e0e3ea;border-radius:14px}
-.cel-ped li{display:flex;align-items:center;gap:5px;font-size:11px;padding:6px 0;border-bottom:1px solid #eef0f4;white-space:nowrap;overflow:hidden}
-.cel-ped li:last-child{border:0}
-.cel-ped em{margin-left:auto;font-style:normal;font-size:10px;padding:2px 7px;border-radius:999px;background:#e8eefc;color:var(--blue)}
-.cel-ped em.ok{background:#e3f4ee;color:#0f7a5a}
-.cel-ej{margin:auto 0 0;text-align:center;font-size:10px;color:#8a93a6;letter-spacing:.06em;text-transform:uppercase}
-/* aparición al hacer scroll */
-.rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1);transition-delay:var(--d,0s)}
-.rv.vis{opacity:1;transform:none}
-/* flujo "todo conectado" que se va encendiendo */
-.flujo li{transition:transform .4s ease,box-shadow .4s ease,border-color .4s ease}
-.flujo li.on{transform:translateY(-6px);border-color:var(--blue);box-shadow:0 14px 30px -14px color-mix(in srgb,var(--blue) 60%,transparent)}
-.flujo li.on .ic{background:var(--blue);color:#fff;animation:pulso 1.2s ease}
-@keyframes pulso{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--blue) 50%,transparent)}100%{box-shadow:0 0 0 14px transparent}}
-/* tarjetas con relieve */
-.obra,.plan{transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease;will-change:transform}
-@media (hover:hover){.obra:hover,.plan:hover{box-shadow:0 22px 44px -22px rgba(12,20,36,.35)}}
-/* brillo en botones */
-.btn-a{position:relative;overflow:hidden}
-.btn-a::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-20deg);animation:brillo 4.5s ease-in-out infinite}
-@keyframes brillo{0%,70%{left:-60%}100%{left:130%}}
-@media (prefers-reduced-motion:reduce){
-  .hero .fondo i,.cel,.btn-a::after,.noti{animation:none!important}
-  .rv{opacity:1;transform:none;transition:none}
-  .prog{display:none}
-}
-
-.obra .links button.ver{background:none;border:1.5px solid var(--line);color:var(--ink);border-radius:999px;padding:7px 14px;font:600 14px var(--body);cursor:pointer}
-.obra .links button.ver:hover{border-color:var(--blue);color:var(--blue)}
-#visor{border:0;padding:0;background:transparent;max-width:none;max-height:none;width:100vw;height:100vh}
-#visor::backdrop{background:rgba(6,10,22,.82)}
-#visor .vz{display:flex;flex-direction:column;align-items:center;gap:12px;height:100%;padding:14px}
-#visor .vz-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center;color:#fff;width:100%;max-width:1200px}
-#visor .vz-bar b{font-family:var(--disp);font-size:18px;margin-right:auto}
-#visor .vz-bar button{background:#fff;color:#0b1220;border:0;border-radius:999px;padding:8px 14px;font:600 14px var(--body);cursor:pointer}
-#visor .vz-bar button[aria-pressed=true]{background:var(--blue);color:#fff}
-#visor .vz-marco{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;width:100%}
-#visor iframe{border:0;background:#fff;box-shadow:0 20px 60px rgba(0,0,0,.45)}
-#visor.m-cel iframe{width:min(400px,94vw);height:min(820px,100%);border-radius:28px;border:10px solid #0b1220}
-#visor.m-pc iframe{width:min(1200px,100%);height:100%;border-radius:10px}
-@media (max-width:700px){#visor .vz-bar .modo{display:none}}
-.hero-in{grid-template-columns:minmax(0,1fr)!important}.hero-txt{max-width:760px}
-@media(min-width:1000px){.planes{grid-template-columns:repeat(4,1fr)}.obras{grid-template-columns:repeat(3,1fr)}}
-.plan .mes{font-size:12.5px;color:var(--soft);margin:-4px 0 12px}
-.sists{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
-.sist{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;display:flex;flex-direction:column}
-.sist h3{margin:0 0 4px}.sist .gana{color:var(--soft);margin:0 0 14px}
-.sist ol{margin:0 0 18px;padding:0;list-style:none;display:grid;gap:8px;counter-reset:p}
-.sist li{counter-increment:p;display:flex;gap:10px;align-items:baseline;font-size:14.5px}
-.sist li::before{content:counter(p);flex:none;width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center}
-.sist .btn{margin-top:auto;align-self:flex-start}
-</style>
+<link rel="stylesheet" href="css/sitio.css?v=20261119">
 </head>
 <body>
-
-
 <nav>
   <div class="in">
     <a class="brand" href="index.html" aria-label="StudioProAr, inicio"><svg viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><path d="M20 18L6 32l14 14M44 18l14 14-14 14" fill="none" stroke="var(--logo-a)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 14L28 50" stroke="var(--logo-b)" stroke-width="6" stroke-linecap="round"/></svg><span class="wm">Studio<b>Pro</b><i>Ar</i></span></a>
+    <button class="menu" id="menu" type="button" aria-expanded="false" aria-label="Abrir el menú">Menú</button>
     <ul>
-      <li><a href="#trabajos">Trabajos</a></li>
-      <li><a href="#planes">Planes</a></li>
-      <li><a href="#sistemas">Sistemas</a></li>
-      <li><a href="#proceso">Cómo trabajamos</a></li>
-      <li><a href="#contacto">Contacto</a></li>
-      <li><a class="nav-cta" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20quiero%20el%20diagn%C3%B3stico%20gratis%20de%20mi%20negocio.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Diagnóstico gratis</a></li>
+      <li><a href="planes.html">Planes</a></li>
+      <li><a href="sistemas.html">Sistemas</a></li>
+      <li><a href="trabajos.html">Trabajos</a></li>
+      <li><a href="como-trabajamos.html">Cómo trabajamos</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+      <li><a class="nav-cta" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20quiero%20pedir%20una%20muestra%20para%20mi%20negocio.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Pedí una muestra</a></li>
     </ul>
   </div>
 </nav>
+<div class="lanz"><b>Precio de lanzamiento</b> para los primeros 10 clientes <span class="cupo">Quedan 10 de 10</span><a href="planes.html">Ver precios →</a></div>
 
 <header class="hero">
+  <div class="fondo" aria-hidden="true"><i></i><i></i><i></i></div>
   <div class="in hero-in">
   <div class="hero-txt">
-    <p class="eyebrow">Diseño web para comercios · Zona norte y todo el país</p>
+    <p class="eyebrow">Webs y sistemas para comercios · Zona norte y todo el país</p>
     <h1>Tu web trabaja mientras vos atendés.</h1>
-    <p class="rota" aria-live="polite">Tu <span id="rota">carta, con pedidos desde la mesa</span>.</p>
-    <p>Que cuando te busquen, te encuentren: armamos la web de tu negocio y la conectamos con tu WhatsApp, tu Instagram y Google Maps. Los pedidos y los turnos te llegan armados, y vos lo ves todo desde un panel en el celular.</p>
+    <p class="rota" aria-live="polite">Tu <span id="rota">agenda, que se llena sola</span>.</p>
+    <p>Te buscan en Google, encuentran tu web y te reservan, te piden o te escriben. Vos lo ves todo en tu celular.</p>
     <div class="btns">
-      <a class="btn btn-a" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20quiero%20que%20me%20muestren%20c%C3%B3mo%20quedar%C3%ADa%20mi%20negocio.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Pedí que te muestre cómo quedaría tu negocio</a>
-      <a class="btn btn-b" href="#planes">Ver planes</a>
+      <a class="btn btn-a" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20quiero%20pedir%20una%20muestra%20para%20mi%20negocio.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Pedí una muestra</a>
+      <a class="btn btn-b" href="planes.html">Ver planes</a>
     </div>
     <ul class="sellos">
       <li>Precio cerrado en pesos</li><li>La app de tu negocio</li><li>El dominio es tuyo</li>
     </ul>
-    </div>
+  </div>
   </div>
 </header>
 
 <section class="conecta">
   <div class="in">
     <div class="head">
-      <p class="eyebrow">Todo conectado</p>
-      <h2>Tu web es el centro. Todo lo demás lleva a ella.</h2>
-      <p class="lead">Hoy tu negocio está desparramado: un Instagram por acá, una ficha de Maps vieja por allá, el WhatsApp explotado. Lo unimos todo para que cada búsqueda termine en una consulta.</p>
+      <p class="eyebrow">Así trabaja tu web</p>
+      <h2>Que te encuentren a vos, no solo a tu Instagram</h2>
+      <p class="lead">Cuando alguien te busca, la idea es que aparezca tu web. Tu Instagram y tu ficha de Maps llevan a ella, y ahí te reservan o te escriben.</p>
     </div>
     <ol class="flujo">
-      <li><span class="ic">G</span><b>Te buscan en Google</b><p>Damos de alta tu web en Google y la conectamos con tu ficha de Google Maps.</p></li>
-      <li><span class="ic">IG</span><b>Te ven en Instagram</b><p>El link de tu perfil lleva a tu web, y medimos cuántos llegan desde ahí.</p></li>
-      <li class="centro"><span class="ic">★</span><b>Llegan a tu web</b><p>Precios, fotos, horarios y ubicación, siempre al día. Sin mandar PDF.</p></li>
-      <li><span class="ic">WA</span><b>Te escriben por WhatsApp</b><p>Con el pedido, el turno o la consulta ya armada. Vos solo respondés.</p></li>
-      <li><span class="ic">▤</span><b>Lo ves en tu panel</b><p>Visitas, de dónde llegan, pedidos y turnos, desde el celular.</p></li>
+      <li><span class="ic">G</span><b>Te buscan en Google</b><p>Aparece tu web, y tu ficha de Google Maps lleva a ella.</p></li>
+      <li><span class="ic">IG</span><b>Tu Instagram suma</b><p>El link de tu perfil lleva a tu web, con precios y horarios siempre al día.</p></li>
+      <li class="centro"><span class="ic">★</span><b>Reservan, piden o te escriben</b><p>El turno, el pedido o la consulta te llega ya armado.</p></li>
+      <li><span class="ic">▤</span><b>Lo ves en tu celular</b><p>En la app de tu negocio, con un aviso cada vez que entra algo.</p></li>
     </ol>
   </div>
 </section>
@@ -384,183 +80,94 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
     </div>
   </div>
 </section>
-
-<section id="trabajos">
+<section>
   <div class="in">
     <div class="head">
       <p class="eyebrow">Trabajos</p>
-      <h2>Negocios que ya trabajan con su web</h2>
-      <p class="lead">Cada web se arma para el negocio, no sale de una plantilla. ¿Querés ver cómo quedaría la tuya? <a href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20quiero%20que%20me%20muestren%20c%C3%B3mo%20quedar%C3%ADa%20mi%20negocio.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Escribinos y te la mostramos</a>.</p>
+      <h2>Un ejemplo de cada plan</h2>
+      <p class="lead">Cada web se arma para el negocio. ¿Querés ver cómo quedaría la tuya? <a href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20quiero%20pedir%20una%20muestra%20para%20mi%20negocio.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Pedí una muestra</a>.</p>
     </div>
     <div class="obras">
-      <article class="obra real">
-        <div class="cab" style="background-image:linear-gradient(180deg,rgba(8,14,30,0) 35%,rgba(8,14,30,.85)),url('https://reinadabi.com.ar/img/og.jpg')"><b>Reina Dabi</b></div>
+      <article class="obra">
+        <div class="cab foto" style="background-image:linear-gradient(180deg,rgba(8,14,30,0) 35%,rgba(8,14,30,.85)),url('https://res.cloudinary.com/f7ugfcbs/image/upload/f_auto,q_auto,w_900/portadas-hd/ferreteria')"><b>Ferretería La Llave</b></div>
         <div class="cu">
-          <p class="rubro">Cliente · Rosas eternas</p>
-          <p class="et">Plan 4 · Autogestionable</p>
-          <p>Arman el ramo en la web y ven el precio al instante. Los pedidos llegan a su app con aviso al celular, y ellas manejan todo.</p>
-        </div>
-      </article>
-      <article class="obra real">
-        <div class="cab logo" style="background-image:url('https://eveyceci.pages.dev/img/logo.jpg');background-color:#fff;background-size:auto 62%"><b>Eve &amp; Ceci Importados</b></div>
-        <div class="cu">
-          <p class="rubro">Cliente · Ropa importada</p>
-          <p class="et">Plan 4 · Autogestionable</p>
-          <p>Showroom con fotos por sección. Ellas suben las prendas y anotan las ventas desde su app.</p>
+          <p class="rubro">Muestra · Ferretería</p>
+          <p class="et">Plan 1 · Esencial</p>
+          <p>Una página con rubros destacados, horarios, ubicación y consulta por WhatsApp.</p>
         </div>
       </article>
       <article class="obra">
-        <div class="cab" style="background-image:linear-gradient(180deg,rgba(8,14,30,0) 35%,rgba(8,14,30,.85)),url('https://res.cloudinary.com/f7ugfcbs/image/upload/f_auto,q_auto,w_900/portadas-hd/peluqueria')"><b>Salón Alma</b></div>
+        <div class="cab foto" style="background-image:linear-gradient(180deg,rgba(8,14,30,0) 35%,rgba(8,14,30,.85)),url('https://res.cloudinary.com/f7ugfcbs/image/upload/f_auto,q_auto,w_900/portadas-hd/parrilla')"><b>La Tranquera</b></div>
+        <div class="cu">
+          <p class="rubro">Muestra · Parrilla</p>
+          <p class="et">Plan 2 · Completa</p>
+          <p>Carta completa con fotos y precios, galería y QR en cada mesa.</p>
+        </div>
+      </article>
+      <article class="obra">
+        <div class="cab foto" style="background-image:linear-gradient(180deg,rgba(8,14,30,0) 35%,rgba(8,14,30,.85)),url('https://res.cloudinary.com/f7ugfcbs/image/upload/f_auto,q_auto,w_900/portadas-hd/peluqueria')"><b>Salón Alma</b></div>
         <div class="cu">
           <p class="rubro">Muestra · Peluquería</p>
           <p class="et">Plan 3 · Turnos</p>
-          <p>El cliente elige servicio, día y hora, y recibe el recordatorio. El salón ve los turnos del día en su app.</p>
+          <p>El cliente elige servicio, día y hora, y recibe el recordatorio. El salón ve los turnos en su app.</p>
+        </div>
+      </article>
+      <article class="obra real">
+        <div class="cab foto" style="background-image:linear-gradient(180deg,rgba(8,14,30,0) 35%,rgba(8,14,30,.85)),url('https://reinadabi.com.ar/img/rojas.jpg')"><b>Reina Dabi</b></div>
+        <div class="cu">
+          <p class="rubro">Cliente · Rosas eternas</p>
+          <p class="et">Plan 4 · Autogestionable</p>
+          <p>Arman el ramo en la web y ven el precio al instante. Los pedidos llegan a su app con aviso al celular.</p>
         </div>
       </article>
     </div>
+
   </div>
 </section>
-
-
-<section id="planes">
+<section>
   <div class="in">
     <div class="head">
       <p class="eyebrow">Planes</p>
-      <h2>Precios claros</h2>
-      <p class="lead">Un pago único por el armado, precio cerrado en pesos, más un mantenimiento mensual. Cada plan incluye lo del anterior. <b>Lanzamiento: precio especial para los primeros 10 clientes.</b></p>
-      <p class="cupos"><span>Quedan 10 de 10 lugares</span> con precio de lanzamiento</p>
+      <h2>Precios claros, en pesos</h2>
+      <p class="lead">Un pago único por el armado y un mantenimiento mensual. <b>Precio de lanzamiento para los primeros 10 clientes.</b></p>
     </div>
-    <div class="quiz" id="quiz">
-      <p class="quiz-t">¿No sabés cuál te conviene? Respondé 3 preguntas</p>
-      <div class="quiz-p" data-q="0"><b>¿Qué querés que haga tu web?</b>
-        <button type="button" data-v="info">Que me encuentren y me consulten</button>
-        <button type="button" data-v="vender">Mostrar productos y recibir pedidos</button>
-        <button type="button" data-v="turnos">Dar turnos o tomar reservas</button>
-        <button type="button" data-v="mesa">Recibir pedidos desde la mesa</button></div>
-      <div class="quiz-p" data-q="1" hidden><b>¿Cuánto tenés para mostrar?</b>
-        <button type="button" data-v="poco">Lo justo: quiénes somos, horarios y contacto</button>
-        <button type="button" data-v="mucho">Bastante: servicios, galería, preguntas</button></div>
-      <div class="quiz-p" data-q="2" hidden><b>¿Querés cambiar precios, fotos y textos vos mismo?</b>
-        <button type="button" data-v="si">Sí, desde el celular</button>
-        <button type="button" data-v="no">No, prefiero pedírselo a StudioProAr</button></div>
-      <div class="quiz-r" id="quiz-r" hidden></div>
+<div class="mini-planes">
+      <a class="mini" href="planes.html"><small>Plan 1</small><b>Esencial</b><span class="pr">$100.000<s>$120.000</s></span><span>Te encuentran y te escriben.</span></a>
+      <a class="mini" href="planes.html"><small>Plan 2</small><b>Completa</b><span class="pr">$150.000<s>$180.000</s></span><span>Mostrás todo lo que ofrecés.</span></a>
+      <a class="mini dest" href="planes.html"><small>Recomendado</small><b>Turnos, reservas o pedidos</b><span class="pr">$200.000<s>$250.000</s></span><span>Reservan y piden solos, sin atender el teléfono.</span></a>
+      <a class="mini" href="planes.html"><small>Plan 4</small><b>Autogestionable</b><span class="pr">$270.000<s>$320.000</s></span><span>Cambiás precios y fotos vos mismo.</span></a>
     </div>
-    <div class="planes">
-      <article class="plan">
-        <p class="tag">Plan 1</p>
-        <h3>Esencial</h3>
-        <p class="precio">$100.000</p>
-        <p class="unidad">Lanzamiento · lista <s>$120.000</s> · pago único</p>
-        <p class="mes">+ $15.000 por mes de mantenimiento</p>
-        <p class="desc">Una página con todo lo importante. Para que te encuentren y te escriban.</p>
-        <ul>
-          <li>Una página con tus datos, servicios y ubicación</li>
-          <li>Hasta 8 productos o servicios destacados, con foto</li>
-          <li>Botones de WhatsApp e Instagram</li>
-          <li>Mapa con "Cómo llegar" y horarios a la vista</li>
-          <li>Alta en Google para que te encuentren</li>
-          <li>Adaptada al celular</li>
-        </ul>
-        <a class="btn btn-b" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20me%20interesa%20el%20plan%20Esencial.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Consultá por este plan</a>
-      </article>
-      <article class="plan">
-        <p class="tag">Plan 2</p>
-        <h3>Completa</h3>
-        <p class="precio">$150.000</p>
-        <p class="unidad">Lanzamiento · lista <s>$180.000</s> · pago único</p>
-        <p class="mes">+ $15.000 por mes de mantenimiento</p>
-        <p class="desc">Varias páginas para negocios con mucho para mostrar.</p>
-        <ul>
-          <li>Hasta 5 páginas</li>
-          <li>Carta o catálogo: hasta 30 productos con foto y precio</li>
-          <li>QR de la carta para las mesas</li>
-          <li>Galería de hasta 40 fotos</li>
-          <li>Preguntas frecuentes</li>
-          <li>Todo lo del plan Esencial</li>
-        </ul>
-        <a class="btn btn-b" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20me%20interesa%20el%20plan%20Completa.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Consultá por este plan</a>
-      </article>
-      <article class="plan dest">
-        <p class="tag">Recomendado</p>
-        <h3>Turnos, reservas o pedidos</h3>
-        <p class="precio">$200.000</p>
-        <p class="unidad">Lanzamiento · lista <s>$250.000</s> · pago único</p>
-        <p class="mes">+ $25.000 por mes de mantenimiento</p>
-        <p class="desc">Tu web trabaja sola: reserva, cobra la seña y avisa.</p>
-        <ul>
-          <li><b>Turnos o reservas:</b> el cliente elige día y hora y confirma</li>
-          <li>Recordatorio automático el día anterior</li>
-          <li>Seña por alias, si la querés activar</li>
-          <li><b>O pedidos:</b> catálogo de hasta 50 productos con carrito</li>
-          <li><b>La app de tu negocio</b> en el celular, con aviso de cada turno o pedido</li>
-          <li>Todo lo del plan Completa</li>
-        </ul>
-        <a class="btn btn-a" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20me%20interesa%20el%20plan%20Turnos%2C%20reservas%20o%20pedidos.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Consultá por este plan</a>
-      </article>
-      <article class="plan">
-        <p class="tag">Plan 4</p>
-        <h3>Autogestionable</h3>
-        <p class="precio">$270.000</p>
-        <p class="unidad">Lanzamiento · lista <s>$320.000</s> · pago único</p>
-        <p class="mes">+ $35.000 por mes de mantenimiento</p>
-        <p class="desc">Manejás tu web vos: fotos, precios y textos desde el celular.</p>
-        <ul>
-          <li><b>Agenda Pro:</b> por profesional, con fichas de clientes. <b>O catálogo</b> que cargás vos</li>
-          <li>Editás precios, fotos, textos y avisos</li>
-          <li>Resumen del mes</li>
-          <li>Capacitación para usarlo</li>
-          <li>Todo lo del plan 3</li>
-        </ul>
-        <a class="btn btn-b" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20me%20interesa%20el%20plan%20Autogestionable.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Consultá por este plan</a>
-      </article>
-    </div>
-    <p class="incluido"><b>Mantenimiento, en todos los planes:</b> tu web y tu app siempre funcionando, copias de seguridad, cuidado de tus datos y arreglo de fallas, con respuesta en 48 horas hábiles. Incluye 2 cambios por mes en los planes 1 y 2, y 3 en los planes 3 y 4. El primer mes es gratis y se da de baja avisando con 30 días.</p>
-    <p class="incluido"><b>Extras:</b> estadísticas de visitas en los planes 1 y 2, $5.000 por mes · ficha de Google Maps $60.000 (optimizar una existente, $40.000) · página extra $35.000 · hoja de QR para imprimir $40.000 · mail con tu dominio $25.000. El dominio propio (alrededor de $8.500 al año) se registra a nombre del cliente y lo paga el cliente. Precios actualizados: noviembre 2026.</p>
+    <p class="mas"><a class="btn btn-b" href="planes.html">Ver qué incluye cada plan</a></p>
+
   </div>
 </section>
-
-
-<section id="sistemas">
+<section>
   <div class="in">
     <div class="head">
       <p class="eyebrow">Sistemas</p>
       <h2>Para que tu negocio funcione mejor por dentro</h2>
-      <p class="lead">Se contratan con o sin web, con un armado y un abono mensual. Si ya tenés tu web con nosotros, el armado sale menos.</p>
+      <p class="lead">Se contratan con o sin web.</p>
     </div>
-    <div class="sists">
+<div class="sists">
       <article class="sist">
         <h3>Pedidos desde la mesa</h3>
         <p class="gana">Menos idas y vueltas del mozo, cero pedidos perdidos.</p>
         <ol><li>El cliente escanea el QR de su mesa</li><li>Elige de la carta y hace el pedido</li><li>El pedido aparece en la tablet de la cocina o la barra</li></ol>
+        <p class="instala">Lo instalamos, lo cargamos y te enseñamos a usarlo en tu local.</p>
         <a class="btn btn-b" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20me%20interesa%20el%20sistema%20de%20pedidos%20desde%20la%20mesa.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Consultá</a>
       </article>
       <article class="sist">
         <h3>Gimnasio: socios y fichaje</h3>
         <p class="gana">Sabés quién pagó y quién no, sin planillas.</p>
         <ol><li>El socio pone su DNI o muestra su credencial en la tablet</li><li>Si está al día, entra; si no, lo manda a recepción</li><li>Vos ves cuotas, vencimientos e ingresos en tu app</li></ol>
+        <p class="instala">Lo instalamos, lo cargamos y te enseñamos a usarlo en tu local.</p>
         <a class="btn btn-b" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20me%20interesa%20el%20sistema%20para%20gimnasios.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Consultá</a>
       </article>
-    </div>
+        </div>
+    <p class="mas"><a class="btn btn-b" href="sistemas.html">Ver sistemas</a></p>
+
   </div>
 </section>
-
-<section id="proceso">
-  <div class="in">
-    <div class="head">
-      <p class="eyebrow">El proceso</p>
-      <h2>Cómo trabajamos</h2>
-      <p class="lead">Un orden claro desde el primer mensaje. Sabés qué va a pasar, cuándo y cuánto sale.</p>
-    </div>
-    <ol class="pasos">
-      <li><b>Hablamos</b><span>Nos contás qué negocio tenés y qué necesitás. Te decimos qué plan te conviene, sin venderte de más.</span></li>
-      <li><b>Propuesta por escrito</b><span>Alcance, precio y plazo en un documento. Si estás de acuerdo, se abona el 50% y arrancamos.</span></li>
-      <li><b>Nos pasás el material</b><span>Te mandamos una lista de qué textos y fotos hacen falta. El plazo arranca cuando llega todo.</span></li>
-      <li><b>Armamos la web</b><span>La ves funcionando antes de publicarla. Incluye una ronda de cambios en el plan Esencial y dos desde el plan Completa.</span></li>
-      <li><b>Publicamos</b><span>Dominio, certificado de seguridad y la web online. Te enseñamos a usar tu panel.</span></li>
-    </ol>
-  </div>
-</section>
-
 <section>
   <div class="in">
     <div class="head">
@@ -574,32 +181,26 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
     </div>
   </div>
 </section>
-
-
 <section>
   <div class="in">
-    <div class="head"><p class="eyebrow">Consultas frecuentes</p><h2>Preguntas</h2></div>
-    <details open><summary>¿Cuánto tarda?</summary><p>Entre 7 y 20 días hábiles según el plan, contados desde que recibimos todos los textos y las fotos. Si el material llega a medias, el plazo arranca cuando está completo.</p></details>
-    <details><summary>¿Qué necesito para arrancar?</summary><p>Un mensaje por WhatsApp. Te hacemos un diagnóstico gratis de cómo aparece hoy tu negocio en Google e Instagram, te recomendamos un plan y te mandamos la propuesta por escrito. Si te cierra, con la seña arrancamos.</p></details>
-    <details><summary>¿Voy a aparecer en Google?</summary><p>Sí. Damos de alta tu web en Google, la conectamos con tu ficha de Google Maps y la armamos para que Google la entienda: títulos, descripciones, ubicación y rubro. Que aparezcas cuando buscan tu nombre es casi inmediato; subir en búsquedas como "rubro + zona" lleva tiempo y depende también de tus reseñas. Nadie serio te puede garantizar el primer puesto.</p></details>
-    <details><summary>¿Trabajan con negocios de otras zonas o provincias?</summary><p>Sí. En zona norte del GBA podemos ir al local; en el resto del país trabajamos por videollamada y WhatsApp. La web, el panel y el mantenimiento funcionan igual estés donde estés.</p></details>
-    <details><summary>¿Me sirve si ya tengo Instagram?</summary><p>Sí, y se complementan. Instagram es para que te conozcan; la web es para que te encuentren en Google, vean precios, horarios y ubicación, y te pidan o reserven sin vueltas. En tu panel vas a ver cuántos llegan desde Instagram.</p></details>
-    <details><summary>¿Cómo se paga?</summary><p>50% al empezar y 50% al entregar, por transferencia. Si lo necesitás, el saldo se puede dividir en más pagos: lo charlamos en la propuesta.</p></details>
-    <details><summary>¿Qué pasa si no tengo fotos?</summary><p>Lo charlamos. Podemos ir a sacarlas al local o usar imágenes con licencia libre mientras conseguís las propias. Nunca usamos fotos bajadas de internet sin derecho de uso: es un riesgo legal que no vale la pena.</p></details>
-    <details><summary>¿Necesito el dominio propio?</summary><p>No es obligatorio, pero conviene. Te da una dirección corta y profesional, te habilita correos con el nombre del negocio y ayuda a que Google te encuentre. Sin dominio propio la web funciona igual, con una dirección más larga.</p></details>
-    <details><summary>¿Y si quiero cambiar algo después?</summary><p>El mantenimiento incluye 2 cambios por mes en los planes 1 y 2, y 3 en los planes 3 y 4. Y en el plan Autogestionable, precios, fotos y textos los cambiás vos desde tu app.</p></details>
-    <details><summary>¿Si dejo de trabajar con ustedes, pierdo la web?</summary><p>No perdés lo tuyo. Si decidís terminar, dentro de los 15 días te entregamos el control del dominio, tus datos exportados y una copia de tu web pública. La app del negocio es una herramienta de StudioProAr: se usa mientras el mantenimiento esté al día. No hay permanencia mínima ni multa.</p></details>
-    <details><summary>¿La app del negocio se usa desde el celular?</summary><p>Sí. En los planes 3 y 4 se instala como una app en tu Android o iPhone, con el logo de tu negocio, sin tiendas de apps. En los planes 1 y 2 podés sumar las estadísticas de visitas.</p></details>
-    <details><summary>¿Hacen tiendas online?</summary><p>Sí, con el plan 3 (pedidos): catálogo con carrito que te manda el pedido armado por WhatsApp y queda guardado en tu app. El cobro lo hacés por transferencia o alias; el pago con tarjeta dentro de la web todavía no lo ofrecemos.</p></details>
+    <div class="head">
+      <p class="eyebrow">Preguntas frecuentes</p>
+      <h2>Lo que más nos preguntan</h2>
+
+    </div>
+    <details open><summary>¿Qué incluye el mantenimiento mensual?</summary><p>Que tu web y tu app estén siempre funcionando, copias de seguridad, arreglo de fallas y los cambios del mes: 2 en los planes 1 y 2, y 3 en los planes 3 y 4. El primer mes es gratis y no hay permanencia: te das de baja avisando con 30 días.</p></details>
+    <details><summary>¿La web y el dominio son míos?</summary><p>Sí. El dominio se registra a nombre de tu negocio desde el primer día. Si un día te vas, te llevás el dominio, tus datos y una copia de tu web.</p></details>
+    <details><summary>¿Cuánto tarda y qué necesito?</summary><p>Entre 7 y 20 días hábiles según el plan, desde que tenemos los textos y las fotos. Te pasamos una lista simple de lo que hace falta y te ayudamos a armarlo.</p></details>
+    <details><summary>¿Voy a aparecer en Google?</summary><p>Sí. Damos de alta tu web en Google y dejamos tu ficha de Google Maps apuntando a tu web, no a tu Instagram. Subir puestos lleva tiempo y reseñas: nadie serio te promete el primer lugar.</p></details>
+    <details><summary>¿Puedo ver ejemplos antes de decidir?</summary><p>Sí. Escribinos y te mostramos trabajos de tu rubro por WhatsApp o en tu local, y cómo quedaría tu negocio.</p></details>
   </div>
 </section>
-
 <section class="cierre" id="contacto">
   <div class="in">
     <div>
-      <h2>Empezá con un diagnóstico gratis</h2>
-      <p class="lead" style="margin-top:10px">Contanos qué negocio tenés. Te mandamos por WhatsApp una hoja con cómo aparecés hoy en Google e Instagram, qué te está haciendo perder clientes y qué plan te conviene. Sin compromiso.</p>
-      <div class="btns" style="margin-top:18px"><a class="btn btn-a" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20quiero%20el%20diagn%C3%B3stico%20gratis%20de%20mi%20negocio.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Pedir mi diagnóstico</a></div>
+      <h2>¿Hablamos de tu negocio?</h2>
+      <p class="lead" style="margin-top:10px">Contanos qué negocio tenés y te mostramos cómo quedaría tu web. Si querés, también te mandamos gratis un diagnóstico de cómo aparecés hoy en Google.</p>
+      <div class="btns" style="margin-top:18px"><a class="btn btn-a" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20quiero%20pedir%20una%20muestra%20para%20mi%20negocio.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Pedí una muestra por WhatsApp</a></div>
       <p class="lead" style="margin-top:12px;font-size:14px">Te respondemos en el día.</p>
     </div>
     <div>
@@ -609,8 +210,7 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
     </div>
   </div>
 </section>
-
-<a class="wa-fijo" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20quiero%20el%20diagn%C3%B3stico%20gratis%20de%20mi%20negocio.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.6 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1a14 14 0 0 1-6.1-5.4c-.6-.9-1-1.9-1-2.9 0-1 .5-1.6.8-1.9.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.4z"/></svg></a>
+<a class="wa-fijo" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20quiero%20pedir%20una%20muestra%20para%20mi%20negocio.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.6 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1a14 14 0 0 1-6.1-5.4c-.6-.9-1-1.9-1-2.9 0-1 .5-1.6.8-1.9.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.4z"/></svg></a>
 
 <footer>
   <div class="in">
@@ -618,186 +218,8 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
     <span><a href="privacidad.html">Política de privacidad</a></span>
   </div>
 </footer>
-
-<script>
-
-/* frase que rota */
-(function(){
-  const f=['carta, con pedidos desde la mesa','agenda, que se llena sola','catálogo, que vende por WhatsApp','local, fácil de encontrar en Google','panel, en tu celular'];
-  const el=document.getElementById('rota');if(!el||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-  let i=0;setInterval(()=>{el.classList.add('fuera');setTimeout(()=>{i=(i+1)%f.length;el.textContent=f[i];el.classList.remove('fuera');},350);},2800);
-})();
-/* ¿cuál me conviene? */
-(function(){
-  const q=document.getElementById('quiz');if(!q)return;
-  const r={};const pasos=[...q.querySelectorAll('.quiz-p')],res=document.getElementById('quiz-r');
-  const planes=[...document.querySelectorAll('.plan')];
-  q.addEventListener('click',e=>{
-    const b=e.target.closest('button');if(!b)return;
-    if(b.id==='quiz-otra'){Object.keys(r).forEach(k=>delete r[k]);pasos.forEach((p,i)=>p.hidden=i>0);res.hidden=true;planes.forEach(p=>p.classList.remove('marcado'));return;}
-    const p=b.closest('.quiz-p');if(!p)return;r[p.dataset.q]=b.dataset.v;
-    let sig=+p.dataset.q+1;
-    if(r[0]==='mesa')sig=3;
-    if(p.dataset.q==='0'&&r[0]!=='info')sig=2;
-    p.hidden=true;
-    if(sig<3){pasos[sig].hidden=false;return;}
-    let n;
-    if(r[0]==='mesa'){res.hidden=false;res.innerHTML='Para pedidos desde la mesa tenés el <b>sistema de pedidos desde la mesa</b>, con o sin web. <button type="button" id="quiz-otra">Volver a empezar</button>';document.getElementById('sistemas').scrollIntoView({behavior:'smooth',block:'start'});return;}
-    if(r[2]==='si')n=4;else if(r[0]==='turnos'||r[0]==='vender')n=3;else n=r[1]==='mucho'?2:1;
-    const card=planes[n-1],nom=card.querySelector('h3').textContent,pe=card.querySelector('.precio'),pre=pe.dataset.fin||pe.textContent;
-    res.hidden=false;res.innerHTML='Te conviene el <b>plan '+n+' · '+nom+'</b>, desde '+pre+' de lanzamiento. <button type="button" id="quiz-otra">Volver a empezar</button>';
-    planes.forEach(p=>p.classList.toggle('marcado',p===card));
-    card.scrollIntoView({behavior:'smooth',block:'center'});
-  });
-})();
-/* calculadora */
-(function(){
-  const sel=document.getElementById('calc-que'),rg=document.getElementById('calc-anios');if(!sel)return;
-  const $=id=>document.getElementById(id),pesos=n=>'$'+Math.round(n).toLocaleString('es-AR');
-  function upd(){const [m,nu,l1,pl]=sel.value.split('|'),a=+rg.value;
-    $('calc-n').textContent=a+(a===1?' año':' años');$('calc-l1').textContent=l1;
-    $('calc-a').textContent=pesos(m*12*a);$('calc-m').textContent=pesos(+m)+' por mes, mientras lo uses';
-    $('calc-b').textContent=pesos(+nu);$('calc-p').textContent=pl+'. Pago único: la web y el dominio son tuyos.';}
-  sel.addEventListener('change',upd);rg.addEventListener('input',upd);upd();
-})();
-document.querySelectorAll('.copiar').forEach(b=>{
-  b.addEventListener('click',async()=>{
-    const txt=b.dataset.copy,prev=b.textContent;
-    try{
-      await navigator.clipboard.writeText(txt);
-      b.textContent='Copiado';
-    }catch(e){
-      const n=document.getElementById(b.dataset.src),r=document.createRange();
-      r.selectNodeContents(n);
-      const s=getSelection();s.removeAllRanges();s.addRange(r);
-      b.textContent='Seleccionado';
-    }
-    setTimeout(()=>{b.textContent=prev},1800);
-  });
-});
-/* ---------- movimiento ---------- */
-(function(){
-  const quieto=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  /* barra de progreso de lectura */
-  const pr=document.createElement('div');pr.className='prog';pr.setAttribute('aria-hidden','true');document.body.appendChild(pr);
-  let tic=false;
-  addEventListener('scroll',()=>{if(tic)return;tic=true;requestAnimationFrame(()=>{const h=document.documentElement;pr.style.transform='scaleX('+(h.scrollTop/Math.max(1,h.scrollHeight-h.clientHeight))+')';tic=false;});},{passive:true});
-
-  /* aparición escalonada al hacer scroll */
-  const grupos='.head,.flujo li,.obra,.plan,section .in > p,section .in > ul > li,section .in > ol > li,details,.cierre .in > *';
-  const els=[...document.querySelectorAll(grupos)].filter(e=>!e.closest('.hero'));
-  if(!quieto&&'IntersectionObserver' in window){
-    els.forEach(e=>{const h=[...e.parentElement.children].filter(x=>els.includes(x));e.style.setProperty('--d',Math.min(h.indexOf(e),6)*0.08+'s');e.classList.add('rv');});
-    const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('vis');io.unobserve(x.target);}}),{rootMargin:'0px 0px -8% 0px'});
-    els.forEach(e=>io.observe(e));
-  }
-
-  /* celular del hero: barras, contadores y avisos que entran */
-  const cel=document.querySelector('.cel');
-  if(cel){
-    const bars=[...cel.querySelectorAll('.cel-bars i')],v=document.getElementById('cel-v'),w=document.getElementById('cel-w'),box=document.getElementById('cel-notis');
-    const pinta=()=>bars.forEach(b=>b.style.height=(25+Math.random()*70)+'%');
-    setTimeout(()=>{cel.classList.add('on');pinta();},300);
-    const N=[['WA','#25d366','Nuevo pedido #1043','2 remeras · $37.000'],['✓','#1452e6','Turno confirmado','Martes 10:30 · Corte'],['IG','#d62976','+12 visitas desde Instagram','en la última hora'],['▦','#c2410c','Mesa 4 pidió la cuenta','Total $28.400'],['G','#0f7a5a','Te encontraron en Google','"ferretería san fernando"']];
-    let i=0,nv=38,nw=6;
-    const ciclo=()=>{
-      const n=N[i++%N.length],d=document.createElement('div');d.className='noti';
-      d.innerHTML='<span class="ico" style="background:'+n[1]+'">'+n[0]+'</span><div><b>'+n[2]+'</b><small>'+n[3]+'</small></div>';
-      box.replaceChildren(d);
-      nv+=1+Math.floor(Math.random()*3);v.textContent=nv;if(n[0]==='WA'){nw++;w.textContent=nw;}
-      pinta();
-    };
-    if(!quieto){ciclo();setInterval(ciclo,3600);}
-  }
-
-  /* flujo "todo conectado": se enciende paso por paso */
-  const pasos=[...document.querySelectorAll('.flujo li')];
-  if(pasos.length&&!quieto){
-    let k=0,t=null;
-    const corre=()=>{pasos.forEach((p,j)=>p.classList.toggle('on',j===k));k=(k+1)%pasos.length;};
-    new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting&&!t){corre();t=setInterval(corre,1400);}else if(!x.isIntersecting&&t){clearInterval(t);t=null;}}),{threshold:.3}).observe(pasos[0].parentElement);
-  }
-
-  /* relieve 3D en tarjetas (solo con mouse) */
-  if(!quieto&&matchMedia('(hover:hover) and (pointer:fine)').matches){
-    document.querySelectorAll('.obra,.plan').forEach(c=>{
-      c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform='perspective(800px) rotateY('+(x*6)+'deg) rotateX('+(-y*6)+'deg) translateY(-4px)';});
-      c.addEventListener('pointerleave',()=>{c.style.transform='';});
-    });
-  }
-
-  /* precios que cuentan hasta su valor la primera vez que se ven */
-  if(!quieto){
-    const io2=new IntersectionObserver(es=>es.forEach(x=>{
-      if(!x.isIntersecting)return;io2.unobserve(x.target);
-      const el=x.target,fin=el.dataset.fin=el.textContent,num=+fin.replace(/\D/g,'');if(!num)return;
-      const t0=performance.now(),dur=900;
-      const paso=t=>{const p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);el.textContent='$'+(Math.round(num*e/500)*500).toLocaleString('es-AR');if(p<1)requestAnimationFrame(paso);else el.textContent=fin;};
-      requestAnimationFrame(paso);
-    }),{threshold:.6});
-    document.querySelectorAll('.plan .precio').forEach(p=>io2.observe(p));
-  }
-})();
-</script>
-
+<script src="js/sitio.js?v=20261119" defer></script>
 <script>window.SPA_STATS={db:"https://studioproar-stats-default-rtdb.firebaseio.com",sitio:"studioproar"};</script><script src="stats.js" defer></script>
-
-<script src="demos/barberia/rubros.js"></script>
-<script src="demos/gastronomia/datos.js"></script>
-<script src="demos/gastronomia/rubros.js"></script>
-<script>
-/* Probá tu rubro: arma los rubros desde los mismos datos de las muestras */
-(function(){
-  var $=function(i){return document.getElementById(i);};if(!$('pr-rubros'))return;
-  var T=window.RUBROS_T||{},C=window.CATALOGO_R||{},G=window.GASTRO||{},R=[];
-  var PT=[['esencial','Esencial','Una página con lo importante y turnos por WhatsApp.'],['completa','Completa','Varias páginas, galería grande y panel de visitas.'],['turnos','Agenda','El cliente reserva solo. Confirmación, recordatorio y cancelación.'],['pro','Autogestionable','Agenda Pro por profesional, fichas de clientes y editás todo vos.']];
-  var tur=function(id,n,ic,est){R.push({id:id,n:n,ic:ic,est:est,planes:PT.map(function(p,i){return{n:i+1,t:p[1],d:p[2],web:function(e){return 'demos/barberia/?'+(id==='barberia'?'':'rubro='+id+'&')+'estilo='+e[0]+'&plan='+p[0];},panel:i===0?null:function(e){return 'demos/mi-negocio/?s='+e[1]+'&muestra=1&vista=seg&plan='+(p[0]==='completa'?'esencial':p[0]);}};})});};
-  tur('barberia','Barberías y peluquerías','✂',[['urbano','navaja','Urbana'],['clasico','eltano','Clásica'],['mujer','alma','Salón de mujer']]);
-  var IC={vet:'🐾',estetica:'💅',salud:'🩺',nautica:'⚓',panaderia:'🥐',rotiseria:'🍗',ferreteria:'🔧',petshop:'🦴',ropa:'👕',gimnasio:'🏋'};
-  Object.keys(T).forEach(function(k){tur(k,T[k].nombre,IC[k],T[k].est.map(function(x){return [x[0],T[k].E[x[0]].sitio,x[1]];}));});
-  var DS={1:'Una página con lo destacado, WhatsApp y ubicación.',2:'Más páginas, productos con foto, galería y panel de visitas.',3:'Carrito que llega armado al WhatsApp del local.',4:'El dueño edita precios y productos. Resumen del mes.'};
-  var cat=function(id,n,ic,est,pl,d4,mesa,t3){var M=[[1,1,'Esencial'],[2,2,'Completa'],[3,pl[4]?4:3,t3||'Catálogo'],[4,5,'Autogestionable']].filter(function(m){return pl[m[1]];});R.push({id:id,n:n,ic:ic,est:est,mesa:mesa,planes:M.map(function(m){var k=m[1];return{n:m[0],t:m[2],d:m[0]===3&&pl[4]?d4:DS[m[0]],web:function(e){return id==='ropa'?'demos/ropa/?estilo='+({parrilla:'femenina',cafe:'minimal',urbano:'urbano'}[e[0]]||'urbano')+'&plan='+k:'demos/gastronomia/?'+(id==='resto'?'':'rubro='+id+'&')+'estilo='+e[0]+'&plan='+k;},panel:m[0]===1?null:function(e){return 'demos/mi-negocio/?s='+e[1]+'&muestra=1&vista=seg&plan='+k;}};})});};
-  cat('resto','Restaurantes y bares','🍽',[['parrilla',(G.parrilla||{}).sitio,'Parrilla'],['cafe',(G.cafe||{}).sitio,'Café'],['urbano',(G.urbano||{}).sitio,'Cervecería']],{1:'Esencial',2:'Completa',3:'Pedidos',4:'Reservas',5:'Salón Pro'},'Reservas de mesa con cupo y pedidos por WhatsApp.',1,'Pedidos y reservas');
-  Object.keys(C).forEach(function(k){var pl={1:'Esencial',2:'Completa'};Object.keys(C[k].planes).forEach(function(n){pl[n]=C[k].planes[n];});cat(k,C[k].nombre,IC[k],C[k].est.map(function(x){return [x[0],C[k].E[x[0]].sitio,x[1]];}),pl,C[k].p4==='programado'?'Encargos: el cliente elige día y hora de retiro o entrega.':'Reserva de lugar en cada clase, con cupo.',0,C[k].p4==='programado'?'Encargos':C[k].p4?'Clases':'Catálogo');});
-  var ORD=['barberia','resto','vet','estetica','salud','panaderia','rotiseria','ferreteria','petshop','ropa','gimnasio','nautica'];R.sort(function(a,b){return ORD.indexOf(a.id)-ORD.indexOf(b.id);});
-  var st={r:0,e:0,p:2,vista:'web'},fr=$('pr-frame'),visto=false;
-  function cargar(){var r=R[st.r],e=r.est[st.e],p=r.planes[Math.min(st.p,r.planes.length-1)],u=p.web(e);if(!visto)return;$('pr-carga').style.display='grid';fr.src=u;$('pr-ver').textContent='Plan '+p.n+' · '+p.t;}
-  fr.addEventListener('load',function(){$('pr-carga').style.display='none';});
-  function pintar(){
-    $('pr-rubros').innerHTML=R.map(function(r,i){return '<button type="button" data-r="'+i+'" aria-pressed="'+(i===st.r)+'">'+(r.ic?r.ic+' ':'')+r.n+'</button>';}).join('');
-    var r=R[st.r];$('pr-estilos').innerHTML='<span style="color:var(--soft);font-size:13px;align-self:center;margin-right:4px">Estilo:</span>'+r.est.map(function(e,i){return '<button type="button" data-e="'+i+'" aria-pressed="'+(i===st.e)+'">'+e[2]+'</button>';}).join('');
-    var pi=Math.min(st.p,r.planes.length-1),e=r.est[st.e];
-    $('pr-planes').innerHTML=r.planes.map(function(p,i){return '<div class="pl-it" role="button" tabindex="0" data-p="'+i+'" aria-pressed="'+(i===pi)+'"><span class="n">'+p.n+'</span><span><b>'+p.t+'</b><small>'+p.d+'</small></span><span class="ir"><a href="#" data-v="web" data-p="'+i+'">Web</a></span></div>';}).join('')+(r.mesa?'<div class="pl-it" role="button" tabindex="0" data-mesa="1"><span class="n">QR</span><span><b>Pedido desde la mesa</b><small>El cliente escanea el QR, pide y le llega a la cocina.</small></span><span class="ir"><a href="#" data-mesa="1">Probar</a></span></div>':'');
-    cargar();
-  }
-  document.querySelector('.probar').addEventListener('click',function(ev){
-    var t=ev.target.closest('[data-r],[data-e],[data-p],[data-mesa]');if(!t)return;
-    var a=ev.target.closest('a');if(a)ev.preventDefault();
-    if(t.dataset.r){st.r=+t.dataset.r;st.e=0;}else if(t.dataset.e)st.e=+t.dataset.e;
-    else if(t.dataset.mesa){var r=R[st.r];visto=true;$('pr-carga').style.display='grid';fr.src=r.planes[r.planes.length-1].web(r.est[st.e])+'&mesa=4';$('pr-ver').textContent='Mesa 4 · pedido por QR';return;}
-    else{st.p=+t.dataset.p;if(a)st.vista=a.dataset.v;}
-    pintar();
-  });
-  document.querySelector('.probar').addEventListener('keydown',function(ev){if((ev.key==='Enter'||ev.key===' ')&&ev.target.classList.contains('pl-it')){ev.preventDefault();ev.target.click();}});
-  /* Los chips de rubros del encabezado abren su muestra acá */
-  if(0)document.querySelectorAll('.marcas a[data-r]').forEach(function(a){a.addEventListener('click',function(ev){ev.preventDefault();var i=R.map(function(r){return r.id;}).indexOf(a.dataset.r);if(i>=0){st.r=i;st.e=0;st.vista='web';pintar();}document.getElementById('probar').scrollIntoView({behavior:'smooth'});});});
-  if('IntersectionObserver' in window){new IntersectionObserver(function(es,o){if(es[0].isIntersecting){visto=true;cargar();o.disconnect();}},{rootMargin:'300px'}).observe(document.querySelector('.tel'));}else{visto=true;}
-  pintar();
-})();
-</script>
-<script>
-/* Trabajos: se abren acá mismo, en grande */
-(function(){
-  var d=document.getElementById('visor'),f=document.getElementById('vz-f');if(!d)return;
-  function modo(m){d.className='m-'+m;d.querySelectorAll('.modo').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.m===m);});}
-  document.querySelector('#trabajos').addEventListener('click',function(e){var b=e.target.closest('.ver');if(!b)return;document.getElementById('vz-t').textContent=b.dataset.t;modo(b.dataset.cel||innerWidth<700?'cel':'pc');f.src=b.dataset.ver;if(d.showModal)d.showModal();else d.setAttribute('open','');});
-  d.addEventListener('click',function(e){var m=e.target.closest('.modo');if(m)modo(m.dataset.m);if(e.target.id==='vz-x'||e.target===d||e.target.classList.contains('vz')||e.target.classList.contains('vz-marco'))d.close();});
-  d.addEventListener('close',function(){f.src='about:blank';});
-})();
-</script>
-<script>
-(function(){var c=document.getElementById('ap-sel'),f=document.getElementById('ap-frame');if(!c)return;c.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;c.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b);});f.src=b.dataset.u;});})();
-</script>
 <script>if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}</script>
 </body>
 </html>
