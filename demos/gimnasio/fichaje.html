@@ -79,9 +79,10 @@ video{width:100%;max-width:420px;border-radius:16px;margin-top:12px;display:none
   function pinta(){$('dni').textContent=dni;}
   function lista(){
     var db=GYM.db(),h0=GYM.hoy0().getTime(),hoy=db.asis.filter(function(a){return a.t>=h0;});
-    $('n-hoy').textContent=hoy.length;
-    $('n-ahora').textContent=hoy.filter(function(a){return a.t>Date.now()-36e5;}).length;
-    $('ult').innerHTML=hoy.slice(-6).reverse().map(function(a){var s=GYM.socio(a.dni),d=new Date(a.t);return '<li class="'+(a.ok?'':'no')+'"><b>'+(s?s.nom.split(' ')[0]+' '+s.nom.split(' ')[1][0]+'.':'—')+'</b><span>'+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)+(a.ok?'':' · vencida')+'</span></li>';}).join('')||'<li><span>Todavía no entró nadie hoy</span></li>';
+    var okHoy=hoy.filter(function(a){return a.ok;});
+    $('n-hoy').textContent=okHoy.length;
+    $('n-ahora').textContent=okHoy.filter(function(a){return a.t>Date.now()-36e5;}).length;
+    $('ult').innerHTML=hoy.slice(-6).reverse().map(function(a){var s=GYM.socio(a.dni),d=new Date(a.t);return '<li class="'+(a.ok?'':'no')+'"><b>'+(s?s.nom.split(' ')[0]+' '+s.nom.split(' ')[1][0]+'.':'—')+'</b><span>'+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)+(a.ok?'':' · rechazado')+'</span></li>';}).join('')||'<li><span>Todavía no entró nadie hoy</span></li>';
   }
   function muestra(r){
     var el=$('res');el.className='on '+r.estado;

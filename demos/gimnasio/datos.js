@@ -1,6 +1,6 @@
 /* Ribera Training Club · datos de la muestra (se guardan solo en este navegador) */
 var GYM = (function () {
-  var K = 'gym_demo_v1';
+  var K = 'gym_demo_v2';
   var PLANES = {
     libre: { nom: 'Pase libre', precio: 38000 },
     tres: { nom: '3 veces por semana', precio: 31000 },
@@ -17,7 +17,9 @@ var GYM = (function () {
         nom: n,
         plan: planes[i % 4],
         vence: masDias([18, 3, 25, -2, 9, 1, 14, -6, 27, 5, 11, 2, 20, -1, 7, 16, 4, 22][i]),
-        tel: '11' + (55000000 + i * 123457) % 100000000
+        tel: '11' + (55000000 + i * 123457) % 100000000,
+        alta: masDias(-(40 + i * 23)),
+        notas: ['', 'Lesión de rodilla: evitar saltos', '', 'Viene a la mañana', ''][i % 5]
       };
     });
     socios[0].dni = '12345678'; /* para probar el fichaje */
@@ -75,13 +77,14 @@ var GYM = (function () {
     fb = { socio: function (s) { base('socios/' + s.dni).set(s).catch(err); }, push: function (k, x) { base(k).push(x).catch(err); }, quitarSol: function (id) { base('solicitudes/' + id).remove().catch(err); } };
   }
   function socio(dni) { return db.socios.filter(function (s) { return s.dni === String(dni); })[0] || null; }
+  function activo(dni) { var s = socio(dni); return s && !s.baja ? s : null; }
   function dias(s) { return Math.round((s.vence - hoy0().getTime()) / 864e5); }
   return {
     PLANES: PLANES, db: function () { return db; }, guardar: guardar, socio: socio, dias: dias, hoy0: hoy0,
     pesos: function (n) { return '$' + Math.round(n).toLocaleString('es-AR'); },
     fecha: function (t) { var d = new Date(t); return d.getDate() + '/' + (d.getMonth() + 1); },
     fichar: function (dni) {
-      var s = socio(dni); if (!s) return { estado: 'nadie' };
+      var s = activo(dni); if (!s) return { estado: 'nadie' };
       var ok = dias(s) >= 0;
       var a = { dni: s.dni, t: Date.now(), ok: ok }; db.asis.push(a); guardar(); if (fb) fb.push('asis', a);
       return { estado: ok ? 'ok' : 'vencido', socio: s, dias: dias(s) };
@@ -92,7 +95,19 @@ var GYM = (function () {
       s.vence = d.getTime();
       var pg = { dni: s.dni, monto: PLANES[s.plan].precio, t: Date.now(), medio: medio || 'Efectivo' }; db.pagos.push(pg); guardar(); if (fb) { fb.socio(s); fb.push('pagos', pg); }
     },
-    alta: function (o) { var n = { dni: String(o.dni), nom: o.nom, plan: o.plan, tel: o.tel || '', vence: hoy0().getTime() - 864e5 }; db.socios.unshift(n); guardar(); if (fb) fb.socio(n); },
+    alta: function (o) { var n = { dni: String(o.dni), nom: o.nom, plan: o.plan, tel: o.tel || '', notas: o.notas || '', alta: Date.now(), vence: hoy0().getTime() - 864e5 }; db.socios.unshift(n); guardar(); if (fb) fb.socio(n); },
+    /* Editar datos de la ficha (el DNI no cambia: es el número de socio) */
+    editar: function (dni, c) {
+      var s = socio(dni); if (!s) return;
+      ['nom', 'tel', 'plan', 'notas'].forEach(function (k) { if (c[k] !== undefined) s[k] = c[k]; });
+      guardar(); if (fb) fb.socio(s); avisar();
+    },
+    /* Baja sin borrar: queda guardado y se puede reactivar */
+    baja: function (dni, si) {
+      var s = socio(dni); if (!s) return;
+      if (si) s.baja = Date.now(); else delete s.baja;
+      guardar(); if (fb) fb.socio(s); avisar();
+    },
     reset: function () { if (REAL) { alert('En la versión real no se reinician los datos.'); return; } db = semilla(); guardar(); },
     real: REAL, alCambiar: function (f) { fns.push(f); },
     /* Solicitud de alta desde la web pública (no necesita usuario) */

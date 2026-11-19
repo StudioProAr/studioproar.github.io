@@ -30,10 +30,6 @@ h3{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--soft
 .est.ok{background:color-mix(in srgb,var(--ac) 18%,transparent);color:var(--ac)}.est.am{background:color-mix(in srgb,var(--amar) 18%,transparent);color:var(--amar)}.est.ro{background:color-mix(in srgb,var(--rojo) 18%,transparent);color:var(--rojo)}
 .wa{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:12px;background:#25d366;flex:none}
 .vacio{padding:16px;color:var(--soft);text-align:center}
-.barras{display:flex;align-items:flex-end;gap:5px;height:140px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 12px 26px;position:relative}
-.barras i{flex:1;background:color-mix(in srgb,var(--ac) 35%,var(--card2));border-radius:4px 4px 2px 2px;position:relative;min-height:2px}
-.barras i.hoy{background:var(--ac)}
-.barras i::after{content:attr(data-l);position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--soft);font-style:normal}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--ac);color:#0d0f12;border:0;border-radius:999px;padding:12px 18px;font:800 15px 'Inter';cursor:pointer;text-decoration:none}
 .btn.sec{background:var(--card2);color:var(--ink)}
 .btn.full{width:100%}
@@ -71,7 +67,6 @@ label{display:block;font-size:13px;color:var(--soft);margin:12px 0 4px}
   <button role="tab" data-v="hoy" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-8 9 8M5 10v10h14V10"/></svg>Hoy</button>
   <button role="tab" data-v="socios"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6M17 11a3 3 0 1 0 0-6M22 20c0-3-2-5-5-5"/></svg>Socios</button>
   <button role="tab" data-v="cobros"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20M6 15h4"/></svg>Cobros</button>
-  <button role="tab" data-v="stats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Estadísticas</button>
 </nav>
 <dialog id="dlg"><div class="dlg" id="dlg-in"></div></dialog>
 <div class="toast" id="toast"></div>
@@ -86,7 +81,7 @@ label{display:block;font-size:13px;color:var(--soft);margin:12px 0 4px}
   var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
   var WA='<svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>';
   function toast(t){var e=$('toast');e.textContent=t;e.classList.add('on');setTimeout(function(){e.classList.remove('on');},1800);}
-  function estado(s){var d=GYM.dias(s);return d<0?['ro','Vencida hace '+(-d)+' d']:d<=7?['am','Vence en '+d+' d']:['ok','Al día'];}
+  function estado(s){if(s.baja)return ['ro','Baja'];var d=GYM.dias(s);return d<0?['ro','Vencida hace '+(-d)+' d']:d<=7?['am','Vence en '+d+' d']:['ok','Al día'];}
   function ini(n){return n.split(' ').map(function(x){return x[0];}).join('').slice(0,2);}
   function waLink(s,tipo){
     var n=s.nom.split(' ')[0],p=GYM.PLANES[s.plan],d=GYM.dias(s),t;
@@ -98,61 +93,78 @@ label{display:block;font-size:13px;color:var(--soft);margin:12px 0 4px}
   function fila(s,conWa){var e=estado(s);return '<div class="fila" data-dni="'+s.dni+'"><div class="av">'+ini(s.nom)+'</div><div class="tx"><b>'+esc(s.nom)+'</b><span>'+GYM.PLANES[s.plan].nom+' · vence '+GYM.fecha(s.vence)+'</span></div>'+(conWa?'<a class="wa" href="'+waLink(s)+'" target="_blank" rel="noopener" aria-label="Avisar por WhatsApp">'+WA+'</a>':'<span class="est '+e[0]+'">'+e[1]+'</span>')+'</div>';}
 
   function hoy(){
-    var db=GYM.db(),h0=GYM.hoy0().getTime(),as=db.asis.filter(function(a){return a.t>=h0;});
-    var act=db.socios.filter(function(s){return GYM.dias(s)>=0;}),pv=db.socios.filter(function(s){var d=GYM.dias(s);return d>=0&&d<=7;}).sort(function(a,b){return a.vence-b.vence;}),venc=db.socios.filter(function(s){return GYM.dias(s)<0;});
-    var horas=[];for(var h=6;h<=22;h++)horas.push([h,Math.round(db.asis.filter(function(a){return new Date(a.t).getHours()===h;}).length/14*10)/10]);
-    var mx=Math.max(1,Math.max.apply(null,horas.map(function(x){return x[1];})));
+    var db=GYM.db(),h0=GYM.hoy0().getTime(),hoyT=db.asis.filter(function(a){return a.t>=h0;}),as=hoyT.filter(function(a){return a.ok;}),soc=db.socios.filter(function(s){return !s.baja;});
+    var act=soc.filter(function(s){return GYM.dias(s)>=0;}),pv=soc.filter(function(s){var d=GYM.dias(s);return d>=0&&d<=7;}).sort(function(a,b){return a.vence-b.vence;}),venc=soc.filter(function(s){return GYM.dias(s)<0;});
+    var hhmm=function(t){var d=new Date(t);return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);};
+    var ing=hoyT.slice().reverse().map(function(a){var s=GYM.socio(a.dni);return '<div class="fila" data-dni="'+a.dni+'"><div class="av">'+(s?ini(s.nom):'?')+'</div><div class="tx"><b>'+(s?esc(s.nom):a.dni)+'</b><span>'+hhmm(a.t)+'</span></div><span class="est '+(a.ok?'ok">Entró':'ro">Rechazado · cuota vencida')+'</span></div>';}).join('');
     var sol=(db.solicitudes||[]).map(function(x){return '<div class="fila"><div class="av">'+ini(x.nom)+'</div><div class="tx"><b>'+esc(x.nom)+'</b><span>DNI '+esc(x.dni)+' · '+(GYM.PLANES[x.plan]?GYM.PLANES[x.plan].nom:'')+' · '+esc(x.tel)+(x.mail?' · '+esc(x.mail):'')+'</span></div><a class="wa" href="https://wa.me/549'+esc(x.tel)+'?text='+encodeURIComponent('Hola '+x.nom.split(' ')[0]+'! Recibimos tu solicitud para Ribera Training. Ya quedaste dado de alta: venite cuando quieras y abonás en recepción. Tu credencial está en la web con tu DNI.')+'" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">'+WA+'</a><button class="btn" data-ok="'+x._id+'" type="button">Dar de alta</button><button class="btn sec" data-no="'+x._id+'" type="button" aria-label="Descartar">✕</button></div>';}).join('');
     return (sol?'<h2>Solicitudes nuevas desde la web</h2><div class="lista">'+sol+'</div>':'')+'<h2>Hoy</h2><div class="kpis"><div class="kpi"><b>'+as.length+'</b><span>ingresos hoy</span></div><div class="kpi"><b>'+act.length+'</b><span>socios al día</span></div><div class="kpi am"><b>'+pv.length+'</b><span>vencen esta semana</span></div><div class="kpi ro"><b>'+venc.length+'</b><span>con cuota vencida</span></div></div>'+
-      '<h3>Ingresos por hora · promedio de 2 semanas</h3><div class="barras">'+horas.map(function(x){return '<i style="height:'+(x[1]/mx*100)+'%" data-l="'+(x[0]%3===0?x[0]:'')+'" title="'+x[0]+' h: '+x[1]+'"></i>';}).join('')+'</div>'+
       '<h3>Vencen esta semana · avisales con un toque</h3><div class="lista">'+(pv.map(function(s){return fila(s,true);}).join('')||'<p class="vacio">Nadie vence esta semana.</p>')+'</div>'+
-      '<h3>Cuota vencida</h3><div class="lista">'+(venc.map(function(s){return fila(s,true);}).join('')||'<p class="vacio">No hay cuotas vencidas.</p>')+'</div>';
+      '<h3>Cuota vencida</h3><div class="lista">'+(venc.map(function(s){return fila(s,true);}).join('')||'<p class="vacio">No hay cuotas vencidas.</p>')+'</div>'+
+      '<h3>Ingresos de hoy</h3><div class="lista">'+(ing||'<p class="vacio">Todavía no entró nadie hoy.</p>')+'</div>';
   }
   function socios(){
-    var db=GYM.db(),l=db.socios.filter(function(s){var d=GYM.dias(s);
+    var db=GYM.db(),nAct=db.socios.filter(function(s){return !s.baja;}).length,l=db.socios.filter(function(s){var d=GYM.dias(s);
+      if((filtro==='baja')!==!!s.baja)return false;
       if(filtro==='ok'&&d<0)return false;if(filtro==='am'&&(d<0||d>7))return false;if(filtro==='ro'&&d>=0)return false;
       return !q||(s.nom+' '+s.dni).toLowerCase().indexOf(q.toLowerCase())>=0;});
-    return '<h2>Socios <span style="color:var(--soft);font:500 15px Inter">('+db.socios.length+')</span></h2><div class="busca"><input id="q" type="search" placeholder="Buscar por nombre o DNI" value="'+esc(q)+'"><button class="btn" id="nuevo" type="button">+ Nuevo</button></div>'+
-      '<div class="filtros">'+[['todos','Todos'],['ok','Al día'],['am','Por vencer'],['ro','Vencidos']].map(function(f){return '<button type="button" data-f="'+f[0]+'" aria-pressed="'+(filtro===f[0])+'">'+f[1]+'</button>';}).join('')+'</div>'+
+    return '<h2>Socios <span style="color:var(--soft);font:500 15px Inter">('+nAct+')</span></h2><div class="busca"><input id="q" type="search" placeholder="Buscar por nombre o DNI" value="'+esc(q)+'"><button class="btn" id="nuevo" type="button">+ Nuevo</button></div>'+
+      '<div class="filtros">'+[['todos','Todos'],['ok','Al día'],['am','Por vencer'],['ro','Vencidos'],['baja','Bajas']].map(function(f){return '<button type="button" data-f="'+f[0]+'" aria-pressed="'+(filtro===f[0])+'">'+f[1]+'</button>';}).join('')+'</div>'+
       '<div class="lista">'+(l.map(function(s){return fila(s,false);}).join('')||'<p class="vacio">No hay socios con ese filtro.</p>')+'</div>';
   }
   function cobros(){
     var db=GYM.db(),d=new Date(),m0=new Date(d.getFullYear(),d.getMonth(),1).getTime(),pm=db.pagos.filter(function(p){return p.t>=m0;});
     var tot=pm.reduce(function(a,p){return a+p.monto;},0),med={};pm.forEach(function(p){med[p.medio]=(med[p.medio]||0)+p.monto;});
-    var acobrar=db.socios.filter(function(s){return GYM.dias(s)<=7;}).reduce(function(a,s){return a+GYM.PLANES[s.plan].precio;},0);
+    var acobrar=db.socios.filter(function(s){return !s.baja&&GYM.dias(s)<=7;}).reduce(function(a,s){return a+GYM.PLANES[s.plan].precio;},0);
     var ult=db.pagos.slice().sort(function(a,b){return b.t-a.t;}).slice(0,8);
     return '<h2>Cobros</h2><div class="kpis"><div class="kpi"><b>'+GYM.pesos(tot)+'</b><span>cobrado este mes</span></div><div class="kpi"><b>'+pm.length+'</b><span>pagos este mes</span></div><div class="kpi am"><b>'+GYM.pesos(acobrar)+'</b><span>por cobrar (vencidos y semana)</span></div><div class="kpi"><b>'+GYM.pesos(pm.length?tot/pm.length:0)+'</b><span>cuota promedio</span></div></div>'+
       '<h3>Por medio de pago</h3><div class="medios">'+Object.keys(med).map(function(k){return '<div class="medio"><div style="flex:1"><b>'+k+'</b><div class="bar" style="width:'+(med[k]/tot*100)+'%"></div></div><b style="margin-left:14px">'+GYM.pesos(med[k])+'</b></div>';}).join('')+'</div>'+
-      '<h3>Últimos pagos</h3><div class="lista">'+ult.map(function(p){var s=GYM.socio(p.dni);return '<div class="fila" data-dni="'+p.dni+'"><div class="av">$</div><div class="tx"><b>'+(s?esc(s.nom):p.dni)+'</b><span>'+GYM.fecha(p.t)+' · '+p.medio+'</span></div><b>'+GYM.pesos(p.monto)+'</b></div>';}).join('')+'</div>';
+      '<h3>Últimos pagos</h3><div class="lista">'+ult.map(function(p){var s=GYM.socio(p.dni);return '<div class="fila" data-dni="'+p.dni+'"><div class="av">$</div><div class="tx"><b>'+(s?esc(s.nom):p.dni)+'</b><span>'+GYM.fecha(p.t)+' · '+p.medio+'</span></div><b>'+GYM.pesos(p.monto)+'</b></div>';}).join('')+'</div>'+
+      (GYM.real?'':'<p style="margin-top:22px"><button class="btn sec" id="reset" type="button">Reiniciar datos de ejemplo</button></p>');
   }
-  function stats(){
-    var db=GYM.db(),dias=[];for(var i=13;i>=0;i--){var a=GYM.hoy0();a.setDate(a.getDate()-i);var b=a.getTime()+864e5;dias.push([a,db.asis.filter(function(x){return x.t>=a.getTime()&&x.t<b;}).length]);}
-    var mx=Math.max.apply(null,dias.map(function(x){return x[1];}))||1,prom=Math.round(dias.slice(0,13).reduce(function(a,x){return a+x[1];},0)/13);
-    var hs={};db.asis.forEach(function(x){var h=new Date(x.t).getHours();hs[h]=(hs[h]||0)+1;});
-    var pico=Object.keys(hs).sort(function(a,b){return hs[b]-hs[a];}).slice(0,3).map(function(h){return h+' a '+(+h+1)+' h';});
-    return '<h2>Estadísticas</h2><div class="kpis"><div class="kpi"><b>'+prom+'</b><span>ingresos por día (promedio)</span></div><div class="kpi"><b>'+pico[0]+'</b><span>horario más lleno</span></div><div class="kpi"><b>214</b><span>visitas a la web (30 días)</span></div><div class="kpi"><b>31</b><span>consultas por WhatsApp</span></div></div>'+
-      '<h3>Ingresos por día · últimos 14 días</h3><div class="barras">'+dias.map(function(x,i){return '<i class="'+(i===13?'hoy':'')+'" style="height:'+(x[1]/mx*100)+'%" data-l="'+(i%2?'':x[0].getDate())+'" title="'+x[1]+'"></i>';}).join('')+'</div>'+
-      '<h3>Horarios con más gente</h3><div class="lista">'+pico.map(function(p,i){return '<div class="fila"><div class="av">'+(i+1)+'</div><div class="tx"><b>'+p+'</b></div></div>';}).join('')+'</div>'+
-      '<h3>De dónde llegan a la web</h3><div class="medios">'+[['Instagram',46],['Google',31],['WhatsApp',15],['Directo',8]].map(function(x){return '<div class="medio"><div style="flex:1"><b>'+x[0]+'</b><div class="bar" style="width:'+x[1]*2+'%"></div></div><b style="margin-left:14px">'+x[1]+'%</b></div>';}).join('')+'</div>'+
-      '<p class="nota">Visitas y origen: números de ejemplo. Con un cliente real salen del medidor de la web.</p><p style="margin-top:22px"><button class="btn sec" id="reset" type="button">Reiniciar datos de ejemplo</button></p>';
-  }
-  var V={hoy:hoy,socios:socios,cobros:cobros,stats:stats};
+  var V={hoy:hoy,socios:socios,cobros:cobros};
   function pinta(){$('vista').innerHTML=V[vista]();[].forEach.call(document.querySelectorAll('nav.tabs button'),function(b){b.setAttribute('aria-selected',b.dataset.v===vista);});}
   document.querySelector('nav.tabs').addEventListener('click',function(e){var b=e.target.closest('button');if(b){vista=b.dataset.v;pinta();scrollTo(0,0);}});
 
   function ficha(dni){
-    var s=GYM.socio(dni);if(!s)return;var e=estado(s),as=GYM.db().asis.filter(function(a){return a.dni===dni;}).slice(-5).reverse();
+    var s=GYM.socio(dni);if(!s)return;var e=estado(s),todos=GYM.db().asis.filter(function(a){return a.dni===dni;});
+    var as=todos.filter(function(a){return a.ok;}).slice(-5).reverse(),rech=todos.filter(function(a){return !a.ok;}).slice(-3).reverse();
+    var fh=function(t){var d=new Date(t);return GYM.fecha(t)+' '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);};
     $('dlg-in').innerHTML='<button class="cerrar" type="button" data-c aria-label="Cerrar">×</button><h2>'+esc(s.nom)+'</h2><span class="est '+e[0]+'">'+e[1]+'</span>'+
-      '<div style="margin-top:12px"><div class="dato"><span>DNI</span><b>'+s.dni+'</b></div><div class="dato"><span>Plan</span><b>'+GYM.PLANES[s.plan].nom+' · '+GYM.pesos(GYM.PLANES[s.plan].precio)+'</b></div><div class="dato"><span>Vence</span><b>'+GYM.fecha(s.vence)+'</b></div><div class="dato"><span>Últimos ingresos</span><b>'+(as.map(function(a){return GYM.fecha(a.t);}).join(', ')||'—')+'</b></div></div>'+
+      '<div style="margin-top:12px"><div class="dato"><span>DNI</span><b>'+s.dni+'</b></div><div class="dato"><span>Celular</span><b>'+(s.tel?esc(s.tel):'—')+'</b></div><div class="dato"><span>Plan</span><b>'+GYM.PLANES[s.plan].nom+' · '+GYM.pesos(GYM.PLANES[s.plan].precio)+'</b></div><div class="dato"><span>Socio desde</span><b>'+(s.alta?GYM.fecha(s.alta)+'/'+new Date(s.alta).getFullYear():'—')+'</b></div><div class="dato"><span>Vence</span><b>'+GYM.fecha(s.vence)+'</b></div>'+
+      '<div class="dato"><span>Últimos ingresos</span><b>'+(as.map(function(a){return fh(a.t);}).join(' · ')||'—')+'</b></div>'+
+      (rech.length?'<div class="dato"><span>Rechazados</span><b style="color:var(--rojo)">'+rech.map(function(a){return fh(a.t);}).join(' · ')+'</b></div>':'')+
+      (s.notas?'<div class="dato"><span>Notas</span><b>'+esc(s.notas)+'</b></div>':'')+'</div>'+
+      (s.baja?'<div class="acc"><button class="btn full" id="reac" type="button">Reactivar socio</button></div>':
       '<label for="medio">Registrar pago del mes</label><select id="medio"><option>Efectivo</option><option>Transferencia</option><option>Débito</option><option>Mercado Pago</option></select>'+
-      '<div class="acc"><button class="btn full" id="pagar" type="button">Registrar pago · '+GYM.pesos(GYM.PLANES[s.plan].precio)+'</button><a class="btn sec full" href="'+waLink(s)+'" target="_blank" rel="noopener">Avisar por WhatsApp</a><a class="btn sec full" href="'+waLink(s,'cred')+'" target="_blank" rel="noopener">Enviar credencial por WhatsApp</a></div>';
-    $('pagar').onclick=function(){GYM.pagar(dni,$('medio').value);$('dlg').close();toast('Pago registrado · vence '+GYM.fecha(GYM.socio(dni).vence));pinta();};
-    $('dlg').showModal();
+      '<div class="acc"><button class="btn full" id="pagar" type="button">Registrar pago · '+GYM.pesos(GYM.PLANES[s.plan].precio)+'</button><a class="btn sec full" href="'+waLink(s)+'" target="_blank" rel="noopener">Avisar por WhatsApp</a><a class="btn sec full" href="'+waLink(s,'cred')+'" target="_blank" rel="noopener">Enviar credencial por WhatsApp</a><button class="btn sec full" id="editar" type="button">Editar ficha</button><button class="btn sec full" id="baja" type="button" style="color:var(--rojo)">Dar de baja</button></div>');
+    if(s.baja){$('reac').onclick=function(){GYM.baja(dni,false);toast('Socio reactivado');ficha(dni);pinta();};}
+    else{
+      $('pagar').onclick=function(){GYM.pagar(dni,$('medio').value);$('dlg').close();toast('Pago registrado · vence '+GYM.fecha(GYM.socio(dni).vence));pinta();};
+      $('editar').onclick=function(){editar(dni);};
+      $('baja').onclick=function(){confirma('¿Dar de baja a '+s.nom+'? No se borra: queda en "Bajas" y se puede reactivar.',function(){GYM.baja(dni,true);$('dlg').close();toast('Socio dado de baja');pinta();});};
+    }
+    if(!$('dlg').open)$('dlg').showModal();
+  }
+  function confirma(txt,si){
+    var c=document.createElement('div');c.innerHTML='<p style="margin:16px 0 8px">'+esc(txt)+'</p><div class="acc"><button class="btn full" type="button" data-si>Sí, confirmar</button><button class="btn sec full" type="button" data-no>Cancelar</button></div>';
+    var acc=$('dlg-in').querySelector('.acc');acc.replaceWith(c);
+    c.querySelector('[data-si]').onclick=si;c.querySelector('[data-no]').onclick=function(){c.replaceWith(acc);};
+  }
+  function editar(dni){
+    var s=GYM.socio(dni);
+    $('dlg-in').innerHTML='<button class="cerrar" type="button" data-c aria-label="Cerrar">×</button><h2>Editar ficha</h2><form id="fe" novalidate><p class="nota">DNI '+s.dni+' (es el número de socio, no se cambia)</p><label for="e-nom">Nombre y apellido</label><input id="e-nom" maxlength="60" value="'+esc(s.nom)+'"><label for="e-tel">Celular (sin 0 ni 15)</label><input id="e-tel" inputmode="numeric" maxlength="10" value="'+esc(s.tel||'')+'"><label for="e-plan">Plan</label><select id="e-plan">'+Object.keys(GYM.PLANES).map(function(k){return '<option value="'+k+'"'+(k===s.plan?' selected':'')+'>'+GYM.PLANES[k].nom+' · '+GYM.pesos(GYM.PLANES[k].precio)+'</option>';}).join('')+'</select><label for="e-not">Notas</label><input id="e-not" maxlength="140" value="'+esc(s.notas||'')+'" placeholder="Ej.: lesión, horario, objetivo"><p class="nota" id="e-err" style="color:var(--rojo)"></p><div class="acc"><button class="btn full" type="submit">Guardar cambios</button><button class="btn sec full" type="button" id="e-vol">Volver sin guardar</button></div></form>';
+    $('e-vol').onclick=function(){ficha(dni);};
+    $('fe').onsubmit=function(ev){ev.preventDefault();
+      var nom=$('e-nom').value.trim(),tel=$('e-tel').value.trim();
+      if(nom.length<3){$('e-err').textContent='Escribí nombre y apellido.';return;}
+      if(!/^\d{10}$/.test(tel)){$('e-err').textContent='El celular tiene que tener 10 números (ej.: 1155554444).';return;}
+      GYM.editar(dni,{nom:nom,tel:tel,plan:$('e-plan').value,notas:$('e-not').value.trim()});toast('Ficha guardada');ficha(dni);pinta();};
   }
   function nuevo(){
-    $('dlg-in').innerHTML='<button class="cerrar" type="button" data-c aria-label="Cerrar">×</button><h2>Nuevo socio</h2><form id="fn"><label for="n-nom">Nombre y apellido</label><input id="n-nom" required maxlength="60"><label for="n-dni">DNI</label><input id="n-dni" required inputmode="numeric" pattern="\\d{7,9}" maxlength="9"><label for="n-tel">Celular (sin 0 ni 15)</label><input id="n-tel" required inputmode="numeric" pattern="\\d{10}" maxlength="10" placeholder="1155554444"><label for="n-plan">Plan</label><select id="n-plan">'+Object.keys(GYM.PLANES).map(function(k){return '<option value="'+k+'">'+GYM.PLANES[k].nom+' · '+GYM.pesos(GYM.PLANES[k].precio)+'</option>';}).join('')+'</select><div class="acc"><button class="btn full" type="submit">Dar de alta y cobrar el primer mes</button></div></form>';
+    $('dlg-in').innerHTML='<button class="cerrar" type="button" data-c aria-label="Cerrar">×</button><h2>Nuevo socio</h2><form id="fn"><label for="n-nom">Nombre y apellido</label><input id="n-nom" required maxlength="60"><label for="n-dni">DNI</label><input id="n-dni" required inputmode="numeric" pattern="\\d{7,9}" maxlength="9"><label for="n-tel">Celular (sin 0 ni 15)</label><input id="n-tel" required inputmode="numeric" pattern="\\d{10}" maxlength="10" placeholder="1155554444"><label for="n-plan">Plan</label><select id="n-plan">'+Object.keys(GYM.PLANES).map(function(k){return '<option value="'+k+'">'+GYM.PLANES[k].nom+' · '+GYM.pesos(GYM.PLANES[k].precio)+'</option>';}).join('')+'</select><label for="n-not">Notas (opcional)</label><input id="n-not" maxlength="140" placeholder="Ej.: lesión, horario, objetivo"><div class="acc"><button class="btn full" type="submit">Dar de alta y cobrar el primer mes</button></div></form>';
     $('fn').onsubmit=function(e){e.preventDefault();var dni=$('n-dni').value;if(GYM.socio(dni)){toast('Ese DNI ya existe');return;}
-      GYM.alta({nom:$('n-nom').value.trim(),dni:dni,tel:$('n-tel').value,plan:$('n-plan').value});$('dlg').close();vista='socios';q='';filtro='todos';pinta();ficha(dni);};
+      GYM.alta({nom:$('n-nom').value.trim(),dni:dni,tel:$('n-tel').value,plan:$('n-plan').value,notas:$('n-not').value.trim()});$('dlg').close();vista='socios';q='';filtro='todos';pinta();ficha(dni);};
     $('dlg').showModal();
   }
   $('dlg').addEventListener('click',function(e){if(e.target===this||e.target.closest('[data-c]'))this.close();});
