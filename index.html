@@ -307,7 +307,15 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
 #visor.m-pc iframe{width:min(1200px,100%);height:100%;border-radius:10px}
 @media (max-width:700px){#visor .vz-bar .modo{display:none}}
 .hero-in{grid-template-columns:minmax(0,1fr)!important}.hero-txt{max-width:760px}
-@media(min-width:1000px){.planes{grid-template-columns:repeat(4,1fr)}.obras{grid-template-columns:repeat(5,1fr)}}
+@media(min-width:1000px){.planes{grid-template-columns:repeat(4,1fr)}.obras{grid-template-columns:repeat(3,1fr)}}
+.plan .mes{font-size:12.5px;color:var(--soft);margin:-4px 0 12px}
+.sists{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.sist{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px;display:flex;flex-direction:column}
+.sist h3{margin:0 0 4px}.sist .gana{color:var(--soft);margin:0 0 14px}
+.sist ol{margin:0 0 18px;padding:0;list-style:none;display:grid;gap:8px;counter-reset:p}
+.sist li{counter-increment:p;display:flex;gap:10px;align-items:baseline;font-size:14.5px}
+.sist li::before{content:counter(p);flex:none;width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center}
+.sist .btn{margin-top:auto;align-self:flex-start}
 </style>
 </head>
 <body>
@@ -317,9 +325,9 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
   <div class="in">
     <a class="brand" href="index.html" aria-label="StudioProAr, inicio"><svg viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><path d="M20 18L6 32l14 14M44 18l14 14-14 14" fill="none" stroke="var(--logo-a)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 14L28 50" stroke="var(--logo-b)" stroke-width="6" stroke-linecap="round"/></svg><span class="wm">Studio<b>Pro</b><i>Ar</i></span></a>
     <ul>
-      <li><a href="#probar">Muestras</a></li>
       <li><a href="#trabajos">Trabajos</a></li>
       <li><a href="#planes">Planes</a></li>
+      <li><a href="#sistemas">Sistemas</a></li>
       <li><a href="#proceso">Cómo trabajamos</a></li>
       <li><a href="#contacto">Contacto</a></li>
       <li><a class="nav-cta" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20quiero%20el%20diagn%C3%B3stico%20gratis%20de%20mi%20negocio.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Diagnóstico gratis</a></li>
@@ -335,11 +343,11 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
     <p class="rota" aria-live="polite">Tu <span id="rota">carta, con pedidos desde la mesa</span>.</p>
     <p>Que cuando te busquen, te encuentren: armamos la web de tu negocio y la conectamos con tu WhatsApp, tu Instagram y Google Maps. Los pedidos y los turnos te llegan armados, y vos lo ves todo desde un panel en el celular.</p>
     <div class="btns">
-      <a class="btn btn-a" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20quiero%20el%20diagn%C3%B3stico%20gratis%20de%20mi%20negocio.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Pedí tu diagnóstico gratis</a>
-      <a class="btn btn-b" href="#probar">Probá tu rubro en vivo</a>
+      <a class="btn btn-a" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20quiero%20que%20me%20muestren%20c%C3%B3mo%20quedar%C3%ADa%20mi%20negocio.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Pedí que te muestre cómo quedaría tu negocio</a>
+      <a class="btn btn-b" href="#planes">Ver planes</a>
     </div>
     <ul class="sellos">
-      <li>Precio cerrado en pesos</li><li>Tu panel en el celular</li><li>El dominio es tuyo</li>
+      <li>Precio cerrado en pesos</li><li>La app de tu negocio</li><li>El dominio es tuyo</li>
     </ul>
     </div>
   </div>
@@ -377,58 +385,20 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
   </div>
 </section>
 
-<section class="probar" id="probar">
-  <div class="in">
-    <div class="head">
-      <p class="eyebrow">Probalo en vivo</p>
-      <h2>Elegí tu rubro y mirá tu web funcionando</h2>
-      <p class="lead">12 rubros, 3 estilos y los 4 planes. Tocá un plan y miralo acá al lado, como en el celular de tu cliente. El panel del dueño lo ves más abajo, en "Tu panel en el bolsillo".</p>
-    </div>
-    <div class="grid2">
-      <div>
-        <div class="chips" id="pr-rubros" role="group" aria-label="Rubro"></div>
-        <div class="chips sm" id="pr-estilos" role="group" aria-label="Estilo"></div>
-        <div class="pl-lista" id="pr-planes"></div>
-        <div class="pie"><span style="color:var(--soft);font-size:14px">Todas las muestras usan negocios y datos ficticios. ¿Te gustó? <a href="https://wa.me/5491126339350?text=Hola%21%20Vi%20las%20muestras%20de%20StudioProAr%20y%20quiero%20una%20web%20as%C3%AD.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Escribinos</a>.</span></div>
-      </div>
-      <div class="tel" aria-label="Vista previa en un celular"><div class="pant"><div class="cargando" id="pr-carga">Cargando la muestra…</div><iframe id="pr-frame" title="Vista previa de la muestra" loading="lazy" sandbox="allow-scripts allow-same-origin allow-forms allow-modals"></iframe><div class="vista"><span id="pr-ver"></span></div></div></div>
-    </div>
-  </div>
-</section>
-
 <section id="trabajos">
   <div class="in">
     <div class="head">
       <p class="eyebrow">Trabajos</p>
-      <h2>Cómo queda una web hecha para tu rubro</h2>
-      <p class="lead">Un trabajo por plan, funcionando de verdad: tocá y se abre acá mismo. Probá reservar un turno, mirá la carta o recorré el showroom.</p>
+      <h2>Negocios que ya trabajan con su web</h2>
+      <p class="lead">Cada web se arma para el negocio, no sale de una plantilla. ¿Querés ver cómo quedaría la tuya? <a href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20quiero%20que%20me%20muestren%20c%C3%B3mo%20quedar%C3%ADa%20mi%20negocio.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Escribinos y te la mostramos</a>.</p>
     </div>
     <div class="obras">
-      <article class="obra">
-        <div class="cab" style="background-image:linear-gradient(180deg,rgba(8,14,30,0) 35%,rgba(8,14,30,.85)),url('https://res.cloudinary.com/f7ugfcbs/image/upload/f_auto,q_auto,w_900/portadas-hd/ferreteria')"><b>Ferretería La Llave</b></div>
+      <article class="obra real">
+        <div class="cab" style="background-image:linear-gradient(180deg,rgba(8,14,30,0) 35%,rgba(8,14,30,.85)),url('https://reinadabi.com.ar/img/og.jpg')"><b>Reina Dabi</b></div>
         <div class="cu">
-          <p class="rubro">Muestra · Ferretería</p>
-          <p class="et">Plan 1 · Esencial</p>
-          <p>Una página con rubros destacados, horarios, ubicación y consulta por WhatsApp.</p>
-          <div class="links"><button type="button" class="ver" data-ver="demos/gastronomia/?rubro=ferreteria&estilo=parrilla&plan=1" data-t="Ferretería La Llave">Ver la web</button></div>
-        </div>
-      </article>
-      <article class="obra">
-        <div class="cab" style="background-image:linear-gradient(180deg,rgba(8,14,30,0) 35%,rgba(8,14,30,.85)),url('https://res.cloudinary.com/f7ugfcbs/image/upload/f_auto,q_auto,w_900/portadas-hd/parrilla')"><b>La Tranquera</b></div>
-        <div class="cu">
-          <p class="rubro">Muestra · Parrilla</p>
-          <p class="et">Plan 2 · Completa</p>
-          <p>Carta completa con fotos y precios, galería, preguntas frecuentes y panel de visitas.</p>
-          <div class="links"><button type="button" class="ver" data-ver="demos/gastronomia/?estilo=parrilla&plan=2" data-t="La Tranquera">Ver la web</button><button type="button" class="ver" data-ver="demos/mi-negocio/?s=tranquera&muestra=1&plan=2&vista=seg" data-t="La Tranquera · panel" data-cel="1">Ver el panel</button></div>
-        </div>
-      </article>
-      <article class="obra">
-        <div class="cab" style="background-image:linear-gradient(180deg,rgba(8,14,30,0) 35%,rgba(8,14,30,.85)),url('https://res.cloudinary.com/f7ugfcbs/image/upload/f_auto,q_auto,w_900/portadas-hd/peluqueria')"><b>Salón Alma</b></div>
-        <div class="cu">
-          <p class="rubro">Muestra · Peluquería</p>
-          <p class="et">Plan 3 · Agenda</p>
-          <p>El cliente elige servicio, día y hora, confirma y recibe el recordatorio. El salón ve sus turnos en el panel.</p>
-          <div class="links"><button type="button" class="ver" data-ver="demos/barberia/?estilo=mujer&plan=turnos" data-t="Salón Alma">Ver la web</button><button type="button" class="ver" data-ver="demos/mi-negocio/?s=alma&muestra=1&plan=turnos&vista=seg" data-t="Salón Alma · panel" data-cel="1">Ver el panel</button></div>
+          <p class="rubro">Cliente · Rosas eternas</p>
+          <p class="et">Plan 4 · Autogestionable</p>
+          <p>Arman el ramo en la web y ven el precio al instante. Los pedidos llegan a su app con aviso al celular, y ellas manejan todo.</p>
         </div>
       </article>
       <article class="obra real">
@@ -436,28 +406,20 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
         <div class="cu">
           <p class="rubro">Cliente · Ropa importada</p>
           <p class="et">Plan 4 · Autogestionable</p>
-          <p>Showroom con fotos por sección y precios de referencia. Ellas suben las prendas y anotan las ventas desde su panel.</p>
-          <div class="links"><button type="button" class="ver" data-ver="https://eveyceci.pages.dev/" data-t="Eve &amp; Ceci Importados">Ver la web</button></div>
+          <p>Showroom con fotos por sección. Ellas suben las prendas y anotan las ventas desde su app.</p>
         </div>
       </article>
       <article class="obra">
-        <div class="cab" style="background-image:linear-gradient(180deg,rgba(8,14,30,0) 35%,rgba(8,14,30,.85)),url('https://res.cloudinary.com/f7ugfcbs/image/upload/f_auto,q_auto,w_900/portadas-hd/netsur')"><b>NetSur Fibra</b></div>
+        <div class="cab" style="background-image:linear-gradient(180deg,rgba(8,14,30,0) 35%,rgba(8,14,30,.85)),url('https://res.cloudinary.com/f7ugfcbs/image/upload/f_auto,q_auto,w_900/portadas-hd/peluqueria')"><b>Salón Alma</b></div>
         <div class="cu">
-          <p class="rubro">Muestra · Empresa</p>
-          <p class="et">A medida · Empresa</p>
-          <p>Proveedor de internet: hogar y empresas, verificador de cobertura, estado de la red, ayuda para clientes, analítica y SEO.</p>
-          <div class="links"><button type="button" class="ver" data-ver="https://netsur-prueba.pages.dev/" data-t="NetSur Fibra">Ver la web</button></div>
+          <p class="rubro">Muestra · Peluquería</p>
+          <p class="et">Plan 3 · Turnos</p>
+          <p>El cliente elige servicio, día y hora, y recibe el recordatorio. El salón ve los turnos del día en su app.</p>
         </div>
       </article>
     </div>
   </div>
 </section>
-<dialog id="visor" class="m-cel" aria-label="Vista de la muestra">
-  <div class="vz">
-    <div class="vz-bar"><b id="vz-t">Muestra</b><button type="button" class="modo" data-m="cel" aria-pressed="true">Celular</button><button type="button" class="modo" data-m="pc" aria-pressed="false">Computadora</button><button type="button" id="vz-x">Cerrar ✕</button></div>
-    <div class="vz-marco"><iframe id="vz-f" title="Muestra" sandbox="allow-scripts allow-same-origin allow-forms allow-modals"></iframe></div>
-  </div>
-</dialog>
 
 
 <section id="planes">
@@ -465,7 +427,7 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
     <div class="head">
       <p class="eyebrow">Planes</p>
       <h2>Precios claros</h2>
-      <p class="lead">Un pago único por el armado, precio cerrado en pesos. Cada plan incluye lo del anterior. <b>Lanzamiento: precio especial para los primeros 10 clientes.</b></p>
+      <p class="lead">Un pago único por el armado, precio cerrado en pesos, más un mantenimiento mensual. Cada plan incluye lo del anterior. <b>Lanzamiento: precio especial para los primeros 10 clientes.</b></p>
       <p class="cupos"><span>Quedan 10 de 10 lugares</span> con precio de lanzamiento</p>
     </div>
     <div class="quiz" id="quiz">
@@ -489,7 +451,8 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
         <h3>Esencial</h3>
         <p class="precio">$100.000</p>
         <p class="unidad">Lanzamiento · lista <s>$120.000</s> · pago único</p>
-        <p class="desc">Una página con todo lo importante. Para existir en internet y que te encuentren.</p>
+        <p class="mes">+ $15.000 por mes de mantenimiento</p>
+        <p class="desc">Una página con todo lo importante. Para que te encuentren y te escriban.</p>
         <ul>
           <li>Una página con tus datos, servicios y ubicación</li>
           <li>Hasta 8 productos o servicios destacados, con foto</li>
@@ -497,97 +460,87 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
           <li>Mapa con "Cómo llegar" y horarios a la vista</li>
           <li>Alta en Google para que te encuentren</li>
           <li>Adaptada al celular</li>
-          <li>La carga inicial la hacemos nosotros</li>
         </ul>
-        <a class="btn btn-b" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20me%20interesa%20el%20plan%20Esencial.%20Mi%20duda%3A%20" target="_blank" rel="noopener">Consultar</a>
+        <a class="btn btn-b" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20me%20interesa%20el%20plan%20Esencial.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Consultá por este plan</a>
       </article>
-      <article class="plan dest">
-        <p class="tag">Recomendado</p>
+      <article class="plan">
+        <p class="tag">Plan 2</p>
         <h3>Completa</h3>
-        <p class="precio">$155.000</p>
+        <p class="precio">$150.000</p>
         <p class="unidad">Lanzamiento · lista <s>$180.000</s> · pago único</p>
+        <p class="mes">+ $15.000 por mes de mantenimiento</p>
         <p class="desc">Varias páginas para negocios con mucho para mostrar.</p>
         <ul>
           <li>Hasta 5 páginas</li>
-          <li>Hasta 30 productos o servicios con foto y precio</li>
+          <li>Carta o catálogo: hasta 30 productos con foto y precio</li>
+          <li>QR de la carta para las mesas</li>
           <li>Galería de hasta 40 fotos</li>
           <li>Preguntas frecuentes</li>
-          <li>Panel de visitas: cuántos entran y de dónde llegan</li>
           <li>Todo lo del plan Esencial</li>
         </ul>
-        <a class="btn btn-a" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20me%20interesa%20el%20plan%20Completa.%20Mi%20duda%3A%20" target="_blank" rel="noopener">Consultar</a>
+        <a class="btn btn-b" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20me%20interesa%20el%20plan%20Completa.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Consultá por este plan</a>
       </article>
-      <article class="plan">
-        <p class="tag">Plan 3</p>
-        <h3>Agenda o Catálogo</h3>
-        <p class="precio">$210.000</p>
-        <p class="unidad">Lanzamiento · lista <s>$240.000</s> · pago único</p>
-        <p class="desc">Tu web trabaja sola: toma turnos o pedidos, según tu rubro.</p>
+      <article class="plan dest">
+        <p class="tag">Recomendado</p>
+        <h3>Turnos, reservas o pedidos</h3>
+        <p class="precio">$200.000</p>
+        <p class="unidad">Lanzamiento · lista <s>$250.000</s> · pago único</p>
+        <p class="mes">+ $25.000 por mes de mantenimiento</p>
+        <p class="desc">Tu web trabaja sola: reserva, cobra la seña y avisa.</p>
         <ul>
-          <li><b>Agenda:</b> el cliente elige día y hora, confirma y recibe un recordatorio (turnos, reservas, encargos o clases)</li>
-          <li><b>O catálogo:</b> hasta 50 productos con carrito que te llega armado por WhatsApp</li>
-          <li>Los turnos o pedidos, en tu panel</li>
-          <li>Tu panel como app en el celular</li>
+          <li><b>Turnos o reservas:</b> el cliente elige día y hora y confirma</li>
+          <li>Recordatorio automático el día anterior</li>
+          <li>Seña por alias, si la querés activar</li>
+          <li><b>O pedidos:</b> catálogo de hasta 50 productos con carrito</li>
+          <li><b>La app de tu negocio</b> en el celular, con aviso de cada turno o pedido</li>
           <li>Todo lo del plan Completa</li>
         </ul>
-        <a class="btn btn-b" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20me%20interesa%20el%20plan%20Agenda%20o%20Catálogo.%20Mi%20duda%3A%20" target="_blank" rel="noopener">Consultar</a>
+        <a class="btn btn-a" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20me%20interesa%20el%20plan%20Turnos%2C%20reservas%20o%20pedidos.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Consultá por este plan</a>
       </article>
       <article class="plan">
         <p class="tag">Plan 4</p>
         <h3>Autogestionable</h3>
-        <p class="precio">$266.000</p>
-        <p class="unidad">Lanzamiento · lista <s>$300.000</s> · pago único</p>
+        <p class="precio">$270.000</p>
+        <p class="unidad">Lanzamiento · lista <s>$320.000</s> · pago único</p>
+        <p class="mes">+ $35.000 por mes de mantenimiento</p>
         <p class="desc">Manejás tu web vos: fotos, precios y textos desde el celular.</p>
         <ul>
           <li><b>Agenda Pro:</b> por profesional, con fichas de clientes. <b>O catálogo</b> que cargás vos</li>
           <li>Editás precios, fotos, textos y avisos</li>
-          <li>Resumen del mes, con descarga</li>
-          <li>La función estrella de tu rubro: pedidos desde la mesa, app de socios y más</li>
+          <li>Resumen del mes</li>
           <li>Capacitación para usarlo</li>
           <li>Todo lo del plan 3</li>
         </ul>
-        <a class="btn btn-b" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20me%20interesa%20el%20plan%20Autogestionable.%20Mi%20duda%3A%20" target="_blank" rel="noopener">Consultar</a>
+        <a class="btn btn-b" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20me%20interesa%20el%20plan%20Autogestionable.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Consultá por este plan</a>
       </article>
     </div>
-    <div class="mants">
-      <div class="mant">
-        <div>
-          <h3 style="margin-bottom:3px">Mantenimiento Básico</h3>
-          <p class="m-precio">$25.000 <span style="font-family:var(--body);font-size:13px;font-weight:400;color:var(--soft)">por mes</span></p>
-        </div>
-        <p>Tu web y tu panel siempre funcionando: copias de seguridad, cuidado de tus datos, arreglo de fallas y hasta 2 cambios por mes, con respuesta en 48 horas hábiles. <b>Incluido y obligatorio en los planes 3 y 4</b>, porque guardan datos de tus clientes.</p>
-      </div>
-      <div class="mant">
-        <div>
-          <h3 style="margin-bottom:3px">Mantenimiento Plus</h3>
-          <p class="m-precio">$40.000 <span style="font-family:var(--body);font-size:13px;font-weight:400;color:var(--soft)">por mes</span></p>
-        </div>
-        <p>Todo lo del Básico, hasta 5 cambios por mes con respuesta en 24 horas hábiles, un informe mensual con qué mejorar, 2 publicaciones por mes en tu ficha de Google y respuesta a reseñas.</p>
-      </div>
-    </div>
-    <p class="incluido"><b>Planes 1 y 2:</b> el mantenimiento es opcional. Tu web queda online igual, y si querés un cambio chico (un precio, un horario, una foto) sale $10.000 cada uno. El primer mes de mantenimiento es gratis y se da de baja avisando con 30 días.</p>
-    <p class="incluido"><b>Extras:</b> productos adicionales $20.000 cada 10 · ficha de Google Maps $60.000 (optimizar una existente, $40.000) · página extra $35.000 · hoja de QR para imprimir $40.000 · gestión del dominio $15.000 · mail con tu dominio $25.000. El dominio propio (alrededor de $8.500 al año) se registra a nombre del cliente y lo paga el cliente.</p>
-    <p class="incluido"><b>¿Empresa o institucional?</b> Webs de 5 a 8 páginas con formulario, analítica y SEO completo, a medida. Mirá NetSur en Trabajos. Precios actualizados: noviembre 2026.</p>
+    <p class="incluido"><b>Mantenimiento, en todos los planes:</b> tu web y tu app siempre funcionando, copias de seguridad, cuidado de tus datos y arreglo de fallas, con respuesta en 48 horas hábiles. Incluye 2 cambios por mes en los planes 1 y 2, y 3 en los planes 3 y 4. El primer mes es gratis y se da de baja avisando con 30 días.</p>
+    <p class="incluido"><b>Extras:</b> estadísticas de visitas en los planes 1 y 2, $5.000 por mes · ficha de Google Maps $60.000 (optimizar una existente, $40.000) · página extra $35.000 · hoja de QR para imprimir $40.000 · mail con tu dominio $25.000. El dominio propio (alrededor de $8.500 al año) se registra a nombre del cliente y lo paga el cliente. Precios actualizados: noviembre 2026.</p>
   </div>
 </section>
 
 
-<section class="appsec" id="panel">
+<section id="sistemas">
   <div class="in">
-    <div class="app-txt">
-      <p class="eyebrow">Tu panel, en el bolsillo</p>
-      <h2>Tu panel de seguimiento, como app en tu celular</h2>
-      <p class="lead">Turnos, pedidos y visitas de tu negocio, a un toque. Se instala en la pantalla de inicio de tu Android o iPhone, con el logo de tu negocio, sin tiendas de apps y sin pagar nada extra. Probalo acá, con datos de ejemplo:</p>
-      <div class="chips" id="ap-sel" role="group" aria-label="Panel de ejemplo">
-        <button type="button" data-u="demos/mi-negocio/?s=alma&amp;muestra=1&amp;plan=turnos&amp;vista=seg" aria-pressed="true">Agenda</button>
-        <button type="button" data-u="demos/mi-negocio/?s=alma&amp;muestra=1&amp;plan=pro&amp;vista=seg" aria-pressed="false">Agenda Pro</button>
-        <button type="button" data-u="demos/mi-negocio/?s=tranquera&amp;muestra=1&amp;plan=5&amp;vista=seg" aria-pressed="false">Restaurante</button>
-        <button type="button" data-u="demos/mi-negocio/?s=horno&amp;muestra=1&amp;plan=4&amp;vista=seg" aria-pressed="false">Encargos</button>
-        <button type="button" data-u="demos/mi-negocio/?s=tranquera&amp;muestra=1&amp;plan=2&amp;vista=seg" aria-pressed="false">Visitas</button>
-      </div>
-      <ul class="sellos" style="margin-top:16px"><li>Android y iPhone</li><li>Con el logo de tu negocio</li><li>Planes 3 y 4 (visitas desde el 2)</li></ul>
+    <div class="head">
+      <p class="eyebrow">Sistemas</p>
+      <h2>Para que tu negocio funcione mejor por dentro</h2>
+      <p class="lead">Se contratan con o sin web, con un armado y un abono mensual. Si ya tenés tu web con nosotros, el armado sale menos.</p>
     </div>
-    <div class="tel" aria-label="Panel de ejemplo en un celular"><div class="pant"><iframe id="ap-frame" title="Panel de ejemplo" loading="lazy" sandbox="allow-scripts allow-same-origin allow-forms allow-modals" src="demos/mi-negocio/?s=alma&amp;muestra=1&amp;plan=turnos&amp;vista=seg"></iframe></div></div>
+    <div class="sists">
+      <article class="sist">
+        <h3>Pedidos desde la mesa</h3>
+        <p class="gana">Menos idas y vueltas del mozo, cero pedidos perdidos.</p>
+        <ol><li>El cliente escanea el QR de su mesa</li><li>Elige de la carta y hace el pedido</li><li>El pedido aparece en la tablet de la cocina o la barra</li></ol>
+        <a class="btn btn-b" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20me%20interesa%20el%20sistema%20de%20pedidos%20desde%20la%20mesa.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Consultá</a>
+      </article>
+      <article class="sist">
+        <h3>Gimnasio: socios y fichaje</h3>
+        <p class="gana">Sabés quién pagó y quién no, sin planillas.</p>
+        <ol><li>El socio pone su DNI o muestra su credencial en la tablet</li><li>Si está al día, entra; si no, lo manda a recepción</li><li>Vos ves cuotas, vencimientos e ingresos en tu app</li></ol>
+        <a class="btn btn-b" href="https://wa.me/5491126339350?text=Hola%21%20Vi%20StudioProAr%20y%20me%20interesa%20el%20sistema%20para%20gimnasios.%20Mi%20negocio%20es%3A%20" target="_blank" rel="noopener">Consultá</a>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -634,10 +587,10 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
     <details><summary>¿Cómo se paga?</summary><p>50% al empezar y 50% al entregar, por transferencia. Si lo necesitás, el saldo se puede dividir en más pagos: lo charlamos en la propuesta.</p></details>
     <details><summary>¿Qué pasa si no tengo fotos?</summary><p>Lo charlamos. Podemos ir a sacarlas al local o usar imágenes con licencia libre mientras conseguís las propias. Nunca usamos fotos bajadas de internet sin derecho de uso: es un riesgo legal que no vale la pena.</p></details>
     <details><summary>¿Necesito el dominio propio?</summary><p>No es obligatorio, pero conviene. Te da una dirección corta y profesional, te habilita correos con el nombre del negocio y ayuda a que Google te encuentre. Sin dominio propio la web funciona igual, con una dirección más larga.</p></details>
-    <details><summary>¿Y si quiero cambiar algo después?</summary><p>Con mantenimiento entran hasta 2 cambios por mes en el Básico y hasta 5 en el Plus. En los planes 1 y 2 sin mantenimiento, cada cambio chico sale $10.000. Y en el plan Autogestionable, precios, fotos y textos los cambiás vos desde el panel.</p></details>
-    <details><summary>¿Si dejo de trabajar con ustedes, pierdo la web?</summary><p>No perdés lo tuyo. Si decidís terminar, dentro de los 15 días te entregamos el control del dominio, tus datos exportados y una copia de tu web pública. El panel es una herramienta de StudioProAr: se usa mientras el mantenimiento esté al día. No hay permanencia mínima ni multa.</p></details>
-    <details><summary>¿El panel se puede usar desde el celular?</summary><p>Sí. Se abre desde cualquier navegador y en los planes 3 y 4 se instala como una app en tu Android o iPhone, con el logo de tu negocio. El plan 2 trae el panel de visitas.</p></details>
-    <details><summary>¿Hacen tiendas online?</summary><p>Sí, con el plan Agenda o Catálogo: catálogo con carrito que te manda el pedido armado por WhatsApp y queda guardado en tu panel. El cobro lo hacés por transferencia o alias; el pago con tarjeta dentro de la web todavía no lo ofrecemos.</p></details>
+    <details><summary>¿Y si quiero cambiar algo después?</summary><p>El mantenimiento incluye 2 cambios por mes en los planes 1 y 2, y 3 en los planes 3 y 4. Y en el plan Autogestionable, precios, fotos y textos los cambiás vos desde tu app.</p></details>
+    <details><summary>¿Si dejo de trabajar con ustedes, pierdo la web?</summary><p>No perdés lo tuyo. Si decidís terminar, dentro de los 15 días te entregamos el control del dominio, tus datos exportados y una copia de tu web pública. La app del negocio es una herramienta de StudioProAr: se usa mientras el mantenimiento esté al día. No hay permanencia mínima ni multa.</p></details>
+    <details><summary>¿La app del negocio se usa desde el celular?</summary><p>Sí. En los planes 3 y 4 se instala como una app en tu Android o iPhone, con el logo de tu negocio, sin tiendas de apps. En los planes 1 y 2 podés sumar las estadísticas de visitas.</p></details>
+    <details><summary>¿Hacen tiendas online?</summary><p>Sí, con el plan 3 (pedidos): catálogo con carrito que te manda el pedido armado por WhatsApp y queda guardado en tu app. El cobro lo hacés por transferencia o alias; el pago con tarjeta dentro de la web todavía no lo ofrecemos.</p></details>
   </div>
 </section>
 
@@ -684,11 +637,13 @@ footer .brand{--logo-a:#8FB0FF;--logo-b:#FFFFFF;color:var(--dark-ink)}footer .br
     if(b.id==='quiz-otra'){Object.keys(r).forEach(k=>delete r[k]);pasos.forEach((p,i)=>p.hidden=i>0);res.hidden=true;planes.forEach(p=>p.classList.remove('marcado'));return;}
     const p=b.closest('.quiz-p');if(!p)return;r[p.dataset.q]=b.dataset.v;
     let sig=+p.dataset.q+1;
+    if(r[0]==='mesa')sig=3;
     if(p.dataset.q==='0'&&r[0]!=='info')sig=2;
     p.hidden=true;
     if(sig<3){pasos[sig].hidden=false;return;}
     let n;
-    if(r[2]==='si'||r[0]==='mesa')n=4;else if(r[0]==='turnos'||r[0]==='vender')n=3;else n=r[1]==='mucho'?2:1;
+    if(r[0]==='mesa'){res.hidden=false;res.innerHTML='Para pedidos desde la mesa tenés el <b>sistema de pedidos desde la mesa</b>, con o sin web. <button type="button" id="quiz-otra">Volver a empezar</button>';document.getElementById('sistemas').scrollIntoView({behavior:'smooth',block:'start'});return;}
+    if(r[2]==='si')n=4;else if(r[0]==='turnos'||r[0]==='vender')n=3;else n=r[1]==='mucho'?2:1;
     const card=planes[n-1],nom=card.querySelector('h3').textContent,pe=card.querySelector('.precio'),pre=pe.dataset.fin||pe.textContent;
     res.hidden=false;res.innerHTML='Te conviene el <b>plan '+n+' · '+nom+'</b>, desde '+pre+' de lanzamiento. <button type="button" id="quiz-otra">Volver a empezar</button>';
     planes.forEach(p=>p.classList.toggle('marcado',p===card));
